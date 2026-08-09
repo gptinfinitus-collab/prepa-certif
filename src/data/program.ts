@@ -17,7 +17,14 @@ export interface ProgramModule {
   contentMarkdown: string;
   keyTakeaway: string | null;
   quiz: QuizItem[];
+  /**
+   * Contenu pédagogique attaché au module (exemples, regard de l'auditeur,
+   * point examen…). Utilisé par les cursus générés à partir d'un référentiel ;
+   * le cursus ISO 45001 s'appuie sur `lessonExtras` indexé par identifiant.
+   */
+  extras?: import("./lesson-extras").LessonExtras;
 }
+
 
 export interface ProgramWeek {
   id: number;
