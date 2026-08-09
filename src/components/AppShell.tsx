@@ -260,7 +260,12 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
           </Button>
         </div>
 
-        <main className="min-w-0 flex-1 pb-[calc(5.5rem+env(safe-area-inset-bottom))] md:pb-0">{children}</main>
+        <main className="min-w-0 flex-1 pb-[calc(5.5rem+env(safe-area-inset-bottom))] md:pb-0">
+          <div key={pathname} className="page-enter">
+            {children}
+          </div>
+        </main>
+
 
         {/* Mobile bottom nav */}
         <nav
