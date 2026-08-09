@@ -26,7 +26,9 @@ export const Route = createFileRoute("/references")({
       { property: "og:image:alt", content: "PREPA CERTIF — Préparation aux certifications ISO" },
       { name: "twitter:image", content: "https://prepa-certif.app/og-image.png" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:url", content: "https://prepa-certif.app/references" },
     ],
+    links: [{ rel: "canonical", href: "https://prepa-certif.app/references" }],
   }),
   component: References,
 });
