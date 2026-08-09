@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedBibliothequeRouteImport } from './routes/_authenticated/bibliotheque'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedPlanningRouteImport } from './routes/_authenticated/planning'
 import { Route as AuthenticatedSeanceModuleIdRouteImport } from './routes/_authenticated/seance.$moduleId'
@@ -30,6 +31,12 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedBibliothequeRoute =
+  AuthenticatedBibliothequeRouteImport.update({
+    id: '/bibliotheque',
+    path: '/bibliotheque',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -50,6 +57,7 @@ const AuthenticatedSeanceModuleIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/bibliotheque': typeof AuthenticatedBibliothequeRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/planning': typeof AuthenticatedPlanningRoute
   '/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
@@ -57,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/bibliotheque': typeof AuthenticatedBibliothequeRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/planning': typeof AuthenticatedPlanningRoute
   '/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
@@ -66,20 +75,34 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/bibliotheque': typeof AuthenticatedBibliothequeRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/planning': typeof AuthenticatedPlanningRoute
   '/_authenticated/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard' | '/planning' | '/seance/$moduleId'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/bibliotheque'
+    | '/dashboard'
+    | '/planning'
+    | '/seance/$moduleId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/planning' | '/seance/$moduleId'
+  to:
+    | '/'
+    | '/auth'
+    | '/bibliotheque'
+    | '/dashboard'
+    | '/planning'
+    | '/seance/$moduleId'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/bibliotheque'
     | '/_authenticated/dashboard'
     | '/_authenticated/planning'
     | '/_authenticated/seance/$moduleId'
@@ -114,6 +137,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/bibliotheque': {
+      id: '/_authenticated/bibliotheque'
+      path: '/bibliotheque'
+      fullPath: '/bibliotheque'
+      preLoaderRoute: typeof AuthenticatedBibliothequeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -139,12 +169,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBibliothequeRoute: typeof AuthenticatedBibliothequeRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedPlanningRoute: typeof AuthenticatedPlanningRoute
   AuthenticatedSeanceModuleIdRoute: typeof AuthenticatedSeanceModuleIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBibliothequeRoute: AuthenticatedBibliothequeRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedPlanningRoute: AuthenticatedPlanningRoute,
   AuthenticatedSeanceModuleIdRoute: AuthenticatedSeanceModuleIdRoute,
