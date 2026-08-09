@@ -15,8 +15,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-/** Avatar rond en haut à droite : profil, paramètres, thème et déconnexion. */
-export function UserMenu() {
+/** Menu du profil : avatar rond (mobile) ou carte de sidebar (desktop). */
+export function UserMenu({
+  variant = "avatar",
+  compact = false,
+}: {
+  variant?: "avatar" | "card";
+  compact?: boolean;
+}) {
   const { data: profile } = useProfile();
   const { data: user } = useSession();
   const { resolved, setTheme } = useTheme();
@@ -36,23 +42,50 @@ export function UserMenu() {
     navigate({ to: "/auth", replace: true });
   }
 
+  const avatar = (
+    <Avatar className="size-9 shrink-0 border border-border">
+      <AvatarImage src={profile?.avatarSignedUrl ?? undefined} alt="" />
+      <AvatarFallback className="text-xs">
+        {initialsOf(profile?.first_name, profile?.last_name, email)}
+      </AvatarFallback>
+    </Avatar>
+  );
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button
-          type="button"
-          className="rounded-full ring-offset-background transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-          aria-label="Ouvrir le menu du profil"
-        >
-          <Avatar className="size-9 border border-border">
-            <AvatarImage src={profile?.avatarSignedUrl ?? undefined} alt="" />
-            <AvatarFallback className="text-xs">
-              {initialsOf(profile?.first_name, profile?.last_name, email)}
-            </AvatarFallback>
-          </Avatar>
-        </button>
+        {variant === "card" ? (
+          <button
+            type="button"
+            className={cn(
+              "flex w-full items-center gap-2 rounded-lg border border-sidebar-border bg-sidebar-accent/40 px-3 py-2 text-left transition-colors hover:bg-sidebar-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              compact && "justify-center px-1.5 py-1.5",
+            )}
+            aria-label="Ouvrir le menu du profil"
+          >
+            {avatar}
+            {!compact && (
+              <>
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-sm font-medium">{fullName}</span>
+                  <span className="block truncate text-xs text-muted-foreground">{email}</span>
+                </span>
+                <ChevronsUpDown className="size-4 shrink-0 text-muted-foreground" aria-hidden />
+              </>
+            )}
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="rounded-full ring-offset-background transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            aria-label="Ouvrir le menu du profil"
+          >
+            {avatar}
+          </button>
+        )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-64">
+      <DropdownMenuContent align={variant === "card" ? "start" : "end"} className="w-64">
+
         <div className="flex items-center gap-3 px-2 py-2">
           <Avatar className="size-9 border border-border">
             <AvatarImage src={profile?.avatarSignedUrl ?? undefined} alt="" />
