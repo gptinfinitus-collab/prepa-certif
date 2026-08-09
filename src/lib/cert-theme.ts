@@ -7,22 +7,22 @@
  */
 
 const HUES: Record<string, number> = {
-  "ISO 9001": 248,
-  "ISO 14001": 150,
-  "ISO 45001": 72,
-  "ISO/IEC 27001": 300,
-  "ISO 22000": 120,
-  "ISO 50001": 95,
-  "ISO 13485": 200,
-  "ISO 22301": 20,
-  "ISO 37001": 330,
-  "ISO 19011": 260,
+  "9001": 248,
+  "14001": 150,
+  "45001": 72,
+  "27001": 300,
+  "22000": 128,
+  "50001": 95,
+  "13485": 200,
+  "22301": 25,
+  "37001": 330,
+  "19011": 260,
 };
 
 /** Teinte stable dérivée du code de la norme (fallback pour les cursus personnalisés). */
 export function certificationHue(code: string | null | undefined): number {
   if (!code) return 72;
-  const key = Object.keys(HUES).find((k) => code.toUpperCase().startsWith(k.toUpperCase()));
+  const key = Object.keys(HUES).find((k) => code.includes(k));
   if (key) return HUES[key] ?? 72;
   let hash = 0;
   for (let i = 0; i < code.length; i += 1) hash = (hash * 31 + code.charCodeAt(i)) % 360;
