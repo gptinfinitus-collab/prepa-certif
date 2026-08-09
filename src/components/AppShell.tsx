@@ -6,13 +6,13 @@ import {
   Bot,
   CalendarRange,
   Check,
-  ChevronsLeft,
-  ChevronsRight,
   ChevronsUpDown,
   GraduationCap,
   Home,
   Library,
   ListChecks,
+  PanelLeft,
+  PanelLeftClose,
   Plus,
   Settings,
   SpellCheck,
@@ -72,7 +72,6 @@ function CertificationSwitcher({ compact = false }: { compact?: boolean }) {
           )}
           aria-label="Changer de certification"
         >
-          <GraduationCap className="size-4 shrink-0 text-cert" aria-hidden />
           <span className="min-w-0 flex-1">
             <span className="block truncate text-sm font-medium">
               {active?.certification.name ?? "Choisir une certification"}
@@ -165,32 +164,19 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
       >
         <div
           className={cn(
-            "flex items-center gap-2 px-4 py-4",
-            collapsed && "flex-col justify-center gap-3 px-2",
+            "flex items-center gap-3 px-4 py-4",
+            collapsed && "justify-center px-2",
           )}
         >
-          <BrandLogo className="size-7 shrink-0 text-sidebar-primary" />
+          <BrandLogo className={cn("shrink-0 text-sidebar-primary", collapsed ? "size-9" : "size-10")} />
           {!collapsed && (
             <Link to="/" className="min-w-0 flex-1">
-              <span className="block truncate text-sm font-semibold leading-tight">PREPA ISO</span>
-              <span className="block text-xs text-muted-foreground">
+              <span className="block truncate text-base font-semibold leading-tight">PREPA ISO</span>
+              <span className="block truncate whitespace-nowrap text-xs text-muted-foreground">
                 Préparation à la certification
               </span>
             </Link>
           )}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="size-8 shrink-0 text-muted-foreground"
-            onClick={() => setCollapsed((c) => !c)}
-            aria-label={collapsed ? "Déplier le menu" : "Replier le menu"}
-          >
-            {collapsed ? (
-              <ChevronsRight className="size-4" aria-hidden />
-            ) : (
-              <ChevronsLeft className="size-4" aria-hidden />
-            )}
-          </Button>
         </div>
 
         {!collapsed && (
@@ -238,8 +224,22 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
         </header>
 
 
-
-
+        {/* Desktop sidebar toggle */}
+        <div className="hidden px-3 pt-3 md:block">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-9 text-muted-foreground"
+            onClick={() => setCollapsed((c) => !c)}
+            aria-label={collapsed ? "Déplier le menu" : "Replier le menu"}
+          >
+            {collapsed ? (
+              <PanelLeft className="size-5" aria-hidden />
+            ) : (
+              <PanelLeftClose className="size-5" aria-hidden />
+            )}
+          </Button>
+        </div>
 
         <main className="min-w-0 flex-1 pb-[calc(5.5rem+env(safe-area-inset-bottom))] md:pb-0">{children}</main>
 
