@@ -14,8 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      certifications: {
+        Row: {
+          chapters: Json
+          code: string
+          created_at: string
+          description: string | null
+          family: string | null
+          has_curriculum: boolean
+          id: string
+          is_custom: boolean
+          name: string
+          owner_id: string | null
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          chapters?: Json
+          code: string
+          created_at?: string
+          description?: string | null
+          family?: string | null
+          has_curriculum?: boolean
+          id?: string
+          is_custom?: boolean
+          name: string
+          owner_id?: string | null
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          chapters?: Json
+          code?: string
+          created_at?: string
+          description?: string | null
+          family?: string | null
+          has_curriculum?: boolean
+          id?: string
+          is_custom?: boolean
+          name?: string
+          owner_id?: string | null
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       module_progress: {
         Row: {
+          certification_id: string
           completed: boolean
           completed_at: string | null
           created_at: string
@@ -26,6 +72,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          certification_id: string
           completed?: boolean
           completed_at?: string | null
           created_at?: string
@@ -36,6 +83,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          certification_id?: string
           completed?: boolean
           completed_at?: string | null
           created_at?: string
@@ -45,7 +93,15 @@ export type Database = {
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "module_progress_certification_id_fkey"
+            columns: ["certification_id"]
+            isOneToOne: false
+            referencedRelation: "certifications"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -79,6 +135,7 @@ export type Database = {
       }
       study_plans: {
         Row: {
+          certification_id: string
           created_at: string
           exam_date: string | null
           modules_per_day: number
@@ -88,6 +145,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          certification_id: string
           created_at?: string
           exam_date?: string | null
           modules_per_day?: number
@@ -97,6 +155,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          certification_id?: string
           created_at?: string
           exam_date?: string | null
           modules_per_day?: number
@@ -105,7 +164,50 @@ export type Database = {
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "study_plans_certification_id_fkey"
+            columns: ["certification_id"]
+            isOneToOne: false
+            referencedRelation: "certifications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_certifications: {
+        Row: {
+          certification_id: string
+          created_at: string
+          id: string
+          is_active: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          certification_id: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          certification_id?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_certifications_certification_id_fkey"
+            columns: ["certification_id"]
+            isOneToOne: false
+            referencedRelation: "certifications"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
