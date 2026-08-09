@@ -117,6 +117,14 @@ function Dashboard() {
             : "Configurez votre planning pour dater vos séances."}
         </p>
 
+        <div className="mt-5 rounded-xl border border-border bg-card p-4">
+          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            Niveau de parcours — {trackDefinition.name}
+          </p>
+          <TrackSwitcher className="mt-3" />
+          <LeadAuditorNotice />
+        </div>
+
         {!curriculum.complete ? (
           <div className="mt-6 flex flex-wrap items-center gap-3 rounded-lg border border-border bg-secondary/40 px-4 py-3">
             <PenLine className="size-4 shrink-0 text-primary" aria-hidden />
