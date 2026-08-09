@@ -24,3 +24,23 @@ Le skill s'appelle **admin-login-page**. On l'applique ici à la page publique `
 - Validation Zod des champs e-mail / mot de passe (longueur min. 6, format e-mail) avant appel réseau, erreurs affichées sous les champs.
 - Vérification visuelle finale en mode clair et mode sombre.
 
+## Documents légaux
+
+Quatre pages publiques (SSR, indexables, avec `head()` propre : titre, description, og:title, og:description, canonical) :
+
+- `/cgu` — Conditions générales d'utilisation : objet du service, création de compte, usage autorisé, contenus déposés par l'utilisateur (documents de cours), propriété intellectuelle (les textes ISO restent la propriété de l'ISO — usage strictement personnel), limitation de responsabilité (outil de préparation, aucune garantie de réussite ni affiliation avec l'ISO ou IRCA), suspension/résiliation, droit applicable.
+- `/confidentialite` — Politique de confidentialité (RGPD) : responsable de traitement, données collectées (compte, profil, documents importés, historique de quiz et de conversations IA), finalités et bases légales, sous-traitants (hébergement/base de données, fournisseur de modèles IA), durées de conservation, droits (accès, rectification, effacement, portabilité, opposition) et adresse de contact, transferts hors UE, sécurité.
+- `/cookies` — Politique de cookies : cookies strictement nécessaires (session d'authentification, préférence de thème), absence de traceurs publicitaires.
+- `/mentions-legales` — Mentions légales : éditeur, directeur de publication, contact, hébergeur.
+
+Intégration :
+
+- Un fichier partagé `src/lib/legal.ts` centralise les informations de l'éditeur (nom, e-mail de contact, hébergeur, date de dernière mise à jour) pour éviter la duplication.
+- Un composant `LegalPage` commun (mise en page lisible `prose`, titre, date de mise à jour, retour à l'accueil) utilisé par les quatre routes.
+- Liens vers CGU / Confidentialité sous la carte de connexion, avec mention « En créant un compte, vous acceptez les CGU et la politique de confidentialité ».
+- Liens légaux également accessibles depuis la page Paramètres.
+- Ajout des quatre URLs au sitemap si un sitemap existe.
+
+Informations à confirmer (des valeurs génériques seront mises en place à défaut) : raison sociale ou nom de l'éditeur, adresse, e-mail de contact RGPD, et nom du directeur de publication.
+
+
