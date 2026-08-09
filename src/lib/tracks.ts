@@ -33,10 +33,10 @@ export const TRACKS: TrackDefinition[] = [
     name: "Lead Auditor",
     short: "Lead Auditor",
     description:
-      "Niveau en préparation : pilotage d'équipe d'audit et audit de certification.",
-    status: "coming_soon",
+      "Piloter une équipe d'audit et conduire un audit de certification : plan d'audit, réunions, non-conformités, rapport.",
+    status: "active",
     note:
-      "Les examens Lead Auditor dépendent de l'organisme (PECB, CQI/IRCA, autres) : format, durée et règles varient. Ce niveau sera ouvert avec un profil d'examen documenté, propre à l'organisme choisi.",
+      "Le format de l'examen Lead Auditor dépend de l'organisme (PECB, CQI/IRCA, autres). Choisissez votre organisme d'examen pour adapter vos entraînements.",
   },
 ];
 
