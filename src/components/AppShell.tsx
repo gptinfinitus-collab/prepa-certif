@@ -206,10 +206,15 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isActive = (to: string) => pathname === to || pathname.startsWith(`${to}/`);
   const activeMobile = mobileItems.some((i) => isActive(i.to));
+  const { data: mine = [] } = useMyCertifications();
+  const activeCert = mine.find((m) => m.is_active) ?? mine[0] ?? null;
   useCertificationGuard();
 
   return (
-    <div className="min-h-screen bg-background md:flex">
+    <div
+      className="min-h-screen bg-background md:flex"
+      style={certificationAccentStyle(activeCert?.certification.code)}
+    >
       {/* Desktop sidebar */}
       <aside
         className={cn(
