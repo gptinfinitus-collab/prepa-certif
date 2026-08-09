@@ -1,6 +1,5 @@
 import { type ReactNode, useEffect, useState } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { useQueryClient } from "@tanstack/react-query";
 import {
   BookMarked,
   Brain,
@@ -13,17 +12,13 @@ import {
   Home,
   Library,
   ListChecks,
-  LogOut,
   Plus,
   Settings,
   ShieldCheck,
   SpellCheck,
-  User,
 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useProfile, useSession } from "@/lib/queries";
+import { useSession } from "@/lib/queries";
 import { useMyCertifications, useSetActiveCertification } from "@/lib/certifications";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -33,7 +28,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { initialsOf } from "@/components/ProfileEditor";
+import { UserMenu } from "@/components/UserMenu";
 import { cn } from "@/lib/utils";
 import { certificationAccentStyle } from "@/lib/cert-theme";
 
