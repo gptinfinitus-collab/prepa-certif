@@ -22,9 +22,9 @@ import { cn } from "@/lib/utils";
 
 interface GeneratedQuestion {
   question: string;
-  choices?: string[];
-  answerIndex?: number;
-  expected?: string;
+  choices?: string[] | undefined;
+  answerIndex?: number | undefined;
+  expected?: string | undefined;
   explanation: string;
   clause: string;
 }
@@ -203,7 +203,8 @@ export function QuizTrainer({
         clause: q.clause,
         question: q.question,
         choices: q.choices ?? null,
-        expected: q.choices && q.answerIndex !== undefined ? q.choices[q.answerIndex] : null,
+        expected:
+          q.choices && q.answerIndex !== undefined ? (q.choices[q.answerIndex] ?? null) : null,
         explanation: q.explanation,
         user_answer:
           choiceAnswers[i] !== undefined ? (q.choices?.[choiceAnswers[i]] ?? "") : "",
