@@ -666,18 +666,30 @@ const overrides: Record<string, Overrides> = {
 
 function merge(base: LessonExtras, extra: LessonExtras | undefined): LessonExtras {
   if (!extra) return base;
-  return {
-    objectives: extra.objectives ?? base.objectives,
-    examples: [...(base.examples ?? []), ...(extra.examples ?? [])],
-    auditorView: [...(base.auditorView ?? []), ...(extra.auditorView ?? [])],
-    evidence: [...(base.evidence ?? []), ...(extra.evidence ?? [])],
-    examFocus: [...(base.examFocus ?? []), ...(extra.examFocus ?? [])],
-    commonMistakes: [...(base.commonMistakes ?? []), ...(extra.commonMistakes ?? [])],
-    scenario: extra.scenario ?? base.scenario,
-    keyPoints: extra.keyPoints ?? base.keyPoints,
-    flashcards: [...(base.flashcards ?? []), ...(extra.flashcards ?? [])],
-  };
+  const merged: LessonExtras = { ...base };
+  const objectives = extra.objectives ?? base.objectives;
+  if (objectives) merged.objectives = objectives;
+  const keyPoints = extra.keyPoints ?? base.keyPoints;
+  if (keyPoints) merged.keyPoints = keyPoints;
+  const scenario = extra.scenario ?? base.scenario;
+  if (scenario) merged.scenario = scenario;
+
+  const examples = [...(base.examples ?? []), ...(extra.examples ?? [])];
+  if (examples.length) merged.examples = examples;
+  const auditorView = [...(base.auditorView ?? []), ...(extra.auditorView ?? [])];
+  if (auditorView.length) merged.auditorView = auditorView;
+  const evidence = [...(base.evidence ?? []), ...(extra.evidence ?? [])];
+  if (evidence.length) merged.evidence = evidence;
+  const examFocus = [...(base.examFocus ?? []), ...(extra.examFocus ?? [])];
+  if (examFocus.length) merged.examFocus = examFocus;
+  const commonMistakes = [...(base.commonMistakes ?? []), ...(extra.commonMistakes ?? [])];
+  if (commonMistakes.length) merged.commonMistakes = commonMistakes;
+  const flashcards = [...(base.flashcards ?? []), ...(extra.flashcards ?? [])];
+  if (flashcards.length) merged.flashcards = flashcards;
+
+  return merged;
 }
+
 
 /**
  * Contenu pédagogique d'un chapitre d'une norme : trame générique de la
