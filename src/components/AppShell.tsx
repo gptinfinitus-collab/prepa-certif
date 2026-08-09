@@ -220,11 +220,18 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
               </>
             )}
           </Button>
-          <ProfileBlock collapsed={collapsed} />
         </div>
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
+        {/* Desktop header */}
+        <header className="sticky top-0 z-30 hidden items-center gap-3 border-b border-border bg-card/80 px-6 py-3 backdrop-blur md:flex">
+          <h2 className="min-w-0 flex-1 truncate font-serif text-base font-semibold">
+            {title ?? "PREPA ISO"}
+          </h2>
+          <UserMenu />
+        </header>
+
         {/* Mobile header */}
         <header className="sticky top-0 z-30 border-b border-border bg-card/90 px-4 py-3 backdrop-blur md:hidden">
           <div className="flex items-center gap-3">
@@ -232,14 +239,13 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
             <span className="min-w-0 flex-1 truncate font-serif text-base font-semibold">
               {title ?? "PREPA ISO"}
             </span>
-            <Link to="/parametres" aria-label="Paramètres">
-              <Settings className="size-5 text-muted-foreground" aria-hidden />
-            </Link>
+            <UserMenu />
           </div>
           <div className="mt-2">
             <CertificationSwitcher compact />
           </div>
         </header>
+
 
 
         <main className="min-w-0 flex-1 pb-24 md:pb-0">{children}</main>
