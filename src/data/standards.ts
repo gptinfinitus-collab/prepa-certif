@@ -352,21 +352,72 @@ export const standardSpecs: Record<string, StandardSpec> = {
     "ISO 13485:2016",
     "système de management de la qualité des dispositifs médicaux",
     "la qualité des dispositifs médicaux",
-    hlsClauses({
-      systemName: "système de management de la qualité des dispositifs médicaux",
-      subject: "la qualité des dispositifs médicaux",
-      riskTerm: "risques liés au dispositif et à la conformité réglementaire",
-      indicator: "les réclamations, la vigilance et les rappels de produits",
-      extra: {
-        7: ["Manuel qualité, dossier du dispositif médical et exigences réglementaires applicables"],
-        8: [
-          "Conception et développement : plan, vérification, validation, transfert, maîtrise des modifications",
-          "Processus de production stériles, propreté du produit, activités d'installation et de service",
-          "Traçabilité, identification et enregistrements de production",
+    [
+      {
+        clause: "4. Système de management de la qualité",
+        title: "Exigences générales et exigences relatives à la documentation",
+        summary:
+          "ISO 13485:2016 ne suit pas la structure harmonisée : elle conserve la structure en 8 chapitres. Le chapitre 4 établit le système, son rôle réglementaire et sa documentation.",
+        requirements: [
+          "4.1 Exigences générales : processus, approche fondée sur les risques, rôle réglementaire de l'organisme",
+          "4.1.6 Validation des applications informatiques utilisées dans le système",
+          "4.2.1 Documentation : manuel qualité, procédures documentées exigées, dossier du dispositif médical",
+          "4.2.3 Dossier du dispositif médical pour chaque type ou famille de dispositifs",
+          "4.2.4 Maîtrise des documents ; 4.2.5 Maîtrise des enregistrements et durées de conservation",
         ],
-        9: ["Retour d'information, traitement des réclamations et notification aux autorités réglementaires"],
       },
-    }),
+      {
+        clause: "5. Responsabilité de la direction",
+        title: "Engagement, politique, planification et revue de direction",
+        summary:
+          "La direction démontre son engagement, définit la politique et les objectifs qualité, attribue les responsabilités et nomme un représentant de la direction — exigence propre à ISO 13485.",
+        requirements: [
+          "5.1 Engagement de la direction, y compris le respect des exigences réglementaires applicables",
+          "5.2 Écoute client : exigences client et exigences réglementaires",
+          "5.3 Politique qualité ; 5.4 Planification : objectifs qualité et planification du système",
+          "5.5.2 Représentant de la direction nommé : exigence maintenue par ISO 13485",
+          "5.5.3 Communication interne ; 5.6 Revue de direction : éléments d'entrée et de sortie définis",
+        ],
+      },
+      {
+        clause: "6. Management des ressources",
+        title: "Ressources humaines, infrastructures et environnement de travail",
+        summary:
+          "Fournir les ressources, assurer les compétences et maîtriser l'environnement de travail, y compris la propreté du produit et la maîtrise de la contamination.",
+        requirements: [
+          "6.1 Mise à disposition des ressources",
+          "6.2 Ressources humaines : compétence, formation, efficacité des actions, enregistrements",
+          "6.3 Infrastructures, y compris maintenance et exigences de maintenance documentées",
+          "6.4.1 Environnement de travail ; 6.4.2 Maîtrise de la contamination (dispositifs stériles)",
+        ],
+      },
+      {
+        clause: "7. Réalisation du produit",
+        title: "De la planification à la libération du dispositif",
+        summary:
+          "Cœur opérationnel de la norme : planification incluant la gestion des risques (ISO 14971), conception et développement, achats, production et maîtrise des équipements de mesure.",
+        requirements: [
+          "7.1 Planification de la réalisation, avec gestion des risques tout au long de la réalisation",
+          "7.2 Processus relatifs aux clients : exigences, revue, communication (dont notification aux autorités)",
+          "7.3 Conception et développement : planification, éléments d'entrée/sortie, revue, vérification, validation, transfert, maîtrise des modifications, dossier de conception",
+          "7.4 Achats : critères de sélection des fournisseurs, informations d'achat, vérification du produit acheté",
+          "7.5 Production : maîtrise, propreté, installation, prestations associées, procédés stériles, validation des procédés, identification et traçabilité, préservation",
+          "7.6 Maîtrise des équipements de surveillance et de mesure",
+        ],
+      },
+      {
+        clause: "8. Mesure, analyse et amélioration",
+        title: "Retour d'information, audits, non-conformités et actions",
+        summary:
+          "Surveiller le produit et le système, traiter le retour d'information et les réclamations, notifier les autorités et améliorer par actions correctives et préventives.",
+        requirements: [
+          "8.2.1 Retour d'information ; 8.2.2 Traitement des réclamations ; 8.2.3 Signalement aux autorités réglementaires",
+          "8.2.4 Audit interne ; 8.2.5 Surveillance et mesure des processus ; 8.2.6 Surveillance et mesure du produit",
+          "8.3 Maîtrise du produit non conforme, y compris les actions après livraison et les avis de sécurité",
+          "8.4 Analyse des données ; 8.5.1 Amélioration ; 8.5.2 Actions correctives ; 8.5.3 Actions préventives",
+        ],
+      },
+    ],
     [
       { term: "Dispositif médical", definition: "Instrument, appareil ou logiciel destiné par le fabricant à une finalité médicale sur l'être humain." },
       { term: "Dossier du dispositif médical", definition: "Ensemble des documents démontrant la conformité du dispositif aux exigences applicables." },
