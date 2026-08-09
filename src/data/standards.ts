@@ -467,7 +467,7 @@ export const standardSpecs: Record<string, StandardSpec> = {
       indicator: "les alertes reçues, les diligences réalisées et les cadeaux déclarés",
       extra: {
         4: ["4.5 Appréciation du risque de corruption, révisée périodiquement"],
-        5: ["5.3 Fonction de conformité anti-corruption, indépendante et dotée de ressources"],
+        5: ["5.3.2 Fonction de conformité anti-corruption, indépendante et dotée de ressources"],
         8: [
           "8.2 Diligence raisonnable (partenaires, projets, personnel exposé)",
           "8.5 Contrôles financiers et non financiers",
