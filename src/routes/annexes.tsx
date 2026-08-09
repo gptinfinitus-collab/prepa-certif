@@ -89,7 +89,7 @@ function Annexes() {
             <Quiz items={annexes.finalMockExam.mcq} />
           </div>
         </section>
-      </main>
-    </div>
+      </div>
+    </AppShell>
   );
 }
