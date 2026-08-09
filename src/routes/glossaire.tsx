@@ -2,21 +2,21 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { Input } from "@/components/ui/input";
-import { program } from "@/data/program";
+import { useCurriculum } from "@/lib/curriculum";
 
 export const Route = createFileRoute("/glossaire")({
   head: () => ({
     meta: [
-      { title: "Glossaire de l'audit SMSST — PREPA IRCA 45001" },
+      { title: "Glossaire de l'audit ISO — PREPA ISO" },
       {
         name: "description",
         content:
-          "Définitions des termes clés de l'ISO 45001 et de l'audit : constat, non-conformité, preuve d'audit, périmètre, partie intéressée et plus.",
+          "Définitions des termes clés des systèmes de management et de l'audit : constat, non-conformité, preuve d'audit, périmètre, partie intéressée et plus.",
       },
-      { property: "og:title", content: "Glossaire — PREPA IRCA 45001" },
+      { property: "og:title", content: "Glossaire de l'audit ISO — PREPA ISO" },
       {
         property: "og:description",
-        content: "Termes clés de l'audit et du management SST expliqués simplement.",
+        content: "Termes clés de l'audit et des systèmes de management expliqués simplement.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -27,8 +27,9 @@ export const Route = createFileRoute("/glossaire")({
 
 function Glossaire() {
   const [query, setQuery] = useState("");
+  const { curriculum, certificationName } = useCurriculum();
   const needle = query.trim().toLowerCase();
-  const entries = program.glossary.filter(
+  const entries = curriculum.glossary.filter(
     (g) =>
       !needle ||
       g.term.toLowerCase().includes(needle) ||
@@ -40,7 +41,7 @@ function Glossaire() {
       <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
         <h1 className="font-serif text-3xl font-semibold">Glossaire</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          {program.glossary.length} termes essentiels pour l'examen et le terrain.
+          {curriculum.glossary.length} termes essentiels pour {certificationName} et l'audit.
         </p>
         <Input
           className="mt-6"
