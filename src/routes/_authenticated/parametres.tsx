@@ -118,15 +118,28 @@ function Parametres() {
               <CardTitle className="font-sans text-lg">Étude</CardTitle>
               <CardDescription>Dates, jours travaillés et rythme de révision.</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex flex-wrap gap-2">
               <Button asChild variant="outline">
                 <Link to="/planning">
                   <CalendarRange className="size-4" aria-hidden />
                   Modifier mon planning
                 </Link>
               </Button>
+              <Button
+                variant="outline"
+                disabled={setOnboarded.isPending}
+                onClick={() => {
+                  setOnboarded.mutate(false, {
+                    onSuccess: () => navigate({ to: "/dashboard" }),
+                  });
+                }}
+              >
+                <Sparkles className="size-4" aria-hidden />
+                Relancer la configuration guidée
+              </Button>
             </CardContent>
           </Card>
+
 
           <Card>
             <CardHeader>
