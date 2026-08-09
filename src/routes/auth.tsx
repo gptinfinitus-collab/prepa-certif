@@ -114,7 +114,7 @@ function AuthPage() {
     <div className="flex min-h-screen items-center justify-center bg-secondary/40 px-4 py-12">
       <Card className="w-full max-w-md">
         <CardHeader className="items-center text-center">
-          <BrandLogo className="size-8 text-primary" />
+          <BrandLogo className="size-16 text-primary" />
           <CardTitle className="font-serif text-2xl">PREPA CERTIF</CardTitle>
           <CardDescription>
             Connectez-vous pour retrouver votre planning et votre progression.
