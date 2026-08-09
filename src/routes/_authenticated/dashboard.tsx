@@ -41,8 +41,10 @@ function Dashboard() {
   const { data: plan } = useStudyPlan();
   const { data: progress = [] } = useProgress();
   const { data: profile } = useProfile();
-  const { curriculum, certificationName } = useCurriculum();
-  const modules = curriculum.modules;
+  const { track } = useActiveTrack();
+  const trackDefinition = getTrack(track);
+  const modules = filterModulesByTrack(curriculum.modules, track);
+
 
   const completedIds = new Set(progress.filter((p) => p.completed).map((p) => p.module_id));
   const schedule = plan ? buildSchedule(plan, modules) : null;
