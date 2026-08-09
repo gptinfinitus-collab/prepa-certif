@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { AppHeader } from "@/components/AppHeader";
+import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -95,9 +95,8 @@ function Bibliotheque() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <AppHeader />
-      <main className="mx-auto max-w-3xl px-4 py-10">
+    <AppShell title="Ma bibliothèque">
+      <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
         <h1 className="font-serif text-3xl font-semibold">Ma bibliothèque</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Les normes ISO sont protégées par le droit d'auteur et ne peuvent pas être diffusées par
@@ -150,7 +149,7 @@ function Bibliotheque() {
             </ul>
           )}
         </section>
-      </main>
-    </div>
+      </div>
+    </AppShell>
   );
 }
