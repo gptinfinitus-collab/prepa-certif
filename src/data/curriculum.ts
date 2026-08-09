@@ -64,7 +64,14 @@ function iso45001Curriculum(): Curriculum {
   };
 }
 
-function clauseModule(id: number, week: number, clause: ClauseSpec, label: string): ProgramModule {
+function clauseModule(
+  id: number,
+  week: number,
+  clause: ClauseSpec,
+  ctx: StandardContext,
+): ProgramModule {
+  const label = ctx.label;
+
   const body = [
     `## ${clause.title}`,
     "",
