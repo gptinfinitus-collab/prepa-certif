@@ -149,6 +149,8 @@ export const generateQuizQuestions = createServerFn({ method: "POST" })
         count: z.number().int().min(3).max(12).default(5),
         difficulty: z.enum(["facile", "standard", "examen"]).default("standard"),
         mode: z.enum(["qcm", "ouverte"]).default("qcm"),
+        track: z.enum(["general", "internal_auditor", "lead_auditor"]).default("general"),
+        examBody: z.enum(["pecb", "irca", "other"]).nullish(),
       })
       .parse(data),
   )
