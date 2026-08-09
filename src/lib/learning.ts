@@ -336,3 +336,40 @@ export function useRecordTopicMastery() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["topic_mastery"] }),
   });
 }
+
+/* ------------------------------------------------------- Écran de bienvenue */
+
+/** Date de fin (ou d'abandon) de l'écran de bienvenue, null si jamais suivi. */
+export function useOnboardedAt() {
+  return useQuery({
+    queryKey: ["onboarded_at"],
+    queryFn: async (): Promise<string | null> => {
+      const { data: userData } = await supabase.auth.getUser();
+      if (!userData.user) return null;
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("onboarded_at")
+        .eq("id", userData.user.id)
+        .maybeSingle();
+      if (error) throw error;
+      return data?.onboarded_at ?? null;
+    },
+  });
+}
+
+export function useSetOnboarded() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (done: boolean) => {
+      const user = await requireUser();
+      const { error } = await supabase
+        .from("profiles")
+        .upsert(
+          { id: user.id, onboarded_at: done ? new Date().toISOString() : null },
+          { onConflict: "id" },
+        );
+      if (error) throw error;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["onboarded_at"] }),
+  });
+}
