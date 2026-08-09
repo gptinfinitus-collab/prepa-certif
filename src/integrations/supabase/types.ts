@@ -21,6 +21,8 @@ export type Database = {
           created_at: string
           id: string
           role: string
+          sources: Json
+          thread_id: string | null
           user_id: string
         }
         Insert: {
@@ -29,6 +31,8 @@ export type Database = {
           created_at?: string
           id?: string
           role: string
+          sources?: Json
+          thread_id?: string | null
           user_id: string
         }
         Update: {
@@ -37,6 +41,8 @@ export type Database = {
           created_at?: string
           id?: string
           role?: string
+          sources?: Json
+          thread_id?: string | null
           user_id?: string
         }
         Relationships: [
@@ -45,6 +51,13 @@ export type Database = {
             columns: ["certification_id"]
             isOneToOne: false
             referencedRelation: "certifications"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_messages_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "chat_threads"
             referencedColumns: ["id"]
           },
         ]
@@ -93,6 +106,41 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      chat_threads: {
+        Row: {
+          certification_id: string | null
+          created_at: string
+          id: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          certification_id?: string | null
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          certification_id?: string | null
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_threads_certification_id_fkey"
+            columns: ["certification_id"]
+            isOneToOne: false
+            referencedRelation: "certifications"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       document_chunks: {
         Row: {

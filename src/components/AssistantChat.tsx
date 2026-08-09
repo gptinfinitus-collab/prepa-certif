@@ -1,0 +1,290 @@
+import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
+import { Bot, Loader2, MessageSquarePlus, Send, Sparkles, Trash2, User } from "lucide-react";
+import { toast } from "sonner";
+import { MarkdownView } from "@/components/MarkdownView";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { supabase } from "@/integrations/supabase/client";
+import { useActiveCertification } from "@/lib/certifications";
+import {
+  useCreateThread,
+  useDeleteThread,
+  useThreadMessages,
+  useThreads,
+  type ChatMessageRow,
+} from "@/lib/threads";
+import { cn } from "@/lib/utils";
+
+const suggestions = [
+  "Explique la différence entre non-conformité majeure et mineure.",
+  "Comment préparer un plan d'audit conforme à l'ISO 19011 ?",
+  "Quelles preuves collecter pour évaluer le leadership (chapitre 5) ?",
+];
+
+export function AssistantChat({ threadId }: { threadId: string }) {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { certification, certificationId } = useActiveCertification();
+  const certificationName = certification?.name ?? "votre certification ISO";
+
+  const threads = useThreads(certificationId ?? null);
+  const stored = useThreadMessages(threadId);
+  const createThread = useCreateThread();
+  const deleteThread = useDeleteThread();
+
+  const [pending, setPending] = useState<ChatMessageRow[]>([]);
+  const [streamed, setStreamed] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [input, setInput] = useState("");
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const messages = [...(stored.data ?? []), ...pending];
+
+  useEffect(() => {
+    setPending([]);
+    setStreamed("");
+    setBusy(false);
+    textareaRef.current?.focus();
+  }, [threadId]);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages.length, streamed]);
+
+  async function send(question: string) {
+    const text = question.trim();
+    if (!text || busy) return;
+    setInput("");
+    setBusy(true);
+    setStreamed("");
+    setPending([{ id: `local-${Date.now()}`, role: "user", content: text, sources: [] }]);
+
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData.session?.access_token;
+      if (!token) throw new Error("Session expirée, reconnectez-vous.");
+
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "content-type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ threadId, question: text, certificationName }),
+      });
+      if (!response.ok || !response.body) {
+        throw new Error(await response.text().catch(() => "Assistant indisponible."));
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let answer = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        let index = buffer.indexOf("\n\n");
+        while (index !== -1) {
+          const raw = buffer.slice(0, index).trim();
+          buffer = buffer.slice(index + 2);
+          index = buffer.indexOf("\n\n");
+          if (!raw.startsWith("data:")) continue;
+          const event = JSON.parse(raw.slice(5).trim()) as {
+            type: string;
+            text?: string;
+            message?: string;
+          };
+          if (event.type === "delta" && event.text) {
+            answer += event.text;
+            setStreamed(answer);
+          } else if (event.type === "error") {
+            throw new Error(event.message ?? "Réponse IA indisponible.");
+          }
+        }
+      }
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Assistant indisponible.");
+    } finally {
+      setBusy(false);
+      setStreamed("");
+      setPending([]);
+      await queryClient.invalidateQueries({ queryKey: ["chat-messages", threadId] });
+      await queryClient.invalidateQueries({ queryKey: ["chat-threads"] });
+      textareaRef.current?.focus();
+    }
+  }
+
+  async function startThread() {
+    const thread = await createThread.mutateAsync(certificationId ?? null);
+    navigate({ to: "/assistant/$threadId", params: { threadId: thread.id } });
+  }
+
+  async function removeThread(id: string) {
+    await deleteThread.mutateAsync(id);
+    if (id === threadId) navigate({ to: "/assistant" });
+  }
+
+  return (
+    <div className="mx-auto grid w-full max-w-6xl gap-6 px-4 py-6 md:grid-cols-[240px_1fr] md:py-10">
+      <aside className="flex flex-col gap-2">
+        <Button onClick={startThread} disabled={createThread.isPending} className="w-full">
+          <MessageSquarePlus className="size-4" aria-hidden />
+          Nouvelle conversation
+        </Button>
+        <nav className="flex gap-2 overflow-x-auto pb-1 md:flex-col md:overflow-visible">
+          {(threads.data ?? []).map((thread) => (
+            <div
+              key={thread.id}
+              className={cn(
+                "flex min-w-[190px] items-center gap-1 rounded-lg border border-border px-1 md:min-w-0",
+                thread.id === threadId ? "bg-secondary" : "bg-card",
+              )}
+            >
+              <Link
+                to="/assistant/$threadId"
+                params={{ threadId: thread.id }}
+                className="min-w-0 flex-1 truncate px-2 py-2 text-sm"
+                title={thread.title}
+              >
+                {thread.title}
+              </Link>
+              <button
+                type="button"
+                onClick={() => removeThread(thread.id)}
+                aria-label={`Supprimer ${thread.title}`}
+                className="rounded-md p-2 text-muted-foreground transition-colors hover:text-destructive"
+              >
+                <Trash2 className="size-4" aria-hidden />
+              </button>
+            </div>
+          ))}
+        </nav>
+      </aside>
+
+      <section className="flex min-w-0 flex-col">
+        <h1 className="font-serif text-3xl font-semibold">Assistant de préparation</h1>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Questions directes sur {certificationName}, l'audit et vos documents de cours indexés.
+        </p>
+
+        {messages.length === 0 && !busy && (
+          <Card className="mt-6">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 font-serif text-lg">
+                <Sparkles className="size-5 text-cert" aria-hidden />
+                Par où commencer ?
+              </CardTitle>
+              <CardDescription>Choisissez une question ou écrivez la vôtre.</CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-2">
+              {suggestions.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => send(s)}
+                  className="rounded-lg border border-border px-3 py-2 text-left text-sm transition-colors hover:bg-secondary"
+                >
+                  {s}
+                </button>
+              ))}
+            </CardContent>
+          </Card>
+        )}
+
+        <div className="mt-6 space-y-4">
+          {messages.map((message) => (
+            <Bubble key={message.id} role={message.role} sources={message.sources}>
+              {message.content}
+            </Bubble>
+          ))}
+
+          {busy && streamed && <Bubble role="assistant">{streamed}</Bubble>}
+          {busy && !streamed && (
+            <p className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Loader2 className="size-4 animate-spin" aria-hidden />
+              L'assistant consulte vos documents…
+            </p>
+          )}
+          <div ref={bottomRef} />
+        </div>
+
+        <div className="sticky bottom-20 mt-6 rounded-xl border border-border bg-card/95 p-3 backdrop-blur md:bottom-4">
+          <Textarea
+            ref={textareaRef}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                void send(input);
+              }
+            }}
+            rows={2}
+            placeholder="Posez votre question (Entrée pour envoyer)…"
+            className="resize-none border-0 bg-transparent shadow-none focus-visible:ring-0"
+          />
+          <div className="flex justify-end">
+            <Button onClick={() => void send(input)} disabled={busy || !input.trim()}>
+              <Send className="size-4" aria-hidden />
+              Envoyer
+            </Button>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function Bubble({
+  role,
+  children,
+  sources = [],
+}: {
+  role: "user" | "assistant";
+  children: string;
+  sources?: ChatMessageRow["sources"];
+}) {
+  return (
+    <div className={cn("flex gap-3", role === "user" && "flex-row-reverse")}>
+      <span
+        className={cn(
+          "mt-1 flex size-8 shrink-0 items-center justify-center rounded-full",
+          role === "user" ? "bg-secondary" : "bg-cert/15 text-cert",
+        )}
+        aria-hidden
+      >
+        {role === "user" ? <User className="size-4" /> : <Bot className="size-4" />}
+      </span>
+      <div
+        className={cn(
+          "min-w-0 max-w-[85%] rounded-xl border border-border px-4 py-3 text-sm leading-relaxed",
+          role === "user" ? "bg-secondary" : "bg-card",
+        )}
+      >
+        {role === "assistant" ? (
+          <MarkdownView>{children}</MarkdownView>
+        ) : (
+          <p className="whitespace-pre-wrap">{children}</p>
+        )}
+        {role === "assistant" && sources.length > 0 && (
+          <details className="mt-3 rounded-lg border border-border bg-secondary/40 p-2">
+            <summary className="cursor-pointer text-xs font-medium text-muted-foreground">
+              {sources.length} extrait{sources.length > 1 ? "s" : ""} de vos documents
+            </summary>
+            <ul className="mt-2 space-y-2">
+              {sources.map((source, i) => (
+                <li key={i} className="text-xs text-muted-foreground">
+                  <span className="font-medium text-foreground">Extrait {i + 1} — </span>
+                  {source.content}
+                </li>
+              ))}
+            </ul>
+          </details>
+        )}
+      </div>
+    </div>
+  );
+}
