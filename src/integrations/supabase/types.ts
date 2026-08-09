@@ -253,6 +253,121 @@ export type Database = {
         }
         Relationships: []
       }
+      quiz_answers: {
+        Row: {
+          chapter: string | null
+          choices: Json | null
+          clause: string | null
+          created_at: string
+          expected: string | null
+          explanation: string | null
+          feedback: string | null
+          id: string
+          is_correct: boolean
+          position: number
+          question: string
+          score: number
+          session_id: string
+          user_answer: string | null
+          user_id: string
+        }
+        Insert: {
+          chapter?: string | null
+          choices?: Json | null
+          clause?: string | null
+          created_at?: string
+          expected?: string | null
+          explanation?: string | null
+          feedback?: string | null
+          id?: string
+          is_correct?: boolean
+          position?: number
+          question: string
+          score?: number
+          session_id: string
+          user_answer?: string | null
+          user_id: string
+        }
+        Update: {
+          chapter?: string | null
+          choices?: Json | null
+          clause?: string | null
+          created_at?: string
+          expected?: string | null
+          explanation?: string | null
+          feedback?: string | null
+          id?: string
+          is_correct?: boolean
+          position?: number
+          question?: string
+          score?: number
+          session_id?: string
+          user_answer?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quiz_answers_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "quiz_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quiz_sessions: {
+        Row: {
+          certification_id: string | null
+          correct: number
+          created_at: string
+          difficulty: string
+          id: string
+          mode: string
+          scope: string
+          score: number
+          source_count: number
+          topic: string | null
+          total: number
+          user_id: string
+        }
+        Insert: {
+          certification_id?: string | null
+          correct?: number
+          created_at?: string
+          difficulty?: string
+          id?: string
+          mode?: string
+          scope?: string
+          score?: number
+          source_count?: number
+          topic?: string | null
+          total?: number
+          user_id: string
+        }
+        Update: {
+          certification_id?: string | null
+          correct?: number
+          created_at?: string
+          difficulty?: string
+          id?: string
+          mode?: string
+          scope?: string
+          score?: number
+          source_count?: number
+          topic?: string | null
+          total?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quiz_sessions_certification_id_fkey"
+            columns: ["certification_id"]
+            isOneToOne: false
+            referencedRelation: "certifications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       study_plans: {
         Row: {
           certification_id: string
