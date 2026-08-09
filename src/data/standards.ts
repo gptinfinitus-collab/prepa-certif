@@ -32,7 +32,7 @@ export interface StandardSpec {
 interface HlsInput {
   systemName: string;
   subject: string;
-  /** Terme employé par la norme pour l'objet du risque (« risques SST », « risques de sécurité de l'information »…). */
+  /** Terme employé par la norme pour l'objet du risque (« risques pour la S&ST », « risques de sécurité de l'information »…). */
   riskTerm: string;
   /** Exemple d'indicateur de performance propre à la norme. */
   indicator: string;
