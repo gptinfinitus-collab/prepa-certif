@@ -10,7 +10,8 @@ import { Label } from "@/components/ui/label";
 import { useTheme } from "@/components/theme-provider";
 import { supabase } from "@/integrations/supabase/client";
 import { legalDocuments } from "@/lib/legal";
-import { LogOut, Moon, CalendarRange } from "lucide-react";
+import { useSetOnboarded } from "@/lib/learning";
+import { LogOut, Moon, CalendarRange, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/parametres")({
   head: () => ({
@@ -34,6 +35,7 @@ function Parametres() {
   const { theme, resolved, setTheme } = useTheme();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const setOnboarded = useSetOnboarded();
 
   async function signOut() {
     await queryClient.cancelQueries();
