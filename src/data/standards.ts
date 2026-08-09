@@ -195,6 +195,7 @@ export const standardSpecs: Record<string, StandardSpec> = {
       riskTerm: "risques qualité",
       indicator: "la satisfaction client et le taux de non-conformités produit",
       extra: {
+        6: ["6.3 Planification des modifications du SMQ"],
         8: [
           "8.2 Exigences relatives aux produits et services, revue des exigences client",
           "8.3 Conception et développement (si applicable)",
