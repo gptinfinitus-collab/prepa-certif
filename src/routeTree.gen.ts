@@ -25,6 +25,7 @@ import { Route as AuthenticatedProfilRouteImport } from './routes/_authenticated
 import { Route as AuthenticatedQuizRouteImport } from './routes/_authenticated/quiz'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AuthenticatedAssistantIndexRouteImport } from './routes/_authenticated/assistant.index'
+import { Route as AuthenticatedAssistantThreadIdRouteImport } from './routes/_authenticated/assistant.$threadId'
 import { Route as AuthenticatedSeanceModuleIdRouteImport } from './routes/_authenticated/seance.$moduleId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -109,6 +110,12 @@ const AuthenticatedAssistantIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedAssistantRoute,
   } as any)
+const AuthenticatedAssistantThreadIdRoute =
+  AuthenticatedAssistantThreadIdRouteImport.update({
+    id: '/$threadId',
+    path: '/$threadId',
+    getParentRoute: () => AuthenticatedAssistantRoute,
+  } as any)
 const AuthenticatedSeanceModuleIdRoute =
   AuthenticatedSeanceModuleIdRouteImport.update({
     id: '/seance/$moduleId',
@@ -131,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/profil': typeof AuthenticatedProfilRoute
   '/quiz': typeof AuthenticatedQuizRoute
   '/api/chat': typeof ApiChatRoute
+  '/assistant/$threadId': typeof AuthenticatedAssistantThreadIdRoute
   '/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
   '/assistant/': typeof AuthenticatedAssistantIndexRoute
 }
@@ -148,6 +156,7 @@ export interface FileRoutesByTo {
   '/profil': typeof AuthenticatedProfilRoute
   '/quiz': typeof AuthenticatedQuizRoute
   '/api/chat': typeof ApiChatRoute
+  '/assistant/$threadId': typeof AuthenticatedAssistantThreadIdRoute
   '/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
   '/assistant': typeof AuthenticatedAssistantIndexRoute
 }
@@ -168,6 +177,7 @@ export interface FileRoutesById {
   '/_authenticated/profil': typeof AuthenticatedProfilRoute
   '/_authenticated/quiz': typeof AuthenticatedQuizRoute
   '/api/chat': typeof ApiChatRoute
+  '/_authenticated/assistant/$threadId': typeof AuthenticatedAssistantThreadIdRoute
   '/_authenticated/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
   '/_authenticated/assistant/': typeof AuthenticatedAssistantIndexRoute
 }
@@ -188,6 +198,7 @@ export interface FileRouteTypes {
     | '/profil'
     | '/quiz'
     | '/api/chat'
+    | '/assistant/$threadId'
     | '/seance/$moduleId'
     | '/assistant/'
   fileRoutesByTo: FileRoutesByTo
@@ -205,6 +216,7 @@ export interface FileRouteTypes {
     | '/profil'
     | '/quiz'
     | '/api/chat'
+    | '/assistant/$threadId'
     | '/seance/$moduleId'
     | '/assistant'
   id:
@@ -224,6 +236,7 @@ export interface FileRouteTypes {
     | '/_authenticated/profil'
     | '/_authenticated/quiz'
     | '/api/chat'
+    | '/_authenticated/assistant/$threadId'
     | '/_authenticated/seance/$moduleId'
     | '/_authenticated/assistant/'
   fileRoutesById: FileRoutesById
@@ -352,6 +365,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAssistantIndexRouteImport
       parentRoute: typeof AuthenticatedAssistantRoute
     }
+    '/_authenticated/assistant/$threadId': {
+      id: '/_authenticated/assistant/$threadId'
+      path: '/$threadId'
+      fullPath: '/assistant/$threadId'
+      preLoaderRoute: typeof AuthenticatedAssistantThreadIdRouteImport
+      parentRoute: typeof AuthenticatedAssistantRoute
+    }
     '/_authenticated/seance/$moduleId': {
       id: '/_authenticated/seance/$moduleId'
       path: '/seance/$moduleId'
@@ -363,11 +383,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAssistantRouteChildren {
+  AuthenticatedAssistantThreadIdRoute: typeof AuthenticatedAssistantThreadIdRoute
   AuthenticatedAssistantIndexRoute: typeof AuthenticatedAssistantIndexRoute
 }
 
 const AuthenticatedAssistantRouteChildren: AuthenticatedAssistantRouteChildren =
   {
+    AuthenticatedAssistantThreadIdRoute: AuthenticatedAssistantThreadIdRoute,
     AuthenticatedAssistantIndexRoute: AuthenticatedAssistantIndexRoute,
   }
 
