@@ -5,6 +5,8 @@ import { AppShell } from "@/components/AppShell";
 import { LessonBlocks } from "@/components/course/LessonBlocks";
 import { LessonQuiz } from "@/components/course/LessonQuiz";
 import { CourseProgressBar, SectionNav } from "@/components/course/SectionNav";
+import { ReferenceBadge } from "@/components/course/ReferenceBadge";
+
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
@@ -190,11 +192,13 @@ function Seance() {
             <span>/</span>
             <span>{module.dayLabel}</span>
             <Badge variant="secondary">{typeLabels[module.type]}</Badge>
+            <ReferenceBadge reference={module} />
             <span className="flex items-center gap-1">
               <Clock className="size-3" aria-hidden />
               {lessonReadingMinutes(module)} min
             </span>
           </div>
+
 
           <h1 className="mt-3 text-2xl font-semibold leading-tight sm:text-3xl">{module.title}</h1>
 

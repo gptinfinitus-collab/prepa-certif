@@ -122,10 +122,11 @@ function clauseModule(
 function methodologyModules(startId: number, week: number, label: string): ProgramModule[] {
   const items = [
     {
-      title: "Principes et vocabulaire de l'audit (ISO 19011)",
+      title: "Principes et vocabulaire de l'audit (ISO 19011:2026)",
       objective: "Connaître les principes de l'audit et le vocabulaire attendu à l'examen.",
       content:
-        "## Principes de l'audit\n\n- Déontologie, présentation impartiale, conscience professionnelle\n- Indépendance, approche fondée sur les preuves, approche par les risques, confidentialité\n\n## Vocabulaire\n\nCritères d'audit, preuve d'audit, constat, conclusion, périmètre, programme d'audit.",
+        "## Principes de l'audit (ISO 19011:2026 — lignes directrices)\n\n- Intégrité, présentation impartiale, conscience professionnelle\n- Indépendance, approche fondée sur des preuves, approche par les risques, confidentialité\n\n> ISO 19011 donne des lignes directrices, pas des exigences certifiables. Les règles propres à la certification tierce partie (audit étape 1 / étape 2, classification majeure ou mineure des non-conformités, décision de certification) relèvent d'ISO/IEC 17021-1.\n\n## Vocabulaire\n\nCritères d'audit, preuve d'audit, constat, conclusion, périmètre, programme d'audit.",
+
       takeaway: "Un constat sans preuve n'est pas un constat.",
     },
     {

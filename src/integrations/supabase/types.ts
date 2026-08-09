@@ -187,6 +187,7 @@ export type Database = {
           created_at: string
           error: string | null
           id: string
+          is_partial: boolean
           kind: string
           name: string
           status: string
@@ -199,6 +200,7 @@ export type Database = {
           created_at?: string
           error?: string | null
           id?: string
+          is_partial?: boolean
           kind?: string
           name: string
           status?: string
@@ -211,6 +213,7 @@ export type Database = {
           created_at?: string
           error?: string | null
           id?: string
+          is_partial?: boolean
           kind?: string
           name?: string
           status?: string

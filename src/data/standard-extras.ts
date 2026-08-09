@@ -501,9 +501,12 @@ const overrides: Record<string, Overrides> = {
         ex("Santé", "Un établissement cote ses risques sans jamais désigner de propriétaire : personne ne peut approuver l'acceptation du risque résiduel."),
       ],
       examFocus: [
+        "Exception à la règle générale : ISO/IEC 27001 impose bien un processus d'appréciation du risque défini et documenté (§6.1.2), avec des critères d'acceptation et des critères de réalisation de l'appréciation. Le « la norme n'impose aucune méthode » valable pour ISO 9001 ou ISO 45001 ne s'applique pas ici.",
+        "La Déclaration d'applicabilité (SoA) est un document exigé : elle liste les mesures nécessaires, leur justification, leur statut de mise en œuvre et la justification des exclusions par rapport à l'Annexe A.",
         "Le propriétaire du risque doit approuver le plan de traitement et accepter les risques résiduels : c'est une exigence explicite.",
         "L'appréciation des risques doit être reproductible : les critères doivent produire des résultats cohérents et comparables.",
       ],
+
       commonMistakes: [
         "Faire porter tous les risques par le RSSI, qui n'a pas l'autorité pour accepter un risque métier.",
         "Changer de méthode d'appréciation chaque année, rendant les résultats incomparables.",
@@ -536,7 +539,11 @@ const overrides: Record<string, Overrides> = {
       examFocus: [
         "Une limite critique doit être mesurable et validée : une appréciation qualitative n'est pas recevable à un CCP.",
         "PRP, PRP opérationnel et CCP ont des logiques de maîtrise et de surveillance différentes : la confusion est très pénalisée à l'examen.",
+        "Les programmes prérequis (§8.2) et l'analyse des dangers (§8.5) supposent des étapes préalables exigées : constitution de l'équipe sécurité des denrées alimentaires, description des produits et des processus, diagramme des flux vérifié sur site.",
+        "La validation (§8.5.3) prouve avant mise en œuvre que la mesure de maîtrise est capable ; la vérification (§8.8) confirme après coup que le dispositif fonctionne ; la surveillance suit la maîtrise en temps réel.",
+        "La maîtrise des non-conformités de produit relève du §8.9 : corrections, actions correctives, traitement des produits potentiellement dangereux, retrait et rappel.",
       ],
+
       commonMistakes: [
         "Déclarer CCP toute étape sensible, ce qui rend le plan HACCP ingérable.",
         "Confondre la surveillance (à chaque lot, en continu) et la vérification (périodique, sur l'efficacité du dispositif).",
@@ -769,7 +776,7 @@ export const methodologyExtras: LessonExtras[] = [
         "Une déclaration est une piste, pas une preuve. Il faut la vérifier : demander à observer plusieurs postes concernés, consulter les enregistrements et croiser les sources. Si l'observation confirme l'écart, le constat s'appuie sur les faits observés et les enregistrements, pas sur la phrase de l'audité. Si rien ne le confirme, aucun constat ne peut être formulé, même si la déclaration semblait crédible.",
     },
     keyPoints: [
-      "Sept principes : déontologie, présentation impartiale, conscience professionnelle, confidentialité, indépendance, approche fondée sur les preuves, approche par les risques.",
+      "Sept principes d'audit (ISO 19011:2026) : intégrité, présentation impartiale, conscience professionnelle, confidentialité, indépendance, approche fondée sur des preuves, approche par les risques.",
       "Un constat sans preuve vérifiable n'est pas un constat.",
       "L'auditeur évalue, il ne conseille pas.",
       "Le vocabulaire exact est très fortement évalué à l'examen.",
