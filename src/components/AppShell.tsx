@@ -11,6 +11,8 @@ import {
   Home,
   Library,
   ListChecks,
+  Menu,
+  MoreHorizontal,
   PanelLeft,
   PanelLeftClose,
   Plus,
@@ -18,6 +20,7 @@ import {
   ShieldCheck,
   SpellCheck,
 } from "lucide-react";
+
 import { useSession } from "@/lib/queries";
 import { useMyCertifications, useSetActiveCertification } from "@/lib/certifications";
 import { Button } from "@/components/ui/button";
@@ -31,11 +34,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { UserMenu } from "@/components/UserMenu";
 import { BrandLogo } from "@/components/BrandLogo";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { certificationAccentStyle } from "@/lib/cert-theme";
 import { useIsSuperAdmin } from "@/lib/admin";
 
 const navItems = [
+
   { to: "/dashboard", label: "Programme", icon: Home },
   { to: "/planning", label: "Mon planning", icon: CalendarRange },
   { to: "/quiz", label: "Quiz", icon: Brain },
@@ -53,8 +58,49 @@ const mobileItems = [
   { to: "/planning", label: "Planning", icon: CalendarRange },
   { to: "/quiz", label: "Quiz", icon: Brain },
   { to: "/assistant", label: "Assistant", icon: Bot },
-  { to: "/bibliotheque", label: "Docs", icon: Library },
 ];
+
+const linkClass = (active: boolean, collapsed: boolean) =>
+  cn(
+    "flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground",
+    collapsed && "justify-center px-0",
+    active &&
+      "bg-sidebar-primary/12 font-medium text-sidebar-primary hover:bg-sidebar-primary/16 hover:text-sidebar-primary",
+  );
+
+/** Liste de navigation partagée entre la barre latérale et le panneau mobile. */
+function NavLinks({
+  isActive,
+  collapsed = false,
+  onNavigate,
+}: {
+  isActive: (to: string) => boolean;
+  collapsed?: boolean;
+  onNavigate?: () => void;
+}) {
+  const isSuperAdmin = useIsSuperAdmin();
+  const items = isSuperAdmin
+    ? [...navItems, { to: "/admin", label: "Administration", icon: ShieldCheck }]
+    : navItems;
+
+  return (
+    <>
+      {items.map((item) => (
+        <Link
+          key={item.to}
+          to={item.to}
+          title={item.label}
+          onClick={onNavigate}
+          className={linkClass(isActive(item.to), collapsed)}
+        >
+          <item.icon className="size-4 shrink-0" aria-hidden />
+          {!collapsed && <span className="truncate">{item.label}</span>}
+        </Link>
+      ))}
+    </>
+  );
+}
+
 
 /** Sélecteur de certification active. */
 function CertificationSwitcher({ compact = false }: { compact?: boolean }) {
@@ -142,11 +188,14 @@ function useCertificationGuard() {
 
 export function AppShell({ children, title }: { children: ReactNode; title?: string }) {
   const [collapsed, setCollapsed] = useState(false);
-  const isSuperAdmin = useIsSuperAdmin();
+  const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
-    if (typeof window !== "undefined" && window.innerWidth < 1024) setCollapsed(true);
+    if (typeof window !== "undefined" && window.innerWidth < 1280) setCollapsed(true);
   }, []);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
   const isActive = (to: string) => pathname === to || pathname.startsWith(`${to}/`);
   const activeMobile = mobileItems.some((i) => isActive(i.to));
   const { data: mine = [] } = useMyCertifications();
@@ -155,14 +204,14 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
 
   return (
     <div
-      className="cert-tint min-h-screen bg-background md:flex"
+      className="cert-tint min-h-screen bg-background lg:flex"
       style={certificationAccentStyle(activeCert?.certification.code)}
     >
       {/* Desktop sidebar */}
       <aside
         className={cn(
-          "sticky top-0 hidden h-screen shrink-0 flex-col border-r border-sidebar-border bg-sidebar transition-[width] duration-200 md:flex",
-          collapsed ? "w-[4.5rem]" : "w-56 lg:w-64",
+          "sticky top-0 hidden h-screen shrink-0 flex-col border-r border-sidebar-border bg-sidebar transition-[width] duration-200 lg:flex",
+          collapsed ? "w-[4.5rem]" : "w-64",
         )}
       >
         <div
@@ -190,37 +239,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
 
 
         <nav className="flex-1 space-y-1 overflow-y-auto px-2 py-2">
-          {navItems.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              title={item.label}
-              className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground",
-                collapsed && "justify-center px-0",
-                isActive(item.to) &&
-                  "bg-sidebar-primary/12 font-medium text-sidebar-primary hover:bg-sidebar-primary/16 hover:text-sidebar-primary",
-              )}
-            >
-              <item.icon className="size-4 shrink-0" aria-hidden />
-              {!collapsed && <span className="truncate">{item.label}</span>}
-            </Link>
-          ))}
-          {isSuperAdmin && (
-            <Link
-              to="/admin"
-              title="Administration"
-              className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground",
-                collapsed && "justify-center px-0",
-                isActive("/admin") &&
-                  "bg-sidebar-primary/12 font-medium text-sidebar-primary hover:bg-sidebar-primary/16 hover:text-sidebar-primary",
-              )}
-            >
-              <ShieldCheck className="size-4 shrink-0" aria-hidden />
-              {!collapsed && <span className="truncate">Administration</span>}
-            </Link>
-          )}
+          <NavLinks isActive={isActive} collapsed={collapsed} />
         </nav>
 
 
@@ -229,74 +248,119 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
         </div>
       </aside>
 
-      <div className="flex min-w-0 flex-1 flex-col">
-        {/* Mobile header */}
-        <header className="sticky top-0 z-30 border-b border-border bg-card/90 px-4 py-3 backdrop-blur md:hidden">
-          <div className="flex items-center gap-3">
-            <BrandLogo className="size-6 shrink-0 text-primary" />
+      {/* Panneau de navigation complet — mobile et tablette */}
+      <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+        <SheetContent side="left" className="flex w-[17rem] flex-col gap-0 bg-sidebar p-0">
+          <SheetTitle className="sr-only">Navigation</SheetTitle>
+          <div className="flex items-center gap-3 px-4 py-4">
+            <BrandLogo className="size-9 shrink-0 text-sidebar-primary" />
             <span className="min-w-0 flex-1 truncate text-base font-semibold">PREPA CERTIF</span>
-            <UserMenu />
           </div>
-          <div className="mt-2">
-            <CertificationSwitcher compact />
+          <div className="px-2 pb-2">
+            <CertificationSwitcher />
           </div>
-        </header>
+          <nav className="flex-1 space-y-1 overflow-y-auto px-2 py-2">
+            <NavLinks isActive={isActive} onNavigate={() => setMenuOpen(false)} />
+          </nav>
+          <div className="border-t border-sidebar-border p-2">
+            <UserMenu variant="card" />
+          </div>
+        </SheetContent>
+
+        <div className="flex min-w-0 flex-1 flex-col">
+          {/* Mobile header */}
+          <header className="sticky top-0 z-30 border-b border-border bg-card/90 px-4 py-3 backdrop-blur lg:hidden">
+            <div className="flex items-center gap-3">
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="size-9 shrink-0" aria-label="Ouvrir le menu">
+                  <Menu className="size-5" aria-hidden />
+                </Button>
+              </SheetTrigger>
+              <BrandLogo className="size-6 shrink-0 text-primary" />
+              <span className="min-w-0 flex-1 truncate text-base font-semibold">PREPA CERTIF</span>
+              <UserMenu />
+            </div>
+            <div className="mt-2">
+              <CertificationSwitcher compact />
+            </div>
+          </header>
 
 
-        {/* Desktop sidebar toggle */}
-        <div className="hidden px-3 pt-3 md:block">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="size-9 text-muted-foreground"
-            onClick={() => setCollapsed((c) => !c)}
-            aria-label={collapsed ? "Déplier le menu" : "Replier le menu"}
+          {/* Desktop sidebar toggle */}
+          <div className="hidden px-3 pt-3 lg:block">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="size-9 text-muted-foreground"
+              onClick={() => setCollapsed((c) => !c)}
+              aria-label={collapsed ? "Déplier le menu" : "Replier le menu"}
+            >
+              {collapsed ? (
+                <PanelLeft className="size-5" aria-hidden />
+              ) : (
+                <PanelLeftClose className="size-5" aria-hidden />
+              )}
+            </Button>
+          </div>
+
+          <main className="min-w-0 flex-1 pb-[calc(5.5rem+env(safe-area-inset-bottom))] lg:pb-0">
+            <div key={pathname} className="page-enter">
+              {children}
+            </div>
+          </main>
+
+
+          {/* Mobile bottom nav */}
+          <nav
+            className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-border bg-card/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden"
+            aria-label="Navigation principale"
           >
-            {collapsed ? (
-              <PanelLeft className="size-5" aria-hidden />
-            ) : (
-              <PanelLeftClose className="size-5" aria-hidden />
-            )}
-          </Button>
-        </div>
-
-        <main className="min-w-0 flex-1 pb-[calc(5.5rem+env(safe-area-inset-bottom))] md:pb-0">
-          <div key={pathname} className="page-enter">
-            {children}
-          </div>
-        </main>
-
-
-        {/* Mobile bottom nav */}
-        <nav
-          className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-border bg-card/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
-          aria-label="Navigation principale"
-        >
-          {mobileItems.map((item) => {
-            const active = activeMobile ? isActive(item.to) : false;
-            return (
-              <Link
-                key={item.to}
-                to={item.to}
+            {mobileItems.map((item) => {
+              const active = activeMobile ? isActive(item.to) : false;
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className={cn(
+                    "flex flex-col items-center gap-1 py-2 text-[0.68rem] transition-colors",
+                    active ? "text-primary" : "text-muted-foreground",
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "grid size-8 place-items-center rounded-full transition-colors",
+                      active && "bg-primary/12",
+                    )}
+                  >
+                    <item.icon className="size-5" aria-hidden />
+                  </span>
+                  {item.label}
+                </Link>
+              );
+            })}
+            <SheetTrigger asChild>
+              <button
+                type="button"
                 className={cn(
                   "flex flex-col items-center gap-1 py-2 text-[0.68rem] transition-colors",
-                  active ? "text-primary" : "text-muted-foreground",
+                  activeMobile ? "text-muted-foreground" : "text-primary",
                 )}
               >
                 <span
                   className={cn(
                     "grid size-8 place-items-center rounded-full transition-colors",
-                    active && "bg-primary/12",
+                    !activeMobile && "bg-primary/12",
                   )}
                 >
-                  <item.icon className="size-5" aria-hidden />
+                  <MoreHorizontal className="size-5" aria-hidden />
                 </span>
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
-      </div>
+                Plus
+              </button>
+            </SheetTrigger>
+          </nav>
+        </div>
+      </Sheet>
+
     </div>
   );
 }
