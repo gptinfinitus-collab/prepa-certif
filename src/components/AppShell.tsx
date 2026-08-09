@@ -67,8 +67,8 @@ function CertificationSwitcher({ compact = false }: { compact?: boolean }) {
           type="button"
           style={certificationAccentStyle(active?.certification.code)}
           className={cn(
-            "cert-tint flex w-full items-center gap-2 rounded-lg border border-sidebar-border border-l-4 border-l-cert bg-sidebar-accent/40 px-3 py-2 text-left transition-colors hover:bg-sidebar-accent",
-            compact && "border-border border-l-4 border-l-cert bg-transparent px-2 py-1.5",
+            "cert-tint flex w-full items-center gap-2 rounded-lg border border-sidebar-border bg-sidebar-accent/40 px-3 py-2 text-left transition-colors hover:bg-sidebar-accent",
+            compact && "border-border bg-transparent px-2 py-1.5",
           )}
           aria-label="Changer de certification"
         >
