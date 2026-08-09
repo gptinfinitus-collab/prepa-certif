@@ -1,11 +1,13 @@
-# Sidebar compacte, profil en bas, typographie Inter
+# Sidebar compacte, profil en bas, typographie Inter (vue desktop)
+
+Portée : ces changements concernent uniquement l'affichage desktop. La vue mobile (en-tête compact + barre de navigation basse) reste inchangée, sauf la police qui devient Inter partout.
 
 ## Ce qui change
 
-### 1. Suppression du header
-- Les barres d'en-tête desktop et mobile (titre + avatar) disparaissent.
-- Le contenu de chaque page commence directement sous la sidebar / en haut de l'écran.
-- Sur mobile, le sélecteur de certification et l'avatar profil restent accessibles : le sélecteur passe en haut du contenu, le profil dans la barre de navigation basse.
+### 1. Suppression du header desktop
+- La barre d'en-tête desktop (titre de page + avatar) disparaît.
+- Le contenu de chaque page commence directement en haut de la zone principale, à droite de la sidebar.
+
 
 ### 2. Profil utilisateur en bas de la sidebar
 - Carte profil en bas de la sidebar, dans un **cadre carré** au même style que le bloc certification du haut (même bordure, même arrondi, même fond).
