@@ -106,7 +106,6 @@ function hlsClauses(input: HlsInput): ClauseSpec[] {
       summary: `Surveiller, mesurer, analyser et évaluer la performance (par exemple ${indicator}), réaliser les audits internes et la revue de direction.`,
       requirements: [
         "9.1 Surveillance, mesure, analyse et évaluation des performances",
-        "9.1 Évaluation de la conformité aux exigences légales",
         "9.2 Programme et réalisation des audits internes",
         "9.3 Revue de direction : éléments d'entrée et de sortie",
         ...(extra[9] ?? []),
