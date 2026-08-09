@@ -76,6 +76,15 @@ export function AssistantChat({ threadId }: { threadId: string }) {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages.length, streamed]);
 
+  // Champ auto-extensible : 1 ligne au repos, jusqu'à ~5 lignes puis scroll interne.
+  useEffect(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${Math.min(el.scrollHeight, 128)}px`;
+  }, [input]);
+
+
   async function send(question: string) {
     const text = question.trim();
     if (!text || busy) return;
