@@ -74,7 +74,7 @@ function hlsClauses(input: HlsInput): ClauseSpec[] {
       requirements: [
         `6.1 Actions à mettre en œuvre face aux ${riskTerm} et opportunités`,
         "6.2 Objectifs et planification des actions pour les atteindre",
-        "Maîtrise des modifications planifiées du système (numérotation propre à chaque norme)",
+        
         ...(extra[6] ?? []),
       ],
     },
