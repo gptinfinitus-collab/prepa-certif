@@ -6,14 +6,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 export const Route = createFileRoute("/_authenticated/profil")({
   head: () => ({
     meta: [
-      { title: "Mon profil — PREPA ISO" },
+      { title: "Mon profil — PREPA CERTIF" },
       {
         name: "description",
         content:
           "Modifiez votre photo, votre prénom et votre nom pour personnaliser votre espace de préparation aux certifications ISO.",
       },
-      { property: "og:title", content: "Mon profil — PREPA ISO" },
-      { property: "og:description", content: "Photo, prénom et nom de votre compte PREPA ISO." },
+      { property: "og:title", content: "Mon profil — PREPA CERTIF" },
+      { property: "og:description", content: "Photo, prénom et nom de votre compte PREPA CERTIF." },
       { property: "og:type", content: "profile" },
       { name: "twitter:card", content: "summary" },
     ],

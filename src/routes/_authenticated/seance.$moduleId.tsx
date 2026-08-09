@@ -14,13 +14,13 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Lightbulb } from "lucide-react";
 export const Route = createFileRoute("/_authenticated/seance/$moduleId")({
   head: () => ({
     meta: [
-      { title: "Séance de préparation — PREPA ISO" },
+      { title: "Séance de préparation — PREPA CERTIF" },
       {
         name: "description",
         content:
           "Séance de préparation : exigences du chapitre, points à retenir et auto-évaluation.",
       },
-      { property: "og:title", content: "Séance de préparation — PREPA ISO" },
+      { property: "og:title", content: "Séance de préparation — PREPA CERTIF" },
       {
         property: "og:description",
         content: "Exigences du chapitre, points clés et auto-évaluation.",

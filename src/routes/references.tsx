@@ -8,13 +8,13 @@ import { ExternalLink } from "lucide-react";
 export const Route = createFileRoute("/references")({
   head: () => ({
     meta: [
-      { title: "Références ISO — PREPA ISO" },
+      { title: "Références ISO — PREPA CERTIF" },
       {
         name: "description",
         content:
           "Normes de référence de votre certification et de l'audit : liens officiels ISO, rôle de chaque texte et résumés par chapitre.",
       },
-      { property: "og:title", content: "Références ISO — PREPA ISO" },
+      { property: "og:title", content: "Références ISO — PREPA CERTIF" },
       {
         property: "og:description",
         content: "Textes normatifs de référence et résumés par chapitre pour votre certification.",

@@ -6,11 +6,11 @@ type BrandLogoProps = {
 };
 
 /**
- * Marque PREPA ISO — inspirée des sceaux de certification ISO :
+ * Marque PREPA CERTIF — inspirée des sceaux de certification ISO :
  * anneau extérieur, disque plein, globe méridien et coche de conformité.
  * Le disque utilise `currentColor` pour s'adapter à la certification active.
  */
-export function BrandLogo({ className, title = "PREPA ISO" }: BrandLogoProps) {
+export function BrandLogo({ className, title = "PREPA CERTIF" }: BrandLogoProps) {
   return (
     <svg
       viewBox="0 0 64 64"

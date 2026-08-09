@@ -16,13 +16,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export const Route = createFileRoute("/_authenticated/quiz")({
   head: () => ({
     meta: [
-      { title: "Quiz IA et niveau de préparation — PREPA ISO" },
+      { title: "Quiz IA et niveau de préparation — PREPA CERTIF" },
       {
         name: "description",
         content:
           "Générez des QCM et questions ouvertes corrigés par l'IA à partir de votre norme et de vos documents, et suivez votre niveau de préparation chapitre par chapitre.",
       },
-      { property: "og:title", content: "Quiz IA et niveau de préparation — PREPA ISO" },
+      { property: "og:title", content: "Quiz IA et niveau de préparation — PREPA CERTIF" },
       {
         property: "og:description",
         content:

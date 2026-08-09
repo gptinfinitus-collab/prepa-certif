@@ -32,13 +32,13 @@ import { Check, CircleDashed, Plus, Search, Sparkles } from "lucide-react";
 export const Route = createFileRoute("/_authenticated/certifications")({
   head: () => ({
     meta: [
-      { title: "Mes certifications — PREPA ISO" },
+      { title: "Mes certifications — PREPA CERTIF" },
       {
         name: "description",
         content:
           "Choisissez la certification que vous préparez : ISO 9001, 14001, 45001, 27001, 22000, 50001, 13485, 22301, 37001 ou votre propre référentiel.",
       },
-      { property: "og:title", content: "Mes certifications — PREPA ISO" },
+      { property: "og:title", content: "Mes certifications — PREPA CERTIF" },
       {
         property: "og:description",
         content: "Sélectionnez et suivez plusieurs cursus de préparation à la certification ISO.",

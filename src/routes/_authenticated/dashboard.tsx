@@ -16,13 +16,13 @@ import { CheckCircle2, Circle, CalendarClock, PenLine } from "lucide-react";
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
-      { title: "Mon programme — PREPA ISO" },
+      { title: "Mon programme — PREPA CERTIF" },
       {
         name: "description",
         content:
           "Suivez vos séances de préparation à la certification ISO que vous avez choisie, votre avancement et votre rythme par rapport au planning.",
       },
-      { property: "og:title", content: "Mon programme — PREPA ISO" },
+      { property: "og:title", content: "Mon programme — PREPA CERTIF" },
       {
         property: "og:description",
         content: "Progression et séances de votre cursus de préparation ISO.",

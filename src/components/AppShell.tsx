@@ -171,7 +171,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
           <BrandLogo className={cn("shrink-0 text-sidebar-primary", collapsed ? "size-9" : "size-10")} />
           {!collapsed && (
             <Link to="/" className="min-w-0 flex-1">
-              <span className="block truncate text-base font-semibold leading-tight">PREPA ISO</span>
+              <span className="block truncate text-base font-semibold leading-tight">PREPA CERTIF</span>
               <span className="block truncate whitespace-nowrap text-xs text-muted-foreground">
                 Préparation à la certification
               </span>
@@ -215,7 +215,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
         <header className="sticky top-0 z-30 border-b border-border bg-card/90 px-4 py-3 backdrop-blur md:hidden">
           <div className="flex items-center gap-3">
             <BrandLogo className="size-6 shrink-0 text-primary" />
-            <span className="min-w-0 flex-1 truncate text-base font-semibold">PREPA ISO</span>
+            <span className="min-w-0 flex-1 truncate text-base font-semibold">PREPA CERTIF</span>
             <UserMenu />
           </div>
           <div className="mt-2">

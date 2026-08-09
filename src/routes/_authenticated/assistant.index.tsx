@@ -8,13 +8,13 @@ import { useCreateThread, useThreads } from "@/lib/threads";
 export const Route = createFileRoute("/_authenticated/assistant/")({
   head: () => ({
     meta: [
-      { title: "Assistant IA — PREPA ISO" },
+      { title: "Assistant IA — PREPA CERTIF" },
       {
         name: "description",
         content:
           "Posez vos questions sur les normes ISO et l'audit : l'assistant répond en streaming en s'appuyant sur vos documents indexés.",
       },
-      { property: "og:title", content: "Assistant IA — PREPA ISO" },
+      { property: "og:title", content: "Assistant IA — PREPA CERTIF" },
       {
         property: "og:description",
         content: "Un tuteur IA qui répond à partir de votre bibliothèque de cours ISO.",

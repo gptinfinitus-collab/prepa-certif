@@ -80,14 +80,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "PREPA ISO — Préparation aux certifications d'auditeur ISO" },
+      { title: "PREPA CERTIF — Préparation aux certifications d'auditeur ISO" },
       {
         name: "description",
         content:
           "Préparation aux certifications d'auditeur ISO (9001, 14001, 45001, 27001…) : planning personnalisable, cours, quiz et suivi de progression.",
       },
-      { name: "author", content: "PREPA ISO" },
-      { property: "og:title", content: "PREPA ISO" },
+      { name: "author", content: "PREPA CERTIF" },
+      { property: "og:title", content: "PREPA CERTIF" },
       {
         property: "og:description",
         content: "Préparation structurée aux certifications d'auditeur des normes ISO.",

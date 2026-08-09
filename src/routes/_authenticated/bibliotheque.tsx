@@ -24,13 +24,13 @@ import { Download, FileText, Loader2, Sparkles, Trash2 } from "lucide-react";
 export const Route = createFileRoute("/_authenticated/bibliotheque")({
   head: () => ({
     meta: [
-      { title: "Mes documents — PREPA ISO" },
+      { title: "Mes documents — PREPA CERTIF" },
       {
         name: "description",
         content:
           "Déposez vos supports de cours et vos exemplaires de normes : ils sont indexés pour alimenter l'assistant IA et les quiz personnalisés.",
       },
-      { property: "og:title", content: "Mes documents — PREPA ISO" },
+      { property: "og:title", content: "Mes documents — PREPA CERTIF" },
       {
         property: "og:description",
         content: "Bibliothèque privée indexée pour l'assistant IA de préparation ISO.",

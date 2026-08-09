@@ -7,13 +7,13 @@ import { useCurriculum } from "@/lib/curriculum";
 export const Route = createFileRoute("/glossaire")({
   head: () => ({
     meta: [
-      { title: "Glossaire de l'audit ISO — PREPA ISO" },
+      { title: "Glossaire de l'audit ISO — PREPA CERTIF" },
       {
         name: "description",
         content:
           "Définitions des termes clés des systèmes de management et de l'audit : constat, non-conformité, preuve d'audit, périmètre, partie intéressée et plus.",
       },
-      { property: "og:title", content: "Glossaire de l'audit ISO — PREPA ISO" },
+      { property: "og:title", content: "Glossaire de l'audit ISO — PREPA CERTIF" },
       {
         property: "og:description",
         content: "Termes clés de l'audit et des systèmes de management expliqués simplement.",

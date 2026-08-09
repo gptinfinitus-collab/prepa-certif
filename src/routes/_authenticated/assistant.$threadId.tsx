@@ -5,13 +5,13 @@ import { AssistantChat } from "@/components/AssistantChat";
 export const Route = createFileRoute("/_authenticated/assistant/$threadId")({
   head: () => ({
     meta: [
-      { title: "Conversation — Assistant IA PREPA ISO" },
+      { title: "Conversation — Assistant IA PREPA CERTIF" },
       {
         name: "description",
         content:
           "Fil de conversation avec l'assistant IA : réponses en streaming appuyées sur la norme active et vos documents indexés.",
       },
-      { property: "og:title", content: "Conversation — Assistant IA PREPA ISO" },
+      { property: "og:title", content: "Conversation — Assistant IA PREPA CERTIF" },
       {
         property: "og:description",
         content: "Vos échanges avec le tuteur IA, conservés par certification.",
