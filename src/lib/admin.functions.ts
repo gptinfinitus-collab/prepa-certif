@@ -15,6 +15,7 @@ export interface AdminUserRow {
   activeTrack: string | null;
   modulesCompleted: number;
   quizSessions: number;
+  documentsCount: number;
 }
 
 /** Vérifie que l'appelant possède le rôle super administrateur. */
@@ -64,12 +65,13 @@ export const listAdminUsers = createServerFn({ method: "GET" })
       if (data.users.length < 200) break;
     }
 
-    const [profiles, roles, certs, progress, sessions] = await Promise.all([
+    const [profiles, roles, certs, progress, sessions, documents] = await Promise.all([
       supabaseAdmin.from("profiles").select("id, display_name, first_name, last_name, active_track, disabled_at"),
       supabaseAdmin.from("user_roles").select("user_id, role"),
       supabaseAdmin.from("user_certifications").select("user_id, certification_id, is_active"),
       supabaseAdmin.from("module_progress").select("user_id, completed"),
       supabaseAdmin.from("quiz_sessions").select("user_id"),
+      supabaseAdmin.from("library_documents").select("user_id"),
     ]);
 
     const profileById = new Map((profiles.data ?? []).map((p) => [p.id, p]));
@@ -86,6 +88,10 @@ export const listAdminUsers = createServerFn({ method: "GET" })
     const quizzes = new Map<string, number>();
     for (const row of sessions.data ?? []) {
       quizzes.set(row.user_id, (quizzes.get(row.user_id) ?? 0) + 1);
+    }
+    const docs = new Map<string, number>();
+    for (const row of documents.data ?? []) {
+      docs.set(row.user_id, (docs.get(row.user_id) ?? 0) + 1);
     }
 
     return authUsers
@@ -108,6 +114,7 @@ export const listAdminUsers = createServerFn({ method: "GET" })
           activeTrack: profile?.active_track ?? null,
           modulesCompleted: completed.get(u.id) ?? 0,
           quizSessions: quizzes.get(u.id) ?? 0,
+          documentsCount: docs.get(u.id) ?? 0,
         };
       })
       .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
