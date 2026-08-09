@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AnnexesRouteImport } from './routes/annexes'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as GlossaireRouteImport } from './routes/glossaire'
 import { Route as ReferencesRouteImport } from './routes/references'
@@ -26,6 +27,11 @@ const IndexRoute = IndexRouteImport.update({
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnnexesRoute = AnnexesRouteImport.update({
+  id: '/annexes',
+  path: '/annexes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -68,6 +74,7 @@ const AuthenticatedSeanceModuleIdRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/annexes': typeof AnnexesRoute
   '/auth': typeof AuthRoute
   '/glossaire': typeof GlossaireRoute
   '/references': typeof ReferencesRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/annexes': typeof AnnexesRoute
   '/auth': typeof AuthRoute
   '/glossaire': typeof GlossaireRoute
   '/references': typeof ReferencesRoute
@@ -90,6 +98,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/annexes': typeof AnnexesRoute
   '/auth': typeof AuthRoute
   '/glossaire': typeof GlossaireRoute
   '/references': typeof ReferencesRoute
@@ -102,6 +111,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/annexes'
     | '/auth'
     | '/glossaire'
     | '/references'
@@ -112,6 +122,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/annexes'
     | '/auth'
     | '/glossaire'
     | '/references'
@@ -123,6 +134,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/annexes'
     | '/auth'
     | '/glossaire'
     | '/references'
@@ -135,6 +147,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AnnexesRoute: typeof AnnexesRoute
   AuthRoute: typeof AuthRoute
   GlossaireRoute: typeof GlossaireRoute
   ReferencesRoute: typeof ReferencesRoute
@@ -154,6 +167,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/annexes': {
+      id: '/annexes'
+      path: '/annexes'
+      fullPath: '/annexes'
+      preLoaderRoute: typeof AnnexesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -228,6 +248,7 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AnnexesRoute: AnnexesRoute,
   AuthRoute: AuthRoute,
   GlossaireRoute: GlossaireRoute,
   ReferencesRoute: ReferencesRoute,
