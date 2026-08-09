@@ -56,7 +56,12 @@ export const ingestDocument = createServerFn({ method: "POST" })
         .update({ status: "ready", chunk_count: inserted, error: null })
         .eq("id", doc.id);
 
-      return { chunkCount: inserted };
+      return {
+        chunkCount: inserted,
+        removedLines: extracted.removedLines,
+        pageCount: extracted.pageCount,
+      };
+
     } catch (cause) {
       const message = cause instanceof Error ? cause.message : "Analyse impossible.";
       await supabase
