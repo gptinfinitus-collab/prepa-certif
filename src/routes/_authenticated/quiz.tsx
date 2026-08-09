@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { RotateCcw } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { QuizTrainer } from "@/components/QuizTrainer";
+import { QuizHistory } from "@/components/QuizHistory";
 import { PreparationAnalysis } from "@/components/PreparationAnalysis";
 import { useCurriculum } from "@/lib/curriculum";
 import { useActiveCertification } from "@/lib/certifications";
@@ -98,11 +99,11 @@ function QuizPage() {
 
           <TabsContent value="training" className="mt-6">
             <QuizTrainer
-              key={focus ?? "default"}
+              key={focusChapter ?? "default"}
               certificationName={certificationName}
               certificationId={certificationId}
               chapters={chapters}
-              initialChapter={focus}
+              initialChapter={focusChapter}
             />
           </TabsContent>
 
@@ -110,8 +111,8 @@ function QuizPage() {
             <QuizHistory
               certificationId={certificationId}
               chapters={chapters}
-              onRetrain={(topic) => {
-                setFocus(topic);
+              onRetrain={(topic: string) => {
+                setFocusChapter(topic);
                 setTab("training");
               }}
             />
