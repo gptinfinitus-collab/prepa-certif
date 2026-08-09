@@ -186,7 +186,9 @@ Politique de référentiels appliquée : ISO 45001:2018 + Amd 1:2024, **ISO 1901
 
 **C14. Chapitre 5 d'ISO 13485 (B-8).** À traiter avec C3.
 
-### Priorité 3 — Structure éditoriale
+### Priorité 3 — Structure éditoriale — ✅ CORRIGÉ
+
+C15 (libellés « Séance N »), C16 (métadonnées commerciales retirées, titre neutre) et C17 (détection d'extrait partiel + nettoyage des filigranes à l'indexation) sont livrés.
 
 **C15. `dayLabel` (D-1).** Remplacer les 21 dates calendaires par « Séance N », comme dans les autres cursus.
 
@@ -194,7 +196,9 @@ Politique de référentiels appliquée : ISO 45001:2018 + Amd 1:2024, **ISO 1901
 
 **C17. Base documentaire (D-6).** Signaler dans l'interface qu'un document indexé est un extrait partiel (comparaison nombre de pages / fragments), et compléter le filtre de nettoyage à l'indexation pour retirer les filigranes de type `iTeh STANDARD PREVIEW`, `standards.iteh.ai`, `© ISO 2018 – Tous droits réservés`, qui polluent aujourd'hui la quasi-totalité des fragments et dégradent la pertinence de la recherche vectorielle.
 
-### Priorité 4 — Vocabulaire et finitions
+### Priorité 4 — Vocabulaire et finitions — ✅ CORRIGÉ
+
+C18 : « SST » → « S&ST » et « blessure » → « traumatisme et pathologie » sur l'ensemble des données de cours ; les seules mentions restantes citent explicitement le vocabulaire obsolète d'OHSAS 18001 pour l'expliquer. C19 : glossaire complété (36 entrées, dont Risque / Risque pour la S&ST, Événement indésirable, Hiérarchie des mesures de prévention). C20 : examen blanc complété et questions de révision marquées. Non-régression : `tests/unit/terminology.test.ts`.
 
 **C18.** Harmoniser « SST » → « S&ST » (38 occurrences), « blessure » → « traumatisme et pathologie » (3), « procédure » → « information documentée » quand il s'agit d'une exigence normative (17 occurrences à trier).
 **C19.** Compléter le glossaire ISO 45001 avec les 8 termes normatifs manquants (A-10).
