@@ -176,6 +176,9 @@ function skeletonCurriculum(
     keyTakeaway: "Réviser, c'est vérifier ce que l'on sait restituer, pas relire.",
     quiz: [],
   };
+  const leadModules = leadAuditorModules(label, 4);
+
+
 
   return {
     complete: false,
