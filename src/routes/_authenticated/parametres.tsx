@@ -157,7 +157,6 @@ function Parametres() {
           </Card>
 
           <Card>
-
             <CardHeader>
               <CardTitle className="font-sans text-lg">Compte</CardTitle>
               <CardDescription>Déconnexion de cet appareil.</CardDescription>
