@@ -3,6 +3,8 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/AppShell";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+import { certificationAccentStyle } from "@/lib/cert-theme";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
