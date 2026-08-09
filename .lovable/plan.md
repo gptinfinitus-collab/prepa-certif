@@ -43,7 +43,9 @@ Les textes intégraux d'ISO 45001:2018 et ISO 19011:2018 sont sous droit d'auteu
 
 - Activation de Lovable Cloud, puis connexion Google et Apple gérées par Lovable (e-mail/mot de passe conservé comme option).
 - Table `profiles` (nom affiché, avatar) créée automatiquement à l'inscription.
-- Table `day_progress` : utilisateur, jour, terminé, score auto-évalué, date — accessible uniquement à son propriétaire.
+- Table `study_plans` : utilisateur, date de début, date d'examen, jours travaillés, séances par jour — un planning par utilisateur.
+- Table `module_progress` : utilisateur, module, terminé, score auto-évalué, date — accessible uniquement à son propriétaire.
+- Stockage privé (bucket `iso-library`) pour les PDF téléversés par l'utilisateur, accès limité à son propre dossier.
 - Le contenu pédagogique reste un fichier statique dans l'application (pas de base de données) : plus rapide, disponible hors connexion partielle.
 
 ## Design
@@ -52,8 +54,9 @@ Direction sobre et professionnelle « qualité / audit » : fond clair sablé, a
 
 ## Détails techniques
 
-- Contenu importé dans `src/data/program.ts` (typé) depuis le JSON fourni.
-- Routes TanStack : `/`, `/auth`, `/glossaire`, `/annexes` publiques ; pages protégées sous `_authenticated/` (dashboard, jour).
+- Contenu importé dans `src/data/program.ts` (typé) depuis le JSON fourni ; `dayLabel` conservé en libellé d'origine mais la date affichée est calculée depuis le planning.
+- Calcul du calendrier dans un module pur `src/lib/schedule.ts` (répartition des modules sur les jours ouvrés choisis, regroupement ou jours de révision selon la durée).
+- Routes TanStack : `/`, `/auth`, `/references`, `/glossaire`, `/annexes` publiques ; pages protégées sous `_authenticated/` (planning, dashboard, séance, bibliothèque personnelle).
 - Rendu markdown via `react-markdown` + `remark-gfm`.
-- Progression lue/écrite via le client Supabase du navigateur avec RLS `auth.uid()`, mise en cache par TanStack Query.
+- Planning et progression lus/écrits via le client Supabase du navigateur avec RLS `auth.uid()`, mise en cache par TanStack Query.
 - Métadonnées SEO propres par page (titre, description, og/twitter).
