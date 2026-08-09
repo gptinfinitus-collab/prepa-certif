@@ -3,6 +3,8 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/AppShell";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+import { certificationAccentStyle } from "@/lib/cert-theme";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -216,13 +218,17 @@ function CertificationsPage() {
               return (
                 <Card
                   key={cert.id}
-                  className={active ? "border-primary ring-1 ring-primary/30" : undefined}
+                  style={certificationAccentStyle(cert.code)}
+                  className={cn(
+                    "cert-tint border-t-4 border-t-cert",
+                    active ? "ring-1 ring-cert/40" : undefined,
+                  )}
                 >
                   <CardHeader>
                     <div className="flex items-start justify-between gap-2">
                       <CardTitle className="font-serif text-lg">{cert.name}</CardTitle>
                       {active && (
-                        <Badge className="shrink-0">
+                        <Badge className="shrink-0 bg-cert text-cert-foreground">
                           <Check className="size-3" aria-hidden />
                           Active
                         </Badge>
@@ -230,6 +236,7 @@ function CertificationsPage() {
                     </div>
                     <CardDescription>{cert.family}</CardDescription>
                   </CardHeader>
+
                   <CardContent className="space-y-3">
                     <p className="text-sm text-muted-foreground">{cert.description}</p>
                     <p className="flex items-center gap-2 text-xs text-muted-foreground">

@@ -99,7 +99,11 @@ function Dashboard() {
           </p>
         </section>
 
-        <h1 className="hidden font-serif text-3xl font-semibold md:block">{certificationName}</h1>
+        <h1 className="hidden items-center gap-3 font-serif text-3xl font-semibold md:flex">
+          <span className="h-7 w-1.5 shrink-0 rounded-full bg-cert" aria-hidden />
+          {certificationName}
+        </h1>
+
         <p className="mt-2 hidden text-sm text-muted-foreground md:block">
           {schedule?.endDate
             ? `Fin estimée le ${formatShortDate(schedule.endDate)} · ${schedule.effectiveModulesPerDay} séance(s) par jour travaillé`

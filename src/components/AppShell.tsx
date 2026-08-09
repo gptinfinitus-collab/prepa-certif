@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { initialsOf } from "@/components/ProfileEditor";
 import { cn } from "@/lib/utils";
+import { certificationAccentStyle } from "@/lib/cert-theme";
 
 const navItems = [
   { to: "/dashboard", label: "Programme", icon: Home },
@@ -65,13 +66,14 @@ function CertificationSwitcher({ compact = false }: { compact?: boolean }) {
       <DropdownMenuTrigger asChild>
         <button
           type="button"
+          style={certificationAccentStyle(active?.certification.code)}
           className={cn(
-            "flex w-full items-center gap-2 rounded-lg border border-sidebar-border bg-sidebar-accent/40 px-3 py-2 text-left transition-colors hover:bg-sidebar-accent",
-            compact && "border-border bg-transparent px-2 py-1.5",
+            "cert-tint flex w-full items-center gap-2 rounded-lg border border-sidebar-border border-l-4 border-l-cert bg-sidebar-accent/40 px-3 py-2 text-left transition-colors hover:bg-sidebar-accent",
+            compact && "border-border border-l-4 border-l-cert bg-transparent px-2 py-1.5",
           )}
           aria-label="Changer de certification"
         >
-          <GraduationCap className="size-4 shrink-0 text-primary" aria-hidden />
+          <GraduationCap className="size-4 shrink-0 text-cert" aria-hidden />
           <span className="min-w-0 flex-1">
             <span className="block truncate text-sm font-medium">
               {active?.certification.name ?? "Choisir une certification"}
@@ -92,6 +94,11 @@ function CertificationSwitcher({ compact = false }: { compact?: boolean }) {
             key={item.id}
             onSelect={() => void setActive.mutateAsync(item.certification_id)}
           >
+            <span
+              className="cert-tint size-2.5 shrink-0 rounded-full bg-cert"
+              style={certificationAccentStyle(item.certification.code)}
+              aria-hidden
+            />
             <Check
               className={cn("size-4", item.is_active ? "opacity-100" : "opacity-0")}
               aria-hidden
@@ -199,10 +206,15 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isActive = (to: string) => pathname === to || pathname.startsWith(`${to}/`);
   const activeMobile = mobileItems.some((i) => isActive(i.to));
+  const { data: mine = [] } = useMyCertifications();
+  const activeCert = mine.find((m) => m.is_active) ?? mine[0] ?? null;
   useCertificationGuard();
 
   return (
-    <div className="min-h-screen bg-background md:flex">
+    <div
+      className="cert-tint min-h-screen bg-background md:flex"
+      style={certificationAccentStyle(activeCert?.certification.code)}
+    >
       {/* Desktop sidebar */}
       <aside
         className={cn(

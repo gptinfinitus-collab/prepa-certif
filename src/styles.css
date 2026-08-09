@@ -59,12 +59,17 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-cert: var(--cert-accent);
+  --color-cert-foreground: var(--cert-accent-foreground);
 }
 
 :root {
   --radius: 0.5rem;
-  --font-display: "Fraunces", Georgia, serif;
-  --font-body: "Karla", system-ui, sans-serif;
+  --font-display: "IBM Plex Serif", Georgia, serif;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --cert-hue: 72;
+  --cert-accent: oklch(0.79 0.14 72);
+  --cert-accent-foreground: oklch(0.26 0.05 72);
   --background: oklch(0.977 0.012 88);
   --foreground: oklch(0.245 0.035 250);
   --card: oklch(0.995 0.006 90);
@@ -100,6 +105,8 @@
 }
 
 .dark {
+  --cert-accent: oklch(0.82 0.145 72);
+  --cert-accent-foreground: oklch(0.2 0.045 72);
   --background: oklch(0.168 0.032 262);
   --foreground: oklch(0.965 0.008 250);
   --card: oklch(0.214 0.034 262);
@@ -137,6 +144,21 @@
 @theme inline {
   --font-sans: var(--font-body);
   --font-serif: var(--font-display);
+}
+
+/*
+ * Teinte par certification : l'élément porte `.cert-tint` et un `--cert-hue`
+ * inline ; la couleur est recalculée sur cet élément puis héritée.
+ */
+.cert-tint {
+  --cert-accent: oklch(0.79 0.14 var(--cert-hue));
+  --cert-accent-foreground: oklch(0.26 0.05 var(--cert-hue));
+}
+
+.dark .cert-tint,
+.dark.cert-tint {
+  --cert-accent: oklch(0.82 0.145 var(--cert-hue));
+  --cert-accent-foreground: oklch(0.2 0.045 var(--cert-hue));
 }
 
 @layer base {
