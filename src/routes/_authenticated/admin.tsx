@@ -1,7 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
-import { Ban, CheckCircle2, RefreshCw, Search, ShieldCheck, Trash2, Users } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowUp,
+  Ban,
+  CheckCircle2,
+  RefreshCw,
+  Search,
+  ShieldCheck,
+  Trash2,
+  UserPlus,
+  Users,
+} from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -27,6 +38,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useAdminUsers, useDeleteUser, useIsSuperAdmin, useToggleUserDisabled } from "@/lib/admin";
+import {
+  type AdminSortKey,
+  computeAdminStats,
+  filterAdminUsers,
+  sortAdminUsers,
+} from "@/lib/admin-users";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
@@ -56,6 +73,39 @@ function formatDate(value: string | null) {
     month: "short",
     year: "numeric",
   });
+}
+
+function SortButton({
+  label,
+  sortKey,
+  active,
+  direction,
+  onSort,
+}: {
+  label: string;
+  sortKey: AdminSortKey;
+  active: AdminSortKey;
+  direction: "asc" | "desc";
+  onSort: (key: AdminSortKey) => void;
+}) {
+  const isActive = active === sortKey;
+  return (
+    <button
+      type="button"
+      onClick={() => onSort(sortKey)}
+      className="inline-flex items-center gap-1 font-medium hover:text-foreground"
+      aria-label={`Trier par ${label}`}
+    >
+      {label}
+      {isActive ? (
+        direction === "asc" ? (
+          <ArrowUp className="size-3" aria-hidden />
+        ) : (
+          <ArrowDown className="size-3" aria-hidden />
+        )
+      ) : null}
+    </button>
+  );
 }
 
 function AdminPage() {
@@ -114,11 +164,13 @@ function AdminPage() {
           </Button>
         </header>
 
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid gap-3 grid-cols-2 lg:grid-cols-5">
           {[
             { label: "Comptes", value: stats.total, icon: Users },
-            { label: "Comptes actifs", value: stats.active, icon: CheckCircle2 },
-            { label: "Connectés (7 j)", value: stats.recent, icon: ShieldCheck },
+            { label: "Inscrits (7 j)", value: stats.signupsLast7, icon: UserPlus },
+            { label: "Inscrits (30 j)", value: stats.signupsLast30, icon: UserPlus },
+            { label: "Connectés (7 j)", value: stats.activeLast7, icon: CheckCircle2 },
+            { label: "Désactivés", value: stats.disabled, icon: Ban },
           ].map((s) => (
             <Card key={s.label}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -164,12 +216,44 @@ function AdminPage() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Utilisateur</TableHead>
+                      <TableHead>
+                        <SortButton
+                          label="Utilisateur"
+                          sortKey="name"
+                          active={sortKey}
+                          direction={direction}
+                          onSort={toggleSort}
+                        />
+                      </TableHead>
                       <TableHead>Certification</TableHead>
-                      <TableHead className="text-right">Séances</TableHead>
-                      <TableHead className="text-right">Quiz</TableHead>
-                      <TableHead>Inscription</TableHead>
-                      <TableHead>Dernière connexion</TableHead>
+                      <TableHead className="text-right">
+                        <SortButton
+                          label="Activité"
+                          sortKey="activity"
+                          active={sortKey}
+                          direction={direction}
+                          onSort={toggleSort}
+                        />
+                      </TableHead>
+                      <TableHead className="text-right">Docs</TableHead>
+                      <TableHead>
+                        <SortButton
+                          label="Inscription"
+                          sortKey="createdAt"
+                          active={sortKey}
+                          direction={direction}
+                          onSort={toggleSort}
+                        />
+                      </TableHead>
+                      <TableHead>
+                        <SortButton
+                          label="Dernière connexion"
+                          sortKey="lastSignInAt"
+                          active={sortKey}
+                          direction={direction}
+                          onSort={toggleSort}
+                        />
+                      </TableHead>
                       <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -195,10 +279,15 @@ function AdminPage() {
                             </span>
                           ) : null}
                         </TableCell>
-                        <TableCell className="text-right tabular-nums">
-                          {u.modulesCompleted}
+                        <TableCell className="whitespace-nowrap text-right text-sm tabular-nums">
+                          {u.modulesCompleted} séances
+                          <span className="block text-xs text-muted-foreground">
+                            {u.quizSessions} quiz
+                          </span>
                         </TableCell>
-                        <TableCell className="text-right tabular-nums">{u.quizSessions}</TableCell>
+                        <TableCell className="text-right tabular-nums">
+                          {u.documentsCount}
+                        </TableCell>
                         <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
                           {formatDate(u.createdAt)}
                         </TableCell>
