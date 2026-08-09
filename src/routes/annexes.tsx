@@ -2,21 +2,21 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Quiz } from "@/components/Quiz";
-import { program } from "@/data/program";
+import { useCurriculum } from "@/lib/curriculum";
 
 export const Route = createFileRoute("/annexes")({
   head: () => ({
     meta: [
-      { title: "Annexes et trames d'audit — PREPA IRCA 45001" },
+      { title: "Annexes et trames d'audit — PREPA ISO" },
       {
         name: "description",
         content:
-          "Trame de plan d'audit, fiche de non-conformité, checklist générique et examen blanc final pour préparer la certification IRCA ISO 45001.",
+          "Trame de plan d'audit, fiche de non-conformité, checklist générique et examen blanc pour préparer votre certification ISO.",
       },
-      { property: "og:title", content: "Annexes — PREPA IRCA 45001" },
+      { property: "og:title", content: "Annexes et trames d'audit — PREPA ISO" },
       {
         property: "og:description",
-        content: "Trames opérationnelles et examen blanc pour la certification IRCA ISO 45001.",
+        content: "Trames opérationnelles et examen blanc pour votre certification ISO.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -26,7 +26,9 @@ export const Route = createFileRoute("/annexes")({
 });
 
 function Annexes() {
-  const { annexes } = program;
+  const { curriculum } = useCurriculum();
+  const { annexes } = curriculum;
+
   return (
     <AppShell title="Annexes">
       <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
