@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { AppShell } from "@/components/AppShell";
 import { ProfileEditor } from "@/components/ProfileEditor";
+import { ShareApp } from "@/components/ShareApp";
 import { ExamBodyPicker } from "@/components/ExamBodyPicker";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -144,6 +145,19 @@ function Parametres() {
 
 
           <Card>
+            <CardHeader>
+              <CardTitle className="font-sans text-lg">Partager PREPA CERTIF</CardTitle>
+              <CardDescription>
+                Invitez un collègue à préparer sa certification.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ShareApp />
+            </CardContent>
+          </Card>
+
+          <Card>
+
             <CardHeader>
               <CardTitle className="font-sans text-lg">Compte</CardTitle>
               <CardDescription>Déconnexion de cet appareil.</CardDescription>
