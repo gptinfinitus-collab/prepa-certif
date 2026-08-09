@@ -96,7 +96,7 @@ export function buildSchedule(plan: StudyPlan, list: ProgramModule[] = modules):
     days,
     effectiveModulesPerDay: perDay,
     compressed,
-    endDate: days.length ? days[days.length - 1].date : null,
+    endDate: days.length ? (days[days.length - 1] as ScheduledDay).date : null,
   };
 }
 
