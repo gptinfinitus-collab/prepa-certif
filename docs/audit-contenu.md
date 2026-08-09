@@ -140,7 +140,9 @@ Or ces deux libellés sont spécifiques à certaines normes seulement. Conséque
 
 Aucune modification n'a été appliquée à ce stade. Les corrections sont classées par ordre de priorité.
 
-### Priorité 1 — Écarts critiques (structure des normes)
+### Priorité 1 — Écarts critiques (structure des normes) — ✅ CORRIGÉ le 9 août 2026
+
+> Générateur `hlsClauses` rendu neutre (chapitre 8 réduit au seul 8.1, retrait des exigences légales et de la planification des modifications génériques) ; chapitres 8 réels déclarés par norme (9001, 14001, 27001, 22000, 50001, 22301, 37001) ; ISO 13485:2016 dotée de son squelette propre en 5 chapitres normatifs (4 à 8) avec surcharges pédagogiques réalignées. Trois tests de non-régression ajoutés (`tests/unit/standard-extras.test.ts`) : aucun numéro de sous-chapitre en doublon, pas de clause « urgence » hors normes concernées, structure 13485 non harmonisée.
 
 **C1. Rendre `hlsClauses` neutre.** Retirer du générateur les deux libellés non génériques `« 8.1 Maîtrise des processus externalisés et des fournisseurs »` et `« 8.2 Préparation et réponse aux situations d'urgence ou incidents »`, et ne conserver au chapitre 8 que « 8.1 Planification et maîtrise opérationnelles ». Chaque norme déclare ensuite ses propres sous-chapitres via sa surcharge. Corrige B-1, B-2, B-3, B-5 en un point unique.
 

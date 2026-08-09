@@ -70,12 +70,11 @@ function hlsClauses(input: HlsInput): ClauseSpec[] {
     {
       clause: "6. Planification",
       title: "Risques, opportunités et objectifs",
-      summary: `Planifier les actions face aux ${riskTerm} et aux opportunités, fixer des objectifs mesurables et planifier les modifications.`,
+      summary: `Planifier les actions face aux ${riskTerm} et aux opportunités et fixer des objectifs mesurables.`,
       requirements: [
         `6.1 Actions à mettre en œuvre face aux ${riskTerm} et opportunités`,
-        "6.1 Exigences légales et autres exigences applicables",
         "6.2 Objectifs et planification des actions pour les atteindre",
-        "6.3 Planification des modifications du système",
+        
         ...(extra[6] ?? []),
       ],
     },
@@ -95,11 +94,9 @@ function hlsClauses(input: HlsInput): ClauseSpec[] {
     {
       clause: "8. Réalisation des activités opérationnelles",
       title: "Maîtrise opérationnelle",
-      summary: `Planifier, mettre en œuvre et maîtriser les processus nécessaires pour satisfaire les exigences, y compris les processus externalisés et la gestion des situations particulières liées à ${subject}.`,
+      summary: `Planifier, mettre en œuvre et maîtriser les processus nécessaires pour satisfaire les exigences liées à ${subject}. Les sous-chapitres du chapitre 8 sont propres à chaque norme.`,
       requirements: [
         "8.1 Planification et maîtrise opérationnelles, critères des processus",
-        "8.1 Maîtrise des processus externalisés et des fournisseurs",
-        "8.2 Préparation et réponse aux situations d'urgence ou incidents",
         ...(extra[8] ?? []),
       ],
     },
@@ -109,7 +106,6 @@ function hlsClauses(input: HlsInput): ClauseSpec[] {
       summary: `Surveiller, mesurer, analyser et évaluer la performance (par exemple ${indicator}), réaliser les audits internes et la revue de direction.`,
       requirements: [
         "9.1 Surveillance, mesure, analyse et évaluation des performances",
-        "9.1 Évaluation de la conformité aux exigences légales",
         "9.2 Programme et réalisation des audits internes",
         "9.3 Revue de direction : éléments d'entrée et de sortie",
         ...(extra[9] ?? []),
@@ -199,6 +195,7 @@ export const standardSpecs: Record<string, StandardSpec> = {
       riskTerm: "risques qualité",
       indicator: "la satisfaction client et le taux de non-conformités produit",
       extra: {
+        6: ["6.3 Planification des modifications du SMQ"],
         8: [
           "8.2 Exigences relatives aux produits et services, revue des exigences client",
           "8.3 Conception et développement (si applicable)",
@@ -234,7 +231,11 @@ export const standardSpecs: Record<string, StandardSpec> = {
           "6.1.2 Aspects environnementaux et impacts associés, critères de significativité",
           "6.1.3 Obligations de conformité",
         ],
-        8: ["8.1 Perspective de cycle de vie et exigences transmises aux prestataires externes"],
+        8: [
+          "Perspective de cycle de vie et exigences transmises aux prestataires externes (au titre du 8.1)",
+          "8.2 Préparation et réponse aux situations d'urgence",
+        ],
+        9: ["9.1.2 Évaluation de la conformité aux obligations de conformité"],
       },
     }),
     [
@@ -260,6 +261,11 @@ export const standardSpecs: Record<string, StandardSpec> = {
           6: [
             "6.1.2 Appréciation des risques de sécurité de l'information (critères, identification, analyse, évaluation)",
             "6.1.3 Traitement des risques, Déclaration d'applicabilité (SoA), plan de traitement",
+            "6.3 Planification des modifications du SMSI (amendement 2024)",
+          ],
+          8: [
+            "8.2 Réalisation des appréciations des risques de sécurité de l'information, à intervalles planifiés",
+            "8.3 Mise en œuvre du plan de traitement des risques de sécurité de l'information",
           ],
         },
       }),
@@ -298,9 +304,13 @@ export const standardSpecs: Record<string, StandardSpec> = {
       extra: {
         8: [
           "8.2 Programmes prérequis (PRP)",
-          "8.5 Analyse des dangers, PRP opérationnels et plan HACCP (CCP, limites critiques)",
+          "8.3 Système de traçabilité",
+          "8.4 Préparation et réponse aux situations d'urgence",
+          "8.5 Maîtrise des dangers : analyse des dangers, PRP opérationnels et plan HACCP (CCP, limites critiques)",
+          "8.6 Mise à jour des informations relatives aux PRP et au plan de maîtrise des dangers",
           "8.7 Maîtrise de la surveillance et du mesurage",
-          "8.9 Maîtrise des non-conformités produit, retraits et rappels",
+          "8.8 Vérification liée aux PRP et au plan de maîtrise des dangers",
+          "8.9 Maîtrise des non-conformités : corrections, actions correctives, retraits et rappels",
         ],
       },
     }),
@@ -344,21 +354,72 @@ export const standardSpecs: Record<string, StandardSpec> = {
     "ISO 13485:2016",
     "système de management de la qualité des dispositifs médicaux",
     "la qualité des dispositifs médicaux",
-    hlsClauses({
-      systemName: "système de management de la qualité des dispositifs médicaux",
-      subject: "la qualité des dispositifs médicaux",
-      riskTerm: "risques liés au dispositif et à la conformité réglementaire",
-      indicator: "les réclamations, la vigilance et les rappels de produits",
-      extra: {
-        7: ["Manuel qualité, dossier du dispositif médical et exigences réglementaires applicables"],
-        8: [
-          "Conception et développement : plan, vérification, validation, transfert, maîtrise des modifications",
-          "Processus de production stériles, propreté du produit, activités d'installation et de service",
-          "Traçabilité, identification et enregistrements de production",
+    [
+      {
+        clause: "4. Système de management de la qualité",
+        title: "Exigences générales et exigences relatives à la documentation",
+        summary:
+          "ISO 13485:2016 ne suit pas la structure harmonisée : elle conserve la structure en 8 chapitres. Le chapitre 4 établit le système, son rôle réglementaire et sa documentation.",
+        requirements: [
+          "4.1 Exigences générales : processus, approche fondée sur les risques, rôle réglementaire de l'organisme",
+          "4.1.6 Validation des applications informatiques utilisées dans le système",
+          "4.2.1 Documentation : manuel qualité, procédures documentées exigées, dossier du dispositif médical",
+          "4.2.3 Dossier du dispositif médical pour chaque type ou famille de dispositifs",
+          "4.2.4 Maîtrise des documents ; 4.2.5 Maîtrise des enregistrements et durées de conservation",
         ],
-        9: ["Retour d'information, traitement des réclamations et notification aux autorités réglementaires"],
       },
-    }),
+      {
+        clause: "5. Responsabilité de la direction",
+        title: "Engagement, politique, planification et revue de direction",
+        summary:
+          "La direction démontre son engagement, définit la politique et les objectifs qualité, attribue les responsabilités et nomme un représentant de la direction — exigence propre à ISO 13485.",
+        requirements: [
+          "5.1 Engagement de la direction, y compris le respect des exigences réglementaires applicables",
+          "5.2 Écoute client : exigences client et exigences réglementaires",
+          "5.3 Politique qualité ; 5.4 Planification : objectifs qualité et planification du système",
+          "5.5.2 Représentant de la direction nommé : exigence maintenue par ISO 13485",
+          "5.5.3 Communication interne ; 5.6 Revue de direction : éléments d'entrée et de sortie définis",
+        ],
+      },
+      {
+        clause: "6. Management des ressources",
+        title: "Ressources humaines, infrastructures et environnement de travail",
+        summary:
+          "Fournir les ressources, assurer les compétences et maîtriser l'environnement de travail, y compris la propreté du produit et la maîtrise de la contamination.",
+        requirements: [
+          "6.1 Mise à disposition des ressources",
+          "6.2 Ressources humaines : compétence, formation, efficacité des actions, enregistrements",
+          "6.3 Infrastructures, y compris maintenance et exigences de maintenance documentées",
+          "6.4.1 Environnement de travail ; 6.4.2 Maîtrise de la contamination (dispositifs stériles)",
+        ],
+      },
+      {
+        clause: "7. Réalisation du produit",
+        title: "De la planification à la libération du dispositif",
+        summary:
+          "Cœur opérationnel de la norme : planification incluant la gestion des risques (ISO 14971), conception et développement, achats, production et maîtrise des équipements de mesure.",
+        requirements: [
+          "7.1 Planification de la réalisation, avec gestion des risques tout au long de la réalisation",
+          "7.2 Processus relatifs aux clients : exigences, revue, communication (dont notification aux autorités)",
+          "7.3 Conception et développement : planification, éléments d'entrée/sortie, revue, vérification, validation, transfert, maîtrise des modifications, dossier de conception",
+          "7.4 Achats : critères de sélection des fournisseurs, informations d'achat, vérification du produit acheté",
+          "7.5 Production : maîtrise, propreté, installation, prestations associées, procédés stériles, validation des procédés, identification et traçabilité, préservation",
+          "7.6 Maîtrise des équipements de surveillance et de mesure",
+        ],
+      },
+      {
+        clause: "8. Mesure, analyse et amélioration",
+        title: "Retour d'information, audits, non-conformités et actions",
+        summary:
+          "Surveiller le produit et le système, traiter le retour d'information et les réclamations, notifier les autorités et améliorer par actions correctives et préventives.",
+        requirements: [
+          "8.2.1 Retour d'information ; 8.2.2 Traitement des réclamations ; 8.2.3 Signalement aux autorités réglementaires",
+          "8.2.4 Audit interne ; 8.2.5 Surveillance et mesure des processus ; 8.2.6 Surveillance et mesure du produit",
+          "8.3 Maîtrise du produit non conforme, y compris les actions après livraison et les avis de sécurité",
+          "8.4 Analyse des données ; 8.5.1 Amélioration ; 8.5.2 Actions correctives ; 8.5.3 Actions préventives",
+        ],
+      },
+    ],
     [
       { term: "Dispositif médical", definition: "Instrument, appareil ou logiciel destiné par le fabricant à une finalité médicale sur l'être humain." },
       { term: "Dossier du dispositif médical", definition: "Ensemble des documents démontrant la conformité du dispositif aux exigences applicables." },
@@ -406,7 +467,7 @@ export const standardSpecs: Record<string, StandardSpec> = {
       indicator: "les alertes reçues, les diligences réalisées et les cadeaux déclarés",
       extra: {
         4: ["4.5 Appréciation du risque de corruption, révisée périodiquement"],
-        5: ["5.3 Fonction de conformité anti-corruption, indépendante et dotée de ressources"],
+        5: ["5.3.2 Fonction de conformité anti-corruption, indépendante et dotée de ressources"],
         8: [
           "8.2 Diligence raisonnable (partenaires, projets, personnel exposé)",
           "8.5 Contrôles financiers et non financiers",

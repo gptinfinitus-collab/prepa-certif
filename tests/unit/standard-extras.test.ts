@@ -134,3 +134,36 @@ describe("cursus générés", () => {
     expect(moduleExtras(first).objectives?.length).toBeGreaterThan(0);
   });
 });
+
+describe("structure des chapitres par norme", () => {
+  const numberOf = (r: string) => /^(\d+(?:\.\d+)+)/.exec(r.trim())?.[1] ?? null;
+
+  it("n'expose aucun numéro de sous-chapitre en doublon", () => {
+    for (const [code, standard] of Object.entries(standardSpecs)) {
+      for (const clause of standard.clauses) {
+        const numbers = clause.requirements.map(numberOf).filter(Boolean) as string[];
+        expect(new Set(numbers).size, `${code} ${clause.clause}`).toBe(numbers.length);
+      }
+    }
+  });
+
+  it("ne mentionne les situations d'urgence que dans les normes concernées", () => {
+    const allowed = new Set(["iso-14001", "iso-22000", "iso-22301"]);
+    for (const [code, standard] of Object.entries(standardSpecs)) {
+      if (allowed.has(code)) continue;
+      const text = standard.clauses.flatMap((c) => c.requirements).join(" ").toLowerCase();
+      expect(text.includes("urgence"), code).toBe(false);
+    }
+  });
+
+  it("traite ISO 13485 hors structure harmonisée", () => {
+    const clauses = standardSpecs["iso-13485"]!.clauses.map((c) => c.clause);
+    expect(clauses).toEqual([
+      "4. Système de management de la qualité",
+      "5. Responsabilité de la direction",
+      "6. Management des ressources",
+      "7. Réalisation du produit",
+      "8. Mesure, analyse et amélioration",
+    ]);
+  });
+});
