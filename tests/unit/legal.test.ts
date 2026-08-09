@@ -38,7 +38,8 @@ describe("legal documents", () => {
       expect(meta["description"]!.length).toBeLessThan(160);
       expect(meta["og:title"]).toBe(meta["title"]);
       expect(meta["og:type"]).toBe("website");
-      expect(meta["twitter:card"]).toBe("summary");
+      expect(meta["twitter:card"]).toBe("summary_large_image");
+      expect(meta["og:image"]).toMatch(/^https:\/\//);
       expect(head.links[0]!.href).toBe(`${legalInfo.siteUrl}${doc.path}`);
       titles.add(meta["title"]!);
     }
