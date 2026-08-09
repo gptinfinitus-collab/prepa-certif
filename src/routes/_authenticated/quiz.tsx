@@ -90,11 +90,19 @@ function QuizPage() {
         </p>
 
         <Tabs value={tab} onValueChange={setTab} className="mt-8">
-          <TabsList className="flex w-full flex-wrap justify-start sm:w-auto">
-            <TabsTrigger value="training">Entraînement</TabsTrigger>
-            <TabsTrigger value="history">Historique</TabsTrigger>
-            <TabsTrigger value="analysis">Mon niveau</TabsTrigger>
-            <TabsTrigger value="cards">Fiches</TabsTrigger>
+          <TabsList className="no-scrollbar flex w-full max-w-full justify-start overflow-x-auto sm:w-auto">
+            <TabsTrigger value="training" className="shrink-0 px-2.5 text-[0.8rem] sm:px-3 sm:text-sm">
+              Entraînement
+            </TabsTrigger>
+            <TabsTrigger value="history" className="shrink-0 px-2.5 text-[0.8rem] sm:px-3 sm:text-sm">
+              Historique
+            </TabsTrigger>
+            <TabsTrigger value="analysis" className="shrink-0 px-2.5 text-[0.8rem] sm:px-3 sm:text-sm">
+              Mon niveau
+            </TabsTrigger>
+            <TabsTrigger value="cards" className="shrink-0 px-2.5 text-[0.8rem] sm:px-3 sm:text-sm">
+              Fiches
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="training" className="mt-6">
