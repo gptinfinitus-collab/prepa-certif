@@ -11,7 +11,10 @@ import { typeLabels } from "@/data/program";
 import { buildSchedule, scheduleByModuleId, computePace, formatShortDate } from "@/lib/schedule";
 import { useProgress, useStudyPlan } from "@/lib/queries";
 import { useCurriculum } from "@/lib/curriculum";
-import { useActiveTrack } from "@/lib/learning";
+import { useActiveTrack, useOnboardedAt } from "@/lib/learning";
+import { useActiveCertification } from "@/lib/certifications";
+import { OnboardingGate } from "@/components/Onboarding";
+import { needsOnboarding } from "@/lib/onboarding";
 import { filterModulesByTrack, getTrack } from "@/lib/tracks";
 import { LeadAuditorNotice, TrackSwitcher } from "@/components/TrackSwitcher";
 import { CheckCircle2, Circle, CalendarClock, PenLine } from "lucide-react";
@@ -43,6 +46,12 @@ function Dashboard() {
   const { data: profile } = useProfile();
   const { curriculum, certificationName } = useCurriculum();
   const { track } = useActiveTrack();
+  const { certification, isLoading: certLoading } = useActiveCertification();
+  const { data: onboardedAt, isLoading: onboardingLoading } = useOnboardedAt();
+  const showOnboarding =
+    !certLoading &&
+    !onboardingLoading &&
+    needsOnboarding({ onboardedAt: onboardedAt ?? null, hasCertification: !!certification });
   const trackDefinition = getTrack(track);
   const modules = filterModulesByTrack(curriculum.modules, track);
 
@@ -60,6 +69,7 @@ function Dashboard() {
 
   return (
     <AppShell title="Mon programme">
+      <OnboardingGate show={showOnboarding} />
       <div className="mx-auto max-w-6xl px-4 py-6 md:py-10">
         {/* Accueil mobile */}
         <section className="mb-6 rounded-2xl border border-border bg-gradient-to-br from-primary/12 via-card to-card p-5 md:hidden">
