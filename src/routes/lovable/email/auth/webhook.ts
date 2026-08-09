@@ -19,7 +19,7 @@ const handler = createAuthEmailHandler({
   emails: {
     signup: {
       subject: `Confirmez votre compte — ${SITE_NAME}`,
-      render: (data: AuthEmailData) =>
+      render: (data: AuthEmailHookData) =>
         React.createElement(SignupEmail, {
           siteName: SITE_NAME,
           siteUrl: SITE_URL,
