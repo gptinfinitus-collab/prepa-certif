@@ -8,13 +8,13 @@ import { CalendarRange, BookOpenCheck, ClipboardList, Library } from "lucide-rea
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "PREPA IRCA 45001 — Préparation à l'audit SMSST ISO 45001" },
+      { title: "PREPA ISO — Préparation à l'audit SMSST ISO 45001" },
       {
         name: "description",
         content:
           "Préparez la certification IRCA Responsable d'Audit ISO 45001:2018 : planning sur mesure, 21 séances de cours, quiz, examen blanc et suivi de progression.",
       },
-      { property: "og:title", content: "PREPA IRCA 45001" },
+      { property: "og:title", content: "PREPA ISO" },
       {
         property: "og:description",
         content:

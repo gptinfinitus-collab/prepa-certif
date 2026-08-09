@@ -80,14 +80,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "PREPA IRCA 45001 — Préparation Responsable d'Audit SMSST" },
+      { title: "PREPA ISO — Préparation Responsable d'Audit SMSST" },
       {
         name: "description",
         content:
           "Programme de préparation à la certification IRCA ISO 45001:2018, avec planning personnalisable, cours, quiz et suivi de progression.",
       },
-      { name: "author", content: "PREPA IRCA 45001" },
-      { property: "og:title", content: "PREPA IRCA 45001" },
+      { name: "author", content: "PREPA ISO" },
+      { property: "og:title", content: "PREPA ISO" },
       {
         property: "og:description",
         content: "Préparation structurée à la certification Responsable d'Audit SMSST ISO 45001.",

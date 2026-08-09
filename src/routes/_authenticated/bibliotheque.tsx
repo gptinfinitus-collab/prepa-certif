@@ -11,13 +11,13 @@ import { FileText, Trash2, Download } from "lucide-react";
 export const Route = createFileRoute("/_authenticated/bibliotheque")({
   head: () => ({
     meta: [
-      { title: "Ma bibliothèque — PREPA IRCA 45001" },
+      { title: "Ma bibliothèque — PREPA ISO" },
       {
         name: "description",
         content:
           "Espace privé pour déposer et consulter vos exemplaires personnels des normes ISO 45001 et ISO 19011 pendant vos révisions.",
       },
-      { property: "og:title", content: "Ma bibliothèque — PREPA IRCA 45001" },
+      { property: "og:title", content: "Ma bibliothèque — PREPA ISO" },
       { property: "og:description", content: "Vos documents normatifs personnels, en privé." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
