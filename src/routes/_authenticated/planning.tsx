@@ -64,7 +64,7 @@ function Planning() {
   return (
     <AppShell title="Mon planning">
       <div className="mx-auto max-w-6xl px-4 py-6 md:py-10">
-        <h1 className="font-serif text-2xl font-semibold sm:text-3xl">Mon planning</h1>
+        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">Mon planning</h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
           La préparation n'a pas de durée imposée : les {curriculum.modules.length} séances de{" "}
           {certificationName} se répartissent automatiquement sur les jours que vous choisissez,
@@ -75,7 +75,7 @@ function Planning() {
         <div className="mt-8 grid gap-6 lg:grid-cols-[380px_1fr]">
           <Card className="h-fit">
             <CardHeader>
-              <CardTitle className="font-serif text-lg">Paramètres</CardTitle>
+              <CardTitle className="font-sans text-lg">Paramètres</CardTitle>
               <CardDescription>Ajustez le rythme, le calendrier se recalcule.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-5">

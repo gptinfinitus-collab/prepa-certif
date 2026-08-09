@@ -72,14 +72,14 @@ function Dashboard() {
             </Avatar>
             <div className="min-w-0">
               <p className="text-xs uppercase tracking-wide text-muted-foreground">Bonjour</p>
-              <p className="truncate font-serif text-lg font-semibold">
+              <p className="truncate font-sans text-lg font-semibold">
                 {firstName || "Bienvenue"}
               </p>
             </div>
           </div>
           <div className="mt-5">
             <div className="flex items-end justify-between">
-              <p className="font-serif text-4xl font-semibold leading-none">{percent}%</p>
+              <p className="font-sans text-4xl font-semibold leading-none">{percent}%</p>
               <p className="text-xs text-muted-foreground">
                 {completedIds.size} / {modules.length} séances
               </p>
@@ -91,7 +91,7 @@ function Dashboard() {
               <p className="text-xs uppercase tracking-wide text-muted-foreground">
                 Prochaine séance
               </p>
-              <p className="mt-1 font-serif text-base font-semibold leading-snug">{next.title}</p>
+              <p className="mt-1 font-sans text-base font-semibold leading-snug">{next.title}</p>
               <Button asChild size="sm" className="mt-3 w-full">
                 <Link to="/seance/$moduleId" params={{ moduleId: String(next.id) }}>
                   Continuer
@@ -106,7 +106,7 @@ function Dashboard() {
           </p>
         </section>
 
-        <h1 className="hidden items-center gap-3 font-serif text-3xl font-semibold md:flex">
+        <h1 className="hidden items-center gap-3 font-sans text-3xl font-semibold md:flex">
           <span className="h-7 w-1.5 shrink-0 rounded-full bg-cert" aria-hidden />
           {certificationName}
         </h1>
@@ -144,7 +144,7 @@ function Dashboard() {
               <CardTitle className="text-sm font-medium text-muted-foreground">Progression</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="font-serif text-2xl font-semibold sm:text-3xl">{percent}%</p>
+              <p className="font-sans text-2xl font-semibold sm:text-3xl">{percent}%</p>
               <Progress value={percent} className="mt-3" />
               <p className="mt-2 text-xs text-muted-foreground">
                 {completedIds.size} / {modules.length} séances terminées
@@ -156,7 +156,7 @@ function Dashboard() {
               <CardTitle className="text-sm font-medium text-muted-foreground">Rythme</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="font-serif text-xl font-semibold">{pace?.label ?? "—"}</p>
+              <p className="font-sans text-xl font-semibold">{pace?.label ?? "—"}</p>
               <p className="mt-2 text-xs text-muted-foreground">
                 Attendu à ce jour : {pace?.expectedCompleted ?? 0} séance(s)
               </p>
@@ -176,7 +176,7 @@ function Dashboard() {
             <CardContent>
               {next ? (
                 <>
-                  <p className="font-serif text-base font-semibold leading-snug">{next.title}</p>
+                  <p className="font-sans text-base font-semibold leading-snug">{next.title}</p>
                   <Button asChild size="sm" className="mt-3">
                     <Link to="/seance/$moduleId" params={{ moduleId: String(next.id) }}>
                       Ouvrir la séance
@@ -195,7 +195,7 @@ function Dashboard() {
             .filter((week) => week.dayIds.some((id) => modules.some((m) => m.id === id)))
             .map((week) => (
             <section key={week.id}>
-              <h2 className="font-serif text-xl font-semibold">{week.title}</h2>
+              <h2 className="font-sans text-xl font-semibold">{week.title}</h2>
               <ul className="mt-3 divide-y divide-border rounded-lg border border-border bg-card">
                 {week.dayIds.map((id) => {
                   const module = modules.find((m) => m.id === id);

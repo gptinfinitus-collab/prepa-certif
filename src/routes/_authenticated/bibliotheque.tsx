@@ -153,7 +153,7 @@ function Bibliotheque() {
   return (
     <AppShell title="Mes documents">
       <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
-        <h1 className="font-serif text-2xl font-semibold sm:text-3xl">Mes documents</h1>
+        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">Mes documents</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Supports de cours, notes de formation et exemplaires personnels de normes. Chaque document
           est privé, puis découpé et indexé pour servir de base de connaissances à l'assistant IA et
@@ -162,7 +162,7 @@ function Bibliotheque() {
 
         <Card className="mt-6">
           <CardHeader>
-            <CardTitle className="font-serif text-lg">Ajouter un document</CardTitle>
+            <CardTitle className="font-sans text-lg">Ajouter un document</CardTitle>
             <CardDescription>
               PDF, TXT ou Markdown pour l'indexation IA. 50 Mo maximum par fichier.
             </CardDescription>
@@ -200,7 +200,7 @@ function Bibliotheque() {
         </Card>
 
         <section className="mt-8">
-          <h2 className="font-serif text-xl font-semibold">Base de connaissances</h2>
+          <h2 className="font-sans text-xl font-semibold">Base de connaissances</h2>
           {list.length === 0 ? (
             <p className="mt-3 text-sm text-muted-foreground">Aucun document pour l'instant.</p>
           ) : (

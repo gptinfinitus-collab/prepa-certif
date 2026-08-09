@@ -220,7 +220,7 @@ export function QuizTrainer({
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 font-serif text-lg">
+          <CardTitle className="flex items-center gap-2 font-sans text-lg">
             <Wand2 className="size-5 text-cert" aria-hidden />
             Nouvel entraînement
           </CardTitle>
@@ -332,7 +332,7 @@ export function QuizTrainer({
           <Card key={qi}>
             <CardHeader className="gap-2">
               <div className="flex items-start justify-between gap-3">
-                <CardTitle className="font-serif text-base leading-snug">
+                <CardTitle className="font-sans text-base leading-snug">
                   {qi + 1}. {q.question}
                 </CardTitle>
                 {q.clause && <Badge variant="outline">Clause {q.clause}</Badge>}
@@ -419,7 +419,7 @@ export function QuizTrainer({
             ) : (
               <>
                 <div className="flex items-baseline gap-2">
-                  <span className="font-serif text-2xl font-semibold sm:text-3xl">{finalScore}%</span>
+                  <span className="font-sans text-2xl font-semibold sm:text-3xl">{finalScore}%</span>
                   <span className="text-sm text-muted-foreground">
                     {mode === "qcm"
                       ? `${correctCount} bonne(s) réponse(s) sur ${questions.length}`

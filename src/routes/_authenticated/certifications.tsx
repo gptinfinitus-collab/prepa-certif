@@ -94,7 +94,7 @@ function CustomCertificationDialog() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="font-serif">Créer un référentiel</DialogTitle>
+          <DialogTitle className="font-sans">Créer un référentiel</DialogTitle>
           <DialogDescription>
             Pour une norme ou une certification qui n'est pas au catalogue.
           </DialogDescription>
@@ -185,7 +185,7 @@ function CertificationsPage() {
   return (
     <AppShell title="Mes certifications">
       <div className="mx-auto max-w-5xl px-4 py-6 md:py-10">
-        <h1 className="font-serif text-2xl font-semibold sm:text-3xl">Mes certifications</h1>
+        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">Mes certifications</h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
           Choisissez la certification que vous préparez. Vous pouvez en suivre plusieurs en
           parallèle : chacune garde son propre planning, sa progression et ses documents.
@@ -226,7 +226,7 @@ function CertificationsPage() {
                 >
                   <CardHeader>
                     <div className="flex items-start justify-between gap-2">
-                      <CardTitle className="font-serif text-lg">{cert.name}</CardTitle>
+                      <CardTitle className="font-sans text-lg">{cert.name}</CardTitle>
                       {active && (
                         <Badge className="shrink-0 bg-cert text-cert-foreground">
                           <Check className="size-3" aria-hidden />

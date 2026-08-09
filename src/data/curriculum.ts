@@ -12,6 +12,11 @@ import {
   type ClauseSpec,
   type StandardReference,
 } from "./standards";
+import {
+  getClauseExtras,
+  methodologyExtras,
+  type StandardContext,
+} from "./standard-extras";
 
 export interface Curriculum {
   /** Vrai lorsque le cursus est entièrement rédigé (séances, quiz, examen blanc). */
@@ -64,7 +69,14 @@ function iso45001Curriculum(): Curriculum {
   };
 }
 
-function clauseModule(id: number, week: number, clause: ClauseSpec, label: string): ProgramModule {
+function clauseModule(
+  id: number,
+  week: number,
+  clause: ClauseSpec,
+  ctx: StandardContext,
+): ProgramModule {
+  const label = ctx.label;
+
   const body = [
     `## ${clause.title}`,
     "",
@@ -96,6 +108,7 @@ function clauseModule(id: number, week: number, clause: ClauseSpec, label: strin
         answer: clause.requirements.slice(0, 2).join(" / "),
       },
     ],
+    extras: getClauseExtras(ctx, clause.clause),
   };
 }
 
@@ -126,6 +139,7 @@ function methodologyModules(startId: number, week: number, label: string): Progr
   ];
 
   return items.map((item, index) => ({
+    ...(methodologyExtras[index] ? { extras: methodologyExtras[index] } : {}),
     id: startId + index,
     week,
     type: "practical" as const,
@@ -140,13 +154,14 @@ function methodologyModules(startId: number, week: number, label: string): Progr
 
 /** Construit un cursus « préparation libre » à partir des chapitres d'un référentiel. */
 function skeletonCurriculum(
-  label: string,
+  ctx: StandardContext,
   description: string | null,
   clauses: ClauseSpec[],
   glossary: GlossaryEntry[],
   references: StandardReference[],
 ): Curriculum {
-  const clauseModules = clauses.map((clause, index) => clauseModule(index + 1, 1, clause, label));
+  const label = ctx.label;
+  const clauseModules = clauses.map((clause, index) => clauseModule(index + 1, 1, clause, ctx));
   const methodology = methodologyModules(clauseModules.length + 1, 2, label);
   const reviewId = clauseModules.length + methodology.length + 1;
   const review: ProgramModule = {
@@ -201,7 +216,13 @@ export function getCurriculum(cert: CurriculumSource | null): Curriculum | null 
 
   const spec = getStandardSpec(cert.code);
   if (spec) {
-    return skeletonCurriculum(spec.label, cert.description, spec.clauses, spec.glossary, spec.references);
+    return skeletonCurriculum(
+      { code: spec.code, label: spec.label, subject: spec.subject, systemName: spec.systemName },
+      cert.description,
+      spec.clauses,
+      spec.glossary,
+      spec.references,
+    );
   }
 
   // Référentiel personnalisé : uniquement les chapitres saisis par l'utilisateur.
@@ -211,5 +232,11 @@ export function getCurriculum(cert: CurriculumSource | null): Curriculum | null 
     summary: `Chapitre du référentiel ${cert.name}.`,
     requirements: ["À compléter avec vos propres notes et documents de cours."],
   }));
-  return skeletonCurriculum(cert.name, cert.description, clauses, [], auditReferences);
+  return skeletonCurriculum(
+    { code: cert.code, label: cert.name, subject: "la performance", systemName: "système de management" },
+    cert.description,
+    clauses,
+    [],
+    auditReferences,
+  );
 }

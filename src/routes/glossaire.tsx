@@ -39,7 +39,7 @@ function Glossaire() {
   return (
     <AppShell title="Glossaire">
       <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
-        <h1 className="font-serif text-2xl font-semibold sm:text-3xl">Glossaire</h1>
+        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">Glossaire</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           {curriculum.glossary.length} termes essentiels pour {certificationName} et l'audit.
         </p>
@@ -52,7 +52,7 @@ function Glossaire() {
         <dl className="mt-6 divide-y divide-border rounded-lg border border-border bg-card">
           {entries.map((entry) => (
             <div key={entry.term} className="px-4 py-3">
-              <dt className="font-serif text-base font-semibold">{entry.term}</dt>
+              <dt className="font-sans text-base font-semibold">{entry.term}</dt>
               <dd className="mt-1 text-sm text-muted-foreground">{entry.definition}</dd>
             </div>
           ))}

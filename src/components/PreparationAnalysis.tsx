@@ -89,7 +89,7 @@ export function PreparationAnalysis({
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 font-serif text-lg">
+          <CardTitle className="flex items-center gap-2 font-sans text-lg">
             <Brain className="size-5 text-cert" aria-hidden />
             Niveau de préparation — {certificationName}
           </CardTitle>
@@ -99,7 +99,7 @@ export function PreparationAnalysis({
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-baseline gap-2">
-            <span className="font-serif text-4xl font-semibold">{global}%</span>
+            <span className="font-sans text-4xl font-semibold">{global}%</span>
             <span className="text-sm text-muted-foreground">de réussite moyenne</span>
           </div>
           <Progress value={global} />
@@ -135,7 +135,7 @@ export function PreparationAnalysis({
       {analysis && (
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 font-serif text-lg">
+            <CardTitle className="flex items-center gap-2 font-sans text-lg">
               <TrendingUp className="size-5 text-cert" aria-hidden />
               Analyse IA
             </CardTitle>
@@ -165,7 +165,7 @@ export function PreparationAnalysis({
 
       <Card>
         <CardHeader>
-          <CardTitle className="font-serif text-lg">Historique des sessions</CardTitle>
+          <CardTitle className="font-sans text-lg">Historique des sessions</CardTitle>
           <CardDescription>Vos entraînements enregistrés pour ce cursus.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-2">

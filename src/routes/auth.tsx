@@ -184,7 +184,7 @@ function AuthPage() {
       <Card className="relative z-10 w-full max-w-md border-border/50 shadow-lg">
         <CardHeader className="items-center text-center">
           <BrandLogo className="mx-auto size-16 text-primary" />
-          <CardTitle className="font-serif text-2xl">PREPA CERTIF</CardTitle>
+          <CardTitle className="font-sans text-2xl">PREPA CERTIF</CardTitle>
           <CardDescription>
             {forgotOpen
               ? "Réinitialisez votre mot de passe en quelques secondes."

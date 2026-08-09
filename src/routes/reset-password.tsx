@@ -90,7 +90,7 @@ function ResetPasswordPage() {
       <Card className="relative z-10 w-full max-w-md border-border/50 shadow-lg">
         <CardHeader className="items-center text-center">
           <BrandLogo className="mx-auto size-16 text-primary" />
-          <CardTitle className="font-serif text-2xl">Nouveau mot de passe</CardTitle>
+          <CardTitle className="font-sans text-2xl">Nouveau mot de passe</CardTitle>
           <CardDescription>
             Choisissez un mot de passe d'au moins 6 caractères pour votre compte.
           </CardDescription>

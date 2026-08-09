@@ -141,7 +141,7 @@ export function AvatarCropper({ open, file, onOpenChange, onCropped, saving }: P
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
-          <DialogTitle className="font-serif">Recadrer la photo</DialogTitle>
+          <DialogTitle className="font-sans">Recadrer la photo</DialogTitle>
           <DialogDescription>
             Déplacez l'image et ajustez le zoom pour cadrer votre portrait.
           </DialogDescription>
