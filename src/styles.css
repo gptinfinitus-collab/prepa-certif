@@ -184,6 +184,16 @@
   }
 }
 
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
+
 @utility prose-course {
   & h3 {
     font-family: var(--font-display);
