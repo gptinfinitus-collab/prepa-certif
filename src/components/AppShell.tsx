@@ -40,6 +40,7 @@ import { certificationAccentStyle } from "@/lib/cert-theme";
 const navItems = [
   { to: "/dashboard", label: "Programme", icon: Home },
   { to: "/planning", label: "Mon planning", icon: CalendarRange },
+  { to: "/quiz", label: "Quiz", icon: Brain },
   { to: "/references", label: "Références ISO", icon: BookMarked },
   { to: "/glossaire", label: "Glossaire", icon: SpellCheck },
   { to: "/annexes", label: "Annexes", icon: ListChecks },
