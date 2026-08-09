@@ -29,7 +29,7 @@ const handler = createAuthEmailHandler({
     },
     invite: {
       subject: `Vous avez été invité sur ${SITE_NAME}`,
-      render: (data: AuthEmailData) =>
+      render: (data: AuthEmailHookData) =>
         React.createElement(InviteEmail, {
           siteName: SITE_NAME,
           siteUrl: SITE_URL,
@@ -38,7 +38,7 @@ const handler = createAuthEmailHandler({
     },
     magiclink: {
       subject: `Votre lien de connexion — ${SITE_NAME}`,
-      render: (data: AuthEmailData) =>
+      render: (data: AuthEmailHookData) =>
         React.createElement(MagicLinkEmail, {
           siteName: SITE_NAME,
           confirmationUrl: data.url,
@@ -46,7 +46,7 @@ const handler = createAuthEmailHandler({
     },
     recovery: {
       subject: `Réinitialisation de votre mot de passe — ${SITE_NAME}`,
-      render: (data: AuthEmailData) =>
+      render: (data: AuthEmailHookData) =>
         React.createElement(RecoveryEmail, {
           siteName: SITE_NAME,
           confirmationUrl: data.url,
@@ -54,7 +54,7 @@ const handler = createAuthEmailHandler({
     },
     email_change: {
       subject: `Confirmez votre nouvelle adresse e-mail — ${SITE_NAME}`,
-      render: (data: AuthEmailData) =>
+      render: (data: AuthEmailHookData) =>
         React.createElement(EmailChangeEmail, {
           siteName: SITE_NAME,
           oldEmail: data.old_email ?? "",
@@ -65,7 +65,7 @@ const handler = createAuthEmailHandler({
     },
     reauthentication: {
       subject: `Votre code de vérification — ${SITE_NAME}`,
-      render: (data: AuthEmailData) =>
+      render: (data: AuthEmailHookData) =>
         React.createElement(ReauthenticationEmail, { token: data.token ?? "" }),
     },
   },
