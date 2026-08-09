@@ -9,6 +9,17 @@ import { EmailChangeEmail } from "@/lib/email-templates/email-change";
 import { ReauthenticationEmail } from "@/lib/email-templates/reauthentication";
 import { SITE_NAME, SENDER_DOMAIN, FROM_DOMAIN, SITE_URL } from "@/lib/email-templates/email-brand";
 
+function rewriteConfirmationUrl(url: string): string {
+  try {
+    const parsed = new URL(url);
+    parsed.hostname = "prepa-certif.app";
+    parsed.protocol = "https:";
+    return parsed.toString();
+  } catch {
+    return url;
+  }
+}
+
 // The SDK handler owns verification, dispatch, and retry semantics; this file
 // owns only the email decisions: subjects, templates, and per-type props.
 const handler = createAuthEmailHandler({
@@ -24,7 +35,7 @@ const handler = createAuthEmailHandler({
           siteName: SITE_NAME,
           siteUrl: SITE_URL,
           recipient: data.email,
-          confirmationUrl: data.url,
+          confirmationUrl: rewriteConfirmationUrl(data.url),
         }),
     },
     invite: {
@@ -33,7 +44,7 @@ const handler = createAuthEmailHandler({
         React.createElement(InviteEmail, {
           siteName: SITE_NAME,
           siteUrl: SITE_URL,
-          confirmationUrl: data.url,
+          confirmationUrl: rewriteConfirmationUrl(data.url),
         }),
     },
     magiclink: {
@@ -41,7 +52,7 @@ const handler = createAuthEmailHandler({
       render: (data: AuthEmailHookData) =>
         React.createElement(MagicLinkEmail, {
           siteName: SITE_NAME,
-          confirmationUrl: data.url,
+          confirmationUrl: rewriteConfirmationUrl(data.url),
         }),
     },
     recovery: {
@@ -49,7 +60,7 @@ const handler = createAuthEmailHandler({
       render: (data: AuthEmailHookData) =>
         React.createElement(RecoveryEmail, {
           siteName: SITE_NAME,
-          confirmationUrl: data.url,
+          confirmationUrl: rewriteConfirmationUrl(data.url),
         }),
     },
     email_change: {
@@ -60,7 +71,7 @@ const handler = createAuthEmailHandler({
           oldEmail: data.old_email ?? "",
           email: data.email,
           newEmail: data.new_email ?? "",
-          confirmationUrl: data.url,
+          confirmationUrl: rewriteConfirmationUrl(data.url),
         }),
     },
     reauthentication: {
