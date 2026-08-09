@@ -73,7 +73,7 @@ export function ProfileEditor() {
           </button>
         </div>
         <div className="min-w-0">
-          <p className="font-serif text-lg font-semibold">
+          <p className="font-sans text-lg font-semibold">
             {[profile?.first_name, profile?.last_name].filter(Boolean).join(" ") || "Votre nom"}
           </p>
           <p className="truncate text-sm text-muted-foreground">{profile?.email}</p>

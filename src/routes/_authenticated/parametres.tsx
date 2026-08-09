@@ -44,7 +44,7 @@ function Parametres() {
   return (
     <AppShell title="Paramètres">
       <div className="mx-auto max-w-3xl px-4 py-8 md:py-10">
-        <h1 className="font-serif text-2xl font-semibold sm:text-3xl">Paramètres</h1>
+        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">Paramètres</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Votre profil, l'apparence de l'application et votre compte.
         </p>
@@ -52,7 +52,7 @@ function Parametres() {
         <div className="mt-8 space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle className="font-serif text-lg">Profil</CardTitle>
+              <CardTitle className="font-sans text-lg">Profil</CardTitle>
               <CardDescription>Photo, prénom et nom affichés dans l'application.</CardDescription>
             </CardHeader>
             <CardContent>
@@ -62,7 +62,7 @@ function Parametres() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="font-serif text-lg">Apparence</CardTitle>
+              <CardTitle className="font-sans text-lg">Apparence</CardTitle>
               <CardDescription>Thème clair ou bleu nuit.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -101,7 +101,7 @@ function Parametres() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="font-serif text-lg">Étude</CardTitle>
+              <CardTitle className="font-sans text-lg">Étude</CardTitle>
               <CardDescription>Dates, jours travaillés et rythme de révision.</CardDescription>
             </CardHeader>
             <CardContent>
@@ -116,7 +116,7 @@ function Parametres() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="font-serif text-lg">Compte</CardTitle>
+              <CardTitle className="font-sans text-lg">Compte</CardTitle>
               <CardDescription>Déconnexion de cet appareil.</CardDescription>
             </CardHeader>
             <CardContent>
@@ -129,7 +129,7 @@ function Parametres() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="font-serif text-lg">Documents légaux</CardTitle>
+              <CardTitle className="font-sans text-lg">Documents légaux</CardTitle>
               <CardDescription>Conditions, confidentialité et informations éditeur.</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-wrap gap-2">

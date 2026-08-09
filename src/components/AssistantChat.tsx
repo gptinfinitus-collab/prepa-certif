@@ -165,7 +165,7 @@ export function AssistantChat({ threadId }: { threadId: string }) {
       </aside>
 
       <section className="flex min-w-0 flex-col">
-        <h1 className="font-serif text-2xl font-semibold sm:text-3xl">Assistant de préparation</h1>
+        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">Assistant de préparation</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Questions directes sur {certificationName}, l'audit et vos documents de cours indexés.
         </p>
@@ -173,7 +173,7 @@ export function AssistantChat({ threadId }: { threadId: string }) {
         {messages.length === 0 && !busy && (
           <Card className="mt-6">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 font-serif text-lg">
+              <CardTitle className="flex items-center gap-2 font-sans text-lg">
                 <Sparkles className="size-5 text-cert" aria-hidden />
                 Par où commencer ?
               </CardTitle>

@@ -25,13 +25,13 @@ function Profil() {
   return (
     <AppShell title="Profil">
       <div className="mx-auto max-w-3xl px-4 py-8 md:py-10">
-        <h1 className="font-serif text-2xl font-semibold sm:text-3xl">Mon profil</h1>
+        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">Mon profil</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Votre photo et votre identité, affichées dans l'application.
         </p>
         <Card className="mt-8">
           <CardHeader>
-            <CardTitle className="font-serif text-lg">Identité</CardTitle>
+            <CardTitle className="font-sans text-lg">Identité</CardTitle>
             <CardDescription>Photo recadrable, prénom et nom.</CardDescription>
           </CardHeader>
           <CardContent>

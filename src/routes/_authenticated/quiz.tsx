@@ -79,7 +79,7 @@ function QuizPage() {
   return (
     <AppShell title="Quiz">
       <div className="mx-auto max-w-3xl px-4 py-8 md:py-10">
-        <h1 className="font-serif text-2xl font-semibold sm:text-3xl">Entraînement et niveau</h1>
+        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">Entraînement et niveau</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Quiz générés par l'IA sur {certificationName}, corrigés avec renvoi aux clauses, et suivi
           de votre progression par chapitre.
@@ -111,7 +111,7 @@ function QuizPage() {
             {total === 0 ? (
               <Card>
                 <CardHeader>
-                  <CardTitle className="font-serif text-lg">Aucune fiche disponible</CardTitle>
+                  <CardTitle className="font-sans text-lg">Aucune fiche disponible</CardTitle>
                   <CardDescription>
                     Le cursus de cette certification ne contient pas encore de questions rédigées.
                     Utilisez l'entraînement généré par l'IA à partir de vos documents.
@@ -130,7 +130,7 @@ function QuizPage() {
                   <Progress value={(answered / total) * 100} />
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <p className="font-serif text-lg leading-snug">{current?.question}</p>
+                  <p className="font-sans text-lg leading-snug">{current?.question}</p>
                   {revealed ? (
                     <p className="rounded-lg border-l-2 border-cert bg-secondary/60 p-4 text-sm leading-relaxed">
                       {current?.answer}
