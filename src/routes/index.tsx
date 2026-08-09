@@ -9,13 +9,13 @@ import { CalendarRange, BookOpenCheck, ClipboardList, Library } from "lucide-rea
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "PREPA ISO — Préparez votre certification d'auditeur ISO" },
+      { title: "PREPA CERTIF — Préparez votre certification d'auditeur ISO" },
       {
         name: "description",
         content:
           "Préparez les certifications ISO 9001, 14001, 45001, 27001, 22000 et plus : planning sur mesure, séances par chapitre, quiz, examen blanc et suivi de progression.",
       },
-      { property: "og:title", content: "PREPA ISO — Préparez votre certification d'auditeur ISO" },
+      { property: "og:title", content: "PREPA CERTIF — Préparez votre certification d'auditeur ISO" },
       {
         property: "og:description",
         content:

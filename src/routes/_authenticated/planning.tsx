@@ -21,13 +21,13 @@ import { useSaveStudyPlan, useStudyPlan } from "@/lib/queries";
 export const Route = createFileRoute("/_authenticated/planning")({
   head: () => ({
     meta: [
-      { title: "Mon planning — PREPA ISO" },
+      { title: "Mon planning — PREPA CERTIF" },
       {
         name: "description",
         content:
           "Définissez la durée de votre préparation ISO : date de début, date d'examen, jours travaillés et séances par jour.",
       },
-      { property: "og:title", content: "Mon planning — PREPA ISO" },
+      { property: "og:title", content: "Mon planning — PREPA CERTIF" },
       {
         property: "og:description",
         content: "Un calendrier de préparation à la certification entièrement configurable.",

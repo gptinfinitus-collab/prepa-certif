@@ -7,13 +7,13 @@ import { useCurriculum } from "@/lib/curriculum";
 export const Route = createFileRoute("/annexes")({
   head: () => ({
     meta: [
-      { title: "Annexes et trames d'audit — PREPA ISO" },
+      { title: "Annexes et trames d'audit — PREPA CERTIF" },
       {
         name: "description",
         content:
           "Trame de plan d'audit, fiche de non-conformité, checklist générique et examen blanc pour préparer votre certification ISO.",
       },
-      { property: "og:title", content: "Annexes et trames d'audit — PREPA ISO" },
+      { property: "og:title", content: "Annexes et trames d'audit — PREPA CERTIF" },
       {
         property: "og:description",
         content: "Trames opérationnelles et examen blanc pour votre certification ISO.",

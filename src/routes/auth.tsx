@@ -20,13 +20,13 @@ export const Route = createFileRoute("/auth")({
   validateSearch: searchSchema,
   head: () => ({
     meta: [
-      { title: "Connexion — PREPA ISO" },
+      { title: "Connexion — PREPA CERTIF" },
       {
         name: "description",
         content:
           "Connectez-vous avec Google, Apple ou votre e-mail pour accéder à votre planning de préparation IRCA ISO 45001.",
       },
-      { property: "og:title", content: "Connexion — PREPA ISO" },
+      { property: "og:title", content: "Connexion — PREPA CERTIF" },
       {
         property: "og:description",
         content: "Accédez à votre programme de préparation à l'audit ISO 45001.",
@@ -115,7 +115,7 @@ function AuthPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="items-center text-center">
           <BrandLogo className="size-8 text-primary" />
-          <CardTitle className="font-serif text-2xl">PREPA ISO</CardTitle>
+          <CardTitle className="font-serif text-2xl">PREPA CERTIF</CardTitle>
           <CardDescription>
             Connectez-vous pour retrouver votre planning et votre progression.
           </CardDescription>
