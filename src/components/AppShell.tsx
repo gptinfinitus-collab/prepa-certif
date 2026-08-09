@@ -1,8 +1,8 @@
 import { type ReactNode, useEffect, useState } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { useQueryClient } from "@tanstack/react-query";
 import {
   BookMarked,
+  Brain,
   CalendarRange,
   Check,
   ChevronsLeft,
@@ -12,17 +12,13 @@ import {
   Home,
   Library,
   ListChecks,
-  LogOut,
   Plus,
   Settings,
   ShieldCheck,
   SpellCheck,
-  User,
 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useProfile, useSession } from "@/lib/queries";
+import { useSession } from "@/lib/queries";
 import { useMyCertifications, useSetActiveCertification } from "@/lib/certifications";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -32,13 +28,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { initialsOf } from "@/components/ProfileEditor";
+import { UserMenu } from "@/components/UserMenu";
 import { cn } from "@/lib/utils";
 import { certificationAccentStyle } from "@/lib/cert-theme";
 
 const navItems = [
   { to: "/dashboard", label: "Programme", icon: Home },
   { to: "/planning", label: "Mon planning", icon: CalendarRange },
+  { to: "/quiz", label: "Quiz", icon: Brain },
   { to: "/references", label: "Références ISO", icon: BookMarked },
   { to: "/glossaire", label: "Glossaire", icon: SpellCheck },
   { to: "/annexes", label: "Annexes", icon: ListChecks },
@@ -50,9 +47,9 @@ const navItems = [
 const mobileItems = [
   { to: "/dashboard", label: "Accueil", icon: Home },
   { to: "/planning", label: "Planning", icon: CalendarRange },
+  { to: "/quiz", label: "Quiz", icon: Brain },
   { to: "/references", label: "Références", icon: BookMarked },
   { to: "/bibliotheque", label: "Docs", icon: Library },
-  { to: "/parametres", label: "Profil", icon: User },
 ];
 
 /** Sélecteur de certification active. */
@@ -137,69 +134,8 @@ function useCertificationGuard() {
 }
 
 
-function useSignOut() {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  return async function signOut() {
-    await queryClient.cancelQueries();
-    queryClient.clear();
-    await supabase.auth.signOut();
-    navigate({ to: "/auth", replace: true });
-  };
-}
 
-function ProfileBlock({ collapsed }: { collapsed: boolean }) {
-  const { data: profile } = useProfile();
-  const { data: user } = useSession();
-  const signOut = useSignOut();
-  const fullName =
-    [profile?.first_name, profile?.last_name].filter(Boolean).join(" ") ||
-    profile?.display_name ||
-    "Mon profil";
-  const email = profile?.email ?? user?.email ?? "";
 
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <button
-          type="button"
-          className={cn(
-            "flex w-full items-center gap-3 rounded-lg border border-sidebar-border bg-sidebar-accent/40 p-2 text-left transition-colors hover:bg-sidebar-accent",
-            collapsed && "justify-center border-transparent bg-transparent p-1",
-          )}
-        >
-          <Avatar className="size-9 shrink-0 border border-sidebar-border">
-            <AvatarImage src={profile?.avatarSignedUrl ?? undefined} alt="" />
-            <AvatarFallback className="text-xs">
-              {initialsOf(profile?.first_name, profile?.last_name, email)}
-            </AvatarFallback>
-          </Avatar>
-          {!collapsed && (
-            <span className="min-w-0 flex-1">
-              <span className="block truncate text-sm font-medium text-sidebar-foreground">
-                {fullName}
-              </span>
-              <span className="block truncate text-xs text-muted-foreground">{email}</span>
-            </span>
-          )}
-        </button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" side="top" className="w-56">
-        <DropdownMenuItem asChild>
-          <Link to="/parametres">
-            <Settings className="size-4" aria-hidden />
-            Paramètres
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onSelect={() => void signOut()}>
-          <LogOut className="size-4" aria-hidden />
-          Se déconnecter
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-}
 
 export function AppShell({ children, title }: { children: ReactNode; title?: string }) {
   const [collapsed, setCollapsed] = useState(false);
@@ -279,11 +215,18 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
               </>
             )}
           </Button>
-          <ProfileBlock collapsed={collapsed} />
         </div>
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
+        {/* Desktop header */}
+        <header className="sticky top-0 z-30 hidden items-center gap-3 border-b border-border bg-card/80 px-6 py-3 backdrop-blur md:flex">
+          <h2 className="min-w-0 flex-1 truncate font-serif text-base font-semibold">
+            {title ?? "PREPA ISO"}
+          </h2>
+          <UserMenu />
+        </header>
+
         {/* Mobile header */}
         <header className="sticky top-0 z-30 border-b border-border bg-card/90 px-4 py-3 backdrop-blur md:hidden">
           <div className="flex items-center gap-3">
@@ -291,14 +234,13 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
             <span className="min-w-0 flex-1 truncate font-serif text-base font-semibold">
               {title ?? "PREPA ISO"}
             </span>
-            <Link to="/parametres" aria-label="Paramètres">
-              <Settings className="size-5 text-muted-foreground" aria-hidden />
-            </Link>
+            <UserMenu />
           </div>
           <div className="mt-2">
             <CertificationSwitcher compact />
           </div>
         </header>
+
 
 
         <main className="min-w-0 flex-1 pb-24 md:pb-0">{children}</main>
