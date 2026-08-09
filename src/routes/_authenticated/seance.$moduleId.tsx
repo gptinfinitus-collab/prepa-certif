@@ -82,7 +82,7 @@ function Seance() {
           <Badge variant="secondary">{typeLabels[module.type]}</Badge>
         </div>
 
-        <h1 className="mt-3 font-serif text-3xl font-semibold leading-tight">{module.title}</h1>
+        <h1 className="mt-3 font-serif text-2xl font-semibold leading-tight sm:text-3xl">{module.title}</h1>
         <p className="mt-3 rounded-md border-l-2 border-primary bg-secondary/50 p-3 text-sm">
           <strong className="font-medium">Objectif :</strong> {module.objective}
         </p>

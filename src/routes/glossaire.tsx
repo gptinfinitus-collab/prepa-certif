@@ -39,7 +39,7 @@ function Glossaire() {
   return (
     <AppShell title="Glossaire">
       <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
-        <h1 className="font-serif text-3xl font-semibold">Glossaire</h1>
+        <h1 className="font-serif text-2xl font-semibold sm:text-3xl">Glossaire</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           {curriculum.glossary.length} termes essentiels pour {certificationName} et l'audit.
         </p>

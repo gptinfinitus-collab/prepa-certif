@@ -185,7 +185,7 @@ function CertificationsPage() {
   return (
     <AppShell title="Mes certifications">
       <div className="mx-auto max-w-5xl px-4 py-6 md:py-10">
-        <h1 className="font-serif text-3xl font-semibold">Mes certifications</h1>
+        <h1 className="font-serif text-2xl font-semibold sm:text-3xl">Mes certifications</h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
           Choisissez la certification que vous préparez. Vous pouvez en suivre plusieurs en
           parallèle : chacune garde son propre planning, sa progression et ses documents.

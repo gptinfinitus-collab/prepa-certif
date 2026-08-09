@@ -129,7 +129,7 @@ function Dashboard() {
               <CardTitle className="text-sm font-medium text-muted-foreground">Progression</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="font-serif text-3xl font-semibold">{percent}%</p>
+              <p className="font-serif text-2xl font-semibold sm:text-3xl">{percent}%</p>
               <Progress value={percent} className="mt-3" />
               <p className="mt-2 text-xs text-muted-foreground">
                 {completedIds.size} / {modules.length} séances terminées

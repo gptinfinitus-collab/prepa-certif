@@ -141,7 +141,7 @@ function Bibliotheque() {
   return (
     <AppShell title="Mes documents">
       <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
-        <h1 className="font-serif text-3xl font-semibold">Mes documents</h1>
+        <h1 className="font-serif text-2xl font-semibold sm:text-3xl">Mes documents</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Supports de cours, notes de formation et exemplaires personnels de normes. Chaque document
           est privé, puis découpé et indexé pour servir de base de connaissances à l'assistant IA et
@@ -194,49 +194,56 @@ function Bibliotheque() {
           ) : (
             <ul className="mt-3 divide-y divide-border rounded-lg border border-border bg-card">
               {list.map((doc) => (
-                <li key={doc.id} className="flex flex-wrap items-center gap-3 px-4 py-3">
-                  <FileText className="size-4 text-primary" aria-hidden />
-                  <span className="min-w-0 flex-1 truncate text-sm">{doc.name}</span>
-                  <Badge variant="secondary">
-                    {kinds.find((k) => k.value === doc.kind)?.label ?? doc.kind}
-                  </Badge>
-                  {doc.status === "ready" ? (
-                    <Badge className="bg-cert/15 text-cert" variant="secondary">
-                      Indexé · {doc.chunk_count} extraits
+                <li key={doc.id} className="flex flex-col gap-2 px-4 py-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
+                  <div className="flex min-w-0 flex-1 items-start gap-2 sm:basis-full lg:basis-auto">
+                    <FileText className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
+                    <span className="min-w-0 flex-1 break-words text-sm">{doc.name}</span>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Badge variant="secondary">
+                      {kinds.find((k) => k.value === doc.kind)?.label ?? doc.kind}
                     </Badge>
-                  ) : doc.status === "error" ? (
-                    <Badge variant="destructive" title={doc.error ?? undefined}>
-                      Analyse échouée
-                    </Badge>
-                  ) : (
-                    <Badge variant="outline">En attente d'analyse</Badge>
-                  )}
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    disabled={analyse.isPending}
-                    onClick={() => analyse.mutate(doc.id)}
-                  >
-                    {analyse.isPending && analyse.variables === doc.id ? (
-                      <Loader2 className="size-4 animate-spin" aria-hidden />
+                    {doc.status === "ready" ? (
+                      <Badge className="bg-cert/15 text-cert" variant="secondary">
+                        Indexé · {doc.chunk_count} extraits
+                      </Badge>
+                    ) : doc.status === "error" ? (
+                      <Badge variant="destructive" title={doc.error ?? undefined}>
+                        Analyse échouée
+                      </Badge>
                     ) : (
-                      <Sparkles className="size-4" aria-hidden />
+                      <Badge variant="outline">En attente d'analyse</Badge>
                     )}
-                    {doc.status === "ready" ? "Réindexer" : "Analyser"}
-                  </Button>
-                  <Button variant="ghost" size="sm" onClick={() => handleOpen(doc.storage_path)}>
-                    <Download className="size-4" aria-hidden />
-                    Ouvrir
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleDelete(doc.id, doc.storage_path)}
-                  >
-                    <Trash2 className="size-4 text-destructive" aria-hidden />
-                    <span className="sr-only">Supprimer {doc.name}</span>
-                  </Button>
+                  </div>
+                  <div className="-ml-2 flex flex-wrap items-center gap-1 sm:ml-auto">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      disabled={analyse.isPending}
+                      onClick={() => analyse.mutate(doc.id)}
+                    >
+                      {analyse.isPending && analyse.variables === doc.id ? (
+                        <Loader2 className="size-4 animate-spin" aria-hidden />
+                      ) : (
+                        <Sparkles className="size-4" aria-hidden />
+                      )}
+                      {doc.status === "ready" ? "Réindexer" : "Analyser"}
+                    </Button>
+                    <Button variant="ghost" size="sm" onClick={() => handleOpen(doc.storage_path)}>
+                      <Download className="size-4" aria-hidden />
+                      Ouvrir
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDelete(doc.id, doc.storage_path)}
+                    >
+                      <Trash2 className="size-4 text-destructive" aria-hidden />
+                      <span className="sr-only">Supprimer {doc.name}</span>
+                    </Button>
+                  </div>
                 </li>
+
               ))}
             </ul>
           )}

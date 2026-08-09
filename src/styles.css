@@ -226,10 +226,14 @@
     color: var(--color-muted-foreground);
   }
   & table {
+    display: block;
     width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
     border-collapse: collapse;
     margin-block: 1rem;
     font-size: 0.9rem;
+    -webkit-overflow-scrolling: touch;
   }
   & th,
   & td {
@@ -242,5 +246,26 @@
     padding: 0.1rem 0.3rem;
     border-radius: 0.25rem;
     font-size: 0.875em;
+    overflow-wrap: anywhere;
+  }
+  & pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  & img {
+    max-width: 100%;
+    height: auto;
+  }
+  & p,
+  & li,
+  & h1,
+  & h2,
+  & h3,
+  & h4,
+  & blockquote {
+    overflow-wrap: anywhere;
+  }
+  & a {
+    overflow-wrap: anywhere;
   }
 }

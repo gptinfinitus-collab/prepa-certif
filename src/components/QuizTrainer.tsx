@@ -419,7 +419,7 @@ export function QuizTrainer({
             ) : (
               <>
                 <div className="flex items-baseline gap-2">
-                  <span className="font-serif text-3xl font-semibold">{finalScore}%</span>
+                  <span className="font-serif text-2xl font-semibold sm:text-3xl">{finalScore}%</span>
                   <span className="text-sm text-muted-foreground">
                     {mode === "qcm"
                       ? `${correctCount} bonne(s) réponse(s) sur ${questions.length}`

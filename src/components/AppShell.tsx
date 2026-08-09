@@ -141,6 +141,9 @@ function useCertificationGuard() {
 
 export function AppShell({ children, title }: { children: ReactNode; title?: string }) {
   const [collapsed, setCollapsed] = useState(false);
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.innerWidth < 1024) setCollapsed(true);
+  }, []);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isActive = (to: string) => pathname === to || pathname.startsWith(`${to}/`);
   const activeMobile = mobileItems.some((i) => isActive(i.to));
@@ -157,7 +160,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
       <aside
         className={cn(
           "sticky top-0 hidden h-screen shrink-0 flex-col border-r border-sidebar-border bg-sidebar transition-[width] duration-200 md:flex",
-          collapsed ? "w-[4.5rem]" : "w-64",
+          collapsed ? "w-[4.5rem]" : "w-56 lg:w-64",
         )}
       >
         <div
@@ -238,7 +241,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
 
 
 
-        <main className="min-w-0 flex-1 pb-24 md:pb-0">{children}</main>
+        <main className="min-w-0 flex-1 pb-[calc(5.5rem+env(safe-area-inset-bottom))] md:pb-0">{children}</main>
 
         {/* Mobile bottom nav */}
         <nav
