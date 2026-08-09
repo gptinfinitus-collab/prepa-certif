@@ -273,6 +273,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          active_track: string
           avatar_url: string | null
           created_at: string
           display_name: string | null
@@ -282,6 +283,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          active_track?: string
           avatar_url?: string | null
           created_at?: string
           display_name?: string | null
@@ -291,6 +293,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          active_track?: string
           avatar_url?: string | null
           created_at?: string
           display_name?: string | null
@@ -485,6 +488,200 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "user_certifications_certification_id_fkey"
+            columns: ["certification_id"]
+            isOneToOne: false
+            referencedRelation: "certifications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_flashcard_progress: {
+        Row: {
+          card_key: string
+          certification_id: string | null
+          created_at: string
+          id: string
+          module_id: number
+          review_count: number
+          reviewed_at: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          card_key: string
+          certification_id?: string | null
+          created_at?: string
+          id?: string
+          module_id: number
+          review_count?: number
+          reviewed_at?: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          card_key?: string
+          certification_id?: string | null
+          created_at?: string
+          id?: string
+          module_id?: number
+          review_count?: number
+          reviewed_at?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_flashcard_progress_certification_id_fkey"
+            columns: ["certification_id"]
+            isOneToOne: false
+            referencedRelation: "certifications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_lesson_progress: {
+        Row: {
+          certification_id: string
+          completed: boolean
+          completed_at: string | null
+          created_at: string
+          current_section: string | null
+          id: string
+          last_activity_at: string
+          module_id: number
+          quiz_submitted: boolean
+          sections_read: string[]
+          time_spent_seconds: number
+          track: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          certification_id: string
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          current_section?: string | null
+          id?: string
+          last_activity_at?: string
+          module_id: number
+          quiz_submitted?: boolean
+          sections_read?: string[]
+          time_spent_seconds?: number
+          track?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          certification_id?: string
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          current_section?: string | null
+          id?: string
+          last_activity_at?: string
+          module_id?: number
+          quiz_submitted?: boolean
+          sections_read?: string[]
+          time_spent_seconds?: number
+          track?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_lesson_progress_certification_id_fkey"
+            columns: ["certification_id"]
+            isOneToOne: false
+            referencedRelation: "certifications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_notes: {
+        Row: {
+          certification_id: string | null
+          content: string
+          created_at: string
+          id: string
+          module_id: number
+          section_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          certification_id?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          module_id: number
+          section_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          certification_id?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          module_id?: number
+          section_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_notes_certification_id_fkey"
+            columns: ["certification_id"]
+            isOneToOne: false
+            referencedRelation: "certifications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_topic_mastery: {
+        Row: {
+          attempts: number
+          certification_id: string | null
+          correct: number
+          created_at: string
+          id: string
+          last_seen_at: string
+          topic: string
+          track: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          attempts?: number
+          certification_id?: string | null
+          correct?: number
+          created_at?: string
+          id?: string
+          last_seen_at?: string
+          topic: string
+          track?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          attempts?: number
+          certification_id?: string | null
+          correct?: number
+          created_at?: string
+          id?: string
+          last_seen_at?: string
+          topic?: string
+          track?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_topic_mastery_certification_id_fkey"
             columns: ["certification_id"]
             isOneToOne: false
             referencedRelation: "certifications"
