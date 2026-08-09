@@ -21,6 +21,7 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as AuthenticatedParametresRouteImport } from './routes/_authenticated/parametres'
 import { Route as AuthenticatedPlanningRouteImport } from './routes/_authenticated/planning'
 import { Route as AuthenticatedProfilRouteImport } from './routes/_authenticated/profil'
+import { Route as AuthenticatedQuizRouteImport } from './routes/_authenticated/quiz'
 import { Route as AuthenticatedSeanceModuleIdRouteImport } from './routes/_authenticated/seance.$moduleId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -84,6 +85,11 @@ const AuthenticatedProfilRoute = AuthenticatedProfilRouteImport.update({
   path: '/profil',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedQuizRoute = AuthenticatedQuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedSeanceModuleIdRoute =
   AuthenticatedSeanceModuleIdRouteImport.update({
     id: '/seance/$moduleId',
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/parametres': typeof AuthenticatedParametresRoute
   '/planning': typeof AuthenticatedPlanningRoute
   '/profil': typeof AuthenticatedProfilRoute
+  '/quiz': typeof AuthenticatedQuizRoute
   '/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
 }
 export interface FileRoutesByTo {
@@ -117,6 +124,7 @@ export interface FileRoutesByTo {
   '/parametres': typeof AuthenticatedParametresRoute
   '/planning': typeof AuthenticatedPlanningRoute
   '/profil': typeof AuthenticatedProfilRoute
+  '/quiz': typeof AuthenticatedQuizRoute
   '/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
 }
 export interface FileRoutesById {
@@ -133,6 +141,7 @@ export interface FileRoutesById {
   '/_authenticated/parametres': typeof AuthenticatedParametresRoute
   '/_authenticated/planning': typeof AuthenticatedPlanningRoute
   '/_authenticated/profil': typeof AuthenticatedProfilRoute
+  '/_authenticated/quiz': typeof AuthenticatedQuizRoute
   '/_authenticated/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
 }
 export interface FileRouteTypes {
@@ -149,6 +158,7 @@ export interface FileRouteTypes {
     | '/parametres'
     | '/planning'
     | '/profil'
+    | '/quiz'
     | '/seance/$moduleId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -163,6 +173,7 @@ export interface FileRouteTypes {
     | '/parametres'
     | '/planning'
     | '/profil'
+    | '/quiz'
     | '/seance/$moduleId'
   id:
     | '__root__'
@@ -178,6 +189,7 @@ export interface FileRouteTypes {
     | '/_authenticated/parametres'
     | '/_authenticated/planning'
     | '/_authenticated/profil'
+    | '/_authenticated/quiz'
     | '/_authenticated/seance/$moduleId'
   fileRoutesById: FileRoutesById
 }
@@ -276,6 +288,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProfilRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/quiz': {
+      id: '/_authenticated/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof AuthenticatedQuizRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/seance/$moduleId': {
       id: '/_authenticated/seance/$moduleId'
       path: '/seance/$moduleId'
@@ -293,6 +312,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedParametresRoute: typeof AuthenticatedParametresRoute
   AuthenticatedPlanningRoute: typeof AuthenticatedPlanningRoute
   AuthenticatedProfilRoute: typeof AuthenticatedProfilRoute
+  AuthenticatedQuizRoute: typeof AuthenticatedQuizRoute
   AuthenticatedSeanceModuleIdRoute: typeof AuthenticatedSeanceModuleIdRoute
 }
 
@@ -303,6 +323,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedParametresRoute: AuthenticatedParametresRoute,
   AuthenticatedPlanningRoute: AuthenticatedPlanningRoute,
   AuthenticatedProfilRoute: AuthenticatedProfilRoute,
+  AuthenticatedQuizRoute: AuthenticatedQuizRoute,
   AuthenticatedSeanceModuleIdRoute: AuthenticatedSeanceModuleIdRoute,
 }
 

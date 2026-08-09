@@ -50,9 +50,9 @@ const navItems = [
 const mobileItems = [
   { to: "/dashboard", label: "Accueil", icon: Home },
   { to: "/planning", label: "Planning", icon: CalendarRange },
+  { to: "/quiz", label: "Quiz", icon: Brain },
   { to: "/references", label: "Références", icon: BookMarked },
   { to: "/bibliotheque", label: "Docs", icon: Library },
-  { to: "/parametres", label: "Profil", icon: User },
 ];
 
 /** Sélecteur de certification active. */
