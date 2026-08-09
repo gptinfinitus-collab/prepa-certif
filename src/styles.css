@@ -284,22 +284,91 @@
 }
 
 @keyframes page-enter-anim {
-  from {
+  0% {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translate3d(0, 28px, 0) scale(0.985);
+    filter: blur(6px);
   }
-  to {
+  60% {
+    filter: blur(0);
+  }
+  100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
+    filter: blur(0);
   }
 }
 
+@keyframes page-rise-anim {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes page-veil-anim {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -18%, 0);
+  }
+}
+
+/* Transition de page : montée fluide depuis le bas, avec voile et cascade */
 .page-enter {
-  animation: page-enter-anim 180ms ease-out both;
+  position: relative;
+  animation: page-enter-anim 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity, filter;
+}
+
+.page-enter::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: 30;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    color-mix(in oklab, var(--background) 92%, transparent) 0%,
+    color-mix(in oklab, var(--background) 60%, transparent) 45%,
+    transparent 100%
+  );
+  animation: page-veil-anim 480ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Cascade des premiers blocs de la page */
+.page-enter > * > * {
+  animation: page-rise-anim 560ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.page-enter > * > *:nth-child(1) {
+  animation-delay: 40ms;
+}
+.page-enter > * > *:nth-child(2) {
+  animation-delay: 100ms;
+}
+.page-enter > * > *:nth-child(3) {
+  animation-delay: 160ms;
+}
+.page-enter > * > *:nth-child(4) {
+  animation-delay: 215ms;
+}
+.page-enter > * > *:nth-child(n + 5) {
+  animation-delay: 260ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .page-enter {
+  .page-enter,
+  .page-enter::before,
+  .page-enter > * > * {
     animation: none;
   }
 }
+
