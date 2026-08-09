@@ -15,6 +15,7 @@ import {
   PanelLeftClose,
   Plus,
   Settings,
+  ShieldCheck,
   SpellCheck,
 } from "lucide-react";
 import { useSession } from "@/lib/queries";
@@ -32,6 +33,7 @@ import { UserMenu } from "@/components/UserMenu";
 import { BrandLogo } from "@/components/BrandLogo";
 import { cn } from "@/lib/utils";
 import { certificationAccentStyle } from "@/lib/cert-theme";
+import { useIsSuperAdmin } from "@/lib/admin";
 
 const navItems = [
   { to: "/dashboard", label: "Programme", icon: Home },
@@ -140,6 +142,7 @@ function useCertificationGuard() {
 
 export function AppShell({ children, title }: { children: ReactNode; title?: string }) {
   const [collapsed, setCollapsed] = useState(false);
+  const isSuperAdmin = useIsSuperAdmin();
   useEffect(() => {
     if (typeof window !== "undefined" && window.innerWidth < 1024) setCollapsed(true);
   }, []);
