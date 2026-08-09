@@ -23,7 +23,7 @@ const HUES: Record<string, number> = {
 export function certificationHue(code: string | null | undefined): number {
   if (!code) return 72;
   const key = Object.keys(HUES).find((k) => code.toUpperCase().startsWith(k.toUpperCase()));
-  if (key) return HUES[key];
+  if (key) return HUES[key] ?? 72;
   let hash = 0;
   for (let i = 0; i < code.length; i += 1) hash = (hash * 31 + code.charCodeAt(i)) % 360;
   return hash;
