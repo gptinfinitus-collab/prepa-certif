@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Toggle } from "@/components/ui/toggle";
 import { toast } from "sonner";
-import { modules } from "@/data/program";
+import { useCurriculum } from "@/lib/curriculum";
 import {
   buildSchedule,
   dayNames,
