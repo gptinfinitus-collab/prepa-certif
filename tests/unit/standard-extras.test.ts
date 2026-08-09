@@ -96,7 +96,7 @@ describe("cursus générés", () => {
   });
 
   it("attache le contenu pédagogique à chaque séance de chapitre", () => {
-    for (const spec of standardSpecs) {
+    for (const spec of Object.values(standardSpecs)) {
       const curriculum = getCurriculum(source(spec.code, spec.label));
       expect(curriculum, spec.code).not.toBeNull();
       const lessons = curriculum!.modules.filter((m) => m.type === "lesson");
