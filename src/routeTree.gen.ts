@@ -13,8 +13,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AnnexesRouteImport } from './routes/annexes'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CguRouteImport } from './routes/cgu'
+import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
+import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as GlossaireRouteImport } from './routes/glossaire'
+import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as ReferencesRouteImport } from './routes/references'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedBibliothequeRouteImport } from './routes/_authenticated/bibliotheque'
 import { Route as AuthenticatedCertificationsRouteImport } from './routes/_authenticated/certifications'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
@@ -46,14 +51,39 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CguRoute = CguRouteImport.update({
+  id: '/cgu',
+  path: '/cgu',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfidentialiteRoute = ConfidentialiteRouteImport.update({
+  id: '/confidentialite',
+  path: '/confidentialite',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GlossaireRoute = GlossaireRouteImport.update({
   id: '/glossaire',
   path: '/glossaire',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
+  id: '/mentions-legales',
+  path: '/mentions-legales',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReferencesRoute = ReferencesRouteImport.update({
   id: '/references',
   path: '/references',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedBibliothequeRoute =
@@ -121,8 +151,13 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/annexes': typeof AnnexesRoute
   '/auth': typeof AuthRoute
+  '/cgu': typeof CguRoute
+  '/confidentialite': typeof ConfidentialiteRoute
+  '/cookies': typeof CookiesRoute
   '/glossaire': typeof GlossaireRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
   '/references': typeof ReferencesRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/bibliotheque': typeof AuthenticatedBibliothequeRoute
   '/certifications': typeof AuthenticatedCertificationsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -139,8 +174,13 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/annexes': typeof AnnexesRoute
   '/auth': typeof AuthRoute
+  '/cgu': typeof CguRoute
+  '/confidentialite': typeof ConfidentialiteRoute
+  '/cookies': typeof CookiesRoute
   '/glossaire': typeof GlossaireRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
   '/references': typeof ReferencesRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/bibliotheque': typeof AuthenticatedBibliothequeRoute
   '/certifications': typeof AuthenticatedCertificationsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -159,8 +199,13 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/annexes': typeof AnnexesRoute
   '/auth': typeof AuthRoute
+  '/cgu': typeof CguRoute
+  '/confidentialite': typeof ConfidentialiteRoute
+  '/cookies': typeof CookiesRoute
   '/glossaire': typeof GlossaireRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
   '/references': typeof ReferencesRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/bibliotheque': typeof AuthenticatedBibliothequeRoute
   '/_authenticated/certifications': typeof AuthenticatedCertificationsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -179,8 +224,13 @@ export interface FileRouteTypes {
     | '/'
     | '/annexes'
     | '/auth'
+    | '/cgu'
+    | '/confidentialite'
+    | '/cookies'
     | '/glossaire'
+    | '/mentions-legales'
     | '/references'
+    | '/reset-password'
     | '/bibliotheque'
     | '/certifications'
     | '/dashboard'
@@ -197,8 +247,13 @@ export interface FileRouteTypes {
     | '/'
     | '/annexes'
     | '/auth'
+    | '/cgu'
+    | '/confidentialite'
+    | '/cookies'
     | '/glossaire'
+    | '/mentions-legales'
     | '/references'
+    | '/reset-password'
     | '/bibliotheque'
     | '/certifications'
     | '/dashboard'
@@ -216,8 +271,13 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/annexes'
     | '/auth'
+    | '/cgu'
+    | '/confidentialite'
+    | '/cookies'
     | '/glossaire'
+    | '/mentions-legales'
     | '/references'
+    | '/reset-password'
     | '/_authenticated/bibliotheque'
     | '/_authenticated/certifications'
     | '/_authenticated/dashboard'
@@ -236,8 +296,13 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AnnexesRoute: typeof AnnexesRoute
   AuthRoute: typeof AuthRoute
+  CguRoute: typeof CguRoute
+  ConfidentialiteRoute: typeof ConfidentialiteRoute
+  CookiesRoute: typeof CookiesRoute
   GlossaireRoute: typeof GlossaireRoute
+  MentionsLegalesRoute: typeof MentionsLegalesRoute
   ReferencesRoute: typeof ReferencesRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   ApiChatRoute: typeof ApiChatRoute
 }
 
@@ -271,6 +336,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cgu': {
+      id: '/cgu'
+      path: '/cgu'
+      fullPath: '/cgu'
+      preLoaderRoute: typeof CguRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/confidentialite': {
+      id: '/confidentialite'
+      path: '/confidentialite'
+      fullPath: '/confidentialite'
+      preLoaderRoute: typeof ConfidentialiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/glossaire': {
       id: '/glossaire'
       path: '/glossaire'
@@ -278,11 +364,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GlossaireRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mentions-legales': {
+      id: '/mentions-legales'
+      path: '/mentions-legales'
+      fullPath: '/mentions-legales'
+      preLoaderRoute: typeof MentionsLegalesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/references': {
       id: '/references'
       path: '/references'
       fullPath: '/references'
       preLoaderRoute: typeof ReferencesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/bibliotheque': {
@@ -399,8 +499,13 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AnnexesRoute: AnnexesRoute,
   AuthRoute: AuthRoute,
+  CguRoute: CguRoute,
+  ConfidentialiteRoute: ConfidentialiteRoute,
+  CookiesRoute: CookiesRoute,
   GlossaireRoute: GlossaireRoute,
+  MentionsLegalesRoute: MentionsLegalesRoute,
   ReferencesRoute: ReferencesRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport
