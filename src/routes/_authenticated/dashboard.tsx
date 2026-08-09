@@ -10,6 +10,7 @@ import { Progress } from "@/components/ui/progress";
 import { modules, program, typeLabels } from "@/data/program";
 import { buildSchedule, scheduleByModuleId, computePace, formatShortDate } from "@/lib/schedule";
 import { useProgress, useStudyPlan } from "@/lib/queries";
+import { useActiveCertification } from "@/lib/certifications";
 import { CheckCircle2, Circle, CalendarClock } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
