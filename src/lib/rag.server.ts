@@ -78,7 +78,7 @@ export async function extractDocumentText(name: string, bytes: ArrayBuffer): Pro
     const { extractText, getDocumentProxy } = await import("unpdf");
     const pdf = await getDocumentProxy(new Uint8Array(bytes));
     const { text } = await extractText(pdf, { mergePages: true });
-    return typeof text === "string" ? text : text.join("\n");
+    return Array.isArray(text) ? (text as string[]).join("\n") : (text as string);
   }
   if (lower.endsWith(".txt") || lower.endsWith(".md") || lower.endsWith(".csv")) {
     return new TextDecoder().decode(bytes);
