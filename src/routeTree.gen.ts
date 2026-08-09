@@ -10,33 +10,147 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AnnexesRouteImport } from './routes/annexes'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as GlossaireRouteImport } from './routes/glossaire'
+import { Route as ReferencesRouteImport } from './routes/references'
+import { Route as AuthenticatedBibliothequeRouteImport } from './routes/_authenticated/bibliotheque'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedPlanningRouteImport } from './routes/_authenticated/planning'
+import { Route as AuthenticatedSeanceModuleIdRouteImport } from './routes/_authenticated/seance.$moduleId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnnexesRoute = AnnexesRouteImport.update({
+  id: '/annexes',
+  path: '/annexes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GlossaireRoute = GlossaireRouteImport.update({
+  id: '/glossaire',
+  path: '/glossaire',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReferencesRoute = ReferencesRouteImport.update({
+  id: '/references',
+  path: '/references',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedBibliothequeRoute =
+  AuthenticatedBibliothequeRouteImport.update({
+    id: '/bibliotheque',
+    path: '/bibliotheque',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPlanningRoute = AuthenticatedPlanningRouteImport.update({
+  id: '/planning',
+  path: '/planning',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSeanceModuleIdRoute =
+  AuthenticatedSeanceModuleIdRouteImport.update({
+    id: '/seance/$moduleId',
+    path: '/seance/$moduleId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/annexes': typeof AnnexesRoute
+  '/auth': typeof AuthRoute
+  '/glossaire': typeof GlossaireRoute
+  '/references': typeof ReferencesRoute
+  '/bibliotheque': typeof AuthenticatedBibliothequeRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/planning': typeof AuthenticatedPlanningRoute
+  '/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/annexes': typeof AnnexesRoute
+  '/auth': typeof AuthRoute
+  '/glossaire': typeof GlossaireRoute
+  '/references': typeof ReferencesRoute
+  '/bibliotheque': typeof AuthenticatedBibliothequeRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/planning': typeof AuthenticatedPlanningRoute
+  '/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/annexes': typeof AnnexesRoute
+  '/auth': typeof AuthRoute
+  '/glossaire': typeof GlossaireRoute
+  '/references': typeof ReferencesRoute
+  '/_authenticated/bibliotheque': typeof AuthenticatedBibliothequeRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/planning': typeof AuthenticatedPlanningRoute
+  '/_authenticated/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/annexes'
+    | '/auth'
+    | '/glossaire'
+    | '/references'
+    | '/bibliotheque'
+    | '/dashboard'
+    | '/planning'
+    | '/seance/$moduleId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/annexes'
+    | '/auth'
+    | '/glossaire'
+    | '/references'
+    | '/bibliotheque'
+    | '/dashboard'
+    | '/planning'
+    | '/seance/$moduleId'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/annexes'
+    | '/auth'
+    | '/glossaire'
+    | '/references'
+    | '/_authenticated/bibliotheque'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/planning'
+    | '/_authenticated/seance/$moduleId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AnnexesRoute: typeof AnnexesRoute
+  AuthRoute: typeof AuthRoute
+  GlossaireRoute: typeof GlossaireRoute
+  ReferencesRoute: typeof ReferencesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +162,97 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/annexes': {
+      id: '/annexes'
+      path: '/annexes'
+      fullPath: '/annexes'
+      preLoaderRoute: typeof AnnexesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/glossaire': {
+      id: '/glossaire'
+      path: '/glossaire'
+      fullPath: '/glossaire'
+      preLoaderRoute: typeof GlossaireRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/references': {
+      id: '/references'
+      path: '/references'
+      fullPath: '/references'
+      preLoaderRoute: typeof ReferencesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/bibliotheque': {
+      id: '/_authenticated/bibliotheque'
+      path: '/bibliotheque'
+      fullPath: '/bibliotheque'
+      preLoaderRoute: typeof AuthenticatedBibliothequeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/planning': {
+      id: '/_authenticated/planning'
+      path: '/planning'
+      fullPath: '/planning'
+      preLoaderRoute: typeof AuthenticatedPlanningRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/seance/$moduleId': {
+      id: '/_authenticated/seance/$moduleId'
+      path: '/seance/$moduleId'
+      fullPath: '/seance/$moduleId'
+      preLoaderRoute: typeof AuthenticatedSeanceModuleIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBibliothequeRoute: typeof AuthenticatedBibliothequeRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedPlanningRoute: typeof AuthenticatedPlanningRoute
+  AuthenticatedSeanceModuleIdRoute: typeof AuthenticatedSeanceModuleIdRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBibliothequeRoute: AuthenticatedBibliothequeRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedPlanningRoute: AuthenticatedPlanningRoute,
+  AuthenticatedSeanceModuleIdRoute: AuthenticatedSeanceModuleIdRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AnnexesRoute: AnnexesRoute,
+  AuthRoute: AuthRoute,
+  GlossaireRoute: GlossaireRoute,
+  ReferencesRoute: ReferencesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
