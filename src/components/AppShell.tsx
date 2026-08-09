@@ -273,15 +273,21 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
 
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Mobile header */}
-        <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-border bg-card/90 px-4 py-3 backdrop-blur md:hidden">
-          <ShieldCheck className="size-5 shrink-0 text-primary" aria-hidden />
-          <span className="min-w-0 flex-1 truncate font-serif text-base font-semibold">
-            {title ?? "PREPA IRCA 45001"}
-          </span>
-          <Link to="/parametres" aria-label="Paramètres">
-            <Settings className="size-5 text-muted-foreground" aria-hidden />
-          </Link>
+        <header className="sticky top-0 z-30 border-b border-border bg-card/90 px-4 py-3 backdrop-blur md:hidden">
+          <div className="flex items-center gap-3">
+            <ShieldCheck className="size-5 shrink-0 text-primary" aria-hidden />
+            <span className="min-w-0 flex-1 truncate font-serif text-base font-semibold">
+              {title ?? "PREPA ISO"}
+            </span>
+            <Link to="/parametres" aria-label="Paramètres">
+              <Settings className="size-5 text-muted-foreground" aria-hidden />
+            </Link>
+          </div>
+          <div className="mt-2">
+            <CertificationSwitcher compact />
+          </div>
         </header>
+
 
         <main className="min-w-0 flex-1 pb-24 md:pb-0">{children}</main>
 
