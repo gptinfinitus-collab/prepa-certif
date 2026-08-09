@@ -40,13 +40,16 @@ export const STUDY_DAY_LABELS: { value: number; label: string; short: string }[]
 
 export const MAX_MODULES_PER_DAY = 4;
 
-/** L'écran de bienvenue s'affiche tant qu'il n'a pas été terminé ou passé. */
+/**
+ * L'écran de bienvenue s'affiche tant qu'il n'a pas été terminé ou passé.
+ * Il réapparaît si le compte n'a plus aucune certification suivie.
+ */
 export function needsOnboarding(input: {
   onboardedAt: string | null;
   hasCertification: boolean;
 }): boolean {
-  if (input.onboardedAt) return false;
-  return !input.hasCertification || true;
+  if (!input.onboardedAt) return true;
+  return !input.hasCertification;
 }
 
 export function toggleStudyDay(days: number[], day: number): number[] {
