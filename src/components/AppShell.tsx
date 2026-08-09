@@ -68,7 +68,7 @@ function CertificationSwitcher({ compact = false }: { compact?: boolean }) {
           type="button"
           style={certificationAccentStyle(active?.certification.code)}
           className={cn(
-            "flex w-full items-center gap-2 rounded-lg border border-sidebar-border border-l-4 border-l-cert bg-sidebar-accent/40 px-3 py-2 text-left transition-colors hover:bg-sidebar-accent",
+            "cert-tint flex w-full items-center gap-2 rounded-lg border border-sidebar-border border-l-4 border-l-cert bg-sidebar-accent/40 px-3 py-2 text-left transition-colors hover:bg-sidebar-accent",
             compact && "border-border border-l-4 border-l-cert bg-transparent px-2 py-1.5",
           )}
           aria-label="Changer de certification"
@@ -95,7 +95,7 @@ function CertificationSwitcher({ compact = false }: { compact?: boolean }) {
             onSelect={() => void setActive.mutateAsync(item.certification_id)}
           >
             <span
-              className="size-2.5 shrink-0 rounded-full bg-cert"
+              className="cert-tint size-2.5 shrink-0 rounded-full bg-cert"
               style={certificationAccentStyle(item.certification.code)}
               aria-hidden
             />
@@ -212,7 +212,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
 
   return (
     <div
-      className="min-h-screen bg-background md:flex"
+      className="cert-tint min-h-screen bg-background md:flex"
       style={certificationAccentStyle(activeCert?.certification.code)}
     >
       {/* Desktop sidebar */}

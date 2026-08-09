@@ -220,7 +220,7 @@ function CertificationsPage() {
                   key={cert.id}
                   style={certificationAccentStyle(cert.code)}
                   className={cn(
-                    "border-t-4 border-t-cert",
+                    "cert-tint border-t-4 border-t-cert",
                     active ? "ring-1 ring-cert/40" : undefined,
                   )}
                 >
