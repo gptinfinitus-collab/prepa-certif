@@ -1,51 +1,71 @@
-# Espace Super Admin — voir et gérer les utilisateurs
+# Plan global — Étapes 4 à 8 de PREPA CERTIF
 
-Objectif : donner au compte `gptinfinitus@gmail.com` une page privée listant tous les utilisateurs de PREPA CERTIF, avec possibilité de désactiver, réactiver ou supprimer un compte. Gratuit aujourd'hui, la structure prépare une future monétisation par abonnement.
+Étapes 1 à 3 déjà validées : typographie Inter, build + tests, contenu pédagogique par norme.
 
-## Ce que verra le super admin
+## Étape 4 — Parcours Lead Auditor et profil d'examen
 
-Nouvelle entrée « Administration » dans la barre latérale, visible uniquement pour lui, menant à `/admin`.
+Ouvrir le troisième niveau, aujourd'hui verrouillé, en l'adaptant à l'organisme visé.
 
-La page affiche :
+- Choix d'un organisme d'examen (PECB, CQI/IRCA, autre / non défini) stocké dans `profiles.exam_body`, proposé dans Paramètres et au déverrouillage du niveau.
+- Déverrouillage du niveau Lead Auditor une fois l'organisme choisi, avec avertissement clair : le contenu reste une préparation, pas un cours officiel accrédité.
+- Contenu spécifique Lead Auditor : conduite d'audit complet, gestion d'équipe, réunions d'ouverture/clôture, rédaction de non-conformités, rapport et suivi.
+- Génération des questions d'entraînement adaptée au format de l'organisme (QCM court PECB, mises en situation longues IRCA).
 
-- Cartes de synthèse : total d'utilisateurs, inscrits sur 7 / 30 jours, actifs sur 7 jours, comptes désactivés.
-- Tableau des utilisateurs : nom, e-mail, date d'inscription, dernière connexion, certification active, nombre de documents et de séances terminées, statut (actif / désactivé).
-- Recherche par nom ou e-mail, tri par date d'inscription ou dernière activité.
-- Actions par ligne : désactiver / réactiver, supprimer (confirmation obligatoire).
+## Étape 5 — Historique et révision des sessions d'entraînement
 
-Protections : le super admin ne peut ni se désactiver ni se supprimer lui-même ; aucun autre compte ne peut atteindre `/admin` ni les fonctions serveur associées.
+Les réponses sont déjà enregistrées mais jamais relues.
+
+- Onglet « Historique » dans `/quiz` : liste des sessions (date, thème, score, mode).
+- Détail d'une session : question, réponse donnée, réponse attendue, explication, feedback IA.
+- Filtres par chapitre et par résultat ; bouton « Réentraîner mes erreurs » qui génère un quiz ciblé sur les thèmes les plus faibles (`user_topic_mastery`).
+
+## Étape 6 — Onboarding guidé
+
+- Écran de bienvenue à la première connexion : certification, niveau de parcours, date d'examen, jours de révision.
+- Pré-remplissage automatique du planning à partir de ces réponses.
+- Possibilité de passer l'étape et de la reprendre depuis Paramètres.
+
+## Étape 7 — Espace Super Admin
+
+Le compte `gptinfinitus@gmail.com` voit et gère tous les utilisateurs. Entrée « Administration » visible uniquement pour lui, vers `/admin`.
+
+- Synthèse : total d'utilisateurs, inscrits sur 7 / 30 jours, actifs sur 7 jours, comptes désactivés.
+- Tableau : nom, e-mail, inscription, dernière connexion, certification active, documents, séances terminées, statut.
+- Recherche, tri, et actions par ligne : désactiver / réactiver, supprimer (confirmation obligatoire).
+- Le super admin ne peut ni se désactiver ni se supprimer lui-même ; aucun autre compte n'accède à `/admin` ni aux fonctions serveur associées.
+
+Base pour une future monétisation par abonnements — aucun paiement implémenté maintenant.
+
+## Étape 8 — Vérification finale
+
+Build de production, tests unitaires et e2e complets, passe responsive tablette et mobile, correction des régressions détectées.
 
 ## Détails techniques
 
-### Base de données (migration)
+### Migrations
 
-- Enum `public.app_role` (`super_admin`, `admin`, `user`).
-- Table `public.user_roles (id, user_id → auth.users, role, unique(user_id, role))` avec GRANT `select` à `authenticated`, `all` à `service_role`, RLS activée : chacun lit ses propres rôles ; aucune écriture côté client.
-- Fonction `public.has_role(_user_id uuid, _role app_role)` en `security definer` (`stable`, `search_path = public`).
-- Attribution du rôle `super_admin` à `gptinfinitus@gmail.com` : insertion depuis `auth.users` par e-mail confirmé, plus un trigger sur inscription/confirmation qui réattribue le rôle si le compte est recréé.
-- Colonne `profiles.disabled_at timestamptz` pour l'affichage du statut (la désactivation réelle passe par le bannissement Auth).
+- `profiles.exam_body text` (nullable) et `profiles.onboarded_at timestamptz`.
+- Enum `public.app_role` (`super_admin`, `admin`, `user`) et table `public.user_roles (id, user_id, role, unique(user_id, role))` : GRANT `select` à `authenticated`, `all` à `service_role`, RLS activée, chacun lit ses propres rôles, aucune écriture côté client.
+- Fonction `public.has_role(_user_id uuid, _role app_role)` en `security definer`, `stable`, `search_path = public`.
+- Attribution du rôle `super_admin` à `gptinfinitus@gmail.com` depuis `auth.users` (e-mail confirmé) plus un trigger de réattribution si le compte est recréé.
+- `profiles.disabled_at timestamptz` pour le statut affiché ; la désactivation effective passe par le bannissement Auth.
 
-### Fonctions serveur (`src/lib/admin.functions.ts`)
+### Fonctions serveur
 
-Toutes avec `.middleware([requireSupabaseAuth])`, vérification `has_role(userId, 'super_admin')` via `context.supabase` avant tout accès privilégié, puis `await import('@/integrations/supabase/client.server')` :
+`src/lib/admin.functions.ts`, toutes avec `.middleware([requireSupabaseAuth])` et vérification `has_role(userId, 'super_admin')` via `context.supabase` avant tout accès privilégié, puis `await import('@/integrations/supabase/client.server')` dans le handler :
 
 - `listUsers` : `auth.admin.listUsers()` agrégé avec `profiles`, `user_certifications`, `library_documents`, `user_lesson_progress`.
-- `setUserDisabled` : `auth.admin.updateUserById` avec `ban_duration` (`876000h` pour désactiver, `none` pour réactiver) + mise à jour de `profiles.disabled_at`.
-- `deleteUser` : `auth.admin.deleteUser` (les données liées partent en cascade).
+- `setUserDisabled` : `auth.admin.updateUserById` avec `ban_duration` (`876000h` / `none`) + `profiles.disabled_at`.
+- `deleteUser` : `auth.admin.deleteUser` (données liées supprimées en cascade).
 
-Refus explicite si la cible est le super admin lui-même.
+### Fichiers front
 
-### Interface
+- `src/lib/tracks.ts`, `src/components/TrackSwitcher.tsx`, `src/routes/_authenticated/parametres.tsx` — organisme d'examen et déverrouillage Lead Auditor.
+- `src/data/standard-extras.ts` — blocs pédagogiques niveau Lead Auditor.
+- `src/routes/_authenticated/quiz.tsx` + nouveau composant d'historique — étape 5.
+- `src/components/Onboarding.tsx` + `src/routes/_authenticated/dashboard.tsx` — étape 6.
+- `src/routes/_authenticated/admin.tsx`, `src/lib/admin.ts`, `src/components/AppShell.tsx` — étape 7.
 
-- `src/routes/_authenticated/admin.tsx` : redirection vers `/dashboard` si l'utilisateur n'est pas super admin, tableau responsive (cartes empilées sur mobile), boutons d'action avec `AlertDialog` de confirmation et notifications `sonner`.
-- `src/lib/admin.ts` : hook `useIsSuperAdmin` + hooks React Query pour la liste et les mutations.
-- `src/components/AppShell.tsx` : lien « Administration » conditionnel.
+### Tests par étape
 
-### Tests
-
-- Unitaires : logique de filtrage/tri et libellés de statut ; garde-fou « pas d'action sur soi-même ».
-- E2E : un utilisateur non admin qui visite `/admin` est redirigé vers `/dashboard`.
-
-## Hors périmètre pour l'instant
-
-Abonnements, paiements et quotas : la table `user_roles` et le champ statut préparent le terrain, mais rien de facturable n'est implémenté maintenant.
+Chaque étape se termine par ses tests unitaires (logique de parcours, filtres d'historique, garde-fous admin) et e2e (déverrouillage, historique, onboarding, redirection `/admin` pour un non-admin), avant de passer à la suivante.
