@@ -1,15 +1,19 @@
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   BookMarked,
   CalendarRange,
+  Check,
   ChevronsLeft,
   ChevronsRight,
+  ChevronsUpDown,
+  GraduationCap,
   Home,
   Library,
   ListChecks,
   LogOut,
+  Plus,
   Settings,
   ShieldCheck,
   SpellCheck,
@@ -17,12 +21,14 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useProfile, useSession } from "@/lib/queries";
+import { useMyCertifications, useSetActiveCertification } from "@/lib/certifications";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -36,6 +42,7 @@ const navItems = [
   { to: "/glossaire", label: "Glossaire", icon: SpellCheck },
   { to: "/annexes", label: "Annexes", icon: ListChecks },
   { to: "/bibliotheque", label: "Ma bibliothèque", icon: Library },
+  { to: "/certifications", label: "Mes certifications", icon: GraduationCap },
   { to: "/parametres", label: "Paramètres", icon: Settings },
 ];
 
@@ -46,6 +53,82 @@ const mobileItems = [
   { to: "/bibliotheque", label: "Docs", icon: Library },
   { to: "/parametres", label: "Profil", icon: User },
 ];
+
+/** Sélecteur de certification active. */
+function CertificationSwitcher({ compact = false }: { compact?: boolean }) {
+  const { data: mine = [] } = useMyCertifications();
+  const setActive = useSetActiveCertification();
+  const active = mine.find((m) => m.is_active) ?? mine[0] ?? null;
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          type="button"
+          className={cn(
+            "flex w-full items-center gap-2 rounded-lg border border-sidebar-border bg-sidebar-accent/40 px-3 py-2 text-left transition-colors hover:bg-sidebar-accent",
+            compact && "border-border bg-transparent px-2 py-1.5",
+          )}
+          aria-label="Changer de certification"
+        >
+          <GraduationCap className="size-4 shrink-0 text-primary" aria-hidden />
+          <span className="min-w-0 flex-1">
+            <span className="block truncate text-sm font-medium">
+              {active?.certification.name ?? "Choisir une certification"}
+            </span>
+            {!compact && (
+              <span className="block truncate text-xs text-muted-foreground">
+                {active?.certification.family ?? "Aucune certification active"}
+              </span>
+            )}
+          </span>
+          <ChevronsUpDown className="size-4 shrink-0 text-muted-foreground" aria-hidden />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="w-64">
+        <DropdownMenuLabel>Mes cursus</DropdownMenuLabel>
+        {mine.map((item) => (
+          <DropdownMenuItem
+            key={item.id}
+            onSelect={() => void setActive.mutateAsync(item.certification_id)}
+          >
+            <Check
+              className={cn("size-4", item.is_active ? "opacity-100" : "opacity-0")}
+              aria-hidden
+            />
+            <span className="truncate">{item.certification.name}</span>
+          </DropdownMenuItem>
+        ))}
+        {mine.length === 0 && (
+          <DropdownMenuItem disabled>Aucun cursus suivi</DropdownMenuItem>
+        )}
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link to="/certifications">
+            <Plus className="size-4" aria-hidden />
+            Ajouter une certification
+          </Link>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+/** Redirige vers le choix de certification quand l'utilisateur n'en suit aucune. */
+function useCertificationGuard() {
+  const navigate = useNavigate();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { data: user } = useSession();
+  const { data: mine, isSuccess } = useMyCertifications();
+
+  useEffect(() => {
+    if (!user || !isSuccess) return;
+    if ((mine?.length ?? 0) === 0 && pathname !== "/certifications") {
+      navigate({ to: "/certifications", replace: true });
+    }
+  }, [user, isSuccess, mine, pathname, navigate]);
+}
+
 
 function useSignOut() {
   const navigate = useNavigate();
@@ -116,6 +199,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isActive = (to: string) => pathname === to || pathname.startsWith(`${to}/`);
   const activeMobile = mobileItems.some((i) => isActive(i.to));
+  useCertificationGuard();
 
   return (
     <div className="min-h-screen bg-background md:flex">
@@ -131,12 +215,21 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
           {!collapsed && (
             <Link to="/" className="min-w-0">
               <span className="block truncate font-serif text-sm font-semibold leading-tight">
-                PREPA IRCA
+                PREPA ISO
               </span>
-              <span className="block text-xs text-muted-foreground">ISO 45001</span>
+              <span className="block text-xs text-muted-foreground">
+                Préparation à la certification
+              </span>
             </Link>
           )}
         </div>
+
+        {!collapsed && (
+          <div className="px-2 pb-2">
+            <CertificationSwitcher />
+          </div>
+        )}
+
 
         <nav className="flex-1 space-y-1 overflow-y-auto px-2 py-2">
           {navItems.map((item) => (
@@ -180,15 +273,21 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
 
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Mobile header */}
-        <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-border bg-card/90 px-4 py-3 backdrop-blur md:hidden">
-          <ShieldCheck className="size-5 shrink-0 text-primary" aria-hidden />
-          <span className="min-w-0 flex-1 truncate font-serif text-base font-semibold">
-            {title ?? "PREPA IRCA 45001"}
-          </span>
-          <Link to="/parametres" aria-label="Paramètres">
-            <Settings className="size-5 text-muted-foreground" aria-hidden />
-          </Link>
+        <header className="sticky top-0 z-30 border-b border-border bg-card/90 px-4 py-3 backdrop-blur md:hidden">
+          <div className="flex items-center gap-3">
+            <ShieldCheck className="size-5 shrink-0 text-primary" aria-hidden />
+            <span className="min-w-0 flex-1 truncate font-serif text-base font-semibold">
+              {title ?? "PREPA ISO"}
+            </span>
+            <Link to="/parametres" aria-label="Paramètres">
+              <Settings className="size-5 text-muted-foreground" aria-hidden />
+            </Link>
+          </div>
+          <div className="mt-2">
+            <CertificationSwitcher compact />
+          </div>
         </header>
+
 
         <main className="min-w-0 flex-1 pb-24 md:pb-0">{children}</main>
 

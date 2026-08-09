@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { defaultPlan, type StudyPlan } from "@/lib/schedule";
+import { useActiveCertification } from "@/lib/certifications";
 
 export interface ModuleProgress {
   module_id: number;
@@ -20,16 +21,19 @@ export function useSession() {
 }
 
 export function useStudyPlan() {
+  const { certificationId } = useActiveCertification();
   return useQuery({
-    queryKey: ["study_plan"],
+    queryKey: ["study_plan", certificationId],
+    enabled: !!certificationId,
     queryFn: async (): Promise<StudyPlan> => {
       const { data: userData } = await supabase.auth.getUser();
       const user = userData.user;
-      if (!user) return defaultPlan;
+      if (!user || !certificationId) return defaultPlan;
       const { data, error } = await supabase
         .from("study_plans")
         .select("start_date, exam_date, study_days, modules_per_day")
         .eq("user_id", user.id)
+        .eq("certification_id", certificationId)
         .maybeSingle();
       if (error) throw error;
       if (!data) return defaultPlan;
@@ -45,20 +49,23 @@ export function useStudyPlan() {
 
 export function useSaveStudyPlan() {
   const queryClient = useQueryClient();
+  const { certificationId } = useActiveCertification();
   return useMutation({
     mutationFn: async (plan: StudyPlan) => {
       const { data: userData } = await supabase.auth.getUser();
       const user = userData.user;
       if (!user) throw new Error("Non connecté");
+      if (!certificationId) throw new Error("Aucune certification sélectionnée");
       const { error } = await supabase.from("study_plans").upsert(
         {
           user_id: user.id,
+          certification_id: certificationId,
           start_date: plan.start_date,
           exam_date: plan.exam_date,
           study_days: plan.study_days,
           modules_per_day: plan.modules_per_day,
         },
-        { onConflict: "user_id" },
+        { onConflict: "user_id,certification_id" },
       );
       if (error) throw error;
       return plan;
@@ -70,16 +77,19 @@ export function useSaveStudyPlan() {
 }
 
 export function useProgress() {
+  const { certificationId } = useActiveCertification();
   return useQuery({
-    queryKey: ["module_progress"],
+    queryKey: ["module_progress", certificationId],
+    enabled: !!certificationId,
     queryFn: async (): Promise<ModuleProgress[]> => {
       const { data: userData } = await supabase.auth.getUser();
       const user = userData.user;
-      if (!user) return [];
+      if (!user || !certificationId) return [];
       const { data, error } = await supabase
         .from("module_progress")
         .select("module_id, completed, self_score, completed_at")
-        .eq("user_id", user.id);
+        .eq("user_id", user.id)
+        .eq("certification_id", certificationId);
       if (error) throw error;
       return data ?? [];
     },
@@ -88,20 +98,23 @@ export function useProgress() {
 
 export function useSetModuleProgress() {
   const queryClient = useQueryClient();
+  const { certificationId } = useActiveCertification();
   return useMutation({
     mutationFn: async (input: { moduleId: number; completed: boolean; selfScore?: number | null }) => {
       const { data: userData } = await supabase.auth.getUser();
       const user = userData.user;
       if (!user) throw new Error("Non connecté");
+      if (!certificationId) throw new Error("Aucune certification sélectionnée");
       const { error } = await supabase.from("module_progress").upsert(
         {
           user_id: user.id,
+          certification_id: certificationId,
           module_id: input.moduleId,
           completed: input.completed,
           self_score: input.selfScore ?? null,
           completed_at: input.completed ? new Date().toISOString() : null,
         },
-        { onConflict: "user_id,module_id" },
+        { onConflict: "user_id,certification_id,module_id" },
       );
       if (error) throw error;
     },
@@ -110,6 +123,7 @@ export function useSetModuleProgress() {
     },
   });
 }
+
 
 export interface Profile {
   id: string;

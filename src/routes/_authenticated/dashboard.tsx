@@ -10,19 +10,23 @@ import { Progress } from "@/components/ui/progress";
 import { modules, program, typeLabels } from "@/data/program";
 import { buildSchedule, scheduleByModuleId, computePace, formatShortDate } from "@/lib/schedule";
 import { useProgress, useStudyPlan } from "@/lib/queries";
+import { useActiveCertification } from "@/lib/certifications";
 import { CheckCircle2, Circle, CalendarClock } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
-      { title: "Mon programme — PREPA IRCA 45001" },
+      { title: "Mon programme — PREPA ISO" },
       {
         name: "description",
         content:
-          "Suivez vos séances de préparation IRCA ISO 45001, votre avancement et votre rythme par rapport au planning.",
+          "Suivez vos séances de préparation à la certification ISO que vous avez choisie, votre avancement et votre rythme par rapport au planning.",
       },
-      { property: "og:title", content: "Mon programme — PREPA IRCA 45001" },
-      { property: "og:description", content: "Progression et séances de préparation ISO 45001." },
+      { property: "og:title", content: "Mon programme — PREPA ISO" },
+      {
+        property: "og:description",
+        content: "Progression et séances de votre cursus de préparation ISO.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -34,6 +38,7 @@ function Dashboard() {
   const { data: plan } = useStudyPlan();
   const { data: progress = [] } = useProgress();
   const { data: profile } = useProfile();
+  const { certification } = useActiveCertification();
 
   const completedIds = new Set(progress.filter((p) => p.completed).map((p) => p.module_id));
   const schedule = plan ? buildSchedule(plan) : null;
@@ -42,6 +47,57 @@ function Dashboard() {
   const percent = Math.round((completedIds.size / modules.length) * 100);
   const next = modules.find((m) => !completedIds.has(m.id));
   const firstName = profile?.first_name?.trim() || profile?.display_name?.split(" ")[0] || "";
+
+  if (certification && !certification.has_curriculum) {
+    return (
+      <AppShell title={certification.name}>
+        <div className="mx-auto max-w-4xl px-4 py-6 md:py-10">
+          <h1 className="font-serif text-3xl font-semibold">{certification.name}</h1>
+          <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+            {certification.description}
+          </p>
+          <Card className="mt-6">
+            <CardHeader>
+              <CardTitle className="font-serif text-lg">Préparation libre</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-sm text-muted-foreground">
+                Le cursus rédigé de cette norme est en cours de préparation. En attendant, vous
+                pouvez organiser vos révisions chapitre par chapitre, déposer vos documents et
+                utiliser vos propres supports.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <Button asChild size="sm">
+                  <Link to="/planning">Organiser mon planning</Link>
+                </Button>
+                <Button asChild size="sm" variant="outline">
+                  <Link to="/bibliotheque">Déposer mes documents</Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          <section className="mt-8">
+            <h2 className="font-serif text-xl font-semibold">Chapitres de la norme</h2>
+            <ul className="mt-3 divide-y divide-border rounded-lg border border-border bg-card">
+              {certification.chapters.map((chapter) => (
+                <li key={chapter} className="flex items-center gap-3 px-4 py-3 text-sm">
+                  <Circle className="size-4 shrink-0 text-muted-foreground" aria-hidden />
+                  {chapter}
+                </li>
+              ))}
+              {certification.chapters.length === 0 && (
+                <li className="px-4 py-3 text-sm text-muted-foreground">
+                  Aucun chapitre renseigné pour ce référentiel.
+                </li>
+              )}
+            </ul>
+          </section>
+        </div>
+      </AppShell>
+    );
+  }
+
 
   return (
     <AppShell title="Mon programme">
