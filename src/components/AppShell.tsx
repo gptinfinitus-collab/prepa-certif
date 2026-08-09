@@ -72,7 +72,6 @@ function CertificationSwitcher({ compact = false }: { compact?: boolean }) {
           )}
           aria-label="Changer de certification"
         >
-          <GraduationCap className="size-4 shrink-0 text-cert" aria-hidden />
           <span className="min-w-0 flex-1">
             <span className="block truncate text-sm font-medium">
               {active?.certification.name ?? "Choisir une certification"}
