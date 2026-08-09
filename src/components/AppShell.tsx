@@ -199,6 +199,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isActive = (to: string) => pathname === to || pathname.startsWith(`${to}/`);
   const activeMobile = mobileItems.some((i) => isActive(i.to));
+  useCertificationGuard();
 
   return (
     <div className="min-h-screen bg-background md:flex">
@@ -214,12 +215,21 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
           {!collapsed && (
             <Link to="/" className="min-w-0">
               <span className="block truncate font-serif text-sm font-semibold leading-tight">
-                PREPA IRCA
+                PREPA ISO
               </span>
-              <span className="block text-xs text-muted-foreground">ISO 45001</span>
+              <span className="block text-xs text-muted-foreground">
+                Préparation à la certification
+              </span>
             </Link>
           )}
         </div>
+
+        {!collapsed && (
+          <div className="px-2 pb-2">
+            <CertificationSwitcher />
+          </div>
+        )}
+
 
         <nav className="flex-1 space-y-1 overflow-y-auto px-2 py-2">
           {navItems.map((item) => (
