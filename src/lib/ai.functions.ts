@@ -8,6 +8,7 @@ import {
   extractDocumentText,
   retrieve,
 } from "@/lib/rag.server";
+import { getExamBody } from "@/lib/exam-bodies";
 
 /** Analyse un document de la bibliothèque et l'indexe pour l'IA. */
 export const ingestDocument = createServerFn({ method: "POST" })
