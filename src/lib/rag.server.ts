@@ -89,6 +89,12 @@ export interface CleanedText {
   text: string;
   pageCount: number;
   removedLines: number;
+  /**
+   * Le document porte des marques d'aperçu (« standard preview ») : il ne
+   * contient qu'un extrait de la norme et ne peut pas servir de source
+   * complète pour l'IA.
+   */
+  isPartial: boolean;
 }
 
 /**
@@ -113,6 +119,7 @@ export function stripWatermarks(pages: string[]): CleanedText {
   );
 
   let removedLines = 0;
+  let watermarkHits = 0;
   const kept: string[] = [];
   for (const lines of pageLines) {
     for (const line of lines) {
@@ -120,11 +127,13 @@ export function stripWatermarks(pages: string[]): CleanedText {
         kept.push("");
         continue;
       }
+      const isWatermark = WATERMARK_PATTERNS.some((re) => re.test(line));
+      if (isWatermark) watermarkHits += 1;
       const isNoise =
         recurring.has(line) ||
         /^\d{1,4}$/.test(line) ||
         /^page\s+\d+(\s*(\/|sur|of)\s*\d+)?$/i.test(line) ||
-        WATERMARK_PATTERNS.some((re) => re.test(line));
+        isWatermark;
       if (isNoise) {
         removedLines += 1;
         continue;
@@ -140,8 +149,9 @@ export function stripWatermarks(pages: string[]): CleanedText {
     .replace(/\n{3,}/g, "\n\n")
     .trim();
 
-  return { text, pageCount, removedLines };
+  return { text, pageCount, removedLines, isPartial: watermarkHits >= 3 };
 }
+
 
 /** Extrait le texte brut d'un document téléversé, filigranes retirés. */
 export async function extractDocumentText(name: string, bytes: ArrayBuffer): Promise<CleanedText> {

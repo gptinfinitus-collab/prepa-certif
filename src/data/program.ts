@@ -2,12 +2,43 @@ import raw from "./program.json";
 
 export type ModuleType = "lesson" | "review" | "practical" | "mockExam" | "rest" | "wrapup";
 
-export interface QuizItem {
-  question: string;
-  answer: string;
+/**
+ * Nature de l'affirmation portée par un contenu ou une question, afin que
+ * l'apprenant ne confonde jamais une exigence de la norme auditée avec une
+ * ligne directrice d'audit ou une règle de certification tierce partie.
+ */
+export type ReferenceType =
+  | "REQUIREMENT"
+  | "GUIDANCE"
+  | "CERTIFICATION_RULE"
+  | "GOOD_PRACTICE"
+  | "PEDAGOGICAL_EXAMPLE";
+
+export type ReviewStatus = "DRAFT" | "NEEDS_VERIFICATION" | "VERIFIED";
+
+/** Traçabilité normative attachable à un contenu ou à une question. */
+export interface NormativeRef {
+  /** Référentiel source, ex. « ISO 45001 », « ISO 19011 », « ISO/IEC 17021-1 ». */
+  standardRef?: string;
+  /** Édition utilisée, ex. « 2018 + Amd 1:2024 », « 2026 ». */
+  standardEdition?: string;
+  /** Chapitre ou article cité, ex. « 5.2 ». */
+  clauseRef?: string;
+  referenceType?: ReferenceType;
+  /** Date de la dernière vérification du contenu contre sa source. */
+  verifiedAt?: string;
+  reviewStatus?: ReviewStatus;
 }
 
-export interface ProgramModule {
+export interface QuizItem extends NormativeRef {
+  question: string;
+  answer: string;
+  /** Question de révision reprise d'une séance antérieure (hors statistiques). */
+  revision?: boolean;
+}
+
+
+export interface ProgramModule extends NormativeRef {
   id: number;
   week: number;
   type: ModuleType;
@@ -34,7 +65,7 @@ export interface ProgramWeek {
   dayIds: number[];
 }
 
-export interface GlossaryEntry {
+export interface GlossaryEntry extends NormativeRef {
   term: string;
   definition: string;
 }
@@ -42,12 +73,11 @@ export interface GlossaryEntry {
 export interface ProgramMeta {
   title: string;
   subtitle: string;
-  candidateExample: string;
-  trainingExample: string;
   howToUse: string;
   copyrightNote: string;
   version: string;
 }
+
 
 export interface ProgramAnnexes {
   auditPlanTemplate: string[];

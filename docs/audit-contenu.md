@@ -154,7 +154,11 @@ Aucune modification n'a été appliquée à ce stade. Les corrections sont class
 
 **C3. Traiter ISO 13485:2016 hors structure harmonisée.** Deux options : soit lui écrire un squelette propre (4 Système de management de la qualité, 5 Responsabilité de la direction, 6 Management des ressources, 7 Réalisation du produit, 8 Mesure, analyse et amélioration), soit la retirer temporairement du catalogue. La laisser sur `hlsClauses` est la seule situation où l'application affiche une architecture de norme entièrement fausse.
 
-### Priorité 2 — Écarts majeurs de contenu
+### Priorité 2 — Écarts majeurs de contenu — ✅ CORRIGÉ
+
+Politique de référentiels appliquée : ISO 45001:2018 + Amd 1:2024, **ISO 19011:2026** (édition en vigueur, lignes directrices), **ISO/IEC 17021-1** (certification tierce partie). C11 est sans objet : les références de clause d'ISO 19011 ont été supprimées plutôt que renumérotées, la numérotation de l'édition 2026 n'étant pas vérifiable ici. C17 (badge « Extrait partiel » + politique anti-recopie du texte normatif dans les prompts IA) et C20 (questions de révision) sont également livrés.
+
+
 
 **C4. ISO 45001, politique S&ST (A-3).** Remplacer, dans le module 4 et dans les corrigés de quiz M4 Q1 et M6 Q4, par les cinq engagements du §5.2 : conditions de travail sûres et saines pour la prévention des traumatismes et pathologies liés au travail ; satisfaction aux exigences légales et autres exigences ; élimination des dangers et réduction des risques pour la S&ST ; amélioration continue du système de management de la S&ST ; consultation et participation des travailleurs.
 

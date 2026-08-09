@@ -1,17 +1,15 @@
 {
  "meta": {
-  "title": "Préparation IRCA ISO 45001:2018 — Responsable d'Audit SMSST",
+  "title": "Préparation ISO 45001:2018 — Audit du système de management de la S&ST",
   "subtitle": "Application de préparation à la certification, adaptable à d'autres normes",
-  "candidateExample": "Hector Ablam Kabu OCCANSEY — Clinicaa",
-  "trainingExample": "Formation SGS : 10–14 août 2026, Douala",
   "howToUse": "Chaque jour comprend un objectif, un cours détaillé, un point clé à retenir, puis un quiz avec corrigé. Faites le quiz avant de lire le corrigé.",
-  "copyrightNote": "Ce contenu explique les notions des normes ISO 45001 et ISO 19011 avec des mots originaux et des exemples ; il ne reproduit pas le texte officiel des normes, qui reste protégé par le droit d'auteur. Les utilisateurs sont invités à se procurer le texte intégral auprès de l'ISO ou de leur organisme national de normalisation.",
+  "copyrightNote": "Ce contenu explique les notions des normes ISO 45001:2018 (et son Amendement 1:2024), ISO 19011:2026 et ISO/IEC 17021-1 avec des mots originaux et des exemples ; il ne reproduit pas le texte officiel des normes, qui reste protégé par le droit d'auteur. Les utilisateurs sont invités à se procurer le texte intégral auprès de l'ISO ou de leur organisme national de normalisation.",
   "version": "1.0"
  },
  "weeks": [
   {
    "id": 1,
-   "title": "Comprendre le SMSST",
+   "title": "Comprendre le SMS&ST",
    "dayIds": [
     1,
     2,
@@ -54,10 +52,10 @@
    "id": 1,
    "week": 1,
    "type": "lesson",
-   "dayLabel": "Lundi 20/07",
-   "title": "Introduction au management de la SST",
-   "objective": "Comprendre pourquoi une norme de management SST existe et comment elle est construite.",
-   "contentMarkdown": "### Pourquoi un système de management plutôt que de simples règles techniques ?\n\nLa sécurité au travail est traditionnellement gérée par des règles techniques : port du casque, extincteurs, garde-corps, gants, etc. C'est nécessaire, mais insuffisant — une entreprise peut respecter toutes les règles techniques et malgré tout avoir des accidents, si personne ne pilote la démarche dans la durée, si les règles ne sont jamais mises à jour, ou si les travailleurs ne sont pas réellement impliqués. ISO 45001 propose autre chose : un **système de management**, c'est-à-dire une façon organisée de piloter la SST comme on pilote la qualité ou les finances — avec une politique, des objectifs, des ressources allouées, une mesure des résultats, et une boucle d'amélioration continue.\n\nAutrement dit : la norme ne dit pas *quelles* règles techniques appliquer, elle dit *comment organiser* l'entreprise pour qu'elle identifie elle-même les bonnes règles, les applique, vérifie qu'elles fonctionnent, et les améliore dans le temps.\n\n### Un peu d'histoire\n\nAvant ISO 45001, la référence internationale était **OHSAS 18001**, une norme britannique (BSI) largement adoptée mais qui n'était pas une norme ISO officielle. En **mars 2018**, l'ISO publie ISO 45001:2018, avec des évolutions majeures :\n\n- Une **structure harmonisée** commune à toutes les normes de management ISO\n- Un accent plus fort sur le **leadership** de la direction\n- L'obligation explicite de **consultation et participation des travailleurs**\n- La prise en compte des **risques ET des opportunités**\n- Une vision élargie du contexte de l'organisme\n\nLes entreprises certifiées OHSAS 18001 ont eu jusqu'en mars 2021 pour migrer vers ISO 45001.\n\n### La structure harmonisée (HLS)\n\n1. Domaine d'application\n2. Références normatives\n3. Termes et définitions\n4. Contexte de l'organisme\n5. Leadership et participation des travailleurs\n6. Planification\n7. Support\n8. Réalisation des activités opérationnelles\n9. Évaluation des performances\n10. Amélioration\n\nLes chapitres 1 à 3 sont introductifs. Le cœur du système se trouve dans les chapitres **4 à 10**.\n\n### Le cycle PDCA appliqué à la SST\n\n| Étape | Signification en SST | Chapitres |\n|---|---|---|\n| Plan | Contexte, dangers, objectifs | 4, 5, 6 |\n| Do | Moyens, formation, maîtrise des opérations | 7, 8 |\n| Check | Mesure, audit, bilan | 9 |\n| Act | Corriger, améliorer | 10 |",
+   "dayLabel": "Séance 1",
+   "title": "Introduction au management de la S&ST",
+   "objective": "Comprendre pourquoi une norme de management S&ST existe et comment elle est construite.",
+   "contentMarkdown": "### Pourquoi un système de management plutôt que de simples règles techniques ?\n\nLa sécurité au travail est traditionnellement gérée par des règles techniques : port du casque, extincteurs, garde-corps, gants, etc. C'est nécessaire, mais insuffisant — une entreprise peut respecter toutes les règles techniques et malgré tout avoir des accidents, si personne ne pilote la démarche dans la durée, si les règles ne sont jamais mises à jour, ou si les travailleurs ne sont pas réellement impliqués. ISO 45001 propose autre chose : un **système de management**, c'est-à-dire une façon organisée de piloter la S&ST comme on pilote la qualité ou les finances — avec une politique, des objectifs, des ressources allouées, une mesure des résultats, et une boucle d'amélioration continue.\n\nAutrement dit : la norme ne dit pas *quelles* règles techniques appliquer, elle dit *comment organiser* l'entreprise pour qu'elle identifie elle-même les bonnes règles, les applique, vérifie qu'elles fonctionnent, et les améliore dans le temps.\n\n### Un peu d'histoire\n\nAvant ISO 45001, la référence internationale était **OHSAS 18001**, une norme britannique (BSI) largement adoptée mais qui n'était pas une norme ISO officielle. En **mars 2018**, l'ISO publie ISO 45001:2018, avec des évolutions majeures :\n\n- Une **structure harmonisée** commune à toutes les normes de management ISO\n- Un accent plus fort sur le **leadership** de la direction\n- L'obligation explicite de **consultation et participation des travailleurs**\n- La prise en compte des **risques ET des opportunités**\n- Une vision élargie du contexte de l'organisme\n\nLes entreprises certifiées OHSAS 18001 ont eu jusqu'en mars 2021 pour migrer vers ISO 45001.\n\n### La structure harmonisée (HLS)\n\n1. Domaine d'application\n2. Références normatives\n3. Termes et définitions\n4. Contexte de l'organisme\n5. Leadership et participation des travailleurs\n6. Planification\n7. Support\n8. Réalisation des activités opérationnelles\n9. Évaluation des performances\n10. Amélioration\n\nLes chapitres 1 à 3 sont introductifs. Le cœur du système se trouve dans les chapitres **4 à 10**.\n\n### Le cycle PDCA appliqué à la S&ST\n\n| Étape | Signification en S&ST | Chapitres |\n|---|---|---|\n| Plan | Contexte, dangers, objectifs | 4, 5, 6 |\n| Do | Moyens, formation, maîtrise des opérations | 7, 8 |\n| Check | Mesure, audit, bilan | 9 |\n| Act | Corriger, améliorer | 10 |",
    "keyTakeaway": "Le PDCA n'est pas qu'un schéma théorique — c'est la façon dont la norme est organisée. Pour chaque clause lue, demandez-vous : Plan, Do, Check ou Act ?",
    "quiz": [
     {
@@ -82,10 +80,10 @@
    "id": 2,
    "week": 1,
    "type": "lesson",
-   "dayLabel": "Mardi 21/07",
+   "dayLabel": "Séance 2",
    "title": "Vocabulaire clé",
    "objective": "Maîtriser le vocabulaire qui revient dans toutes les clauses.",
-   "contentMarkdown": "### Le glossaire du jour\n\n- **Danger** : source potentielle de blessure ou d'atteinte à la santé.\n- **Risque** : combinaison de la probabilité qu'un danger se réalise et de la gravité de ses conséquences.\n- **Opportunité SST** : circonstance qui pourrait améliorer la performance SST.\n- **Système de management** : ensemble organisé de politiques, processus et ressources visant à atteindre des objectifs.\n- **Partie intéressée** : toute personne/organisation pouvant affecter ou être affectée par une décision SST.\n- **Exigence légale et autre exigence** : lois/règlements applicables, mais aussi engagements volontaires.\n- **Incident** : événement lié au travail ayant causé ou pouvant causer une atteinte à la santé (« presqu'accident » si sans conséquence).\n- **Non-conformité** : non-respect d'une exigence.\n- **Action corrective** : action visant à supprimer la cause d'une non-conformité.\n- **Correction** : action immédiate pour éliminer une non-conformité détectée, sans traiter la cause.\n- **Performance SST** : résultats mesurables liés à la maîtrise des risques SST.\n- **Travailleur** : toute personne exerçant un travail sous le contrôle de l'organisme.\n- **Consultation** : demander l'avis des travailleurs.\n- **Participation** : impliquer réellement les travailleurs dans le processus.\n- **Amélioration continue** : activité récurrente visant à améliorer la performance.\n\n### Comparer « correction » et « action corrective » — le piège classique de l'examen\n\n*Un agent se pique avec une aiguille usagée mal placée dans le collecteur.*\n- **Correction** : jeter l'aiguille dans le bon collecteur, prendre en charge l'agent (traite le symptôme immédiat).\n- **Action corrective** : analyser pourquoi l'aiguille n'a pas été bien placée (manque de collecteurs ? formation insuffisante ? charge de travail ?) et traiter la cause durablement.",
+   "contentMarkdown": "### Le glossaire du jour\n\n- **Danger** (art. 3.19) : source susceptible de causer **traumatisme et pathologie**. Le mot « blessure », hérité d'OHSAS 18001, n'est plus le vocabulaire normatif.\n- **Risque** (art. 3.20) : effet de l'incertitude — définition harmonisée, commune à toutes les normes de management.\n- **Risque pour la S&ST** (art. 3.21) : combinaison de la probabilité d'occurrence d'événements ou d'expositions dangereux liés au travail et de la gravité des traumatismes et pathologies pouvant en résulter. C'est cette définition-là, et non celle de « risque », qui est attendue en S&ST.\n- **Opportunité S&ST** : circonstance qui pourrait améliorer la performance S&ST.\n- **Système de management** : ensemble organisé de politiques, processus et ressources visant à atteindre des objectifs.\n- **Partie intéressée** : toute personne/organisation pouvant affecter ou être affectée par une décision S&ST.\n- **Exigence légale et autre exigence** : lois/règlements applicables, mais aussi engagements volontaires.\n- **Événement indésirable** (art. 3.35, anciennement appelé « incident ») : événement lié au travail ayant causé ou pouvant causer traumatisme et pathologie ; on parle de « presqu'accident » lorsqu'aucune conséquence ne s'est matérialisée.\n- **Non-conformité** : non-respect d'une exigence.\n- **Action corrective** : action visant à supprimer la cause d'une non-conformité.\n- **Correction** : action immédiate pour éliminer une non-conformité détectée, sans traiter la cause.\n- **Performance S&ST** : résultats mesurables liés à la maîtrise des risques S&ST.\n- **Travailleur** : toute personne exerçant un travail sous le contrôle de l'organisme.\n- **Consultation** (art. 3.5) : recherche d'avis **avant** une prise de décision.\n- **Participation** (art. 3.4) : implication **dans** la prise de décision.\n- **Amélioration continue** : activité récurrente visant à améliorer la performance.\n\n### Comparer « correction » et « action corrective » — le piège classique de l'examen\n\n*Un agent se pique avec une aiguille usagée mal placée dans le collecteur.*\n- **Correction** : jeter l'aiguille dans le bon collecteur, prendre en charge l'agent (traite le symptôme immédiat).\n- **Action corrective** : analyser pourquoi l'aiguille n'a pas été bien placée (manque de collecteurs ? formation insuffisante ? charge de travail ?) et traiter la cause durablement.",
    "keyTakeaway": "Si la question porte sur l'action immédiate après découverte du problème → correction. Si elle porte sur éviter la récurrence → action corrective.",
    "quiz": [
     {
@@ -94,18 +92,24 @@
     },
     {
      "question": "Quelle est la différence entre consultation et participation des travailleurs ?",
-     "answer": "Consultation = demander leur avis ; participation = les impliquer réellement dans le processus."
+     "answer": "Consultation (art. 3.5) = recherche d'avis avant la prise de décision ; participation (art. 3.4) = implication dans la prise de décision elle-même.",
+     "standardRef": "ISO 45001",
+     "standardEdition": "2018 + Amd 1:2024",
+     "clauseRef": "3.4 / 3.5",
+     "referenceType": "REQUIREMENT",
+     "verifiedAt": "2026-08-09",
+     "reviewStatus": "VERIFIED"
     },
     {
      "question": "Un fournisseur de linge stérile pour la clinique est-il une partie intéressée ? Justifiez.",
-     "answer": "Oui — il peut affecter ou être affecté par des décisions SST de la clinique."
+     "answer": "Oui — il peut affecter ou être affecté par des décisions S&ST de la clinique."
     },
     {
      "question": "Donnez un exemple de presqu'accident dans un contexte de laboratoire médical.",
      "answer": "Un tube de prélèvement tombe et se brise sans exposer personne, ou un réactif est presque mélangé avec un produit incompatible mais l'erreur est repérée à temps."
     },
     {
-     "question": "Vrai ou faux : une opportunité SST concerne uniquement la réduction des risques.",
+     "question": "Vrai ou faux : une opportunité S&ST concerne uniquement la réduction des risques.",
      "answer": "Faux — elle peut concerner une amélioration plus large du système de management."
     }
    ]
@@ -114,10 +118,10 @@
    "id": 3,
    "week": 1,
    "type": "lesson",
-   "dayLabel": "Mercredi 22/07",
+   "dayLabel": "Séance 3",
    "title": "Clause 4 : Contexte de l'organisme",
-   "objective": "Comprendre comment une entreprise détermine où elle en est avant de construire son SMSST.",
-   "contentMarkdown": "### Les trois questions du chapitre 4\n\n**1. Quels sont mes enjeux internes et externes ?**\n- Externes : réglementation, contexte économique, culture, climat social, exigences clients.\n- Internes : structure, culture interne, compétences, ressources, gouvernance.\n\n**2. Qui sont mes parties intéressées, et qu'attendent-elles de moi en matière de SST ?**\n\n| Partie intéressée | Exemple d'attente en SST |\n|---|---|\n| Travailleurs | Environnement de travail sûr, équipements adaptés |\n| Autorités sanitaires | Conformité réglementaire, gestion des déchets |\n| Patients (indirectement) | Personnel formé, moins d'erreurs liées à la fatigue |\n| Assureurs | Maîtrise du risque, réduction de la sinistralité |\n| Syndicats | Dialogue social sur les conditions de travail |\n\n**3. Quel est le domaine d'application (périmètre) de mon SMSST ?**\n\nL'organisme doit définir précisément quelles activités, quels sites, quels travailleurs sont couverts. Ce périmètre doit être documenté et **cohérent avec la réalité observée**.",
+   "objective": "Comprendre comment une entreprise détermine où elle en est avant de construire son SMS&ST.",
+   "contentMarkdown": "### Les trois questions du chapitre 4\n\n**1. Quels sont mes enjeux internes et externes ?**\n- Externes : réglementation, contexte économique, culture, climat social, exigences clients.\n- Internes : structure, culture interne, compétences, ressources, gouvernance.\n\n**2. Qui sont mes parties intéressées, et qu'attendent-elles de moi en matière de S&ST ?**\n\n| Partie intéressée | Exemple d'attente en S&ST |\n|---|---|\n| Travailleurs | Environnement de travail sûr, équipements adaptés |\n| Autorités sanitaires | Conformité réglementaire, gestion des déchets |\n| Patients (indirectement) | Personnel formé, moins d'erreurs liées à la fatigue |\n| Assureurs | Maîtrise du risque, réduction de la sinistralité |\n| Syndicats | Dialogue social sur les conditions de travail |\n\n**3. Quel est le domaine d'application (périmètre) de mon SMS&ST ?**\n\nL'organisme doit définir précisément quelles activités, quels sites, quels travailleurs sont couverts. Ce périmètre doit être documenté et **cohérent avec la réalité observée**.",
    "keyTakeaway": "Piège classique en audit : un domaine d'application qui exclut en pratique le personnel intérimaire ou un site annexe est une non-conformité fréquente.",
    "quiz": [
     {
@@ -142,15 +146,21 @@
    "id": 4,
    "week": 1,
    "type": "lesson",
-   "dayLabel": "Jeudi 23/07",
+   "dayLabel": "Séance 4",
    "title": "Clause 5 : Leadership et participation des travailleurs",
    "objective": "Comprendre le rôle de la direction et la place centrale donnée aux travailleurs.",
-   "contentMarkdown": "### Le rôle de la direction\n\nEngagement visible et actif : allouer des ressources, intégrer la SST dans la stratégie, rendre compte du système, promouvoir une culture SST positive, **protéger les travailleurs contre les représailles** lorsqu'ils signalent un incident ou un danger.\n\n### La politique SST\n\nDoit inclure : engagement à éliminer les dangers/réduire les risques, engagement à la consultation/participation, engagement d'amélioration continue.\n\n### Rôles, responsabilités et autorités\n\nChaque acteur doit savoir précisément ce qu'on attend de lui — testé en audit via des entretiens terrain.\n\n### Consultation et participation des travailleurs — le point le plus distinctif de la norme\n\nLes travailleurs doivent être **consultés** et réellement **impliqués** : identification des dangers, enquêtes après incident, définition des objectifs. Un système construit uniquement « d'en haut » est un point de non-conformité quasi systématique en audit.",
+   "contentMarkdown": "### Le rôle de la direction\n\nEngagement visible et actif : allouer des ressources, intégrer la S&ST dans la stratégie, rendre compte du système, promouvoir une culture S&ST positive, **protéger les travailleurs contre les représailles** lorsqu'ils signalent un incident ou un danger.\n\n### La politique S&ST : cinq engagements, pas trois\n\nLe §5.2 impose que la politique S&ST comporte **cinq** engagements. C'est un piège d'examen classique : beaucoup de candidats n'en citent que trois.\n\n1. **Fournir des conditions de travail sûres et saines** — l'engagement est tourné vers la *prévention des traumatismes et pathologies liés au travail*, pas seulement vers l'absence d'accidents déclarés.\n2. **Satisfaire aux exigences légales et autres exigences** — disposer d'une liste de textes ne suffit pas : l'organisme s'engage à comprendre ce qui lui est réellement applicable et à en tenir compte.\n3. **Éliminer les dangers et réduire les risques pour la S&ST** — cet engagement se lit avec la *hiérarchie des mesures de prévention* : on ne « réduit » qu'après avoir cherché à éliminer.\n4. **Améliorer en continu le système de management de la S&ST (SMS&ST)** — l'amélioration continue porte sur le système lui-même (maturité des processus, qualité des données, efficacité des actions), pas uniquement sur la baisse du nombre d'accidents.\n5. **Consulter et faire participer les travailleurs** — deux notions distinctes : consulter, c'est rechercher un avis *avant* la décision ; faire participer, c'est impliquer *dans* la décision (par exemple co-construire l'analyse de risque d'un poste).\n\n### Rôles, responsabilités et autorités\n\nChaque acteur doit savoir précisément ce qu'on attend de lui — testé en audit via des entretiens terrain.\n\n### Consultation et participation des travailleurs — le point le plus distinctif de la norme\n\nLes travailleurs doivent être **consultés** et réellement **impliqués** : identification des dangers, enquêtes après incident, définition des objectifs. Un système construit uniquement « d'en haut » est un point de non-conformité quasi systématique en audit.",
    "keyTakeaway": "Ne jamais poser la question de la participation uniquement à la direction — la réponse la plus fiable vient du travailleur de terrain.",
    "quiz": [
     {
-     "question": "Citez 3 engagements que doit contenir une politique SST.",
-     "answer": "Éliminer les dangers/réduire les risques, consultation/participation, amélioration continue."
+     "question": "Citez les cinq engagements que doit contenir une politique S&ST.",
+     "answer": "1) Fournir des conditions de travail sûres et saines pour la prévention des traumatismes et pathologies liés au travail ; 2) satisfaire aux exigences légales et autres exigences ; 3) éliminer les dangers et réduire les risques pour la S&ST ; 4) améliorer en continu le SMS&ST ; 5) consulter et faire participer les travailleurs.",
+     "standardRef": "ISO 45001",
+     "standardEdition": "2018 + Amd 1:2024",
+     "clauseRef": "5.2",
+     "referenceType": "REQUIREMENT",
+     "verifiedAt": "2026-08-09",
+     "reviewStatus": "VERIFIED"
     },
     {
      "question": "Pourquoi la protection contre les représailles est-elle importante pour la fiabilité du système ?",
@@ -170,23 +180,29 @@
    "id": 5,
    "week": 1,
    "type": "lesson",
-   "dayLabel": "Vendredi 24/07",
+   "dayLabel": "Séance 5",
    "title": "Clause 6 : Planification",
    "objective": "Comprendre comment l'organisme identifie ses risques et fixe ses objectifs.",
-   "contentMarkdown": "### Identification des dangers\n\nCouvre : activités de routine et hors routine, situations d'urgence, comportements humains, changements, dangers liés à des tiers.\n\n### Évaluation des risques ET des opportunités — exemple chiffré\n\n| | Gravité faible | Gravité moyenne | Gravité élevée |\n|---|---|---|---|\n| Probabilité faible | Risque faible | Risque faible | Risque moyen |\n| Probabilité moyenne | Risque faible | Risque moyen | Risque élevé |\n| Probabilité élevée | Risque moyen | Risque élevé | Risque élevé |\n\n*Exemple* : une piqûre accidentelle a une probabilité moyenne et une gravité élevée → risque élevé, priorité de traitement immédiate.\n\nLes opportunités concernent aussi l'amélioration globale du système, pas seulement la réduction de risque.\n\n### Exigences légales et autres exigences\n\nProcessus pour identifier les textes applicables, évaluer sa conformité, et le tenir à jour (veille réglementaire).\n\n### Objectifs SST et planification des actions\n\nCohérents avec la politique, mesurables, communiqués, avec un plan d'action clair (qui, quoi, ressources, échéance).",
-   "keyTakeaway": "Un bon objectif SST suit la logique SMART. « Améliorer la sécurité » n'est pas exploitable en audit ; « réduire de 30% les accidents d'ici décembre 2026 » l'est.",
+   "contentMarkdown": "### Identification des dangers\n\nCouvre : activités de routine et hors routine, situations d'urgence, comportements humains, changements, dangers liés à des tiers.\n\n### Évaluation des risques ET des opportunités — exemple chiffré\n\n| | Gravité faible | Gravité moyenne | Gravité élevée |\n|---|---|---|---|\n| Probabilité faible | Risque faible | Risque faible | Risque moyen |\n| Probabilité moyenne | Risque faible | Risque moyen | Risque élevé |\n| Probabilité élevée | Risque moyen | Risque élevé | Risque élevé |\n\n*Exemple* : une piqûre accidentelle a une probabilité moyenne et une gravité élevée → risque élevé, priorité de traitement immédiate.\n\nLes opportunités concernent aussi l'amélioration globale du système, pas seulement la réduction de risque.\n\n### Exigences légales et autres exigences (§6.1.3) — à ne pas confondre avec l'évaluation de conformité (§9.1.2)\n\n**Ce que demande le §6.1.3 :**\n\n- déterminer les exigences légales et autres exigences applicables ;\n- pouvoir y accéder ;\n- déterminer **comment** elles s'appliquent à l'organisme, et ce qui doit être communiqué ;\n- les prendre en compte dans la mise en place et le fonctionnement du SMS&ST ;\n- tenir à jour les informations documentées correspondantes.\n\n**Ce que demande le §9.1.2 — une exigence distincte, du chapitre 9 :**\n\n- définir un processus d'évaluation de la conformité ;\n- en déterminer la fréquence et les méthodes ;\n- évaluer effectivement le statut de conformité et agir si nécessaire ;\n- maintenir la connaissance et la compréhension de ce statut.\n\n> **Point examen.** Une veille réglementaire bien tenue ne démontre pas à elle seule la conformité de l'organisme : identifier un texte (chapitre 6) et évaluer qu'on le respecte (chapitre 9) sont deux exigences séparées.\n\n### Objectifs S&ST et planification des actions\n\nCohérents avec la politique, mesurables, communiqués, avec un plan d'action clair (qui, quoi, ressources, échéance).",
+   "keyTakeaway": "Un bon objectif S&ST suit la logique SMART. « Améliorer la sécurité » n'est pas exploitable en audit ; « réduire de 30% les accidents d'ici décembre 2026 » l'est.",
    "quiz": [
     {
      "question": "Positionnez dans la matrice : un déversement mineur de produit d'entretien dans une salle peu fréquentée.",
      "answer": "Probabilité faible × gravité faible = risque faible."
     },
     {
-     "question": "Donnez un exemple d'opportunité SST distincte d'une simple réduction de risque.",
+     "question": "Donnez un exemple d'opportunité S&ST distincte d'une simple réduction de risque.",
      "answer": "Réorganiser un poste pour réduire la fatigue tout en améliorant la productivité."
     },
     {
-     "question": "Que doit permettre de vérifier la veille réglementaire ?",
-     "answer": "Que l'organisme identifie tous les textes applicables, évalue sa conformité, et répercute les évolutions dans ses procédures."
+     "question": "Le §6.1.3 exige-t-il d'évaluer la conformité de l'organisme aux textes identifiés ?",
+     "answer": "Non. Le §6.1.3 exige de déterminer les exigences applicables, d'y avoir accès, de déterminer comment elles s'appliquent, de les prendre en compte dans le système et de tenir l'information à jour. L'évaluation de la conformité est une exigence distincte du §9.1.2.",
+     "standardRef": "ISO 45001",
+     "standardEdition": "2018 + Amd 1:2024",
+     "clauseRef": "6.1.3 / 9.1.2",
+     "referenceType": "REQUIREMENT",
+     "verifiedAt": "2026-08-09",
+     "reviewStatus": "VERIFIED"
     },
     {
      "question": "Reformulez « Améliorer la formation du personnel » en objectif SMART.",
@@ -198,7 +214,7 @@
    "id": 6,
    "week": 1,
    "type": "review",
-   "dayLabel": "Samedi 25/07",
+   "dayLabel": "Séance 6",
    "title": "Révision Semaine 1",
    "objective": "Consolider les jours 1 à 5 avant de passer à la semaine 2.",
    "contentMarkdown": "Reprenez vos fiches des jours 1 à 5 et répondez au quiz de révision sans les regarder. Si vous manquez plus de 3 questions sur 10, reprenez les jours correspondants avant de passer au jour 7.",
@@ -217,8 +233,14 @@
      "answer": "Par exemple : travailleurs, autorités sanitaires, assureurs, syndicats."
     },
     {
-     "question": "Que doit contenir une politique SST selon la norme ?",
-     "answer": "Un engagement à éliminer les dangers/réduire les risques, à la consultation/participation, à l'amélioration continue."
+     "question": "Que doit contenir une politique S&ST selon la norme ?",
+     "answer": "Les cinq engagements du §5.2 : conditions de travail sûres et saines, satisfaction aux exigences légales et autres exigences, élimination des dangers et réduction des risques, amélioration continue du SMS&ST, consultation et participation des travailleurs.",
+     "standardRef": "ISO 45001",
+     "standardEdition": "2018 + Amd 1:2024",
+     "clauseRef": "5.2",
+     "referenceType": "REQUIREMENT",
+     "verifiedAt": "2026-08-09",
+     "reviewStatus": "VERIFIED"
     },
     {
      "question": "Pourquoi la participation des travailleurs est-elle un point central d'ISO 45001 ?",
@@ -233,7 +255,7 @@
      "answer": "OHSAS 18001."
     },
     {
-     "question": "Qu'est-ce qui distingue une opportunité SST d'une simple réduction de risque ?",
+     "question": "Qu'est-ce qui distingue une opportunité S&ST d'une simple réduction de risque ?",
      "answer": "Elle peut améliorer plus largement le système, pas seulement réduire un danger identifié."
     },
     {
@@ -241,7 +263,7 @@
      "answer": "Un décalage constitue une non-conformité classique en audit."
     },
     {
-     "question": "Formulez un exemple d'objectif SST respectant la logique SMART.",
+     "question": "Formulez un exemple d'objectif S&ST respectant la logique SMART.",
      "answer": "Réduire de 30% les accidents d'exposition au sang d'ici décembre 2026."
     }
    ]
@@ -250,7 +272,7 @@
    "id": 7,
    "week": 1,
    "type": "rest",
-   "dayLabel": "Dimanche 26/07",
+   "dayLabel": "Séance 7",
    "title": "Pause / mise en jambe pour la semaine 2",
    "objective": "Repos.",
    "contentMarkdown": "Journée de repos méritée. Si vous avez de l'énergie, lisez simplement l'introduction du jour 12 (les 7 principes de l'audit) pour vous familiariser avec les mots-clés avant d'attaquer la semaine 2 — sans obligation.",
@@ -261,10 +283,10 @@
    "id": 8,
    "week": 2,
    "type": "lesson",
-   "dayLabel": "Lundi 27/07",
+   "dayLabel": "Séance 8",
    "title": "Clause 7 : Support",
    "objective": "Comprendre ce qui doit être mis en place pour que le système fonctionne concrètement au quotidien.",
-   "contentMarkdown": "### Les 5 piliers du chapitre 7\n\n- **Ressources** : humaines, financières, matérielles, techniques.\n- **Compétences** : formation, expérience, qualification — avec preuves conservées.\n- **Sensibilisation** : politique SST, dangers du poste, contribution à l'efficacité du système, conséquences d'un non-respect.\n- **Communication** : quoi, quand, à qui, comment — interne et externe.\n- **Information documentée** : créer, mettre à jour, maîtriser (accès, protection, conservation, versions).\n\n### Un exemple de vérification croisée typique en audit\n\nL'auditeur vérifie le registre de formation (document), interroge l'agent sur le contenu de sa formation (entretien), puis observe s'il applique réellement ce qui a été enseigné (observation). Les trois sources doivent converger.",
+   "contentMarkdown": "### Les 5 piliers du chapitre 7\n\n- **Ressources** : humaines, financières, matérielles, techniques.\n- **Compétences** : formation, expérience, qualification — avec preuves conservées.\n- **Sensibilisation** : politique S&ST, dangers du poste, contribution à l'efficacité du système, conséquences d'un non-respect.\n- **Communication** : quoi, quand, à qui, comment — interne et externe.\n- **Information documentée** : créer, mettre à jour, maîtriser (accès, protection, conservation, versions).\n\n### Un exemple de vérification croisée typique en audit\n\nL'auditeur vérifie le registre de formation (document), interroge l'agent sur le contenu de sa formation (entretien), puis observe s'il applique réellement ce qui a été enseigné (observation). Les trois sources doivent converger.",
    "keyTakeaway": "Un document qui existe mais que personne ne connaît, ou qu'on ne sait pas appliquer sur le terrain, ne prouve rien.",
    "quiz": [
     {
@@ -289,10 +311,10 @@
    "id": 9,
    "week": 2,
    "type": "lesson",
-   "dayLabel": "Mardi 28/07",
+   "dayLabel": "Séance 9",
    "title": "Clause 8 : Réalisation des activités opérationnelles",
    "objective": "Comprendre comment l'organisme maîtrise ses opérations au quotidien.",
-   "contentMarkdown": "### La hiérarchie des mesures de maîtrise, du plus au moins efficace\n\n1. **Élimination** du danger\n2. **Substitution** par quelque chose de moins dangereux\n3. **Mesures d'ingénierie** (isolation, ventilation, protection collective)\n4. **Mesures organisationnelles** (procédures, rotation, formation)\n5. **Équipements de protection individuelle (EPI)** — le dernier rempart\n\n*Exemple appliqué au risque de piqûre* : élimination (matériel sans aiguille) → substitution (dispositif de sécurité intégré) → ingénierie (collecteurs proches) → organisationnel (procédure, formation) → EPI (gants, insuffisant seul).\n\n### Gestion du changement\n\nTout changement doit être évalué pour ses impacts SST **avant** d'être mis en œuvre.\n\n### Préparation et réponse aux situations d'urgence\n\nIdentifier les urgences potentielles, préparer des plans de réponse, et les **tester périodiquement**.",
+   "contentMarkdown": "### La hiérarchie des mesures de maîtrise, du plus au moins efficace\n\n1. **Élimination** du danger\n2. **Substitution** par quelque chose de moins dangereux\n3. **Mesures d'ingénierie** (isolation, ventilation, protection collective)\n4. **Mesures organisationnelles** (procédures, rotation, formation)\n5. **Équipements de protection individuelle (EPI)** — le dernier rempart\n\n*Exemple appliqué au risque de piqûre* : élimination (matériel sans aiguille) → substitution (dispositif de sécurité intégré) → ingénierie (collecteurs proches) → organisationnel (procédure, formation) → EPI (gants, insuffisant seul).\n\n### Gestion du changement\n\nTout changement doit être évalué pour ses impacts S&ST **avant** d'être mis en œuvre.\n\n### Préparation et réponse aux situations d'urgence\n\nIdentifier les urgences potentielles, préparer des plans de réponse, et les **tester périodiquement**.",
    "keyTakeaway": "Face à plusieurs mesures possibles, choisissez toujours celle la plus haute dans la hiérarchie (élimination avant EPI), sauf si l'élimination est manifestement impossible.",
    "quiz": [
     {
@@ -305,7 +327,7 @@
     },
     {
      "question": "Que doit faire l'organisme avant un changement d'organisation ?",
-     "answer": "Évaluer les impacts SST potentiels avant sa mise en œuvre."
+     "answer": "Évaluer les impacts S&ST potentiels avant sa mise en œuvre."
     },
     {
      "question": "Pourquoi un plan d'urgence non testé est-il un point d'attention en audit ?",
@@ -317,7 +339,7 @@
    "id": 10,
    "week": 2,
    "type": "lesson",
-   "dayLabel": "Mercredi 29/07",
+   "dayLabel": "Séance 10",
    "title": "Clause 9 : Évaluation des performances",
    "objective": "Comprendre comment l'organisme vérifie que son système fonctionne réellement.",
    "contentMarkdown": "### Surveillance, mesure, analyse et évaluation\n\nIndicateurs courants : taux de fréquence des accidents, taux de gravité, nombre de presqu'accidents remontés, taux de complétion des formations.\n\n### Évaluation de la conformité\n\nVérifier régulièrement le respect des obligations légales — la réglementation évolue.\n\n### Audit interne\n\nL'organisme audite lui-même son système à intervalles planifiés — c'est le Check du PDCA appliqué en interne.\n\n### Revue de direction\n\nExamen périodique du système par la direction (résultats d'audits, incidents, non-conformités, actions correctives, contexte, ressources), débouchant sur des décisions documentées.",
@@ -345,7 +367,7 @@
    "id": 11,
    "week": 2,
    "type": "lesson",
-   "dayLabel": "Jeudi 30/07",
+   "dayLabel": "Séance 11",
    "title": "Clause 10 : Amélioration",
    "objective": "Comprendre comment l'organisme traite les écarts et progresse dans la durée.",
    "contentMarkdown": "### Le traitement complet d'un incident, en 4 étapes\n\n1. **Réagir** : maîtriser et corriger la situation immédiate\n2. **Analyser les causes** (méthode des « 5 pourquoi »)\n3. **Mettre en place une action corrective**\n4. **Vérifier l'efficacité** après un délai\n\n### Illustration avec les « 5 pourquoi »\n\n*Un agent se pique avec une aiguille.* Pourquoi ? Aiguille pas dans le collecteur → collecteur plein → pas vidé selon fréquence → tâche non assignée → absence de responsabilité définie.\n→ L'action corrective : assigner clairement la responsabilité du vidage des collecteurs et vérifier son application (pas « acheter plus de gants »).\n\n### Amélioration continue\n\nChercher en permanence à améliorer le système, même sans non-conformité constatée.",
@@ -373,15 +395,18 @@
    "id": 12,
    "week": 2,
    "type": "lesson",
-   "dayLabel": "Vendredi 31/07",
-   "title": "Introduction à ISO 19011",
-   "objective": "Basculer du contenu de la norme SST vers la méthode d'audit elle-même.",
-   "contentMarkdown": "ISO 19011 est le guide international pour auditer n'importe quel système de management. Elle repose sur **7 principes** :\n\n1. **Intégrité** : honnêteté, diligence, responsabilité.\n2. **Présentation impartiale** : rapporter les constats de façon exacte, même inconfortables.\n3. **Conscience professionnelle** : diligence et jugement.\n4. **Confidentialité** : protéger les informations obtenues.\n5. **Indépendance** : base de l'impartialité — ne pas auditer son propre travail.\n6. **Approche fondée sur la preuve** : conclusions basées sur des preuves vérifiables.\n7. **Approche fondée sur le risque** : concentrer l'effort d'audit sur les zones critiques.\n\n### Mises en situation\n\n- Un auditeur ne rapporte que ce qui est prouvé, même si un point positif n'est pas totalement vérifié → présentation impartiale.\n- Un auditeur a conçu lui-même la procédure qu'on lui demande d'auditer → violation de l'indépendance.\n- Un auditeur passe plus de temps sur les processus à fort risque → bonne application de l'approche fondée sur le risque.",
+   "dayLabel": "Séance 12",
+   "title": "Introduction à ISO 19011:2026",
+   "objective": "Basculer du contenu de la norme S&ST vers la méthode d'audit elle-même.",
+   "contentMarkdown": "ISO 19011:2026 (édition en vigueur) est le guide international pour auditer n'importe quel système de management. Ce sont des **lignes directrices**, pas des exigences certifiables : les règles de la certification tierce partie (étape 1 / étape 2, classification majeure ou mineure, décision de certification) relèvent d'ISO/IEC 17021-1. Elle repose sur **7 principes** :\n\n1. **Intégrité** : honnêteté, diligence, responsabilité.\n2. **Présentation impartiale** : rapporter les constats de façon exacte, même inconfortables.\n3. **Conscience professionnelle** : diligence et jugement.\n4. **Confidentialité** : protéger les informations obtenues.\n5. **Indépendance** : base de l'impartialité — ne pas auditer son propre travail.\n6. **Approche fondée sur la preuve** : conclusions basées sur des preuves vérifiables.\n7. **Approche fondée sur le risque** : concentrer l'effort d'audit sur les zones critiques.\n\n### Mises en situation\n\n- Un auditeur ne rapporte que ce qui est prouvé, même si un point positif n'est pas totalement vérifié → présentation impartiale.\n- Un auditeur a conçu lui-même la procédure qu'on lui demande d'auditer → violation de l'indépendance.\n- Un auditeur passe plus de temps sur les processus à fort risque → bonne application de l'approche fondée sur le risque.",
    "keyTakeaway": "Les questions d'examen sur ces 7 principes sont presque toujours des mises en situation. Apprenez-les avec un exemple associé à chacun.",
    "quiz": [
     {
      "question": "Citez les 7 principes de l'audit selon ISO 19011.",
-     "answer": "Intégrité, présentation impartiale, conscience professionnelle, confidentialité, indépendance, approche fondée sur la preuve, approche fondée sur le risque."
+     "answer": "Intégrité, présentation impartiale, conscience professionnelle, confidentialité, indépendance, approche fondée sur la preuve, approche fondée sur le risque.",
+     "standardRef": "ISO 19011",
+     "standardEdition": "2026",
+     "referenceType": "GUIDANCE"
     },
     {
      "question": "Un auditeur, ancien employé d'une entreprise, l'audite 6 mois après son départ. Quel principe est en jeu ?",
@@ -395,13 +420,16 @@
      "question": "Donnez un exemple d'application du principe de confidentialité.",
      "answer": "Ne pas mentionner à un client les pratiques observées chez un autre client."
     }
-   ]
+   ],
+   "standardRef": "ISO 19011",
+   "standardEdition": "2026",
+   "referenceType": "GUIDANCE"
   },
   {
    "id": 13,
    "week": 2,
    "type": "lesson",
-   "dayLabel": "Samedi 01/08",
+   "dayLabel": "Séance 13",
    "title": "Types et méthodes d'audit",
    "objective": "Comprendre les différents types d'audit et le déroulement d'une certification.",
    "contentMarkdown": "### Les 3 types d'audit\n\n- **Première partie (interne)** : l'organisme s'audite lui-même.\n- **Seconde partie** : réalisé par une partie ayant un intérêt direct (ex. un client qui audite son fournisseur).\n- **Tierce partie** : réalisé par un organisme certificateur indépendant en vue d'une certification.\n\n### Le processus de certification en 2 étapes\n\n**Étape 1 — Revue documentaire** : vérifier que le système documenté est cohérent et prêt, via check-lists et questionnaire. Conclut par un rapport d'étape 1.\n\n**Étape 2 — Audit sur site** : vérifier la mise en œuvre réelle (entretiens, observations, preuves documentaires). Conclut par une réunion de restitution et un rapport d'étape 2.\n\n### Non-conformité majeure vs mineure\n\n- **Majeure** : absence totale ou défaillance systémique, ou accumulation de mineures sur le même point.\n- **Mineure** : défaillance ponctuelle ou isolée.",
@@ -429,7 +457,7 @@
    "id": 14,
    "week": 2,
    "type": "review",
-   "dayLabel": "Dimanche 02/08",
+   "dayLabel": "Séance 14",
    "title": "Révision Semaine 2",
    "objective": "Consolider les jours 8 à 13.",
    "contentMarkdown": "Reprenez vos fiches des jours 8 à 13. Si vous manquez plus de 3 questions sur 10, reprenez les jours correspondants avant d'entamer la semaine 3.",
@@ -449,7 +477,8 @@
     },
     {
      "question": "Citez les 4 composantes du chapitre 9.",
-     "answer": "Surveillance/mesure/analyse, conformité, audit interne, revue de direction."
+     "answer": "Surveillance/mesure/analyse, conformité, audit interne, revue de direction.",
+     "revision": true
     },
     {
      "question": "Décrivez les 4 étapes du traitement complet d'un incident.",
@@ -457,7 +486,11 @@
     },
     {
      "question": "Citez les 7 principes de l'audit selon ISO 19011.",
-     "answer": "Intégrité, présentation impartiale, conscience professionnelle, confidentialité, indépendance, approche fondée sur la preuve, approche fondée sur le risque."
+     "answer": "Intégrité, présentation impartiale, conscience professionnelle, confidentialité, indépendance, approche fondée sur la preuve, approche fondée sur le risque.",
+     "revision": true,
+     "standardRef": "ISO 19011",
+     "standardEdition": "2026",
+     "referenceType": "GUIDANCE"
     },
     {
      "question": "Quelle est la différence entre audit interne, de seconde partie et de tierce partie ?",
@@ -469,11 +502,13 @@
     },
     {
      "question": "Quelle est la conséquence typique d'une non-conformité majeure ?",
-     "answer": "Elle empêche généralement la certification immédiate."
+     "answer": "Elle empêche généralement la certification immédiate.",
+     "revision": true
     },
     {
      "question": "À quoi sert la méthode des 5 pourquoi ?",
-     "answer": "Remonter d'un symptôme à sa cause racine."
+     "answer": "Remonter d'un symptôme à sa cause racine.",
+     "revision": true
     }
    ]
   },
@@ -481,7 +516,7 @@
    "id": 15,
    "week": 3,
    "type": "lesson",
-   "dayLabel": "Lundi 03/08",
+   "dayLabel": "Séance 15",
    "title": "Qualités et comportement de l'auditeur",
    "objective": "Comprendre ce qui fait un bon auditeur, au-delà de la connaissance technique.",
    "contentMarkdown": "### Savoir-faire et savoir-être\n\n- Ouverture d'esprit et diplomatie\n- Capacité d'observation et de perception\n- Aptitude à décider sur la base de raisonnements logiques\n- Ténacité\n- Capacité à agir de façon autonome, tout en travaillant en équipe\n\n### Le management de l'équipe d'audit\n\nLe lead auditor répartit les rôles, coordonne le planning, arbitre les désaccords sur une conclusion.\n\n### Le pilotage global de l'audit\n\nRespecter le plan initial tout en restant capable de s'adapter si un constat important émerge en cours de route.",
@@ -509,10 +544,10 @@
    "id": 16,
    "week": 3,
    "type": "lesson",
-   "dayLabel": "Mardi 04/08",
+   "dayLabel": "Séance 16",
    "title": "Préparation d'un audit",
    "objective": "Apprendre à construire les outils qui structurent un audit.",
-   "contentMarkdown": "### Le plan d'audit\n\nFixe les objectifs, le périmètre, les critères, le calendrier, les personnes à rencontrer. Communiqué à l'audité avant l'audit.\n\n### La check-list d'audit\n\nGuide l'auditeur sans être suivie de façon rigide.\n\n### Le questionnaire d'étape 1\n\nVérifie en amont que la documentation existe et couvre les exigences.\n\n### Exemple de check-list — clause 6 en laboratoire médical\n\n1. Existe-t-il une procédure d'identification des dangers spécifique au laboratoire ?\n2. Couvre-t-elle les activités hors routine ?\n3. Les résultats d'évaluation des risques sont-ils datés et mis à jour ?\n4. Les opportunités d'amélioration sont-elles tracées ?\n5. Existe-t-il une liste des exigences légales applicables au laboratoire ?\n6. Cette liste est-elle mise à jour, et par qui ?\n7. Les objectifs SST sont-ils mesurables et datés ?\n8. Un plan d'action est-il associé, avec responsable et échéance ?\n9. Les travailleurs ont-ils été consultés lors de l'identification des dangers ?\n10. Existe-t-il une preuve de cette consultation ?",
+   "contentMarkdown": "### Le plan d'audit\n\nFixe les objectifs, le périmètre, les critères, le calendrier, les personnes à rencontrer. Communiqué à l'audité avant l'audit.\n\n### La check-list d'audit\n\nGuide l'auditeur sans être suivie de façon rigide.\n\n### Le questionnaire d'étape 1\n\nVérifie en amont que la documentation existe et couvre les exigences.\n\n### Exemple de check-list — clause 6 en laboratoire médical\n\n1. Existe-t-il une information documentée décrivant l'identification des dangers spécifique au laboratoire ?\n2. Couvre-t-elle les activités hors routine ?\n3. Les résultats d'évaluation des risques sont-ils datés et mis à jour ?\n4. Les opportunités d'amélioration sont-elles tracées ?\n5. Existe-t-il une liste des exigences légales applicables au laboratoire ?\n6. Cette liste est-elle mise à jour, et par qui ?\n7. Les objectifs S&ST sont-ils mesurables et datés ?\n8. Un plan d'action est-il associé, avec responsable et échéance ?\n9. Les travailleurs ont-ils été consultés lors de l'identification des dangers ?\n10. Existe-t-il une preuve de cette consultation ?",
    "keyTakeaway": "Une bonne check-list mélange questions documentaires (existe-t-il...) et questions de vérification terrain (est-ce daté, tracé, prouvé...).",
    "quiz": [
     {
@@ -537,7 +572,7 @@
    "id": 17,
    "week": 3,
    "type": "lesson",
-   "dayLabel": "Mercredi 05/08",
+   "dayLabel": "Séance 17",
    "title": "Conduite de l'audit",
    "objective": "Les techniques utilisées pendant l'audit sur le terrain.",
    "contentMarkdown": "### La réunion d'ouverture\n\nPrésenter l'équipe, confirmer le plan, rappeler la confidentialité, expliquer le déroulement.\n\n### Techniques d'entretien\n\n- Privilégier les **questions ouvertes**\n- **Observer les pratiques réelles**, pas seulement les réponses verbales\n- **Croiser les sources** : documents, entretiens, observation\n- Reformuler pour vérifier sa compréhension\n\n### Collecte de preuves objectives\n\nUne preuve doit être **vérifiable** : document, observation directe, déclaration corroborée. Une affirmation isolée non vérifiée ne suffit pas.\n\n### La réunion de clôture\n\nPrésenter les constats de façon factuelle et impartiale, sans surprise avec le rapport écrit qui suit.",
@@ -565,7 +600,7 @@
    "id": 18,
    "week": 3,
    "type": "lesson",
-   "dayLabel": "Jeudi 06/08",
+   "dayLabel": "Séance 18",
    "title": "Rédaction des constats",
    "objective": "L'exercice le plus discriminant à l'examen — savoir écrire une non-conformité correctement.",
    "contentMarkdown": "### Les 3 éléments obligatoires d'une non-conformité bien rédigée\n\n1. **La preuve objective** : ce qui a été observé, factuellement\n2. **L'exigence de référence** : la clause non respectée\n3. **L'écart constaté** : le lien entre la preuve et l'exigence\n\n### Erreurs fréquentes à éviter\n\n- Formuler une opinion plutôt qu'un fait\n- Oublier de citer l'exigence précise\n- Mélanger plusieurs écarts différents dans une seule NC\n- Vocabulaire vague au lieu de données précises\n\n### Trois exemples, du plus faible au plus solide\n\n**Faible** : « Le personnel ne connaît pas bien les procédures de sécurité. » (opinion vague, aucune preuve datée)\n\n**Moyen** : « Un agent interrogé ne connaissait pas la procédure d'urgence. Non-conformité à la clause 8.2. » (mieux, mais imprécis)\n\n**Solide** : « Lors de l'entretien du 05/08 avec 3 agents du service de prélèvement, 2 agents sur 3 n'ont pas su décrire la procédure d'urgence en cas d'exposition au sang, ni localiser le document affiché. Ceci constitue un écart à l'exigence de sensibilisation de la clause 7.3 et à la préparation aux situations d'urgence de la clause 8.2. »",
@@ -585,7 +620,7 @@
     },
     {
      "question": "Un registre d'incidents n'a pas été mis à jour depuis 4 mois, alors que la procédure prévoit une mise à jour hebdomadaire. Rédigez la NC complète.",
-     "answer": "Exemple : preuve datée du registre non mis à jour depuis 4 mois, exigence = clause 9.1 (surveillance et mesure), écart = absence de suivi effectif et à jour des incidents SST."
+     "answer": "Exemple : preuve datée du registre non mis à jour depuis 4 mois, exigence = clause 9.1 (surveillance et mesure), écart = absence de suivi effectif et à jour des incidents S&ST."
     }
    ]
   },
@@ -593,7 +628,7 @@
    "id": 19,
    "week": 3,
    "type": "practical",
-   "dayLabel": "Vendredi 07/08",
+   "dayLabel": "Séance 19",
    "title": "Cas pratique complet",
    "objective": "Mettre en pratique l'ensemble des notions sur un scénario proche de l'environnement professionnel.",
    "contentMarkdown": "### Scénario : audit du service de stérilisation d'une clinique\n\n- Le registre de traçabilité des cycles de stérilisation est bien tenu, daté et complet.\n- 2 agents sur 3 interrogés ne savent pas où se trouve la fiche de données de sécurité du produit désinfectant.\n- Aucune évaluation des risques n'a été formalisée pour le poste de manipulation des instruments contaminés, alors qu'elle existe pour d'autres postes du même service.\n- Un exercice d'évacuation a été réalisé il y a 2 mois, compte-rendu disponible et signé.\n- Le responsable déclare que « tout le monde est consulté sur les risques », mais aucun des 3 agents interrogés ne se souvient d'avoir été associé à une identification des dangers.\n\n### À faire\n\n1. Identifiez les points conformes et non conformes.\n2. Pour chaque non-conformité, rédigez le constat complet.\n3. Reliez chaque non-conformité à la clause concernée.\n4. Indiquez si elle est plutôt majeure ou mineure, et pourquoi.",
@@ -621,7 +656,7 @@
    "id": 20,
    "week": 3,
    "type": "mockExam",
-   "dayLabel": "Samedi 08/08",
+   "dayLabel": "Séance 20",
    "title": "Examen blanc",
    "objective": "Se tester dans des conditions proches de l'examen réel, sans revenir sur ses fiches.",
    "contentMarkdown": "QCM de 15 questions couvrant l'ensemble du programme, suivi d'un exercice de rédaction. Moins de 10/15 signale un besoin de retour sur les jours correspondants avant la formation.",
@@ -629,7 +664,7 @@
    "quiz": [
     {
      "question": "Quelle clause de la structure harmonisée traite de la planification ?",
-     "answer": "Chapitre 6."
+     "answer": "Le chapitre 6 « Planification » : identification des dangers, appréciation des risques et opportunités, exigences légales et autres exigences, objectifs S&ST et planification des actions."
     },
     {
      "question": "Quelle est la différence entre une correction et une action corrective ?",
@@ -641,11 +676,22 @@
     },
     {
      "question": "Quel principe de l'audit garantit qu'un auditeur ne peut pas auditer son propre travail ?",
-     "answer": "L'indépendance."
+     "answer": "L'indépendance.",
+     "standardRef": "ISO 19011",
+     "standardEdition": "2026",
+     "referenceType": "GUIDANCE",
+     "verifiedAt": "2026-08-09",
+     "reviewStatus": "VERIFIED"
     },
     {
-     "question": "Que vérifie-t-on pendant l'étape 1 de la certification ?",
-     "answer": "Que le système documenté est cohérent et prêt pour l'audit sur site."
+     "question": "Que vérifie-t-on pendant l'audit d'étape 1 d'une certification, et de quel référentiel cette étape relève-t-elle ?",
+     "answer": "Les étapes 1 et 2 relèvent du processus de certification tierce partie décrit par ISO/IEC 17021-1, et non d'ISO 19011. L'étape 1 examine les informations documentées du système et évalue la préparation de l'audité : compréhension des exigences, périmètre et sites, ressources, exigences légales identifiées, état de l'audit interne et de la revue de direction — afin de planifier l'étape 2.",
+     "standardRef": "ISO/IEC 17021-1",
+     "clauseRef": "9.3",
+     "referenceType": "CERTIFICATION_RULE",
+     "verifiedAt": "2026-08-09",
+     "reviewStatus": "VERIFIED",
+     "standardEdition": "2026"
     },
     {
      "question": "Dans la hiérarchie des mesures, quelle est la plus efficace : élimination ou EPI ?",
@@ -656,12 +702,12 @@
      "answer": "Preuve objective, exigence de référence, écart constaté."
     },
     {
-     "question": "Qu'est-ce qu'une opportunité SST ?",
-     "answer": "Une circonstance qui pourrait améliorer la performance SST, pas seulement réduire un risque."
+     "question": "Qu'est-ce qu'une opportunité S&ST ?",
+     "answer": "Une circonstance qui pourrait améliorer la performance S&ST, pas seulement réduire un risque."
     },
     {
      "question": "Quel chapitre traite de la revue de direction ?",
-     "answer": "Chapitre 9."
+     "answer": "Le chapitre 9 « Évaluation des performances », §9.3 Revue de direction (le §9.1 traite de la surveillance et du mesurage, le §9.2 de l'audit interne)."
     },
     {
      "question": "Citez 2 techniques de collecte de preuves objectives.",
@@ -669,7 +715,12 @@
     },
     {
      "question": "Quelle est la conséquence typique d'une NC majeure sur une certification ?",
-     "answer": "Elle empêche généralement la certification immédiate."
+     "answer": "Elle empêche généralement la recommandation de certification tant qu'elle n'est pas soldée. Attention : la classification majeure / mineure est une règle du processus de certification tierce partie (ISO/IEC 17021-1), pas une classification définie par ISO 19011.",
+     "standardRef": "ISO/IEC 17021-1",
+     "referenceType": "CERTIFICATION_RULE",
+     "verifiedAt": "2026-08-09",
+     "reviewStatus": "VERIFIED",
+     "standardEdition": "2026"
     },
     {
      "question": "Pourquoi une déclaration verbale isolée ne suffit-elle pas comme preuve ?",
@@ -685,7 +736,8 @@
     },
     {
      "question": "Pourquoi le domaine d'application doit-il correspondre exactement à la réalité observée ?",
-     "answer": "Un décalage constitue une non-conformité classique en audit."
+     "answer": "Un décalage constitue une non-conformité classique en audit.",
+     "revision": true
     }
    ]
   },
@@ -693,7 +745,7 @@
    "id": 21,
    "week": 3,
    "type": "wrapup",
-   "dayLabel": "Dimanche 09/08",
+   "dayLabel": "Séance 21",
    "title": "Révision légère et logistique",
    "objective": "Se préparer sereinement pour le départ en formation.",
    "contentMarkdown": "- Relisez uniquement vos fiches de vocabulaire (jour 2), le tableau du cycle PDCA (jour 1), et la structure d'une non-conformité (jour 18) — pas de contenu nouveau aujourd'hui.\n- Préparez vos affaires : pièce d'identité, de quoi prendre des notes, tenue adaptée pour 5 jours de formation.\n- Couchez-vous tôt : la formation démarre demain et sera intensive.",
@@ -703,48 +755,8 @@
  ],
  "glossary": [
   {
-   "term": "Danger",
-   "definition": "Source potentielle de blessure ou d'atteinte à la santé."
-  },
-  {
-   "term": "Risque",
-   "definition": "Combinaison de la probabilité et de la gravité d'un danger qui se réalise."
-  },
-  {
-   "term": "Opportunité SST",
-   "definition": "Circonstance pouvant améliorer la performance SST, au-delà de la réduction d'un risque."
-  },
-  {
-   "term": "Système de management",
-   "definition": "Ensemble organisé de politiques, processus et ressources pour atteindre des objectifs."
-  },
-  {
-   "term": "Partie intéressée",
-   "definition": "Toute personne/organisation pouvant affecter ou être affectée par les décisions SST."
-  },
-  {
-   "term": "Exigence légale",
-   "definition": "Loi ou règlement applicable à l'organisme."
-  },
-  {
-   "term": "Autre exigence",
-   "definition": "Engagement volontaire (charte, contrat, code de conduite)."
-  },
-  {
-   "term": "Incident",
-   "definition": "Événement lié au travail ayant causé ou pouvant causer une atteinte à la santé."
-  },
-  {
-   "term": "Presqu'accident",
-   "definition": "Incident sans conséquence réelle mais qui aurait pu en avoir."
-  },
-  {
-   "term": "Non-conformité",
-   "definition": "Non-respect d'une exigence."
-  },
-  {
-   "term": "Correction",
-   "definition": "Action immédiate pour éliminer une non-conformité constatée."
+   "term": "Accréditation",
+   "definition": "Reconnaissance officielle de la compétence d'un organisme certificateur."
   },
   {
    "term": "Action corrective",
@@ -755,66 +767,143 @@
    "definition": "Recherche récurrente d'amélioration de la performance."
   },
   {
-   "term": "Travailleur",
-   "definition": "Toute personne exerçant un travail sous le contrôle de l'organisme."
-  },
-  {
-   "term": "Consultation",
-   "definition": "Demander l'avis des travailleurs."
-  },
-  {
-   "term": "Participation",
-   "definition": "Impliquer réellement les travailleurs dans le processus."
-  },
-  {
-   "term": "Hiérarchie des mesures de maîtrise",
-   "definition": "Ordre de priorité des solutions face à un danger (élimination > EPI)."
-  },
-  {
-   "term": "Domaine d'application (scope)",
-   "definition": "Périmètre exact couvert par le système de management."
-  },
-  {
-   "term": "Programme d'audit",
-   "definition": "Ensemble d'audits planifiés sur une période donnée."
-  },
-  {
-   "term": "Critères d'audit",
-   "definition": "Référentiel auquel on compare les preuves (norme, procédure interne)."
+   "term": "Autre exigence",
+   "definition": "Engagement volontaire (charte, contrat, code de conduite)."
   },
   {
    "term": "Champ d'audit",
    "definition": "Étendue et limites d'un audit donné."
   },
   {
-   "term": "Preuve d'audit",
-   "definition": "Élément vérifiable (document, observation, déclaration corroborée)."
-  },
-  {
    "term": "Constat d'audit",
    "definition": "Résultat de l'évaluation des preuves par rapport aux critères."
   },
   {
-   "term": "Plan d'audit",
-   "definition": "Description des activités et modalités d'un audit."
+   "term": "Consultation",
+   "definition": "Recherche d'avis des travailleurs avant une prise de décision (art. 3.5)."
   },
   {
-   "term": "Rapport d'audit",
-   "definition": "Document final présentant les constats et conclusions de l'audit."
+   "term": "Correction",
+   "definition": "Action immédiate pour éliminer une non-conformité constatée."
+  },
+  {
+   "term": "Critères d'audit",
+   "definition": "Référentiel auquel on compare les preuves (norme, procédure interne)."
+  },
+  {
+   "term": "Danger",
+   "definition": "Source susceptible de causer traumatisme et pathologie (art. 3.19). Le terme « blessure » appartient au vocabulaire d'OHSAS 18001."
+  },
+  {
+   "term": "Direction",
+   "definition": "Personne ou groupe qui oriente et dirige l'organisme au plus haut niveau (art. 3.12). Porte les exigences de leadership du chapitre 5."
+  },
+  {
+   "term": "Domaine d'application (scope)",
+   "definition": "Périmètre exact couvert par le système de management."
+  },
+  {
+   "term": "Efficacité",
+   "definition": "Niveau de réalisation des activités planifiées et d'obtention des résultats escomptés (art. 3.13)."
+  },
+  {
+   "term": "Exigence légale",
+   "definition": "Loi ou règlement applicable à l'organisme."
+  },
+  {
+   "term": "Externalisation",
+   "definition": "Accord par lequel un organisme externe réalise une partie d'une fonction ou d'un processus de l'organisme (art. 3.29). N'exonère pas l'organisme de sa responsabilité."
+  },
+  {
+   "term": "Hiérarchie des mesures de prévention",
+   "definition": "Ordre imposé par le §8.1.2 : 1) élimination du danger, 2) substitution, 3) mesures techniques et protection collective, 4) mesures administratives et réorganisation du travail, dont la formation, 5) équipements de protection individuelle."
+  },
+  {
+   "term": "Information documentée",
+   "definition": "Information devant être maîtrisée et tenue à jour par l'organisme, et son support (art. 3.24). Remplace les anciens termes « procédure documentée » et « enregistrement »."
+  },
+  {
+   "term": "Intervenant extérieur",
+   "definition": "Organisme externe qui fournit un service à l'organisme sur son lieu de travail, sous le contrôle partiel de celui-ci (art. 3.7)."
+  },
+  {
+   "term": "Lieu de travail",
+   "definition": "Lieu placé sous le contrôle de l'organisme où une personne doit se trouver ou se rendre pour son travail (art. 3.6)."
+  },
+  {
+   "term": "Non-conformité",
+   "definition": "Non-respect d'une exigence."
+  },
+  {
+   "term": "Opportunité pour la S&ST",
+   "definition": "Circonstance pouvant améliorer la performance en S&ST, au-delà de la seule réduction d'un risque."
   },
   {
    "term": "Organisme certificateur",
    "definition": "Organisme accrédité habilité à délivrer un certificat ISO."
   },
   {
-   "term": "Accréditation",
-   "definition": "Reconnaissance officielle de la compétence d'un organisme certificateur."
+   "term": "Participation",
+   "definition": "Implication des travailleurs dans la prise de décision (art. 3.4)."
+  },
+  {
+   "term": "Partie intéressée",
+   "definition": "Toute personne/organisation pouvant affecter ou être affectée par les décisions S&ST."
+  },
+  {
+   "term": "Performance en S&ST",
+   "definition": "Performance liée à l'efficacité de la prévention des traumatismes et pathologies et à la sécurité des lieux de travail (art. 3.28)."
+  },
+  {
+   "term": "Plan d'audit",
+   "definition": "Description des activités et modalités d'un audit."
+  },
+  {
+   "term": "Presqu'accident",
+   "definition": "Événement indésirable qui n'a pas entraîné de traumatisme ni de pathologie, mais aurait pu en causer."
+  },
+  {
+   "term": "Preuve d'audit",
+   "definition": "Élément vérifiable (document, observation, déclaration corroborée)."
+  },
+  {
+   "term": "Programme d'audit",
+   "definition": "Ensemble d'audits planifiés sur une période donnée."
+  },
+  {
+   "term": "Rapport d'audit",
+   "definition": "Document final présentant les constats et conclusions de l'audit."
+  },
+  {
+   "term": "Risque",
+   "definition": "Effet de l'incertitude (art. 3.20). Définition harmonisée commune à toutes les normes de management — à ne pas confondre avec le risque pour la S&ST."
+  },
+  {
+   "term": "Risque pour la S&ST",
+   "definition": "Combinaison de la probabilité d'occurrence d'événements ou d'expositions dangereux liés au travail et de la gravité des traumatismes et pathologies pouvant en résulter (art. 3.21)."
+  },
+  {
+   "term": "Système de management",
+   "definition": "Ensemble organisé de politiques, processus et ressources pour atteindre des objectifs."
+  },
+  {
+   "term": "Traumatisme et pathologie",
+   "definition": "Effet négatif sur l'état physique, mental ou cognitif d'une personne, quelle qu'en soit l'origine liée au travail (art. 3.18)."
+  },
+  {
+   "term": "Travailleur",
+   "definition": "Toute personne exerçant un travail sous le contrôle de l'organisme."
+  },
+  {
+   "term": "Événement indésirable",
+   "definition": "Événement lié au travail ayant causé ou pouvant causer traumatisme et pathologie (art. 3.35). Anciennement appelé « incident »."
   }
  ],
  "annexes": {
   "auditPlanTemplate": [
    "Organisme audité",
    "Date(s) de l'audit",
+   "Objectifs de l'audit",
    "Type d'audit (interne / 2nde partie / 3ème partie, étape 1 / étape 2)",
    "Norme et critères d'audit",
    "Domaine et périmètre",
@@ -837,7 +926,7 @@
    },
    {
     "field": "Classification",
-    "hint": "Majeure / mineure, et justification"
+    "hint": "Majeure / mineure, et justification — classification issue des règles de certification tierce partie (ISO/IEC 17021-1), non d'ISO 19011"
    }
   ],
   "genericChecklist": [
@@ -892,15 +981,15 @@
      "answer": "Plan, Do, Check, Act."
     },
     {
-     "question": "Quelle différence entre danger et risque ?",
-     "answer": "Le danger est la source potentielle de blessure ; le risque est la combinaison probabilité × gravité."
+     "question": "Quelle différence entre danger, risque et risque pour la S&ST ?",
+     "answer": "Le danger (art. 3.19) est la source susceptible de causer traumatisme et pathologie ; le risque (art. 3.20) est l'effet de l'incertitude ; le risque pour la S&ST (art. 3.21) est la combinaison de la probabilité d'occurrence d'un événement ou d'une exposition dangereux liés au travail et de la gravité des traumatismes et pathologies pouvant en résulter."
     },
     {
      "question": "Citez 2 parties intéressées typiques d'une structure de santé.",
      "answer": "Par exemple : travailleurs, autorités sanitaires, assureurs, syndicats."
     },
     {
-     "question": "Que doit contenir une politique SST ?",
+     "question": "Que doit contenir une politique S&ST ?",
      "answer": "Engagement à éliminer les dangers/réduire les risques, à la consultation/participation, à l'amélioration continue."
     },
     {
@@ -909,7 +998,7 @@
     },
     {
      "question": "Citez les 4 composantes du chapitre 6.",
-     "answer": "Identification des dangers, évaluation des risques/opportunités, exigences légales, objectifs SST."
+     "answer": "Identification des dangers, évaluation des risques/opportunités, exigences légales, objectifs S&ST."
     },
     {
      "question": "Quels sont les 5 piliers du chapitre 7 ?",
@@ -921,7 +1010,7 @@
     },
     {
      "question": "Que doit-on faire avant de mettre en œuvre un changement organisationnel ?",
-     "answer": "Évaluer ses impacts SST potentiels avant sa mise en œuvre."
+     "answer": "Évaluer ses impacts S&ST potentiels avant sa mise en œuvre."
     },
     {
      "question": "Citez les 4 composantes du chapitre 9.",

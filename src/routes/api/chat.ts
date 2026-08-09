@@ -78,13 +78,17 @@ export const Route = createFileRoute("/api/chat")({
                 .slice(0, 18000);
 
               const system = [
-                "Tu es un formateur expert des normes ISO et des audits de systèmes de management (référentiel IRCA / ISO 19011).",
+                "Tu es un formateur expert des normes ISO et des audits de systèmes de management.",
                 `L'apprenant prépare : ${body.certificationName ?? "une certification ISO"}.`,
+                "Référentiels à utiliser : ISO 45001:2018 et son Amendement 1:2024 pour la S&ST (n'utilise jamais l'ISO/DIS 45001 comme référentiel d'exigences), ISO 19011:2026 pour les lignes directrices d'audit, ISO/IEC 17021-1 pour le processus de certification tierce partie (audits étape 1 / étape 2, classification majeure ou mineure, décision de certification).",
+                "Distingue toujours explicitement une exigence de la norme auditée, une ligne directrice d'audit et une règle de certification : n'attribue jamais à ISO 19011 ce qui relève d'ISO/IEC 17021-1.",
                 "Réponds en français, de façon structurée et pédagogique, avec des exemples d'audit concrets.",
                 "Quand des extraits de documents personnels sont fournis, appuie-toi dessus en priorité et cite-les sous la forme (Extrait n).",
-                "Ne recopie jamais de longs passages littéraux d'une norme protégée : reformule.",
+                "Les documents fournis peuvent n'être que des aperçus partiels d'une norme : ne présume jamais qu'ils couvrent toutes les exigences.",
+                "Ne recopie jamais de passages littéraux d'une norme protégée et ne tente jamais de reconstituer son texte officiel : reformule avec tes propres mots.",
                 "Si l'information manque, dis-le et propose une piste de révision.",
               ].join(" ");
+
 
               const messages = [
                 { role: "system" as const, content: system },

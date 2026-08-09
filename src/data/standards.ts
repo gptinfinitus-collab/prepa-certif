@@ -130,9 +130,10 @@ const isoUrl = (id: string) => `https://www.iso.org/fr/standard/${id}.html`;
 /** Normes transverses utiles à toute préparation d'auditeur. */
 export const auditReferences: StandardReference[] = [
   {
-    code: "ISO 19011:2018",
+    code: "ISO 19011:2026",
     title: "Lignes directrices pour l'audit des systèmes de management",
-    role: "Principes de l'audit, programme d'audit, conduite et compétences de l'auditeur.",
+    role: "Édition en vigueur : principes de l'audit, management du programme d'audit, conduite de l'audit et compétence des auditeurs. Lignes directrices, pas d'exigences certifiables.",
+
     url: isoUrl("70017"),
   },
   {

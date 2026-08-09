@@ -1,0 +1,1 @@
+ALTER TABLE public.library_documents ADD COLUMN IF NOT EXISTS is_partial boolean NOT NULL DEFAULT false;

@@ -61,7 +61,7 @@ function Bibliotheque() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("library_documents")
-        .select("id, name, kind, status, error, chunk_count, storage_path, created_at")
+        .select("id, name, kind, status, error, chunk_count, is_partial, storage_path, created_at")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data ?? [];
@@ -226,7 +226,17 @@ function Bibliotheque() {
                     ) : (
                       <Badge variant="outline">En attente d'analyse</Badge>
                     )}
+                    {doc.is_partial ? (
+                      <Badge
+                        variant="outline"
+                        className="border-amber-500/50 text-amber-600 dark:text-amber-400"
+                        title="Ce fichier porte des marques d'aperçu : il ne contient qu'un extrait de la norme. L'IA ne peut pas s'appuyer dessus pour couvrir l'intégralité des exigences."
+                      >
+                        Extrait partiel
+                      </Badge>
+                    ) : null}
                   </div>
+
                   <div className="-ml-2 flex flex-wrap items-center gap-1 sm:ml-auto">
                     <Button
                       variant="ghost"

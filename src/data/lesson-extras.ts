@@ -543,9 +543,11 @@ export const lessonExtras: Record<number, LessonExtras> = {
       "Rapports d'audit et preuves collectées",
     ],
     examFocus: [
-      "ISO 19011 est un guide, non une norme d'exigences certifiable.",
+      "ISO 19011:2026 est un guide de lignes directrices, non une norme d'exigences certifiable.",
       "Les principes : intégrité, présentation impartiale, conscience professionnelle, confidentialité, indépendance, approche fondée sur des preuves, approche par les risques.",
+      "Les audits de certification étape 1 et étape 2 et la classification majeure / mineure des non-conformités relèvent d'ISO/IEC 17021-1, pas d'ISO 19011.",
     ],
+
     commonMistakes: [
       "Traiter ISO 19011 comme une norme auditable en exigences.",
       "Confondre programme d'audit (le pilotage global) et audit (l'intervention).",
@@ -557,7 +559,8 @@ export const lessonExtras: Record<number, LessonExtras> = {
         "ISO 19011 fournit des lignes directrices, pas des exigences certifiables. L'exigence d'audit interne provient d'ISO 45001, chapitre 9.2 ; ISO 19011 aide à la mettre en œuvre. La formulation est à corriger, même si la pratique peut être bonne.",
     },
     flashcards: [
-      { front: "ISO 19011", back: "Lignes directrices pour l'audit des systèmes de management. Pas une norme d'exigences." },
+      { front: "ISO 19011:2026", back: "Lignes directrices pour l'audit des systèmes de management. Pas une norme d'exigences certifiable." },
+
       { front: "Programme d'audit", back: "Ensemble des audits planifiés sur une période donnée pour un objectif défini." },
       { front: "Approche fondée sur des preuves", back: "Les conclusions d'audit reposent sur des preuves vérifiables, obtenues par échantillonnage." },
     ],

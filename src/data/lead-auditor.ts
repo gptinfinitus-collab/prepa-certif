@@ -25,7 +25,7 @@ function specs(label: string): LeadModuleSpec[] {
         {
           heading: "Ce que recouvre le rôle",
           body: [
-            "Le responsable d'équipe d'audit (ISO 19011, § 5.5.2) est désigné pour un audit précis. Il porte la responsabilité de la conduite de l'audit et de ses conclusions, pas seulement de sa propre part de travail.",
+            "Le responsable d'équipe d'audit, au sens des lignes directrices d'ISO 19011:2026, est désigné pour un audit précis. Il porte la responsabilité de la conduite de l'audit et de ses conclusions, pas seulement de sa propre part de travail.",
             "Ses responsabilités : préparer le plan d'audit, répartir les tâches entre auditeurs et experts techniques, arbitrer les désaccords sur les constats, animer les réunions d'ouverture et de clôture, valider le rapport.",
           ],
         },
@@ -180,7 +180,7 @@ function specs(label: string): LeadModuleSpec[] {
         {
           heading: "Principes",
           body: [
-            "Les principes d'ISO 19011 s'appliquent au responsable d'équipe en premier : déontologie, présentation impartiale, conscience professionnelle, confidentialité, indépendance, approche fondée sur la preuve, approche par les risques.",
+            "Les principes d'audit d'ISO 19011:2026 s'appliquent au responsable d'équipe en premier : intégrité, présentation impartiale, conscience professionnelle, confidentialité, indépendance, approche fondée sur des preuves, approche par les risques.",
             "Conflit d'intérêts : un auditeur n'audite pas un domaine dont il a été responsable ou qu'il a conseillé récemment. Le cas se déclare avant l'audit.",
           ],
         },
