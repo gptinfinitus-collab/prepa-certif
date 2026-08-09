@@ -1,5 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { AppHeader } from "@/components/AppHeader";
+import { AppShell } from "@/components/AppShell";
+import { useProfile } from "@/lib/queries";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { initialsOf } from "@/components/ProfileEditor";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +33,7 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
 function Dashboard() {
   const { data: plan } = useStudyPlan();
   const { data: progress = [] } = useProgress();
+  const { data: profile } = useProfile();
 
   const completedIds = new Set(progress.filter((p) => p.completed).map((p) => p.module_id));
   const schedule = plan ? buildSchedule(plan) : null;
@@ -37,19 +41,65 @@ function Dashboard() {
   const pace = schedule ? computePace(schedule, completedIds.size) : null;
   const percent = Math.round((completedIds.size / modules.length) * 100);
   const next = modules.find((m) => !completedIds.has(m.id));
+  const firstName = profile?.first_name?.trim() || profile?.display_name?.split(" ")[0] || "";
 
   return (
-    <div className="min-h-screen bg-background">
-      <AppHeader />
-      <main className="mx-auto max-w-6xl px-4 py-10">
-        <h1 className="font-serif text-3xl font-semibold">Mon programme</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
+    <AppShell title="Mon programme">
+      <div className="mx-auto max-w-6xl px-4 py-6 md:py-10">
+        {/* Accueil mobile */}
+        <section className="mb-6 rounded-2xl border border-border bg-gradient-to-br from-primary/12 via-card to-card p-5 md:hidden">
+          <div className="flex items-center gap-3">
+            <Avatar className="size-12 shrink-0 border border-border">
+              <AvatarImage src={profile?.avatarSignedUrl ?? undefined} alt="" />
+              <AvatarFallback>
+                {initialsOf(profile?.first_name, profile?.last_name, profile?.email)}
+              </AvatarFallback>
+            </Avatar>
+            <div className="min-w-0">
+              <p className="text-xs uppercase tracking-wide text-muted-foreground">Bonjour</p>
+              <p className="truncate font-serif text-lg font-semibold">
+                {firstName || "Bienvenue"}
+              </p>
+            </div>
+          </div>
+          <div className="mt-5">
+            <div className="flex items-end justify-between">
+              <p className="font-serif text-4xl font-semibold leading-none">{percent}%</p>
+              <p className="text-xs text-muted-foreground">
+                {completedIds.size} / {modules.length} séances
+              </p>
+            </div>
+            <Progress value={percent} className="mt-3" />
+          </div>
+          {next ? (
+            <div className="mt-5 rounded-xl border border-border bg-background/70 p-4">
+              <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                Prochaine séance
+              </p>
+              <p className="mt-1 font-serif text-base font-semibold leading-snug">{next.title}</p>
+              <Button asChild size="sm" className="mt-3 w-full">
+                <Link to="/seance/$moduleId" params={{ moduleId: String(next.id) }}>
+                  Continuer
+                </Link>
+              </Button>
+            </div>
+          ) : null}
+          <p className="mt-4 text-xs text-muted-foreground">
+            {schedule?.endDate
+              ? `Fin estimée le ${formatShortDate(schedule.endDate)} · ${pace?.label ?? ""}`
+              : "Configurez votre planning pour dater vos séances."}
+          </p>
+        </section>
+
+        <h1 className="hidden font-serif text-3xl font-semibold md:block">Mon programme</h1>
+        <p className="mt-2 hidden text-sm text-muted-foreground md:block">
           {schedule?.endDate
             ? `Fin estimée le ${formatShortDate(schedule.endDate)} · ${schedule.effectiveModulesPerDay} séance(s) par jour travaillé`
             : "Configurez votre planning pour dater vos séances."}
         </p>
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-3">
+        <div className="mt-6 hidden gap-4 sm:grid-cols-3 md:grid">
+
           <Card>
             <CardHeader>
               <CardTitle className="text-sm font-medium text-muted-foreground">Progression</CardTitle>
@@ -139,7 +189,7 @@ function Dashboard() {
             </section>
           ))}
         </div>
-      </main>
-    </div>
+      </div>
+    </AppShell>
   );
 }

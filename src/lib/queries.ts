@@ -110,3 +110,95 @@ export function useSetModuleProgress() {
     },
   });
 }
+
+export interface Profile {
+  id: string;
+  first_name: string | null;
+  last_name: string | null;
+  display_name: string | null;
+  avatar_url: string | null;
+}
+
+export function useProfile() {
+  return useQuery({
+    queryKey: ["profile"],
+    queryFn: async (): Promise<(Profile & { email: string | null; avatarSignedUrl: string | null }) | null> => {
+      const { data: userData } = await supabase.auth.getUser();
+      const user = userData.user;
+      if (!user) return null;
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("id, first_name, last_name, display_name, avatar_url")
+        .eq("id", user.id)
+        .maybeSingle();
+      if (error) throw error;
+
+      const profile: Profile = data ?? {
+        id: user.id,
+        first_name: null,
+        last_name: null,
+        display_name: null,
+        avatar_url: null,
+      };
+
+      let avatarSignedUrl: string | null = null;
+      if (profile.avatar_url) {
+        if (profile.avatar_url.startsWith("http")) {
+          avatarSignedUrl = profile.avatar_url;
+        } else {
+          const { data: signed } = await supabase.storage
+            .from("avatars")
+            .createSignedUrl(profile.avatar_url, 60 * 60);
+          avatarSignedUrl = signed?.signedUrl ?? null;
+        }
+      }
+
+      return { ...profile, email: user.email ?? null, avatarSignedUrl };
+    },
+  });
+}
+
+export function useUpdateProfile() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: { first_name: string; last_name: string }) => {
+      const { data: userData } = await supabase.auth.getUser();
+      const user = userData.user;
+      if (!user) throw new Error("Non connecté");
+      const display = [input.first_name, input.last_name].filter(Boolean).join(" ").trim();
+      const { error } = await supabase.from("profiles").upsert(
+        {
+          id: user.id,
+          first_name: input.first_name || null,
+          last_name: input.last_name || null,
+          display_name: display || null,
+        },
+        { onConflict: "id" },
+      );
+      if (error) throw error;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["profile"] }),
+  });
+}
+
+export function useUploadAvatar() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (blob: Blob) => {
+      const { data: userData } = await supabase.auth.getUser();
+      const user = userData.user;
+      if (!user) throw new Error("Non connecté");
+      const path = `${user.id}/avatar-${Date.now()}.jpg`;
+      const { error: uploadError } = await supabase.storage
+        .from("avatars")
+        .upload(path, blob, { contentType: "image/jpeg", upsert: true });
+      if (uploadError) throw uploadError;
+      const { error } = await supabase
+        .from("profiles")
+        .upsert({ id: user.id, avatar_url: path }, { onConflict: "id" });
+      if (error) throw error;
+      return path;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["profile"] }),
+  });
+}

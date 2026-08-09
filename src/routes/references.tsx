@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { AppHeader } from "@/components/AppHeader";
+import { AppShell } from "@/components/AppShell";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { program } from "@/data/program";
@@ -55,9 +55,8 @@ const standards = [
 
 function References() {
   return (
-    <div className="min-h-screen bg-background">
-      <AppHeader />
-      <main className="mx-auto max-w-4xl px-4 py-10">
+    <AppShell title="Références ISO">
+      <div className="mx-auto max-w-4xl px-4 py-6 md:py-10">
         <h1 className="font-serif text-3xl font-semibold">Références ISO</h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
           Les textes normatifs sont protégés par le droit d'auteur : ils ne peuvent pas être
@@ -99,7 +98,7 @@ function References() {
         </section>
 
         <p className="mt-10 text-xs text-muted-foreground">{program.meta.copyrightNote}</p>
-      </main>
-    </div>
+      </div>
+    </AppShell>
   );
 }

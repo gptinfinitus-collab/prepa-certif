@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { AppHeader } from "@/components/AppHeader";
+import { AppShell } from "@/components/AppShell";
 import { MarkdownView } from "@/components/MarkdownView";
 import { Quiz } from "@/components/Quiz";
 import { Button } from "@/components/ui/button";
@@ -57,9 +57,8 @@ function Seance() {
   const next = index < modules.length - 1 ? modules[index + 1] : undefined;
 
   return (
-    <div className="min-h-screen bg-background">
-      <AppHeader />
-      <main className="mx-auto max-w-3xl px-4 py-10">
+    <AppShell title="Séance">
+      <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
         <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
           <Link to="/dashboard" className="hover:text-foreground">
             Programme
@@ -138,7 +137,7 @@ function Seance() {
             ) : null}
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </AppShell>
   );
 }

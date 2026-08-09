@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { AppHeader } from "@/components/AppHeader";
+import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -60,9 +60,8 @@ function Planning() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <AppHeader />
-      <main className="mx-auto max-w-6xl px-4 py-10">
+    <AppShell title="Mon planning">
+      <div className="mx-auto max-w-6xl px-4 py-6 md:py-10">
         <h1 className="font-serif text-3xl font-semibold">Mon planning</h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
           La préparation n'a pas de durée imposée : les {modules.length} séances se répartissent
@@ -174,7 +173,7 @@ function Planning() {
             </ol>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </AppShell>
   );
 }
