@@ -41,10 +41,12 @@ export function QuizTrainer({
   certificationName,
   certificationId,
   chapters,
+  initialChapter,
 }: {
   certificationName: string;
   certificationId: string | null;
   chapters: string[];
+  initialChapter?: string | null;
 }) {
   const generate = useServerFn(generateQuizQuestions);
   const grade = useServerFn(gradeOpenAnswers);
@@ -52,7 +54,9 @@ export function QuizTrainer({
   const { examBody } = useExamBody();
   const queryClient = useQueryClient();
 
-  const [chapter, setChapter] = useState<string>(ALL);
+  const [chapter, setChapter] = useState<string>(
+    initialChapter && chapters.includes(initialChapter) ? initialChapter : ALL,
+  );
   const [count, setCount] = useState("5");
   const [mode, setMode] = useState<"qcm" | "ouverte">("qcm");
   const [difficulty, setDifficulty] = useState<"facile" | "standard" | "examen">("examen");
@@ -132,6 +136,7 @@ export function QuizTrainer({
     );
     setSaved(true);
     queryClient.invalidateQueries({ queryKey: ["quiz_sessions"] });
+    queryClient.invalidateQueries({ queryKey: ["quiz_answers"] });
   }
 
   const generation = useMutation({

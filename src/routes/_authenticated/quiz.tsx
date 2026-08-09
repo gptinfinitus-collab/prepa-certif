@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { RotateCcw } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { QuizTrainer } from "@/components/QuizTrainer";
+import { QuizHistory } from "@/components/QuizHistory";
 import { PreparationAnalysis } from "@/components/PreparationAnalysis";
 import { useCurriculum } from "@/lib/curriculum";
 import { useActiveCertification } from "@/lib/certifications";
@@ -64,6 +65,9 @@ function QuizPage() {
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [verdicts, setVerdicts] = useState<Record<number, Verdict>>({});
+  const [tab, setTab] = useState("training");
+  const [focusChapter, setFocusChapter] = useState<string | null>(null);
+
 
   const total = flashcards.length;
   const answered = Object.keys(verdicts).length;
@@ -85,18 +89,32 @@ function QuizPage() {
           de votre progression par chapitre.
         </p>
 
-        <Tabs defaultValue="training" className="mt-8">
-          <TabsList>
+        <Tabs value={tab} onValueChange={setTab} className="mt-8">
+          <TabsList className="flex w-full flex-wrap justify-start sm:w-auto">
             <TabsTrigger value="training">Entraînement</TabsTrigger>
+            <TabsTrigger value="history">Historique</TabsTrigger>
             <TabsTrigger value="analysis">Mon niveau</TabsTrigger>
             <TabsTrigger value="cards">Fiches</TabsTrigger>
           </TabsList>
 
           <TabsContent value="training" className="mt-6">
             <QuizTrainer
+              key={focusChapter ?? "default"}
               certificationName={certificationName}
               certificationId={certificationId}
               chapters={chapters}
+              initialChapter={focusChapter}
+            />
+          </TabsContent>
+
+          <TabsContent value="history" className="mt-6">
+            <QuizHistory
+              certificationId={certificationId}
+              chapters={chapters}
+              onRetrain={(topic: string) => {
+                setFocusChapter(topic);
+                setTab("training");
+              }}
             />
           </TabsContent>
 
@@ -106,6 +124,7 @@ function QuizPage() {
               certificationId={certificationId}
             />
           </TabsContent>
+
 
           <TabsContent value="cards" className="mt-6">
             {total === 0 ? (
