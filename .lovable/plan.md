@@ -27,7 +27,7 @@ Portée : ces changements concernent uniquement l'affichage desktop. La vue mobi
 - IBM Plex Serif / Sans retirés.
 
 ## Détails techniques
-- `src/components/AppShell.tsx` : suppression des deux `<header>`, ajout du bloc profil en pied de sidebar (réutilisation du menu de `UserMenu` transformé pour accepter un déclencheur « carte »), déplacement du toggle collapse dans l'en-tête de sidebar, retrait de `border-l-4 border-l-cert` sur `CertificationSwitcher`.
+- `src/components/AppShell.tsx` : suppression du `<header>` desktop uniquement (l'en-tête mobile et la bottom-nav restent), ajout du bloc profil en pied de sidebar (réutilisation du menu de `UserMenu` via un déclencheur « carte »), déplacement du toggle collapse dans l'en-tête de sidebar, retrait de `border-l-4 border-l-cert` sur `CertificationSwitcher`.
 - `src/components/UserMenu.tsx` : ajout d'une variante « carte sidebar » (avatar + nom + e-mail) en plus de la variante avatar seul, sans changer les entrées du menu.
 - `src/routes/__root.tsx` : remplacement des `<link>` IBM Plex par Inter.
 - `src/styles.css` : `--font-display` et `--font-body` pointent sur `"Inter"`.
