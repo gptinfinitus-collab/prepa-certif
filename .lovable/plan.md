@@ -1,75 +1,51 @@
-# Prochaines étapes — Audit de finition PREPA CERTIF
+# Espace Super Admin — voir et gérer les utilisateurs
 
-## Ce qui est déjà en place
+Objectif : donner au compte `gptinfinitus@gmail.com` une page privée listant tous les utilisateurs de PREPA CERTIF, avec possibilité de désactiver, réactiver ou supprimer un compte. Gratuit aujourd'hui, la structure prépare une future monétisation par abonnement.
 
-- Authentification : e-mail/mot de passe, Google, Apple ; récupération de mot de passe ; e-mails en français avec la charte PREPA CERTIF.
-- Catalogue multi-certifications : ISO 9001, 14001, 45001, 27001, 22000, 50001… avec sélection à la connexion.
-- Cursus ISO 45001 complet : cours séquencés (Comprendre → Exemples → Regard de l'auditeur → Preuves → Point examen → Erreurs → Mise en situation → À retenir → Flashcards → Quiz).
-- Parcours à niveaux : Maîtrise / Auditeur interne / Lead Auditor (verrouillé).
-- Bibliothèque et RAG : upload PDF/texte/MD, nettoyage de filigranes, indexation vectorielle, Assistant IA en streaming avec sources.
-- Entraînement IA : QCM et questions ouvertes générées, correction par IA, suivi de la maîtrise par thème.
-- Planning configurable : date d'examen, jours de révision, rythme compressé.
-- UI responsive : sidebar desktop avec profil en bas, navigation mobile, mode sombre « bleu nuit », typographie Inter, logo ISO-inspired.
-- PWA : manifeste, favicon, icônes, invite d'installation.
-- Pages légales : CGU, confidentialité, cookies, mentions légales.
+## Ce que verra le super admin
 
-## Ce qui reste à implémenter ou à polir
+Nouvelle entrée « Administration » dans la barre latérale, visible uniquement pour lui, menant à `/admin`.
 
-### 1. Finition typographique et cohérence visuelle
+La page affiche :
 
-Partout dans le code, la classe `font-serif` est encore utilisée alors que la police globale est Inter. Cela fonctionne grâce à un alias CSS, mais c'est sémantiquement faux et source de confusion pour les futures évolutions.
+- Cartes de synthèse : total d'utilisateurs, inscrits sur 7 / 30 jours, actifs sur 7 jours, comptes désactivés.
+- Tableau des utilisateurs : nom, e-mail, date d'inscription, dernière connexion, certification active, nombre de documents et de séances terminées, statut (actif / désactivé).
+- Recherche par nom ou e-mail, tri par date d'inscription ou dernière activité.
+- Actions par ligne : désactiver / réactiver, supprimer (confirmation obligatoire).
 
-- Remplacer `font-serif` par `font-sans` (ou supprimer la classe quand elle est redondante) dans les composants et routes.
-- Vérifier que les titres gardent le même rendu visuel.
+Protections : le super admin ne peut ni se désactiver ni se supprimer lui-même ; aucun autre compte ne peut atteindre `/admin` ni les fonctions serveur associées.
 
-### 2. Enrichissement des cursus non-ISO 45001
+## Détails techniques
 
-Les certifications autres qu'ISO 45001 reposent actuellement sur des squelettes HLS. Le lecteur séquencé fonctionne, mais il n'y a pas encore de contenus pédagogiques originaux (objectifs, exemples, regard auditeur, preuves, points examen, erreurs, cas pratiques, flashcards).
+### Base de données (migration)
 
-- Ajouter des `lesson-extras` pour ISO 9001, 14001, 27001, 22000 et 50001.
-- Compléter les quiz et fiches de révision de chaque cursus.
-- Adapter les exemples sectoriels à chaque norme.
+- Enum `public.app_role` (`super_admin`, `admin`, `user`).
+- Table `public.user_roles (id, user_id → auth.users, role, unique(user_id, role))` avec GRANT `select` à `authenticated`, `all` à `service_role`, RLS activée : chacun lit ses propres rôles ; aucune écriture côté client.
+- Fonction `public.has_role(_user_id uuid, _role app_role)` en `security definer` (`stable`, `search_path = public`).
+- Attribution du rôle `super_admin` à `gptinfinitus@gmail.com` : insertion depuis `auth.users` par e-mail confirmé, plus un trigger sur inscription/confirmation qui réattribue le rôle si le compte est recréé.
+- Colonne `profiles.disabled_at timestamptz` pour l'affichage du statut (la désactivation réelle passe par le bannissement Auth).
 
-### 3. Déverrouillage du parcours Lead Auditor
+### Fonctions serveur (`src/lib/admin.functions.ts`)
 
-Le niveau Lead Auditor est actuellement verrouillé avec un avertissement. Il faut un mécanisme qui permette à l'utilisateur de choisir son organisme d'examen (PECB, CQI/IRCA, autre) et d'adapter le contenu / les questions.
+Toutes avec `.middleware([requireSupabaseAuth])`, vérification `has_role(userId, 'super_admin')` via `context.supabase` avant tout accès privilégié, puis `await import('@/integrations/supabase/client.server')` :
 
-- Ajouter un profil d'examen dans `profiles` ou une table dédiée.
-- Adapter le sélecteur de parcours pour proposer le déverrouillage.
-- Ajuster les questions d'entraînement et les mises en situation au format de l'organisme choisi.
+- `listUsers` : `auth.admin.listUsers()` agrégé avec `profiles`, `user_certifications`, `library_documents`, `user_lesson_progress`.
+- `setUserDisabled` : `auth.admin.updateUserById` avec `ban_duration` (`876000h` pour désactiver, `none` pour réactiver) + mise à jour de `profiles.disabled_at`.
+- `deleteUser` : `auth.admin.deleteUser` (les données liées partent en cascade).
 
-### 4. Page de revue des sessions d'entraînement
+Refus explicite si la cible est le super admin lui-même.
 
-Les réponses aux quiz sont enregistrées (`quiz_answers`), mais il n'existe pas encore de page pour les relire, filtrer par chapitre ou refaire ses erreurs.
+### Interface
 
-- Créer `/quiz/historique` ou un onglet dans `/quiz`.
-- Afficher les questions, la réponse donnée, la réponse attendue et l'explication.
-- Ajouter un bouton « Réentraîner mes erreurs » qui génère un nouveau quiz ciblé sur les sujets faibles.
+- `src/routes/_authenticated/admin.tsx` : redirection vers `/dashboard` si l'utilisateur n'est pas super admin, tableau responsive (cartes empilées sur mobile), boutons d'action avec `AlertDialog` de confirmation et notifications `sonner`.
+- `src/lib/admin.ts` : hook `useIsSuperAdmin` + hooks React Query pour la liste et les mutations.
+- `src/components/AppShell.tsx` : lien « Administration » conditionnel.
 
-### 5. Onboarding et première expérience
+### Tests
 
-Un nouvel utilisateur arrive directement sur `/auth`, puis `/dashboard`. Le choix de la certification est possible, mais le parcours n'est pas explicitement guidé.
+- Unitaires : logique de filtrage/tri et libellés de statut ; garde-fou « pas d'action sur soi-même ».
+- E2E : un utilisateur non admin qui visite `/admin` est redirigé vers `/dashboard`.
 
-- Ajouter un écran de bienvenue post-première connexion qui invite à choisir la certification, la date d'examen et le niveau de parcours.
-- Pré-remplir le planning à partir de ces choix.
+## Hors périmètre pour l'instant
 
-### 6. Vérification build, tests et ajustements responsive
-
-- Lancer le build de production pour détecter les erreurs Worker/edge.
-- Exécuter les tests unitaires et e2e existants.
-- Corriger les éventuelles régressions responsive sur tablette.
-
-## Ordre de priorité proposé
-
-1. **Finition typographique** — rapide, sans risque, améliore la maintenabilité.
-2. **Vérification build + tests** — sécurise la base avant d'ajouter du contenu.
-3. **Enrichissement des cursus 9001 / 14001 / 27001** — apporte de la valeur aux utilisateurs non-45001.
-4. **Revue des sessions d'entraînement** — valorise les données déjà collectées.
-5. **Déverrouillage Lead Auditor** — fonctionnalité avancée, demande le plus de réflexion métier.
-6. **Onboarding guidé** — améliore la conversion des nouveaux utilisateurs.
-
-## Questions avant de commencer
-
-- Souhaitez-vous que je démarre automatiquement les étapes 1 et 2, puis que je vous présente un plan détaillé pour les suivantes ?
-- Quelles certifications souhaitez-vous prioriser pour l'enrichissement de contenu (9001, 14001, 27001, 22000, 50001) ?
-- Le parcours Lead Auditor doit-il rester verrouillé pour l'instant, ou souhaitez-vous l'ouvrir avec un choix d'organisme d'examen ?
+Abonnements, paiements et quotas : la table `user_roles` et le champ statut préparent le terrain, mais rien de facturable n'est implémenté maintenant.
