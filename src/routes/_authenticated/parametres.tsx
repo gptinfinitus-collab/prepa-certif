@@ -43,7 +43,7 @@ function Parametres() {
   return (
     <AppShell title="Paramètres">
       <div className="mx-auto max-w-3xl px-4 py-8 md:py-10">
-        <h1 className="font-serif text-3xl font-semibold">Paramètres</h1>
+        <h1 className="font-serif text-2xl font-semibold sm:text-3xl">Paramètres</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Votre profil, l'apparence de l'application et votre compte.
         </p>

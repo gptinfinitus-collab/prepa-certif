@@ -79,7 +79,7 @@ function QuizPage() {
   return (
     <AppShell title="Quiz">
       <div className="mx-auto max-w-3xl px-4 py-8 md:py-10">
-        <h1 className="font-serif text-3xl font-semibold">Entraînement et niveau</h1>
+        <h1 className="font-serif text-2xl font-semibold sm:text-3xl">Entraînement et niveau</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Quiz générés par l'IA sur {certificationName}, corrigés avec renvoi aux clauses, et suivi
           de votre progression par chapitre.

@@ -64,7 +64,7 @@ function Planning() {
   return (
     <AppShell title="Mon planning">
       <div className="mx-auto max-w-6xl px-4 py-6 md:py-10">
-        <h1 className="font-serif text-3xl font-semibold">Mon planning</h1>
+        <h1 className="font-serif text-2xl font-semibold sm:text-3xl">Mon planning</h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
           La préparation n'a pas de durée imposée : les {curriculum.modules.length} séances de{" "}
           {certificationName} se répartissent automatiquement sur les jours que vous choisissez,
