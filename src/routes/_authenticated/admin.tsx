@@ -64,25 +64,25 @@ function AdminPage() {
   const toggle = useToggleUserDisabled();
   const remove = useDeleteUser();
   const [search, setSearch] = useState("");
+  const [sortKey, setSortKey] = useState<AdminSortKey>("createdAt");
+  const [direction, setDirection] = useState<"asc" | "desc">("desc");
 
-  const filtered = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    if (!q) return users;
-    return users.filter(
-      (u) =>
-        u.email.toLowerCase().includes(q) || (u.displayName ?? "").toLowerCase().includes(q),
-    );
-  }, [users, search]);
+  const filtered = useMemo(
+    () => sortAdminUsers(filterAdminUsers(users, search), sortKey, direction),
+    [users, search, sortKey, direction],
+  );
 
-  const stats = useMemo(() => {
-    const now = Date.now();
-    const week = 7 * 24 * 3600 * 1000;
-    return {
-      total: users.length,
-      active: users.filter((u) => !u.disabled).length,
-      recent: users.filter((u) => u.lastSignInAt && now - Date.parse(u.lastSignInAt) < week).length,
-    };
-  }, [users]);
+  const stats = useMemo(() => computeAdminStats(users), [users]);
+
+  function toggleSort(key: AdminSortKey) {
+    if (key === sortKey) {
+      setDirection((d) => (d === "asc" ? "desc" : "asc"));
+    } else {
+      setSortKey(key);
+      setDirection("desc");
+    }
+  }
+
 
   if (!isSuperAdmin) {
     return (
