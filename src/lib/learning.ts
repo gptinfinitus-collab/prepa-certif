@@ -62,7 +62,8 @@ export function useExamBody() {
         .eq("id", userData.user.id)
         .maybeSingle();
       if (error) throw error;
-      return isExamBodyId(data?.exam_body) ? data.exam_body : null;
+      const value = data?.exam_body ?? null;
+      return isExamBodyId(value) ? value : null;
     },
   });
   return { examBody: query.data ?? null, isLoading: query.isLoading };
