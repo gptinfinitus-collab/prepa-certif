@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { AppShell } from "@/components/AppShell";
 import { ProfileEditor } from "@/components/ProfileEditor";
+import { ExamBodyPicker } from "@/components/ExamBodyPicker";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -96,6 +97,19 @@ function Parametres() {
                   </Button>
                 ))}
               </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="font-sans text-lg">Profil d'examen</CardTitle>
+              <CardDescription>
+                Organisme visé pour le niveau Lead Auditor : il ouvre le niveau et adapte le style
+                de vos entraînements.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ExamBodyPicker />
             </CardContent>
           </Card>
 

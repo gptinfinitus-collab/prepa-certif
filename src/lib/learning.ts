@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useActiveCertification } from "@/lib/certifications";
 import { DEFAULT_TRACK, isTrackId, type TrackId } from "@/lib/tracks";
+import { isExamBodyId, type ExamBodyId } from "@/lib/exam-bodies";
 
 async function requireUser() {
   const { data } = await supabase.auth.getUser();
@@ -44,6 +45,42 @@ export function useSetActiveTrack() {
       queryClient.invalidateQueries({ queryKey: ["active_track"] });
       queryClient.invalidateQueries({ queryKey: ["lesson_progress"] });
     },
+  });
+}
+
+/* ------------------------------------------------------ Organisme d'examen */
+
+export function useExamBody() {
+  const query = useQuery({
+    queryKey: ["exam_body"],
+    queryFn: async (): Promise<ExamBodyId | null> => {
+      const { data: userData } = await supabase.auth.getUser();
+      if (!userData.user) return null;
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("exam_body")
+        .eq("id", userData.user.id)
+        .maybeSingle();
+      if (error) throw error;
+      const value = data?.exam_body ?? null;
+      return isExamBodyId(value) ? value : null;
+    },
+  });
+  return { examBody: query.data ?? null, isLoading: query.isLoading };
+}
+
+export function useSetExamBody() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (examBody: ExamBodyId | null) => {
+      const user = await requireUser();
+      const { error } = await supabase
+        .from("profiles")
+        .upsert({ id: user.id, exam_body: examBody }, { onConflict: "id" });
+      if (error) throw error;
+      return examBody;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["exam_body"] }),
   });
 }
 

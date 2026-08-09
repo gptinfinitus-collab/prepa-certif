@@ -23,6 +23,8 @@ export interface ProgramModule {
    * le cursus ISO 45001 s'appuie sur `lessonExtras` indexé par identifiant.
    */
   extras?: import("./lesson-extras").LessonExtras;
+  /** Niveau de parcours imposé pour ce module (sinon déduit du contenu). */
+  track?: "general" | "internal_auditor" | "lead_auditor";
 }
 
 

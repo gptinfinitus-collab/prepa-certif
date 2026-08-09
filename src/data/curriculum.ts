@@ -17,6 +17,7 @@ import {
   methodologyExtras,
   type StandardContext,
 } from "./standard-extras";
+import { leadAuditorModules } from "./lead-auditor";
 
 export interface Curriculum {
   /** Vrai lorsque le cursus est entièrement rédigé (séances, quiz, examen blanc). */
@@ -42,12 +43,17 @@ const genericAnnexes = {
 
 /** Cursus complet ISO 45001 (contenu rédigé). */
 function iso45001Curriculum(): Curriculum {
+  const leadWeekId = Math.max(...iso45001Program.weeks.map((w) => w.id)) + 1;
+  const leadModules = leadAuditorModules("ISO 45001:2018", leadWeekId);
   return {
     complete: true,
     title: iso45001Program.meta.title,
     subtitle: iso45001Program.meta.subtitle,
-    weeks: iso45001Program.weeks,
-    modules: iso45001Program.modules,
+    weeks: [
+      ...iso45001Program.weeks,
+      { id: leadWeekId, title: "Lead Auditor", dayIds: leadModules.map((m) => m.id) },
+    ],
+    modules: [...iso45001Program.modules, ...leadModules],
     glossary: iso45001Program.glossary,
     annexes: iso45001Program.annexes,
     references: [
@@ -176,6 +182,9 @@ function skeletonCurriculum(
     keyTakeaway: "Réviser, c'est vérifier ce que l'on sait restituer, pas relire.",
     quiz: [],
   };
+  const leadModules = leadAuditorModules(label, 4);
+
+
 
   return {
     complete: false,
@@ -185,8 +194,9 @@ function skeletonCurriculum(
       { id: 1, title: "Les chapitres du référentiel", dayIds: clauseModules.map((m) => m.id) },
       { id: 2, title: "Méthodologie d'audit", dayIds: methodology.map((m) => m.id) },
       { id: 3, title: "Consolidation", dayIds: [reviewId] },
+      { id: 4, title: "Lead Auditor", dayIds: leadModules.map((m) => m.id) },
     ],
-    modules: [...clauseModules, ...methodology, review],
+    modules: [...clauseModules, ...methodology, review, ...leadModules],
     glossary: [...glossary, ...commonGlossary].sort((a, b) => a.term.localeCompare(b.term, "fr")),
     annexes: {
       ...genericAnnexes,

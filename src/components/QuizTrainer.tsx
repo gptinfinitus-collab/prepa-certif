@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { useActiveTrack, useExamBody } from "@/lib/learning";
 
 interface GeneratedQuestion {
   question: string;
@@ -47,6 +48,8 @@ export function QuizTrainer({
 }) {
   const generate = useServerFn(generateQuizQuestions);
   const grade = useServerFn(gradeOpenAnswers);
+  const { track } = useActiveTrack();
+  const { examBody } = useExamBody();
   const queryClient = useQueryClient();
 
   const [chapter, setChapter] = useState<string>(ALL);
@@ -140,6 +143,8 @@ export function QuizTrainer({
           count: Number(count),
           difficulty,
           mode,
+          track,
+          examBody,
         },
       }),
     onSuccess: (result) => {
