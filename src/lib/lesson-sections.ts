@@ -1,5 +1,10 @@
 import type { ProgramModule, QuizItem } from "@/data/program";
-import { getLessonExtras, type Flashcard, type LessonScenario } from "@/data/lesson-extras";
+import {
+  getLessonExtras,
+  type Flashcard,
+  type LessonExtras,
+  type LessonScenario,
+} from "@/data/lesson-extras";
 
 export type SectionKind =
   | "intro"
@@ -80,11 +85,19 @@ export function readingMinutes(text: string): number {
 }
 
 /**
+ * Contenu pédagogique d'un module : attaché au module pour les cursus générés
+ * à partir d'un référentiel, indexé par identifiant pour le cursus ISO 45001.
+ */
+export function moduleExtras(module: ProgramModule): LessonExtras {
+  return module.extras ?? getLessonExtras(module.id);
+}
+
+/**
  * Construit le parcours séquencé d'une séance : une étape par bloc pédagogique,
  * dans l'ordre imposé par la trame de cours.
  */
 export function buildLessonSections(module: ProgramModule): LessonSection[] {
-  const extras = getLessonExtras(module.id);
+  const extras = moduleExtras(module);
   const sections: LessonSection[] = [];
   const parts = splitMarkdownSections(module.contentMarkdown);
   const intro = parts.find((p) => p.body.length > 0);
@@ -218,7 +231,7 @@ export function buildLessonSections(module: ProgramModule): LessonSection[] {
 }
 
 export function lessonReadingMinutes(module: ProgramModule): number {
-  const extras = getLessonExtras(module.id);
+  const extras = moduleExtras(module);
   const extraText = [
     ...(extras.objectives ?? []),
     ...(extras.examples ?? []).map((e) => e.text),
