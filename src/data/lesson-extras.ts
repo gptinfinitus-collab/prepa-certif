@@ -43,7 +43,7 @@ export interface LessonExtras {
 export const lessonExtras: Record<number, LessonExtras> = {
   1: {
     objectives: [
-      "Expliquer la finalité d'un système de management de la SST",
+      "Expliquer la finalité d'un système de management de la S&ST",
       "Situer ISO 45001 par rapport aux règles techniques de sécurité",
       "Restituer la logique du cycle PDCA et son lien avec les chapitres 4 à 10",
       "Distinguer prévention réactive et prévention proactive",
@@ -64,12 +64,12 @@ export const lessonExtras: Record<number, LessonExtras> = {
       },
     ],
     auditorView: [
-      "L'auditeur cherche à comprendre si la SST est pilotée dans la durée ou gérée au coup par coup.",
+      "L'auditeur cherche à comprendre si la S&ST est pilotée dans la durée ou gérée au coup par coup.",
       "Il observe si la boucle d'amélioration est réellement bouclée : les constats débouchent-ils sur des décisions ?",
     ],
     evidence: [
-      "Politique SST signée et diffusée",
-      "Objectifs SST avec échéances et responsables",
+      "Politique S&ST signée et diffusée",
+      "Objectifs S&ST avec échéances et responsables",
       "Comptes rendus de revue de direction",
       "Indicateurs suivis dans le temps, pas seulement le nombre d'accidents",
     ],
@@ -84,7 +84,7 @@ export const lessonExtras: Record<number, LessonExtras> = {
     ],
     scenario: {
       prompt:
-        "Une PME affiche un taux d'accidents en baisse depuis trois ans, mais n'a ni objectifs SST écrits, ni revue de direction. Le dirigeant estime qu'un système de management serait « de la paperasse ». Que répondez-vous, en vous appuyant sur la logique de la norme ?",
+        "Une PME affiche un taux d'accidents en baisse depuis trois ans, mais n'a ni objectifs S&ST écrits, ni revue de direction. Le dirigeant estime qu'un système de management serait « de la paperasse ». Que répondez-vous, en vous appuyant sur la logique de la norme ?",
       correction:
         "La baisse observée n'est pas démontrable comme un résultat piloté : sans objectifs ni revue, rien ne prouve que la performance est maîtrisée plutôt que due au hasard ou à une baisse d'activité. La norme n'impose pas de la paperasse mais une boucle : planifier des objectifs, allouer des moyens, mesurer, puis décider. L'enjeu n'est pas le document, c'est la capacité à démontrer et à reproduire le résultat.",
     },
@@ -99,7 +99,7 @@ export const lessonExtras: Record<number, LessonExtras> = {
 
   2: {
     objectives: [
-      "Distinguer danger et risque SST",
+      "Distinguer danger et risque S&ST",
       "Différencier incident, accident et presqu'accident",
       "Différencier consultation et participation des travailleurs",
       "Différencier correction et action corrective",
@@ -129,7 +129,7 @@ export const lessonExtras: Record<number, LessonExtras> = {
       "Comptes rendus de consultation des travailleurs et traces de leur participation aux décisions",
     ],
     examFocus: [
-      "Un incident n'implique pas nécessairement une blessure : il peut n'avoir aucune conséquence.",
+      "Un événement indésirable n'implique pas nécessairement un traumatisme ou une pathologie : il peut n'avoir aucune conséquence (presqu'accident).",
       "La consultation recueille un avis ; la participation associe à la décision. Les deux sont exigées, sur des sujets différents.",
       "Une formation ne prouve pas une compétence : la compétence est l'aptitude démontrée à obtenir le résultat attendu.",
     ],
@@ -146,7 +146,7 @@ export const lessonExtras: Record<number, LessonExtras> = {
     },
     flashcards: [
       { front: "Danger", back: "Source ayant le potentiel de causer un dommage ou une atteinte à la santé." },
-      { front: "Risque SST", back: "Combinaison de la probabilité d'un événement dangereux et de la gravité des conséquences." },
+      { front: "Risque S&ST", back: "Combinaison de la probabilité d'un événement dangereux et de la gravité des conséquences." },
       { front: "Presqu'accident", back: "Incident sans dommage effectif, mais qui aurait pu en causer." },
       { front: "Consultation vs participation", back: "Consultation : recueillir un avis avant décision. Participation : associer les travailleurs à la décision." },
       { front: "Correction vs action corrective", back: "Correction : traiter l'effet. Action corrective : supprimer la cause pour éviter la récurrence." },
@@ -157,10 +157,10 @@ export const lessonExtras: Record<number, LessonExtras> = {
 
   3: {
     objectives: [
-      "Identifier des enjeux internes et externes pertinents pour la SST",
+      "Identifier des enjeux internes et externes pertinents pour la S&ST",
       "Déterminer les parties intéressées et leurs exigences applicables",
       "Justifier un domaine d'application cohérent",
-      "Relier le contexte aux risques SST et aux processus du système",
+      "Relier le contexte aux risques S&ST et aux processus du système",
     ],
     examples: [
       {
@@ -185,7 +185,7 @@ export const lessonExtras: Record<number, LessonExtras> = {
     examFocus: [
       "La norme n'impose aucun outil : SWOT, PESTEL ou tableau simple sont acceptables si le résultat est démontré.",
       "Toutes les attentes des parties intéressées ne deviennent pas des obligations : l'organisme décide lesquelles il retient.",
-      "Le domaine d'application ne peut pas exclure une activité qui influe sur la SST des travailleurs.",
+      "Le domaine d'application ne peut pas exclure une activité qui influe sur la S&ST des travailleurs.",
     ],
     commonMistakes: [
       "Confondre parties intéressées et clients.",
@@ -196,12 +196,12 @@ export const lessonExtras: Record<number, LessonExtras> = {
       prompt:
         "Un site exclut de son domaine d'application l'atelier de maintenance, sous-traité à une entreprise extérieure travaillant dans ses murs. Cette exclusion est-elle recevable ?",
       correction:
-        "Non. Les sous-traitants intervenant sur le lieu de travail sont sous le contrôle ou l'influence de l'organisme et leur activité affecte la SST. Le domaine d'application peut décrire des limites, mais ne peut pas écarter des travailleurs exposés dont l'organisme maîtrise ou influence les conditions de travail.",
+        "Non. Les sous-traitants intervenant sur le lieu de travail sont sous le contrôle ou l'influence de l'organisme et leur activité affecte la S&ST. Le domaine d'application peut décrire des limites, mais ne peut pas écarter des travailleurs exposés dont l'organisme maîtrise ou influence les conditions de travail.",
     },
     flashcards: [
-      { front: "Enjeu interne", back: "Élément propre à l'organisme influant sur sa capacité à atteindre les résultats SST : culture, moyens, âge des équipements." },
+      { front: "Enjeu interne", back: "Élément propre à l'organisme influant sur sa capacité à atteindre les résultats S&ST : culture, moyens, âge des équipements." },
       { front: "Enjeu externe", back: "Élément de l'environnement de l'organisme : réglementation, marché, climat, voisinage, technologies." },
-      { front: "Partie intéressée pertinente", back: "Personne ou organisme pouvant affecter ou être affecté par les décisions SST de l'organisme." },
+      { front: "Partie intéressée pertinente", back: "Personne ou organisme pouvant affecter ou être affecté par les décisions S&ST de l'organisme." },
       { front: "Domaine d'application", back: "Périmètre documenté du système : sites, activités, produits et services couverts." },
     ],
   },
@@ -209,14 +209,14 @@ export const lessonExtras: Record<number, LessonExtras> = {
   4: {
     objectives: [
       "Décrire les preuves attendues du leadership de la direction",
-      "Analyser une politique SST au regard des exigences",
+      "Analyser une politique S&ST au regard des exigences",
       "Distinguer consultation et participation dans les cas prévus par la norme",
       "Vérifier l'attribution des rôles, responsabilités et autorités",
     ],
     examples: [
       {
         sector: "Industrie",
-        text: "Le directeur de site consacre une heure hebdomadaire à une visite terrain SST et arbitre lui-même les investissements de sécurité.",
+        text: "Le directeur de site consacre une heure hebdomadaire à une visite terrain S&ST et arbitre lui-même les investissements de sécurité.",
       },
       {
         sector: "BTP",
@@ -233,8 +233,8 @@ export const lessonExtras: Record<number, LessonExtras> = {
       "Il vérifie que les travailleurs peuvent signaler un danger sans crainte de représailles.",
     ],
     evidence: [
-      "Politique SST datée, signée, communiquée et disponible",
-      "Comptes rendus de réunions où des décisions SST ont été arbitrées par la direction",
+      "Politique S&ST datée, signée, communiquée et disponible",
+      "Comptes rendus de réunions où des décisions S&ST ont été arbitrées par la direction",
       "Fiches de rôles et délégations d'autorité",
       "Comptes rendus de consultation et de participation des travailleurs",
     ],
@@ -250,13 +250,13 @@ export const lessonExtras: Record<number, LessonExtras> = {
     ],
     scenario: {
       prompt:
-        "La politique SST est affichée dans le hall, mais trois opérateurs interrogés en ignorent le contenu et n'ont jamais été consultés sur l'analyse des risques de leur poste. Quels constats formulez-vous ?",
+        "La politique S&ST est affichée dans le hall, mais trois opérateurs interrogés en ignorent le contenu et n'ont jamais été consultés sur l'analyse des risques de leur poste. Quels constats formulez-vous ?",
       correction:
         "Deux pistes de non-conformité distinctes. D'une part, la politique doit être communiquée et comprise au sein de l'organisme : un affichage sans appropriation ne le démontre pas. D'autre part, la participation des travailleurs à l'identification des dangers et à l'appréciation des risques est explicitement exigée ; son absence est un écart structurant, à formuler séparément.",
     },
     flashcards: [
-      { front: "Qui porte le leadership SST ?", back: "La direction. Elle peut déléguer des tâches, jamais la responsabilité du système." },
-      { front: "Trois engagements attendus d'une politique SST", back: "Fournir des conditions de travail sûres, éliminer les dangers et réduire les risques, améliorer en continu — avec consultation et participation des travailleurs." },
+      { front: "Qui porte le leadership S&ST ?", back: "La direction. Elle peut déléguer des tâches, jamais la responsabilité du système." },
+      { front: "Trois engagements attendus d'une politique S&ST", back: "Fournir des conditions de travail sûres, éliminer les dangers et réduire les risques, améliorer en continu — avec consultation et participation des travailleurs." },
       { front: "Protection du signalement", back: "Les travailleurs doivent pouvoir signaler dangers et incidents sans crainte de représailles." },
     ],
   },
@@ -265,8 +265,8 @@ export const lessonExtras: Record<number, LessonExtras> = {
     objectives: [
       "Appliquer la chaîne danger → événement → conséquence → niveau de risque",
       "Appliquer la hiérarchie des mesures de prévention",
-      "Distinguer risques SST et risques pour le système de management",
-      "Formuler des objectifs SST mesurables et planifiés",
+      "Distinguer risques S&ST et risques pour le système de management",
+      "Formuler des objectifs S&ST mesurables et planifiés",
       "Identifier les exigences légales et autres exigences applicables",
     ],
     examples: [
@@ -296,8 +296,8 @@ export const lessonExtras: Record<number, LessonExtras> = {
     ],
     examFocus: [
       "Ordre de la hiérarchie : élimination, substitution, mesures d'ingénierie, mesures administratives, équipements de protection individuelle.",
-      "Les opportunités SST ne sont pas des « avantages business » : ce sont des occasions d'améliorer la performance SST.",
-      "Les risques pour le système (perte de compétence clé, obsolescence de la veille) sont distincts des risques SST pour les personnes.",
+      "Les opportunités S&ST ne sont pas des « avantages business » : ce sont des occasions d'améliorer la performance S&ST.",
+      "Les risques pour le système (perte de compétence clé, obsolescence de la veille) sont distincts des risques S&ST pour les personnes.",
     ],
     commonMistakes: [
       "Commencer par l'EPI, qui est le dernier niveau de la hiérarchie.",
@@ -312,8 +312,8 @@ export const lessonExtras: Record<number, LessonExtras> = {
     },
     flashcards: [
       { front: "Hiérarchie des mesures", back: "Élimination → substitution → mesures d'ingénierie → mesures administratives → EPI." },
-      { front: "Opportunité SST", back: "Circonstance pouvant conduire à une amélioration de la performance SST." },
-      { front: "Objectif SST conforme", back: "Cohérent avec la politique, mesurable, suivi, communiqué, avec moyens, responsable et échéance." },
+      { front: "Opportunité S&ST", back: "Circonstance pouvant conduire à une amélioration de la performance S&ST." },
+      { front: "Objectif S&ST conforme", back: "Cohérent avec la politique, mesurable, suivi, communiqué, avec moyens, responsable et échéance." },
       { front: "Autres exigences", back: "Engagements non réglementaires que l'organisme choisit de respecter : accords, exigences clients, normes internes." },
     ],
   },
@@ -343,11 +343,11 @@ export const lessonExtras: Record<number, LessonExtras> = {
       "Matrice de compétences et évaluations post-formation",
       "Plan de communication interne et externe",
       "Liste des informations documentées, avec version et diffusion",
-      "Budget ou moyens affectés à la SST",
+      "Budget ou moyens affectés à la S&ST",
     ],
     examFocus: [
       "La compétence est une aptitude démontrée, la formation n'en est qu'un moyen parmi d'autres.",
-      "La sensibilisation vise tous les travailleurs ; la compétence vise les fonctions ayant un impact sur la SST.",
+      "La sensibilisation vise tous les travailleurs ; la compétence vise les fonctions ayant un impact sur la S&ST.",
       "La norme n'impose pas de procédures papier : elle impose la maîtrise des informations documentées nécessaires.",
     ],
     commonMistakes: [
@@ -382,7 +382,7 @@ export const lessonExtras: Record<number, LessonExtras> = {
       },
       {
         sector: "Logistique",
-        text: "Les critères SST sont intégrés au cahier des charges de sélection des transporteurs, et vérifiés lors des audits fournisseurs.",
+        text: "Les critères S&ST sont intégrés au cahier des charges de sélection des transporteurs, et vérifiés lors des audits fournisseurs.",
       },
     ],
     auditorView: [
@@ -391,7 +391,7 @@ export const lessonExtras: Record<number, LessonExtras> = {
     ],
     evidence: [
       "Analyses de risques de changement",
-      "Contrats et cahiers des charges intégrant des exigences SST",
+      "Contrats et cahiers des charges intégrant des exigences S&ST",
       "Plans d'urgence, comptes rendus d'exercices et actions issues du retour d'expérience",
       "Permis de travail, consignations, modes opératoires",
     ],
@@ -401,7 +401,7 @@ export const lessonExtras: Record<number, LessonExtras> = {
       "Les exercices d'urgence doivent impliquer les parties intéressées pertinentes présentes sur le lieu de travail.",
     ],
     commonMistakes: [
-      "Croire qu'externaliser une activité transfère la responsabilité SST.",
+      "Croire qu'externaliser une activité transfère la responsabilité S&ST.",
       "Limiter la gestion du changement aux nouveaux équipements.",
       "Se contenter d'un plan d'urgence écrit, jamais testé.",
     ],
@@ -412,9 +412,9 @@ export const lessonExtras: Record<number, LessonExtras> = {
         "Le dispositif d'urgence doit couvrir toutes les personnes présentes sur le lieu de travail, y compris les prestataires et les équipes en horaires décalés. Un exercice qui exclut structurellement une population exposée ne démontre pas la capacité de réponse de l'organisme.",
     },
     flashcards: [
-      { front: "Maîtrise opérationnelle", back: "Ensemble des dispositions garantissant que les activités sont réalisées dans les conditions SST prévues." },
-      { front: "Gestion du changement", back: "Analyse préalable des conséquences SST des changements permanents ou temporaires." },
-      { front: "Externalisation", back: "L'organisme conserve la responsabilité de la SST des activités qu'il externalise et doit en définir la maîtrise." },
+      { front: "Maîtrise opérationnelle", back: "Ensemble des dispositions garantissant que les activités sont réalisées dans les conditions S&ST prévues." },
+      { front: "Gestion du changement", back: "Analyse préalable des conséquences S&ST des changements permanents ou temporaires." },
+      { front: "Externalisation", back: "L'organisme conserve la responsabilité de la S&ST des activités qu'il externalise et doit en définir la maîtrise." },
     ],
   },
 
@@ -441,7 +441,7 @@ export const lessonExtras: Record<number, LessonExtras> = {
       "Il consulte les entrées et sorties de revue de direction pour vérifier la boucle décisionnelle.",
     ],
     evidence: [
-      "Tableau de bord SST avec périodicité et responsables",
+      "Tableau de bord S&ST avec périodicité et responsables",
       "Évaluation de conformité réglementaire datée",
       "Programme et rapports d'audit interne",
       "Compte rendu de revue de direction avec décisions et ressources",
