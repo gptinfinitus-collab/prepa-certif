@@ -26,9 +26,13 @@ Portée : ces changements concernent uniquement l'affichage desktop. La vue mobi
 - Passage à **Inter** pour tout le texte (corps et titres), chargée via `<link>` dans la racine.
 - IBM Plex Serif / Sans retirés.
 
+### 6. En-tête mobile
+- L'en-tête mobile affiche toujours le nom de l'application (**PREPA ISO**), jamais le titre de la page en cours.
+- Le reste de l'en-tête mobile (avatar profil, sélecteur de certification) et la barre de navigation basse ne changent pas.
+
 ## Détails techniques
-- `src/components/AppShell.tsx` : suppression du `<header>` desktop uniquement (l'en-tête mobile et la bottom-nav restent), ajout du bloc profil en pied de sidebar (réutilisation du menu de `UserMenu` via un déclencheur « carte »), déplacement du toggle collapse dans l'en-tête de sidebar, retrait de `border-l-4 border-l-cert` sur `CertificationSwitcher`.
+- `src/components/AppShell.tsx` : suppression du `<header>` desktop uniquement (l'en-tête mobile et la bottom-nav restent), ajout du bloc profil en pied de sidebar (réutilisation du menu de `UserMenu` via un déclencheur « carte »), déplacement du toggle collapse dans l'en-tête de sidebar, retrait de `border-l-4 border-l-cert` sur `CertificationSwitcher`, en-tête mobile figé sur « PREPA ISO ».
 - `src/components/UserMenu.tsx` : ajout d'une variante « carte sidebar » (avatar + nom + e-mail) en plus de la variante avatar seul, sans changer les entrées du menu.
 - `src/routes/__root.tsx` : remplacement des `<link>` IBM Plex par Inter.
 - `src/styles.css` : `--font-display` et `--font-body` pointent sur `"Inter"`.
-- La prop `title` de `AppShell` devient inutilisée pour l'affichage ; conservée sans rendu pour ne pas toucher chaque route.
+- La prop `title` de `AppShell` n'est plus rendue nulle part ; conservée pour ne pas toucher chaque route.
