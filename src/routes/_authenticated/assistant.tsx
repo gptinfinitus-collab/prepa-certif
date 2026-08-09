@@ -48,12 +48,12 @@ const suggestions = [
 
 function AssistantPage() {
   const ask = useServerFn(askAssistant);
-  const { data: active } = useActiveCertification();
+  const { certification, certificationId } = useActiveCertification();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  const certificationName = active?.certification.name ?? "votre certification ISO";
+  const certificationName = certification?.name ?? "votre certification ISO";
 
   const history = useQuery({
     queryKey: ["ai-messages"],
@@ -83,7 +83,7 @@ function AssistantPage() {
         data: {
           question,
           certificationName,
-          certificationId: active?.certification_id ?? null,
+          certificationId: certificationId ?? null,
           history: messages.slice(-6),
         },
       }),
@@ -163,7 +163,7 @@ function AssistantPage() {
                 )}
               >
                 {message.role === "assistant" ? (
-                  <MarkdownView content={message.content} />
+                  <MarkdownView>{message.content}</MarkdownView>
                 ) : (
                   <p className="whitespace-pre-wrap">{message.content}</p>
                 )}
