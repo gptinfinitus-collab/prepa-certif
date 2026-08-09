@@ -68,16 +68,28 @@ const AUDIT_KEYWORDS = [
 ];
 
 /** Niveau auquel une séance appartient. */
-export function trackForModule(module: Pick<ProgramModule, "title" | "objective" | "type">): TrackId {
+export function trackForModule(
+  module: Pick<ProgramModule, "title" | "objective" | "type"> & { track?: TrackId },
+): TrackId {
+  if (module.track) return module.track;
   const haystack = `${module.title} ${module.objective}`.toLowerCase();
   if (module.type === "mockExam" || module.type === "practical") return "internal_auditor";
   return AUDIT_KEYWORDS.some((k) => haystack.includes(k)) ? "internal_auditor" : "general";
 }
 
-export function filterModulesByTrack<T extends Pick<ProgramModule, "title" | "objective" | "type">>(
-  modules: T[],
-  track: TrackId,
-): T[] {
-  if (track === "lead_auditor") return [];
+/**
+ * Séances affichées pour un niveau. Le niveau Lead Auditor est cumulatif :
+ * il reprend la méthodologie d'audit interne et y ajoute les séances de
+ * pilotage d'équipe.
+ */
+export function filterModulesByTrack<
+  T extends Pick<ProgramModule, "title" | "objective" | "type"> & { track?: TrackId },
+>(modules: T[], track: TrackId): T[] {
+  if (track === "lead_auditor") {
+    return modules.filter((m) => {
+      const t = trackForModule(m);
+      return t === "internal_auditor" || t === "lead_auditor";
+    });
+  }
   return modules.filter((m) => trackForModule(m) === track);
 }
