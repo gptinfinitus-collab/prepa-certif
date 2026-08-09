@@ -64,6 +64,9 @@ function QuizPage() {
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [verdicts, setVerdicts] = useState<Record<number, Verdict>>({});
+  const [tab, setTab] = useState("training");
+  const [focusChapter, setFocusChapter] = useState<string | null>(null);
+
 
   const total = flashcards.length;
   const answered = Object.keys(verdicts).length;
