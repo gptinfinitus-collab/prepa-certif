@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useActiveCertification } from "@/lib/certifications";
 import { DEFAULT_TRACK, isTrackId, type TrackId } from "@/lib/tracks";
+import { isExamBodyId, type ExamBodyId } from "@/lib/exam-bodies";
 
 async function requireUser() {
   const { data } = await supabase.auth.getUser();
