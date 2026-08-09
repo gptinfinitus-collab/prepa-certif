@@ -47,6 +47,8 @@ export function QuizTrainer({
 }) {
   const generate = useServerFn(generateQuizQuestions);
   const grade = useServerFn(gradeOpenAnswers);
+  const { track } = useActiveTrack();
+  const { examBody } = useExamBody();
   const queryClient = useQueryClient();
 
   const [chapter, setChapter] = useState<string>(ALL);
