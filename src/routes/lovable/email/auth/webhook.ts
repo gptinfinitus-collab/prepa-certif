@@ -1,5 +1,5 @@
 import * as React from "react";
-import { createAuthEmailHandler, type AuthEmailData } from "@lovable.dev/email-js";
+import { createAuthEmailHandler, type AuthEmailHookData } from "@lovable.dev/email-js";
 import { createFileRoute } from "@tanstack/react-router";
 import { SignupEmail } from "@/lib/email-templates/signup";
 import { InviteEmail } from "@/lib/email-templates/invite";
