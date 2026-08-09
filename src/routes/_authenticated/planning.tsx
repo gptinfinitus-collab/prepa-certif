@@ -43,13 +43,14 @@ export const Route = createFileRoute("/_authenticated/planning")({
 function Planning() {
   const { data: saved } = useStudyPlan();
   const save = useSaveStudyPlan();
+  const { curriculum, certificationName } = useCurriculum();
   const [plan, setPlan] = useState<StudyPlan>(defaultPlan);
 
   useEffect(() => {
     if (saved) setPlan(saved);
   }, [saved]);
 
-  const schedule = buildSchedule(plan);
+  const schedule = buildSchedule(plan, curriculum.modules);
 
   function toggleDay(value: number) {
     setPlan((prev) => ({
@@ -65,10 +66,11 @@ function Planning() {
       <div className="mx-auto max-w-6xl px-4 py-6 md:py-10">
         <h1 className="font-serif text-3xl font-semibold">Mon planning</h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-          La préparation n'a pas de durée imposée : les {modules.length} séances se répartissent
-          automatiquement sur les jours que vous choisissez, jusqu'à votre date d'examen le cas
-          échéant.
+          La préparation n'a pas de durée imposée : les {curriculum.modules.length} séances de{" "}
+          {certificationName} se répartissent automatiquement sur les jours que vous choisissez,
+          jusqu'à votre date d'examen le cas échéant.
         </p>
+
 
         <div className="mt-8 grid gap-6 lg:grid-cols-[380px_1fr]">
           <Card className="h-fit">
