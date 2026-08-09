@@ -191,7 +191,9 @@ function Dashboard() {
         </div>
 
         <div className="mt-10 space-y-8">
-          {curriculum.weeks.map((week) => (
+          {curriculum.weeks
+            .filter((week) => week.dayIds.some((id) => modules.some((m) => m.id === id)))
+            .map((week) => (
             <section key={week.id}>
               <h2 className="font-serif text-xl font-semibold">{week.title}</h2>
               <ul className="mt-3 divide-y divide-border rounded-lg border border-border bg-card">
