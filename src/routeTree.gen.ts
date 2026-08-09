@@ -24,6 +24,7 @@ import { Route as AuthenticatedPlanningRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedProfilRouteImport } from './routes/_authenticated/profil'
 import { Route as AuthenticatedQuizRouteImport } from './routes/_authenticated/quiz'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as AuthenticatedAssistantIndexRouteImport } from './routes/_authenticated/assistant.index'
 import { Route as AuthenticatedSeanceModuleIdRouteImport } from './routes/_authenticated/seance.$moduleId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -102,6 +103,12 @@ const ApiChatRoute = ApiChatRouteImport.update({
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAssistantIndexRoute =
+  AuthenticatedAssistantIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedAssistantRoute,
+  } as any)
 const AuthenticatedSeanceModuleIdRoute =
   AuthenticatedSeanceModuleIdRouteImport.update({
     id: '/seance/$moduleId',
@@ -115,7 +122,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/glossaire': typeof GlossaireRoute
   '/references': typeof ReferencesRoute
-  '/assistant': typeof AuthenticatedAssistantRoute
+  '/assistant': typeof AuthenticatedAssistantRouteWithChildren
   '/bibliotheque': typeof AuthenticatedBibliothequeRoute
   '/certifications': typeof AuthenticatedCertificationsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -125,6 +132,7 @@ export interface FileRoutesByFullPath {
   '/quiz': typeof AuthenticatedQuizRoute
   '/api/chat': typeof ApiChatRoute
   '/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
+  '/assistant/': typeof AuthenticatedAssistantIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -132,7 +140,6 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/glossaire': typeof GlossaireRoute
   '/references': typeof ReferencesRoute
-  '/assistant': typeof AuthenticatedAssistantRoute
   '/bibliotheque': typeof AuthenticatedBibliothequeRoute
   '/certifications': typeof AuthenticatedCertificationsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -142,6 +149,7 @@ export interface FileRoutesByTo {
   '/quiz': typeof AuthenticatedQuizRoute
   '/api/chat': typeof ApiChatRoute
   '/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
+  '/assistant': typeof AuthenticatedAssistantIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -151,7 +159,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/glossaire': typeof GlossaireRoute
   '/references': typeof ReferencesRoute
-  '/_authenticated/assistant': typeof AuthenticatedAssistantRoute
+  '/_authenticated/assistant': typeof AuthenticatedAssistantRouteWithChildren
   '/_authenticated/bibliotheque': typeof AuthenticatedBibliothequeRoute
   '/_authenticated/certifications': typeof AuthenticatedCertificationsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -161,6 +169,7 @@ export interface FileRoutesById {
   '/_authenticated/quiz': typeof AuthenticatedQuizRoute
   '/api/chat': typeof ApiChatRoute
   '/_authenticated/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
+  '/_authenticated/assistant/': typeof AuthenticatedAssistantIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -180,6 +189,7 @@ export interface FileRouteTypes {
     | '/quiz'
     | '/api/chat'
     | '/seance/$moduleId'
+    | '/assistant/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -187,7 +197,6 @@ export interface FileRouteTypes {
     | '/auth'
     | '/glossaire'
     | '/references'
-    | '/assistant'
     | '/bibliotheque'
     | '/certifications'
     | '/dashboard'
@@ -197,6 +206,7 @@ export interface FileRouteTypes {
     | '/quiz'
     | '/api/chat'
     | '/seance/$moduleId'
+    | '/assistant'
   id:
     | '__root__'
     | '/'
@@ -215,6 +225,7 @@ export interface FileRouteTypes {
     | '/_authenticated/quiz'
     | '/api/chat'
     | '/_authenticated/seance/$moduleId'
+    | '/_authenticated/assistant/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -334,6 +345,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/assistant/': {
+      id: '/_authenticated/assistant/'
+      path: '/'
+      fullPath: '/assistant/'
+      preLoaderRoute: typeof AuthenticatedAssistantIndexRouteImport
+      parentRoute: typeof AuthenticatedAssistantRoute
+    }
     '/_authenticated/seance/$moduleId': {
       id: '/_authenticated/seance/$moduleId'
       path: '/seance/$moduleId'
@@ -344,8 +362,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedAssistantRouteChildren {
+  AuthenticatedAssistantIndexRoute: typeof AuthenticatedAssistantIndexRoute
+}
+
+const AuthenticatedAssistantRouteChildren: AuthenticatedAssistantRouteChildren =
+  {
+    AuthenticatedAssistantIndexRoute: AuthenticatedAssistantIndexRoute,
+  }
+
+const AuthenticatedAssistantRouteWithChildren =
+  AuthenticatedAssistantRoute._addFileChildren(
+    AuthenticatedAssistantRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAssistantRoute: typeof AuthenticatedAssistantRoute
+  AuthenticatedAssistantRoute: typeof AuthenticatedAssistantRouteWithChildren
   AuthenticatedBibliothequeRoute: typeof AuthenticatedBibliothequeRoute
   AuthenticatedCertificationsRoute: typeof AuthenticatedCertificationsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
@@ -357,7 +389,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAssistantRoute: AuthenticatedAssistantRoute,
+  AuthenticatedAssistantRoute: AuthenticatedAssistantRouteWithChildren,
   AuthenticatedBibliothequeRoute: AuthenticatedBibliothequeRoute,
   AuthenticatedCertificationsRoute: AuthenticatedCertificationsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
