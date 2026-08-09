@@ -85,18 +85,32 @@ function QuizPage() {
           de votre progression par chapitre.
         </p>
 
-        <Tabs defaultValue="training" className="mt-8">
-          <TabsList>
+        <Tabs value={tab} onValueChange={setTab} className="mt-8">
+          <TabsList className="flex w-full flex-wrap justify-start sm:w-auto">
             <TabsTrigger value="training">Entraînement</TabsTrigger>
+            <TabsTrigger value="history">Historique</TabsTrigger>
             <TabsTrigger value="analysis">Mon niveau</TabsTrigger>
             <TabsTrigger value="cards">Fiches</TabsTrigger>
           </TabsList>
 
           <TabsContent value="training" className="mt-6">
             <QuizTrainer
+              key={focus ?? "default"}
               certificationName={certificationName}
               certificationId={certificationId}
               chapters={chapters}
+              initialChapter={focus}
+            />
+          </TabsContent>
+
+          <TabsContent value="history" className="mt-6">
+            <QuizHistory
+              certificationId={certificationId}
+              chapters={chapters}
+              onRetrain={(topic) => {
+                setFocus(topic);
+                setTab("training");
+              }}
             />
           </TabsContent>
 
@@ -106,6 +120,7 @@ function QuizPage() {
               certificationId={certificationId}
             />
           </TabsContent>
+
 
           <TabsContent value="cards" className="mt-6">
             {total === 0 ? (
