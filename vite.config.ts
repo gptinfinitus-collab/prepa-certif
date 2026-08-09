@@ -11,12 +11,10 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
-// Client env vars (VITE_*) — passed through to envDefine for browser code.
-const mode = process.env.NODE_ENV === "production" ? "production" : "development";
-const env = loadEnv(mode, process.cwd(), "VITE_");
-
 // Server routes need non-VITE env vars (e.g. SUPABASE_SERVICE_ROLE_KEY, LOVABLE_API_KEY).
-// This loads them into process.env for server-side code only and does NOT leak them to the client.
+// The @lovable.dev/vite-tanstack-config plugin already injects VITE_* vars for the client.
+// We load the full env file here to populate process.env for server-side code only.
+const mode = process.env["NODE_ENV"] === "production" ? "production" : "development";
 const serverEnv = loadEnv(mode, process.cwd(), "");
 Object.assign(process.env, serverEnv);
 
@@ -27,7 +25,6 @@ export default defineConfig({
     server: { entry: "server" },
   },
   vite: {
-    env,
     resolve: {
       alias: {
         // Pin entities to the hoisted v4.5.0 copy so React Email's htmlparser2 path works.
