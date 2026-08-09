@@ -84,13 +84,23 @@ function Annexes() {
 
         <section className="mt-10">
           <h2 className="font-serif text-2xl font-semibold">Examen blanc final</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Traitez les questions en conditions réelles avant d'afficher les réponses.
-          </p>
-          <div className="mt-4">
-            <Quiz items={annexes.finalMockExam.mcq} />
-          </div>
+          {annexes.finalMockExam.mcq.length > 0 ? (
+            <>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Traitez les questions en conditions réelles avant d'afficher les réponses.
+              </p>
+              <div className="mt-4">
+                <Quiz items={annexes.finalMockExam.mcq} />
+              </div>
+            </>
+          ) : (
+            <p className="mt-1 text-sm text-muted-foreground">
+              Aucun examen blanc rédigé pour ce référentiel pour le moment : appuyez-vous sur les
+              résumés par chapitre et sur vos propres documents.
+            </p>
+          )}
         </section>
+
       </div>
     </AppShell>
   );
