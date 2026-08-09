@@ -101,6 +101,19 @@ function Parametres() {
 
           <Card>
             <CardHeader>
+              <CardTitle className="font-sans text-lg">Profil d'examen</CardTitle>
+              <CardDescription>
+                Organisme visé pour le niveau Lead Auditor : il ouvre le niveau et adapte le style
+                de vos entraînements.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ExamBodyPicker />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
               <CardTitle className="font-sans text-lg">Étude</CardTitle>
               <CardDescription>Dates, jours travaillés et rythme de révision.</CardDescription>
             </CardHeader>
