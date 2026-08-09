@@ -11,6 +11,9 @@ import { typeLabels } from "@/data/program";
 import { buildSchedule, scheduleByModuleId, computePace, formatShortDate } from "@/lib/schedule";
 import { useProgress, useStudyPlan } from "@/lib/queries";
 import { useCurriculum } from "@/lib/curriculum";
+import { useActiveTrack } from "@/lib/learning";
+import { filterModulesByTrack, getTrack } from "@/lib/tracks";
+import { LeadAuditorNotice, TrackSwitcher } from "@/components/TrackSwitcher";
 import { CheckCircle2, Circle, CalendarClock, PenLine } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
