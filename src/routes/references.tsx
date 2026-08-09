@@ -98,7 +98,7 @@ function References() {
         </section>
 
         <p className="mt-10 text-xs text-muted-foreground">{program.meta.copyrightNote}</p>
-      </main>
-    </div>
+      </div>
+    </AppShell>
   );
 }
