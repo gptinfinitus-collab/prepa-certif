@@ -32,7 +32,7 @@ function References() {
   return (
     <AppShell title="Références ISO">
       <div className="mx-auto max-w-4xl px-4 py-6 md:py-10">
-        <h1 className="font-serif text-3xl font-semibold">Références ISO</h1>
+        <h1 className="font-serif text-2xl font-semibold sm:text-3xl">Références ISO</h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
           Textes de référence pour {certificationName}. Les normes sont protégées par le droit
           d'auteur : elles ne peuvent pas être téléchargées depuis cette application. Vous trouverez
