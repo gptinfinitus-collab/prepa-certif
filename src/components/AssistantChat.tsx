@@ -1,11 +1,29 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { Bot, Loader2, MessageSquarePlus, Send, Sparkles, Trash2, User } from "lucide-react";
+import {
+  Bot,
+  Loader2,
+  Menu,
+  MessageSquarePlus,
+  Send,
+  Sparkles,
+  Trash2,
+  User,
+} from "lucide-react";
 import { toast } from "sonner";
 import { MarkdownView } from "@/components/MarkdownView";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { useActiveCertification } from "@/lib/certifications";
@@ -17,6 +35,7 @@ import {
   type ChatMessageRow,
 } from "@/lib/threads";
 import { cn } from "@/lib/utils";
+
 
 const suggestions = [
   "Explique la différence entre non-conformité majeure et mineure.",
