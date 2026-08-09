@@ -1,21 +1,43 @@
 # PREPA IRCA 45001 — application de préparation
 
-Application web en français qui déroule le programme de 21 jours (3 semaines) fourni dans le fichier JSON, avec connexion Google et Apple gérée par Lovable Cloud et sauvegarde de la progression par utilisateur.
+Application web en français qui déroule le programme fourni dans le fichier JSON, avec une **durée de préparation configurable** (pas figée à 21 jours), connexion Google et Apple gérée par Lovable Cloud et sauvegarde de la progression par utilisateur.
 
 ## Contenu repris du fichier
 
-- 3 semaines, 21 jours (types : cours, révision, pratique, examen blanc, repos, bilan)
-- Pour chaque jour : objectif, cours en markdown, point clé, quiz avec corrigé
+- Les 21 séances fournies (types : cours, révision, pratique, examen blanc, repos, bilan) deviennent des **modules** indépendants de toute date fixe
+- Pour chaque module : objectif, cours en markdown, point clé, quiz avec corrigé
 - Glossaire et annexes
 - Métadonnées (titre, sous-titre, mode d'emploi, note de droit d'auteur)
 
+## Planning configurable
+
+À la première connexion (et modifiable à tout moment dans « Mon planning ») :
+
+- date de début et date de l'examen/formation
+- rythme : nombre de séances par jour ou de jours de repos par semaine, jours travaillés
+- durée totale déduite automatiquement, ou choix direct « je veux tout couvrir en N jours »
+- les modules sont alors répartis sur le calendrier réel de l'utilisateur ; les libellés type « Lundi 20/07 » sont recalculés au lieu d'être codés en dur
+- si le temps est plus court que le nombre de modules, l'application regroupe plusieurs modules par jour ; s'il est plus long, elle intercale des jours de révision
+- indicateur « en avance / en retard » par rapport au planning
+
 ## Écrans
 
-1. **Accueil `/`** — page publique : présentation du programme, aperçu des 3 semaines, bouton « Se connecter pour commencer », note de droit d'auteur.
+1. **Accueil `/`** — page publique : présentation du programme, aperçu des semaines, bouton « Se connecter pour commencer », note de droit d'auteur.
 2. **Connexion `/auth`** — Google et Apple (+ e-mail/mot de passe en secours).
-3. **Tableau de bord `/dashboard`** (connecté) — les 21 jours groupés par semaine, état terminé/en cours, barre de progression globale, bouton « Reprendre ».
-4. **Jour `/jour/$id`** (connecté) — objectif, cours (markdown), point clé encadré, quiz interactif : on répond/on révèle le corrigé question par question, auto-évaluation, bouton « Marquer le jour comme terminé », navigation jour précédent/suivant.
-5. **Glossaire `/glossaire`** avec recherche, **Annexes `/annexes`**.
+3. **Mon planning `/planning`** (connecté) — configuration de la période et du rythme, aperçu du calendrier généré.
+4. **Tableau de bord `/dashboard`** (connecté) — les modules groupés par semaine de planning, état terminé/en cours, progression globale, « Reprendre ».
+5. **Séance `/seance/$id`** (connecté) — objectif, cours (markdown), point clé encadré, quiz interactif (révélation du corrigé question par question, auto-évaluation), « Marquer comme terminé », navigation précédent/suivant.
+6. **Références ISO `/references`** — voir ci-dessous.
+7. **Glossaire `/glossaire`** avec recherche, **Annexes `/annexes`**.
+
+## Références ISO
+
+Les textes intégraux d'ISO 45001:2018 et ISO 19011:2018 sont sous droit d'auteur : ils ne peuvent pas être téléchargés ni redistribués dans l'application. La page Références fournira à la place :
+
+- la fiche de chaque norme utile (ISO 45001:2018, ISO 19011:2018, ISO/IEC 17021-1, ISO 45002) avec liens directs vers l'aperçu gratuit et l'achat sur iso.org
+- pour chaque norme, le sommaire des chapitres et un résumé original par clause, relié aux séances du programme
+- une **bibliothèque personnelle** : l'utilisateur peut téléverser sa propre copie achetée (PDF), stockée de façon privée et visible uniquement par lui
+
 
 ## Authentification et données
 
