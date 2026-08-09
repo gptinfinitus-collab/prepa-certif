@@ -136,7 +136,7 @@ describe("cursus générés", () => {
 });
 
 describe("structure des chapitres par norme", () => {
-  const numberOf = (r: string) => /^(\d+\.\d+)/.exec(r.trim())?.[1] ?? null;
+  const numberOf = (r: string) => /^(\d+(?:\.\d+)+)/.exec(r.trim())?.[1] ?? null;
 
   it("n'expose aucun numéro de sous-chapitre en doublon", () => {
     for (const [code, standard] of Object.entries(standardSpecs)) {
