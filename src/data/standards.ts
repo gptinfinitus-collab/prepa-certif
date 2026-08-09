@@ -261,6 +261,7 @@ export const standardSpecs: Record<string, StandardSpec> = {
           6: [
             "6.1.2 Appréciation des risques de sécurité de l'information (critères, identification, analyse, évaluation)",
             "6.1.3 Traitement des risques, Déclaration d'applicabilité (SoA), plan de traitement",
+            "6.3 Planification des modifications du SMSI (amendement 2024)",
           ],
           8: [
             "8.2 Réalisation des appréciations des risques de sécurité de l'information, à intervalles planifiés",
