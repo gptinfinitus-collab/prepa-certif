@@ -1,90 +1,59 @@
-import * as React from 'react'
-
+import * as React from "react";
+import { Body, Button, Container, Head, Heading, Html, Link, Preview, Text } from "@react-email/components";
 import {
-  Body,
-  Button,
-  Container,
-  Head,
-  Heading,
-  Html,
-  Link,
-  Preview,
-  Text,
-} from '@react-email/components'
+  SITE_NAME,
+  EmailLogo,
+  EmailFooter,
+  main,
+  container,
+  h1,
+  text,
+  button,
+  link,
+} from "./email-brand";
 
 interface EmailChangeEmailProps {
-  siteName: string
-  // oldEmail is the user's current address (HookData.OldEmail). For the
-  // NEW-recipient half of a secure email_change fanout, `email` equals the
-  // recipient (NEW), so the "from" line must render oldEmail to read
-  // "from OLD to NEW" instead of "from NEW to NEW".
-  oldEmail: string
-  email: string
-  newEmail: string
-  confirmationUrl: string
+  siteName: string;
+  oldEmail: string;
+  email: string;
+  newEmail: string;
+  confirmationUrl: string;
 }
 
 export const EmailChangeEmail = ({
-  siteName,
   oldEmail,
   newEmail,
   confirmationUrl,
 }: EmailChangeEmailProps) => (
-  <Html lang="en" dir="ltr">
+  <Html lang="fr" dir="ltr">
     <Head />
-    <Preview>Confirm your email change for {siteName}</Preview>
+    <Preview>Confirmez le changement d'adresse e-mail — {SITE_NAME}</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Heading style={h1}>Confirm your email change</Heading>
+        <EmailLogo />
+        <Heading style={h1}>Confirmez le changement d'adresse e-mail</Heading>
         <Text style={text}>
-          You requested to change your email address for {siteName} from{' '}
-          <Link href={`mailto:${oldEmail}`} style={link}>
-            {oldEmail}
-          </Link>{' '}
-          to{' '}
-          <Link href={`mailto:${newEmail}`} style={link}>
-            {newEmail}
-          </Link>
-          .
+          Vous avez demandé de remplacer l'adresse e-mail de votre compte <strong>{SITE_NAME}</strong>{" "}
+          de <Link href={`mailto:${oldEmail}`} style={link}>{oldEmail}</Link> à{" "}
+          <Link href={`mailto:${newEmail}`} style={link}>{newEmail}</Link>.
         </Text>
-        <Text style={text}>
-          Click the button below to confirm this change:
-        </Text>
+        <Text style={text}>Cliquez sur le bouton ci-dessous pour confirmer ce changement :</Text>
         <Button style={button} href={confirmationUrl}>
-          Confirm Email Change
+          Confirmer le changement
         </Button>
-        <Text style={footer}>
-          If you didn't request this change, please secure your account
-          immediately.
+        <Text style={text}>
+          Si le bouton ne s'affiche pas, vous pouvez aussi coller ce lien dans votre navigateur :
+          <br />
+          {confirmationUrl}
         </Text>
+        <Text style={{ ...text, fontSize: "14px", color: "#6b7280" }}>
+          Si vous n'êtes pas à l'origine de cette demande, nous vous recommandons de sécuriser votre
+          compte en changeant immédiatement votre mot de passe.
+        </Text>
+        <EmailFooter />
       </Container>
     </Body>
   </Html>
-)
+);
 
-export default EmailChangeEmail
-
-const main = { backgroundColor: '#ffffff', fontFamily: 'Arial, sans-serif' }
-const container = { padding: '20px 25px' }
-const h1 = {
-  fontSize: '22px',
-  fontWeight: 'bold' as const,
-  color: '#000000',
-  margin: '0 0 20px',
-}
-const text = {
-  fontSize: '14px',
-  color: '#55575d',
-  lineHeight: '1.5',
-  margin: '0 0 25px',
-}
-const link = { color: 'inherit', textDecoration: 'underline' }
-const button = {
-  backgroundColor: '#000000',
-  color: '#ffffff',
-  fontSize: '14px',
-  borderRadius: '8px',
-  padding: '12px 20px',
-  textDecoration: 'none',
-}
-const footer = { fontSize: '12px', color: '#999999', margin: '30px 0 0' }
+export default EmailChangeEmail;
