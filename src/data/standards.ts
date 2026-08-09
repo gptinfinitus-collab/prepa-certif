@@ -230,7 +230,11 @@ export const standardSpecs: Record<string, StandardSpec> = {
           "6.1.2 Aspects environnementaux et impacts associés, critères de significativité",
           "6.1.3 Obligations de conformité",
         ],
-        8: ["8.1 Perspective de cycle de vie et exigences transmises aux prestataires externes"],
+        8: [
+          "8.1 Perspective de cycle de vie et exigences transmises aux prestataires externes",
+          "8.2 Préparation et réponse aux situations d'urgence",
+        ],
+        9: ["9.1.2 Évaluation de la conformité aux obligations de conformité"],
       },
     }),
     [
