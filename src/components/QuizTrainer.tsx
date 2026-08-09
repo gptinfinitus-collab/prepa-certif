@@ -136,6 +136,7 @@ export function QuizTrainer({
     );
     setSaved(true);
     queryClient.invalidateQueries({ queryKey: ["quiz_sessions"] });
+    queryClient.invalidateQueries({ queryKey: ["quiz_answers"] });
   }
 
   const generation = useMutation({
