@@ -17,6 +17,7 @@ import {
   methodologyExtras,
   type StandardContext,
 } from "./standard-extras";
+import { leadAuditorModules } from "./lead-auditor";
 
 export interface Curriculum {
   /** Vrai lorsque le cursus est entièrement rédigé (séances, quiz, examen blanc). */
