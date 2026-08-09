@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { AppHeader } from "@/components/AppHeader";
+import { AppShell } from "@/components/AppShell";
 import { Input } from "@/components/ui/input";
 import { program } from "@/data/program";
 
