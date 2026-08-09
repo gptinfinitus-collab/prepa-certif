@@ -12,6 +12,7 @@ const navItems = [
   { to: "/references", label: "Références ISO" },
   { to: "/glossaire", label: "Glossaire" },
   { to: "/annexes", label: "Annexes" },
+  { to: "/bibliotheque", label: "Ma bibliothèque" },
 ];
 
 export function AppHeader() {
