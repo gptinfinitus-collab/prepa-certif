@@ -140,6 +140,8 @@ export function QuizTrainer({
           count: Number(count),
           difficulty,
           mode,
+          track,
+          examBody,
         },
       }),
     onSuccess: (result) => {
