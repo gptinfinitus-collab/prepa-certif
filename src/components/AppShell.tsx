@@ -224,8 +224,22 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
         </header>
 
 
-
-
+        {/* Desktop sidebar toggle */}
+        <div className="hidden px-3 pt-3 md:block">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-9 text-muted-foreground"
+            onClick={() => setCollapsed((c) => !c)}
+            aria-label={collapsed ? "Déplier le menu" : "Replier le menu"}
+          >
+            {collapsed ? (
+              <PanelLeft className="size-5" aria-hidden />
+            ) : (
+              <PanelLeftClose className="size-5" aria-hidden />
+            )}
+          </Button>
+        </div>
 
         <main className="min-w-0 flex-1 pb-[calc(5.5rem+env(safe-area-inset-bottom))] md:pb-0">{children}</main>
 
