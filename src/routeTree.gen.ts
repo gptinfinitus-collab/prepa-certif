@@ -20,6 +20,7 @@ import { Route as GlossaireRouteImport } from './routes/glossaire'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as ReferencesRouteImport } from './routes/references'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedBibliothequeRouteImport } from './routes/_authenticated/bibliotheque'
 import { Route as AuthenticatedCertificationsRouteImport } from './routes/_authenticated/certifications'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
@@ -87,6 +88,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedBibliothequeRoute =
   AuthenticatedBibliothequeRouteImport.update({
@@ -170,6 +176,7 @@ export interface FileRoutesByFullPath {
   '/mentions-legales': typeof MentionsLegalesRoute
   '/references': typeof ReferencesRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/bibliotheque': typeof AuthenticatedBibliothequeRoute
   '/certifications': typeof AuthenticatedCertificationsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -195,6 +202,7 @@ export interface FileRoutesByTo {
   '/mentions-legales': typeof MentionsLegalesRoute
   '/references': typeof ReferencesRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/bibliotheque': typeof AuthenticatedBibliothequeRoute
   '/certifications': typeof AuthenticatedCertificationsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -222,6 +230,7 @@ export interface FileRoutesById {
   '/mentions-legales': typeof MentionsLegalesRoute
   '/references': typeof ReferencesRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/bibliotheque': typeof AuthenticatedBibliothequeRoute
   '/_authenticated/certifications': typeof AuthenticatedCertificationsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -249,6 +258,7 @@ export interface FileRouteTypes {
     | '/mentions-legales'
     | '/references'
     | '/reset-password'
+    | '/admin'
     | '/bibliotheque'
     | '/certifications'
     | '/dashboard'
@@ -274,6 +284,7 @@ export interface FileRouteTypes {
     | '/mentions-legales'
     | '/references'
     | '/reset-password'
+    | '/admin'
     | '/bibliotheque'
     | '/certifications'
     | '/dashboard'
@@ -300,6 +311,7 @@ export interface FileRouteTypes {
     | '/mentions-legales'
     | '/references'
     | '/reset-password'
+    | '/_authenticated/admin'
     | '/_authenticated/bibliotheque'
     | '/_authenticated/certifications'
     | '/_authenticated/dashboard'
@@ -411,6 +423,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/bibliotheque': {
       id: '/_authenticated/bibliotheque'
       path: '/bibliotheque'
@@ -506,6 +525,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedBibliothequeRoute: typeof AuthenticatedBibliothequeRoute
   AuthenticatedCertificationsRoute: typeof AuthenticatedCertificationsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
@@ -519,6 +539,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedBibliothequeRoute: AuthenticatedBibliothequeRoute,
   AuthenticatedCertificationsRoute: AuthenticatedCertificationsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
