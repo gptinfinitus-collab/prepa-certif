@@ -67,8 +67,8 @@ function CertificationSwitcher({ compact = false }: { compact?: boolean }) {
           type="button"
           style={certificationAccentStyle(active?.certification.code)}
           className={cn(
-            "cert-tint flex w-full items-center gap-2 rounded-lg border border-sidebar-border border-l-4 border-l-cert bg-sidebar-accent/40 px-3 py-2 text-left transition-colors hover:bg-sidebar-accent",
-            compact && "border-border border-l-4 border-l-cert bg-transparent px-2 py-1.5",
+            "cert-tint flex w-full items-center gap-2 rounded-lg border border-sidebar-border bg-sidebar-accent/40 px-3 py-2 text-left transition-colors hover:bg-sidebar-accent",
+            compact && "border-border bg-transparent px-2 py-1.5",
           )}
           aria-label="Changer de certification"
         >
@@ -160,18 +160,34 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
           collapsed ? "w-[4.5rem]" : "w-64",
         )}
       >
-        <div className={cn("flex items-center gap-2 px-4 py-4", collapsed && "justify-center px-2")}>
+        <div
+          className={cn(
+            "flex items-center gap-2 px-4 py-4",
+            collapsed && "flex-col justify-center gap-3 px-2",
+          )}
+        >
           <ShieldCheck className="size-6 shrink-0 text-sidebar-primary" aria-hidden />
           {!collapsed && (
-            <Link to="/" className="min-w-0">
-              <span className="block truncate font-serif text-sm font-semibold leading-tight">
-                PREPA ISO
-              </span>
+            <Link to="/" className="min-w-0 flex-1">
+              <span className="block truncate text-sm font-semibold leading-tight">PREPA ISO</span>
               <span className="block text-xs text-muted-foreground">
                 Préparation à la certification
               </span>
             </Link>
           )}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-8 shrink-0 text-muted-foreground"
+            onClick={() => setCollapsed((c) => !c)}
+            aria-label={collapsed ? "Déplier le menu" : "Replier le menu"}
+          >
+            {collapsed ? (
+              <ChevronsRight className="size-4" aria-hidden />
+            ) : (
+              <ChevronsLeft className="size-4" aria-hidden />
+            )}
+          </Button>
         </div>
 
         {!collapsed && (
@@ -200,48 +216,25 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
           ))}
         </nav>
 
-        <div className="space-y-2 border-t border-sidebar-border p-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="w-full justify-center text-muted-foreground"
-            onClick={() => setCollapsed((c) => !c)}
-            aria-label={collapsed ? "Déplier le menu" : "Replier le menu"}
-          >
-            {collapsed ? (
-              <ChevronsRight className="size-4" aria-hidden />
-            ) : (
-              <>
-                <ChevronsLeft className="size-4" aria-hidden />
-                Replier
-              </>
-            )}
-          </Button>
+        <div className="border-t border-sidebar-border p-2">
+          <UserMenu variant="card" compact={collapsed} />
         </div>
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        {/* Desktop header */}
-        <header className="sticky top-0 z-30 hidden items-center gap-3 border-b border-border bg-card/80 px-6 py-3 backdrop-blur md:flex">
-          <h2 className="min-w-0 flex-1 truncate font-serif text-base font-semibold">
-            {title ?? "PREPA ISO"}
-          </h2>
-          <UserMenu />
-        </header>
-
         {/* Mobile header */}
         <header className="sticky top-0 z-30 border-b border-border bg-card/90 px-4 py-3 backdrop-blur md:hidden">
           <div className="flex items-center gap-3">
             <ShieldCheck className="size-5 shrink-0 text-primary" aria-hidden />
-            <span className="min-w-0 flex-1 truncate font-serif text-base font-semibold">
-              {title ?? "PREPA ISO"}
-            </span>
+            <span className="min-w-0 flex-1 truncate text-base font-semibold">PREPA ISO</span>
             <UserMenu />
           </div>
           <div className="mt-2">
             <CertificationSwitcher compact />
           </div>
         </header>
+
+
 
 
 

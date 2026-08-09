@@ -65,8 +65,8 @@
 
 :root {
   --radius: 0.5rem;
-  --font-display: "IBM Plex Serif", Georgia, serif;
-  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --font-display: "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
   --cert-hue: 72;
   --cert-accent: oklch(0.79 0.14 72);
   --cert-accent-foreground: oklch(0.26 0.05 72);
