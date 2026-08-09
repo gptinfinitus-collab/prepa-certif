@@ -194,8 +194,8 @@ function Bibliotheque() {
           ) : (
             <ul className="mt-3 divide-y divide-border rounded-lg border border-border bg-card">
               {list.map((doc) => (
-                <li key={doc.id} className="flex flex-col gap-2 px-4 py-3">
-                  <div className="flex min-w-0 items-start gap-2">
+                <li key={doc.id} className="flex flex-col gap-2 px-4 py-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
+                  <div className="flex min-w-0 flex-1 items-start gap-2 sm:basis-full lg:basis-auto">
                     <FileText className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
                     <span className="min-w-0 flex-1 break-words text-sm">{doc.name}</span>
                   </div>
@@ -215,7 +215,7 @@ function Bibliotheque() {
                       <Badge variant="outline">En attente d'analyse</Badge>
                     )}
                   </div>
-                  <div className="-ml-2 flex flex-wrap items-center gap-1">
+                  <div className="-ml-2 flex flex-wrap items-center gap-1 sm:ml-auto">
                     <Button
                       variant="ghost"
                       size="sm"
