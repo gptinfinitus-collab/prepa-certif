@@ -314,11 +314,11 @@
    "dayLabel": "Séance 9",
    "title": "Clause 8 : Réalisation des activités opérationnelles",
    "objective": "Comprendre comment l'organisme maîtrise ses opérations au quotidien.",
-   "contentMarkdown": "### La hiérarchie des mesures de maîtrise, du plus au moins efficace\n\n1. **Élimination** du danger\n2. **Substitution** par quelque chose de moins dangereux\n3. **Mesures d'ingénierie** (isolation, ventilation, protection collective)\n4. **Mesures organisationnelles** (procédures, rotation, formation)\n5. **Équipements de protection individuelle (EPI)** — le dernier rempart\n\n*Exemple appliqué au risque de piqûre* : élimination (matériel sans aiguille) → substitution (dispositif de sécurité intégré) → ingénierie (collecteurs proches) → organisationnel (procédure, formation) → EPI (gants, insuffisant seul).\n\n### Gestion du changement\n\nTout changement doit être évalué pour ses impacts S&ST **avant** d'être mis en œuvre.\n\n### Préparation et réponse aux situations d'urgence\n\nIdentifier les urgences potentielles, préparer des plans de réponse, et les **tester périodiquement**.",
+   "contentMarkdown": "### La hiérarchie des mesures de prévention (§8.1.2), du plus au moins efficace\n\n1. **Élimination** du danger\n2. **Substitution** par quelque chose de moins dangereux\n3. **Mesures d'ingénierie et réorganisation du travail** (isolation, ventilation, protection collective)\n4. **Mesures administratives, dont la formation** (procédures, rotation, sensibilisation)\n5. **Équipements de protection individuelle (EPI)** — le dernier rempart\n\n*Exemple appliqué au risque de piqûre* : élimination (matériel sans aiguille) → substitution (dispositif de sécurité intégré) → ingénierie (collecteurs proches) → organisationnel (procédure, formation) → EPI (gants, insuffisant seul).\n\n### Gestion du changement\n\nTout changement doit être évalué pour ses impacts S&ST **avant** d'être mis en œuvre.\n\n### Préparation et réponse aux situations d'urgence\n\nIdentifier les urgences potentielles, préparer des plans de réponse, et les **tester périodiquement**.",
    "keyTakeaway": "Face à plusieurs mesures possibles, choisissez toujours celle la plus haute dans la hiérarchie (élimination avant EPI), sauf si l'élimination est manifestement impossible.",
    "quiz": [
     {
-     "question": "Citez les 5 niveaux de la hiérarchie des mesures de maîtrise.",
+     "question": "Citez les 5 niveaux de la hiérarchie des mesures de prévention.",
      "answer": "Élimination, substitution, mesures d'ingénierie, mesures organisationnelles, EPI."
     },
     {
@@ -468,7 +468,7 @@
      "answer": "Ressources, compétences, sensibilisation, communication, information documentée."
     },
     {
-     "question": "Quelle est la hiérarchie des mesures de maîtrise du risque ?",
+     "question": "Quelle est la hiérarchie des mesures de prévention du risque ?",
      "answer": "Élimination, substitution, mesures d'ingénierie, mesures organisationnelles, EPI."
     },
     {
@@ -1005,7 +1005,7 @@
      "answer": "Ressources, compétences, sensibilisation, communication, information documentée."
     },
     {
-     "question": "Citez la hiérarchie des mesures de maîtrise du risque.",
+     "question": "Citez la hiérarchie des mesures de prévention du risque.",
      "answer": "Élimination, substitution, mesures d'ingénierie, mesures organisationnelles, EPI."
     },
     {

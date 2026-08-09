@@ -33,3 +33,11 @@ describe("terminologie S&ST", () => {
     expect(program).toContain("traumatisme et pathologie");
   });
 });
+
+describe("hiérarchie des mesures", () => {
+  it("emploie « mesures de prévention » et non « mesures de maîtrise »", () => {
+    for (const file of [...files, "src/data/program.json"]) {
+      expect(read(file).toLowerCase(), file).not.toContain("mesures de maîtrise");
+    }
+  });
+});
