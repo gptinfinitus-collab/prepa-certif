@@ -70,7 +70,7 @@ function hlsClauses(input: HlsInput): ClauseSpec[] {
     {
       clause: "6. Planification",
       title: "Risques, opportunités et objectifs",
-      summary: `Planifier les actions face aux ${riskTerm} et aux opportunités, fixer des objectifs mesurables et planifier les modifications.`,
+      summary: `Planifier les actions face aux ${riskTerm} et aux opportunités et fixer des objectifs mesurables.`,
       requirements: [
         `6.1 Actions à mettre en œuvre face aux ${riskTerm} et opportunités`,
         "6.2 Objectifs et planification des actions pour les atteindre",
