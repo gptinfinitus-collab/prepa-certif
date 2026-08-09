@@ -185,8 +185,9 @@ function skeletonCurriculum(
       { id: 1, title: "Les chapitres du référentiel", dayIds: clauseModules.map((m) => m.id) },
       { id: 2, title: "Méthodologie d'audit", dayIds: methodology.map((m) => m.id) },
       { id: 3, title: "Consolidation", dayIds: [reviewId] },
+      { id: 4, title: "Lead Auditor", dayIds: leadModules.map((m) => m.id) },
     ],
-    modules: [...clauseModules, ...methodology, review],
+    modules: [...clauseModules, ...methodology, review, ...leadModules],
     glossary: [...glossary, ...commonGlossary].sort((a, b) => a.term.localeCompare(b.term, "fr")),
     annexes: {
       ...genericAnnexes,
