@@ -166,12 +166,20 @@ export const generateQuizQuestions = createServerFn({ method: "POST" })
         ? '{"questions":[{"question":"...","choices":["a","b","c","d"],"answerIndex":0,"explanation":"correction commentée","clause":"6.1.2"}]}'
         : '{"questions":[{"question":"...","expected":"réponse attendue détaillée","explanation":"points clés attendus","clause":"6.1.2"}]}';
 
+    const body = getExamBody(data.examBody ?? null);
+    const trackBrief =
+      data.track === "lead_auditor"
+        ? "Niveau visé : Lead Auditor (responsable d'équipe d'audit). Les questions portent sur le pilotage de l'audit : plan d'audit, conduite d'équipe, qualification et rédaction des non-conformités, réunion de clôture, rapport, éthique et impartialité."
+        : data.track === "internal_auditor"
+          ? "Niveau visé : auditeur interne. Les questions portent sur la préparation, la conduite et la restitution d'un audit interne."
+          : "Niveau visé : maîtrise de la norme. Les questions portent sur la compréhension et l'application des exigences.";
+
     const raw = await chatComplete(
       [
         {
           role: "system",
           content:
-            "Tu conçois des questions d'examen d'auditeur ISO (style IRCA). Réponds uniquement en JSON valide.",
+            "Tu conçois des questions d'entraînement pour de futurs auditeurs ISO. Réponds uniquement en JSON valide.",
         },
         {
           role: "user",
@@ -179,6 +187,8 @@ export const generateQuizQuestions = createServerFn({ method: "POST" })
             `Certification : ${data.certificationName}.`,
             `Thème : ${topic}.`,
             `Niveau : ${data.difficulty}.`,
+            trackBrief,
+            body ? `Organisme d'examen visé : ${body.name}. ${body.promptStyle}` : "",
             sourcesBlock ? `Extraits des documents de l'apprenant :\n${sourcesBlock}` : "",
             data.mode === "qcm"
               ? `Génère ${data.count} questions à choix multiples en français.`
