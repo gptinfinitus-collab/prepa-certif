@@ -220,5 +220,12 @@ export function leadAuditorModules(label: string, week: number): ProgramModule[]
       .trim(),
     keyTakeaway: spec.keyTakeaway,
     quiz: spec.quiz,
+    extras: {
+      objectives: [spec.objective],
+      auditorView: spec.sections.map((section) => `${section.heading} : ${section.body[0] ?? ""}`),
+      examFocus: [spec.keyTakeaway],
+      keyPoints: spec.sections.flatMap((section) => section.body),
+      flashcards: spec.quiz.map((q) => ({ front: q.question, back: q.answer })),
+    },
   }));
 }
