@@ -139,69 +139,8 @@ function useCertificationGuard() {
 }
 
 
-function useSignOut() {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  return async function signOut() {
-    await queryClient.cancelQueries();
-    queryClient.clear();
-    await supabase.auth.signOut();
-    navigate({ to: "/auth", replace: true });
-  };
-}
 
-function ProfileBlock({ collapsed }: { collapsed: boolean }) {
-  const { data: profile } = useProfile();
-  const { data: user } = useSession();
-  const signOut = useSignOut();
-  const fullName =
-    [profile?.first_name, profile?.last_name].filter(Boolean).join(" ") ||
-    profile?.display_name ||
-    "Mon profil";
-  const email = profile?.email ?? user?.email ?? "";
 
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <button
-          type="button"
-          className={cn(
-            "flex w-full items-center gap-3 rounded-lg border border-sidebar-border bg-sidebar-accent/40 p-2 text-left transition-colors hover:bg-sidebar-accent",
-            collapsed && "justify-center border-transparent bg-transparent p-1",
-          )}
-        >
-          <Avatar className="size-9 shrink-0 border border-sidebar-border">
-            <AvatarImage src={profile?.avatarSignedUrl ?? undefined} alt="" />
-            <AvatarFallback className="text-xs">
-              {initialsOf(profile?.first_name, profile?.last_name, email)}
-            </AvatarFallback>
-          </Avatar>
-          {!collapsed && (
-            <span className="min-w-0 flex-1">
-              <span className="block truncate text-sm font-medium text-sidebar-foreground">
-                {fullName}
-              </span>
-              <span className="block truncate text-xs text-muted-foreground">{email}</span>
-            </span>
-          )}
-        </button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" side="top" className="w-56">
-        <DropdownMenuItem asChild>
-          <Link to="/parametres">
-            <Settings className="size-4" aria-hidden />
-            Paramètres
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onSelect={() => void signOut()}>
-          <LogOut className="size-4" aria-hidden />
-          Se déconnecter
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-}
 
 export function AppShell({ children, title }: { children: ReactNode; title?: string }) {
   const [collapsed, setCollapsed] = useState(false);
