@@ -147,49 +147,83 @@ export function AssistantChat({ threadId }: { threadId: string }) {
   }
 
   return (
-    <div className="mx-auto grid w-full min-w-0 max-w-6xl gap-6 px-4 py-6 md:py-10 lg:grid-cols-[240px_minmax(0,1fr)]">
-      <aside className="flex min-w-0 flex-col gap-2">
-        <Button onClick={startThread} disabled={createThread.isPending} className="w-full">
-          <MessageSquarePlus className="size-4" aria-hidden />
-          Nouvelle conversation
-        </Button>
-        <nav className="-mx-1 flex max-w-full gap-2 overflow-x-auto px-1 pb-1 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0">
-          {(threads.data ?? []).map((thread) => (
-            <div
-              key={thread.id}
-              className={cn(
-                "flex w-[190px] shrink-0 items-center gap-1 rounded-lg border border-border px-1 lg:w-auto lg:shrink",
-                thread.id === threadId ? "bg-secondary" : "bg-card",
-              )}
-            >
-              <Link
-                to="/assistant/$threadId"
-                params={{ threadId: thread.id }}
-                className="min-w-0 flex-1 truncate px-2 py-2 text-sm"
-                title={thread.title}
+    <div className="mx-auto flex w-full min-w-0 max-w-3xl flex-col px-4 py-4 md:py-8">
+      <div className="flex min-w-0 items-start gap-2">
+        <Sheet open={historyOpen} onOpenChange={setHistoryOpen}>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon" aria-label="Historique des conversations">
+              <Menu className="size-5" aria-hidden />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="w-[85vw] max-w-xs p-0">
+            <SheetHeader className="p-4 pb-2">
+              <SheetTitle className="font-sans text-base">Conversations</SheetTitle>
+              <SheetDescription className="text-xs">
+                Vos échanges avec l'assistant, par certification.
+              </SheetDescription>
+            </SheetHeader>
+            <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto p-4 pt-0">
+              <Button
+                onClick={startThread}
+                disabled={createThread.isPending}
+                className="w-full"
+                size="sm"
               >
-                {thread.title}
-              </Link>
-              <button
-                type="button"
-                onClick={() => removeThread(thread.id)}
-                aria-label={`Supprimer ${thread.title}`}
-                className="rounded-md p-2 text-muted-foreground transition-colors hover:text-destructive"
-              >
-                <Trash2 className="size-4" aria-hidden />
-              </button>
+                <MessageSquarePlus className="size-4" aria-hidden />
+                Nouvelle conversation
+              </Button>
+              <nav className="flex flex-col gap-1">
+                {threads.isLoading &&
+                  [0, 1, 2].map((i) => <Skeleton key={i} className="h-9 w-full rounded-lg" />)}
+                {(threads.data ?? []).map((thread) => (
+                  <div
+                    key={thread.id}
+                    className={cn(
+                      "flex min-w-0 items-center gap-1 rounded-lg border border-border px-1",
+                      thread.id === threadId ? "bg-secondary" : "bg-card",
+                    )}
+                  >
+                    <Link
+                      to="/assistant/$threadId"
+                      params={{ threadId: thread.id }}
+                      onClick={() => setHistoryOpen(false)}
+                      className="min-w-0 flex-1 truncate px-2 py-2 text-sm"
+                      title={thread.title}
+                    >
+                      {thread.title}
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => removeThread(thread.id)}
+                      aria-label={`Supprimer ${thread.title}`}
+                      className="rounded-md p-2 text-muted-foreground transition-colors hover:text-destructive"
+                    >
+                      <Trash2 className="size-4" aria-hidden />
+                    </button>
+                  </div>
+                ))}
+              </nav>
             </div>
-          ))}
-        </nav>
-      </aside>
+          </SheetContent>
+        </Sheet>
+
+        <div className="min-w-0 flex-1">
+          <h1 className="font-sans text-xl font-semibold sm:text-2xl">Assistant de préparation</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Questions directes sur {certificationName}, l'audit et vos documents indexés.
+          </p>
+        </div>
+      </div>
 
       <section className="flex min-w-0 flex-col">
-        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">Assistant de préparation</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Questions directes sur {certificationName}, l'audit et vos documents de cours indexés.
-        </p>
+        {stored.isLoading && (
+          <div className="mt-6 space-y-3">
+            <Skeleton className="h-16 w-2/3 rounded-xl" />
+            <Skeleton className="ml-auto h-24 w-5/6 rounded-xl" />
+          </div>
+        )}
 
-        {messages.length === 0 && !busy && (
+        {!stored.isLoading && messages.length === 0 && !busy && (
           <Card className="mt-6">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 font-sans text-lg">
@@ -230,7 +264,7 @@ export function AssistantChat({ threadId }: { threadId: string }) {
           <div ref={bottomRef} />
         </div>
 
-        <div className="sticky bottom-20 mt-6 rounded-xl border border-border bg-card/95 p-3 backdrop-blur md:bottom-4">
+        <div className="sticky bottom-20 mt-4 flex items-end gap-2 rounded-full border border-border bg-card/95 py-1 pl-4 pr-1 backdrop-blur md:bottom-4">
           <Textarea
             ref={textareaRef}
             value={input}
@@ -241,18 +275,27 @@ export function AssistantChat({ threadId }: { threadId: string }) {
                 void send(input);
               }
             }}
-            rows={2}
-            placeholder="Posez votre question (Entrée pour envoyer)…"
-            className="resize-none border-0 bg-transparent shadow-none focus-visible:ring-0"
+            rows={1}
+            placeholder="Votre question…"
+            aria-label="Votre question"
+            className="max-h-32 min-h-0 resize-none overflow-y-auto border-0 bg-transparent py-2 text-sm shadow-none placeholder:text-xs placeholder:text-muted-foreground/70 focus-visible:ring-0 md:text-sm"
           />
-          <div className="flex justify-end">
-            <Button onClick={() => void send(input)} disabled={busy || !input.trim()}>
+          <Button
+            onClick={() => void send(input)}
+            disabled={busy || !input.trim()}
+            size="icon"
+            aria-label="Envoyer"
+            className="mb-1 size-9 shrink-0 rounded-full"
+          >
+            {busy ? (
+              <Loader2 className="size-4 animate-spin" aria-hidden />
+            ) : (
               <Send className="size-4" aria-hidden />
-              Envoyer
-            </Button>
-          </div>
+            )}
+          </Button>
         </div>
       </section>
+
     </div>
   );
 }
