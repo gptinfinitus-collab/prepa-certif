@@ -4,7 +4,7 @@ test.describe("Espace d'administration", () => {
   test("/admin renvoie un visiteur non connecté vers la page de connexion", async ({ page }) => {
     await page.goto("/admin");
     await page.waitForURL(/\/auth/);
-    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(page.getByRole("button", { name: /google/i })).toBeVisible();
   });
 
   test("les fonctions serveur d'administration refusent un appel non authentifié", async ({
