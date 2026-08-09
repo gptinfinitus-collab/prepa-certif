@@ -6,6 +6,7 @@ import {
   chunkText,
   embedTexts,
   extractDocumentText,
+  retrieve,
 } from "@/lib/rag.server";
 
 /** Analyse un document de la bibliothèque et l'indexe pour l'IA. */
@@ -64,24 +65,6 @@ export const ingestDocument = createServerFn({ method: "POST" })
       throw new Error(message);
     }
   });
-
-interface Passage {
-  content: string;
-  document_id: string;
-}
-
-async function retrieve(
-  supabase: { rpc: (fn: string, args: Record<string, unknown>) => Promise<{ data: unknown }> },
-  query: string,
-  matchCount = 8,
-): Promise<Passage[]> {
-  const [embedding] = await embedTexts([query]);
-  const { data } = await supabase.rpc("match_document_chunks", {
-    query_embedding: JSON.stringify(embedding),
-    match_count: matchCount,
-  });
-  return (data as Passage[] | null) ?? [];
-}
 
 /** Répond à une question en s'appuyant sur les documents de l'utilisateur. */
 export const askAssistant = createServerFn({ method: "POST" })

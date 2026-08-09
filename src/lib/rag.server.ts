@@ -101,3 +101,23 @@ export function chunkText(text: string, size = 1400, overlap = 200): string[] {
   }
   return chunks.slice(0, 400);
 }
+
+interface Passage {
+  content: string;
+  document_id: string;
+}
+
+/** Recherche sémantique dans les documents indexés de l'utilisateur. */
+export async function retrieve(
+  supabase: { rpc: (fn: string, args: Record<string, unknown>) => Promise<{ data: unknown }> },
+  query: string,
+  matchCount = 8,
+): Promise<Passage[]> {
+  const [embedding] = await embedTexts([query]);
+  const { data } = await supabase.rpc("match_document_chunks", {
+    query_embedding: JSON.stringify(embedding),
+    match_count: matchCount,
+  });
+  return (data as Passage[] | null) ?? [];
+}
+
