@@ -15,6 +15,7 @@ import {
   PanelLeftClose,
   Plus,
   Settings,
+  ShieldCheck,
   SpellCheck,
 } from "lucide-react";
 import { useSession } from "@/lib/queries";
@@ -32,6 +33,7 @@ import { UserMenu } from "@/components/UserMenu";
 import { BrandLogo } from "@/components/BrandLogo";
 import { cn } from "@/lib/utils";
 import { certificationAccentStyle } from "@/lib/cert-theme";
+import { useIsSuperAdmin } from "@/lib/admin";
 
 const navItems = [
   { to: "/dashboard", label: "Programme", icon: Home },
@@ -140,6 +142,7 @@ function useCertificationGuard() {
 
 export function AppShell({ children, title }: { children: ReactNode; title?: string }) {
   const [collapsed, setCollapsed] = useState(false);
+  const isSuperAdmin = useIsSuperAdmin();
   useEffect(() => {
     if (typeof window !== "undefined" && window.innerWidth < 1024) setCollapsed(true);
   }, []);
@@ -203,7 +206,23 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
               {!collapsed && <span className="truncate">{item.label}</span>}
             </Link>
           ))}
+          {isSuperAdmin && (
+            <Link
+              to="/admin"
+              title="Administration"
+              className={cn(
+                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground",
+                collapsed && "justify-center px-0",
+                isActive("/admin") &&
+                  "bg-sidebar-primary/12 font-medium text-sidebar-primary hover:bg-sidebar-primary/16 hover:text-sidebar-primary",
+              )}
+            >
+              <ShieldCheck className="size-4 shrink-0" aria-hidden />
+              {!collapsed && <span className="truncate">Administration</span>}
+            </Link>
+          )}
         </nav>
+
 
         <div className="border-t border-sidebar-border p-2">
           <UserMenu variant="card" compact={collapsed} />
