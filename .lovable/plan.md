@@ -22,8 +22,8 @@ Portée : ces changements concernent uniquement l'affichage desktop. La vue mobi
 - Le bouton « Replier » en bas de sidebar est supprimé.
 - Une icône discrète prend sa place **en haut à droite**, sur la ligne du logo PREPA ISO ; elle reste visible et cliquable en mode replié.
 
-### 5. Typographie
-- Passage à **Inter** pour tout le texte (corps et titres), chargée via `<link>` dans la racine.
+### 5. Typographie (toutes les vues)
+- Passage à **Inter** pour tout le texte (corps et titres), sur desktop **et** mobile, chargée via `<link>` dans la racine.
 - IBM Plex Serif / Sans retirés.
 
 ### 6. En-tête mobile
