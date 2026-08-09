@@ -59,7 +59,7 @@ function Glossaire() {
             <p className="px-4 py-6 text-sm text-muted-foreground">Aucun résultat.</p>
           ) : null}
         </dl>
-      </main>
-    </div>
+      </div>
+    </AppShell>
   );
 }
