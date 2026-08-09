@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { LogOut, Moon, Settings, User } from "lucide-react";
+import { ChevronsUpDown, LogOut, Moon, Settings, User } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { useProfile, useSession } from "@/lib/queries";
 import { useTheme } from "@/components/theme-provider";
