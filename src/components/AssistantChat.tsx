@@ -128,18 +128,18 @@ export function AssistantChat({ threadId }: { threadId: string }) {
   }
 
   return (
-    <div className="mx-auto grid w-full max-w-6xl gap-6 px-4 py-6 md:grid-cols-[240px_1fr] md:py-10">
-      <aside className="flex flex-col gap-2">
+    <div className="mx-auto grid w-full min-w-0 max-w-6xl gap-6 px-4 py-6 md:grid-cols-[220px_minmax(0,1fr)] md:py-10 lg:grid-cols-[240px_minmax(0,1fr)]">
+      <aside className="flex min-w-0 flex-col gap-2">
         <Button onClick={startThread} disabled={createThread.isPending} className="w-full">
           <MessageSquarePlus className="size-4" aria-hidden />
           Nouvelle conversation
         </Button>
-        <nav className="flex gap-2 overflow-x-auto pb-1 md:flex-col md:overflow-visible">
+        <nav className="-mx-1 flex max-w-full gap-2 overflow-x-auto px-1 pb-1 md:mx-0 md:flex-col md:overflow-visible md:px-0">
           {(threads.data ?? []).map((thread) => (
             <div
               key={thread.id}
               className={cn(
-                "flex min-w-[190px] items-center gap-1 rounded-lg border border-border px-1 md:min-w-0",
+                "flex w-[190px] shrink-0 items-center gap-1 rounded-lg border border-border px-1 md:w-auto md:shrink",
                 thread.id === threadId ? "bg-secondary" : "bg-card",
               )}
             >
@@ -165,7 +165,7 @@ export function AssistantChat({ threadId }: { threadId: string }) {
       </aside>
 
       <section className="flex min-w-0 flex-col">
-        <h1 className="font-serif text-3xl font-semibold">Assistant de préparation</h1>
+        <h1 className="font-serif text-2xl font-semibold sm:text-3xl">Assistant de préparation</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Questions directes sur {certificationName}, l'audit et vos documents de cours indexés.
         </p>
@@ -248,7 +248,7 @@ function Bubble({
   sources?: ChatMessageRow["sources"];
 }) {
   return (
-    <div className={cn("flex gap-3", role === "user" && "flex-row-reverse")}>
+    <div className={cn("flex min-w-0 gap-2 sm:gap-3", role === "user" && "flex-row-reverse")}>
       <span
         className={cn(
           "mt-1 flex size-8 shrink-0 items-center justify-center rounded-full",
@@ -260,7 +260,7 @@ function Bubble({
       </span>
       <div
         className={cn(
-          "min-w-0 max-w-[85%] rounded-xl border border-border px-4 py-3 text-sm leading-relaxed",
+          "min-w-0 max-w-[calc(100%-2.75rem)] rounded-xl border border-border px-3 py-3 text-sm leading-relaxed sm:max-w-[85%] sm:px-4",
           role === "user" ? "bg-secondary" : "bg-card",
         )}
       >
@@ -278,7 +278,7 @@ function Bubble({
               {sources.map((source, i) => (
                 <li key={i} className="text-xs text-muted-foreground">
                   <span className="font-medium text-foreground">Extrait {i + 1} — </span>
-                  {source.content}
+                  <span className="break-words">{source.content}</span>
                 </li>
               ))}
             </ul>
