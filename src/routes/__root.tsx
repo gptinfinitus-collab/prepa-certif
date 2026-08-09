@@ -115,6 +115,34 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
       { rel: "manifest", href: "/manifest.webmanifest" },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "https://prepa-certif.app/#organization",
+              name: "PREPA CERTIF",
+              url: "https://prepa-certif.app",
+              logo: "https://prepa-certif.app/og-image.png",
+              email: "contact@prepa-certif.app",
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://prepa-certif.app/#website",
+              name: "PREPA CERTIF",
+              url: "https://prepa-certif.app",
+              inLanguage: "fr-FR",
+              description:
+                "Préparation aux certifications d'auditeur ISO (9001, 14001, 45001, 27001…) : planning personnalisable, cours, quiz et suivi de progression.",
+              publisher: { "@id": "https://prepa-certif.app/#organization" },
+            },
+          ],
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
