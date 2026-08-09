@@ -14,6 +14,41 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_messages: {
+        Row: {
+          certification_id: string | null
+          content: string
+          created_at: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          certification_id?: string | null
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          certification_id?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_messages_certification_id_fkey"
+            columns: ["certification_id"]
+            isOneToOne: false
+            referencedRelation: "certifications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       certifications: {
         Row: {
           chapters: Json
@@ -58,6 +93,91 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      document_chunks: {
+        Row: {
+          chunk_index: number
+          content: string
+          created_at: string
+          document_id: string
+          embedding: string | null
+          id: string
+          user_id: string
+        }
+        Insert: {
+          chunk_index: number
+          content: string
+          created_at?: string
+          document_id: string
+          embedding?: string | null
+          id?: string
+          user_id: string
+        }
+        Update: {
+          chunk_index?: number
+          content?: string
+          created_at?: string
+          document_id?: string
+          embedding?: string | null
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "document_chunks_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "library_documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      library_documents: {
+        Row: {
+          certification_id: string | null
+          chunk_count: number
+          created_at: string
+          error: string | null
+          id: string
+          kind: string
+          name: string
+          status: string
+          storage_path: string
+          user_id: string
+        }
+        Insert: {
+          certification_id?: string | null
+          chunk_count?: number
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind?: string
+          name: string
+          status?: string
+          storage_path: string
+          user_id: string
+        }
+        Update: {
+          certification_id?: string | null
+          chunk_count?: number
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind?: string
+          name?: string
+          status?: string
+          storage_path?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "library_documents_certification_id_fkey"
+            columns: ["certification_id"]
+            isOneToOne: false
+            referencedRelation: "certifications"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       module_progress: {
         Row: {
@@ -214,7 +334,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      match_document_chunks: {
+        Args: { match_count?: number; query_embedding: string }
+        Returns: {
+          content: string
+          document_id: string
+          id: string
+          similarity: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

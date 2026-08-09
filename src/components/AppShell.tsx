@@ -3,6 +3,7 @@ import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   BookMarked,
   Brain,
+  Bot,
   CalendarRange,
   Check,
   ChevronsLeft,
@@ -36,10 +37,11 @@ const navItems = [
   { to: "/dashboard", label: "Programme", icon: Home },
   { to: "/planning", label: "Mon planning", icon: CalendarRange },
   { to: "/quiz", label: "Quiz", icon: Brain },
+  { to: "/assistant", label: "Assistant IA", icon: Bot },
   { to: "/references", label: "Références ISO", icon: BookMarked },
   { to: "/glossaire", label: "Glossaire", icon: SpellCheck },
   { to: "/annexes", label: "Annexes", icon: ListChecks },
-  { to: "/bibliotheque", label: "Ma bibliothèque", icon: Library },
+  { to: "/bibliotheque", label: "Mes documents", icon: Library },
   { to: "/certifications", label: "Mes certifications", icon: GraduationCap },
   { to: "/parametres", label: "Paramètres", icon: Settings },
 ];
@@ -48,7 +50,7 @@ const mobileItems = [
   { to: "/dashboard", label: "Accueil", icon: Home },
   { to: "/planning", label: "Planning", icon: CalendarRange },
   { to: "/quiz", label: "Quiz", icon: Brain },
-  { to: "/references", label: "Références", icon: BookMarked },
+  { to: "/assistant", label: "Assistant", icon: Bot },
   { to: "/bibliotheque", label: "Docs", icon: Library },
 ];
 

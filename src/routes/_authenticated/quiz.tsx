@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Brain, RotateCcw, Sparkles } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
+import { AiQuizGenerator } from "@/components/AiQuizGenerator";
 import { useCurriculum } from "@/lib/curriculum";
 import type { QuizItem } from "@/data/program";
 import { Button } from "@/components/ui/button";
@@ -81,6 +82,10 @@ function QuizPage() {
           réponse attendue, puis évaluez-vous honnêtement.
         </p>
 
+        <div className="mt-8">
+          <AiQuizGenerator certificationName={certificationName} />
+        </div>
+
         {total === 0 ? (
           <Card className="mt-8">
             <CardHeader>
@@ -153,8 +158,8 @@ function QuizPage() {
                 <Progress value={score} />
                 <p className="flex items-start gap-2 rounded-lg border border-dashed border-border p-3 text-xs text-muted-foreground">
                   <Sparkles className="mt-0.5 size-4 shrink-0 text-cert" aria-hidden />
-                  Prochaine étape : l'analyse IA s'appuiera sur vos documents de cours pour générer
-                  des questions inédites et diagnostiquer vos chapitres faibles.
+                  Complétez cette auto-évaluation avec les questions générées par l'IA à partir de
+                  vos documents de cours indexés dans la bibliothèque.
                 </p>
               </CardContent>
             </Card>
