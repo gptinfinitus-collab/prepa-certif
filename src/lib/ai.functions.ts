@@ -27,9 +27,10 @@ export const ingestDocument = createServerFn({ method: "POST" })
       const file = await supabase.storage.from("iso-library").download(doc.storage_path);
       if (file.error || !file.data) throw new Error("Fichier illisible dans la bibliothèque.");
 
-      const text = await extractDocumentText(doc.name, await file.data.arrayBuffer());
-      const chunks = chunkText(text);
+      const extracted = await extractDocumentText(doc.name, await file.data.arrayBuffer());
+      const chunks = chunkText(extracted.text);
       if (chunks.length === 0) throw new Error("Aucun texte exploitable trouvé dans ce document.");
+
 
       await supabase.from("document_chunks").delete().eq("document_id", doc.id);
 
@@ -55,7 +56,12 @@ export const ingestDocument = createServerFn({ method: "POST" })
         .update({ status: "ready", chunk_count: inserted, error: null })
         .eq("id", doc.id);
 
-      return { chunkCount: inserted };
+      return {
+        chunkCount: inserted,
+        removedLines: extracted.removedLines,
+        pageCount: extracted.pageCount,
+      };
+
     } catch (cause) {
       const message = cause instanceof Error ? cause.message : "Analyse impossible.";
       await supabase

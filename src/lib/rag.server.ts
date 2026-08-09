@@ -71,17 +71,91 @@ export async function chatComplete(
   return payload.choices[0]?.message.content ?? "";
 }
 
-/** Extrait le texte brut d'un document téléversé. */
-export async function extractDocumentText(name: string, bytes: ArrayBuffer): Promise<string> {
+const WATERMARK_PATTERNS: RegExp[] = [
+  /iteh/i,
+  /standard\s*preview/i,
+  /standards\.iteh\.ai/i,
+  /document\s*preview/i,
+  /^\(?preview\)?$/i,
+  /https?:\/\/standards\./i,
+  /full\s*standard\b.*\bpreview/i,
+];
+
+function normalizeLine(line: string): string {
+  return line.replace(/\s+/g, " ").trim();
+}
+
+export interface CleanedText {
+  text: string;
+  pageCount: number;
+  removedLines: number;
+}
+
+/**
+ * Retire les filigranes et les lignes récurrentes (en-têtes, pieds de page,
+ * numéros de page) d'un document extrait page par page.
+ */
+export function stripWatermarks(pages: string[]): CleanedText {
+  const pageLines = pages.map((p) => p.split(/\r?\n/).map(normalizeLine));
+  const pageCount = pages.length;
+
+  // Lignes courtes répétées sur une large proportion des pages = bruit d'habillage.
+  const occurrences = new Map<string, number>();
+  for (const lines of pageLines) {
+    for (const line of new Set(lines)) {
+      if (!line || line.length > 120) continue;
+      occurrences.set(line, (occurrences.get(line) ?? 0) + 1);
+    }
+  }
+  const threshold = Math.max(3, Math.ceil(pageCount * 0.5));
+  const recurring = new Set(
+    [...occurrences.entries()].filter(([, n]) => pageCount >= 4 && n >= threshold).map(([l]) => l),
+  );
+
+  let removedLines = 0;
+  const kept: string[] = [];
+  for (const lines of pageLines) {
+    for (const line of lines) {
+      if (!line) {
+        kept.push("");
+        continue;
+      }
+      const isNoise =
+        recurring.has(line) ||
+        /^\d{1,4}$/.test(line) ||
+        /^page\s+\d+(\s*(\/|sur|of)\s*\d+)?$/i.test(line) ||
+        WATERMARK_PATTERNS.some((re) => re.test(line));
+      if (isNoise) {
+        removedLines += 1;
+        continue;
+      }
+      kept.push(line);
+    }
+    kept.push("");
+  }
+
+  const text = kept
+    .join("\n")
+    .replace(/([a-zà-ÿ,;:])-\n([a-zà-ÿ])/g, "$1$2")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+
+  return { text, pageCount, removedLines };
+}
+
+/** Extrait le texte brut d'un document téléversé, filigranes retirés. */
+export async function extractDocumentText(name: string, bytes: ArrayBuffer): Promise<CleanedText> {
   const lower = name.toLowerCase();
   if (lower.endsWith(".pdf")) {
     const { extractText, getDocumentProxy } = await import("unpdf");
     const pdf = await getDocumentProxy(new Uint8Array(bytes));
-    const { text } = await extractText(pdf, { mergePages: true });
-    return Array.isArray(text) ? (text as string[]).join("\n") : (text as string);
+    const { text } = await extractText(pdf, { mergePages: false });
+    const pages = Array.isArray(text) ? (text as string[]) : [text as string];
+    return stripWatermarks(pages);
   }
   if (lower.endsWith(".txt") || lower.endsWith(".md") || lower.endsWith(".csv")) {
-    return new TextDecoder().decode(bytes);
+    const decoded = new TextDecoder().decode(bytes);
+    return stripWatermarks([decoded]);
   }
   throw new Error("Format non analysable : convertissez le document en PDF, TXT ou Markdown.");
 }
@@ -95,12 +169,14 @@ export function chunkText(text: string, size = 1400, overlap = 200): string[] {
   while (start < clean.length) {
     const end = Math.min(start + size, clean.length);
     const slice = clean.slice(start, end).trim();
-    if (slice.length > 40) chunks.push(slice);
+    // Ignore les segments sans contenu réellement exploitable.
+    if (slice.replace(/[^\p{L}\p{N}]/gu, "").length > 60) chunks.push(slice);
     if (end === clean.length) break;
     start = end - overlap;
   }
   return chunks.slice(0, 400);
 }
+
 
 interface Passage {
   content: string;

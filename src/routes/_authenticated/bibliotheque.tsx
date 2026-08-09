@@ -71,9 +71,21 @@ function Bibliotheque() {
   const analyse = useMutation({
     mutationFn: async (documentId: string) => ingest({ data: { documentId } }),
     onSuccess: (result) => {
-      toast.success(`Document indexé : ${result.chunkCount} extraits disponibles pour l'IA.`);
+      const cleaned =
+        result.removedLines > 0
+          ? ` Filigrane et habillage retirés (${result.removedLines} lignes).`
+          : "";
+      toast.success(
+        `Document indexé : ${result.chunkCount} extraits disponibles pour l'IA.${cleaned}`,
+      );
+      if (result.pageCount > 3 && result.chunkCount < 5) {
+        toast.warning(
+          "Ce fichier semble n'être qu'un extrait de prévisualisation : peu de contenu exploitable a été trouvé.",
+        );
+      }
       void queryClient.invalidateQueries({ queryKey: ["library_documents"] });
     },
+
     onError: (error: Error) => {
       toast.error(error.message);
       void queryClient.invalidateQueries({ queryKey: ["library_documents"] });
