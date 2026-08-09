@@ -43,12 +43,17 @@ const genericAnnexes = {
 
 /** Cursus complet ISO 45001 (contenu rédigé). */
 function iso45001Curriculum(): Curriculum {
+  const leadWeekId = Math.max(...iso45001Program.weeks.map((w) => w.id)) + 1;
+  const leadModules = leadAuditorModules("ISO 45001:2018", leadWeekId);
   return {
     complete: true,
     title: iso45001Program.meta.title,
     subtitle: iso45001Program.meta.subtitle,
-    weeks: iso45001Program.weeks,
-    modules: iso45001Program.modules,
+    weeks: [
+      ...iso45001Program.weeks,
+      { id: leadWeekId, title: "Lead Auditor", dayIds: leadModules.map((m) => m.id) },
+    ],
+    modules: [...iso45001Program.modules, ...leadModules],
     glossary: iso45001Program.glossary,
     annexes: iso45001Program.annexes,
     references: [
