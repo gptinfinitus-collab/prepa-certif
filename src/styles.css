@@ -415,6 +415,7 @@
 @media (prefers-reduced-motion: reduce) {
   .page-enter,
   .page-enter::before,
+  .page-enter::after,
   .page-enter > * > * {
     animation: none;
   }
