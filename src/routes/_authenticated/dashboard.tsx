@@ -11,6 +11,9 @@ import { typeLabels } from "@/data/program";
 import { buildSchedule, scheduleByModuleId, computePace, formatShortDate } from "@/lib/schedule";
 import { useProgress, useStudyPlan } from "@/lib/queries";
 import { useCurriculum } from "@/lib/curriculum";
+import { useActiveTrack } from "@/lib/learning";
+import { filterModulesByTrack, getTrack } from "@/lib/tracks";
+import { LeadAuditorNotice, TrackSwitcher } from "@/components/TrackSwitcher";
 import { CheckCircle2, Circle, CalendarClock, PenLine } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
@@ -39,7 +42,11 @@ function Dashboard() {
   const { data: progress = [] } = useProgress();
   const { data: profile } = useProfile();
   const { curriculum, certificationName } = useCurriculum();
-  const modules = curriculum.modules;
+  const { track } = useActiveTrack();
+  const trackDefinition = getTrack(track);
+  const modules = filterModulesByTrack(curriculum.modules, track);
+
+
 
   const completedIds = new Set(progress.filter((p) => p.completed).map((p) => p.module_id));
   const schedule = plan ? buildSchedule(plan, modules) : null;
@@ -110,6 +117,14 @@ function Dashboard() {
             : "Configurez votre planning pour dater vos séances."}
         </p>
 
+        <div className="mt-5 rounded-xl border border-border bg-card p-4">
+          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            Niveau de parcours — {trackDefinition.name}
+          </p>
+          <TrackSwitcher className="mt-3" />
+          <LeadAuditorNotice />
+        </div>
+
         {!curriculum.complete ? (
           <div className="mt-6 flex flex-wrap items-center gap-3 rounded-lg border border-border bg-secondary/40 px-4 py-3">
             <PenLine className="size-4 shrink-0 text-primary" aria-hidden />
@@ -176,7 +191,9 @@ function Dashboard() {
         </div>
 
         <div className="mt-10 space-y-8">
-          {curriculum.weeks.map((week) => (
+          {curriculum.weeks
+            .filter((week) => week.dayIds.some((id) => modules.some((m) => m.id === id)))
+            .map((week) => (
             <section key={week.id}>
               <h2 className="font-serif text-xl font-semibold">{week.title}</h2>
               <ul className="mt-3 divide-y divide-border rounded-lg border border-border bg-card">

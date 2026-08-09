@@ -1,29 +1,46 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useMemo, useState } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { z } from "zod";
 import { AppShell } from "@/components/AppShell";
-import { MarkdownView } from "@/components/MarkdownView";
-import { Quiz } from "@/components/Quiz";
+import { LessonBlocks } from "@/components/course/LessonBlocks";
+import { LessonQuiz } from "@/components/course/LessonQuiz";
+import { CourseProgressBar, SectionNav } from "@/components/course/SectionNav";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { typeLabels } from "@/data/program";
 import { useProgress, useSetModuleProgress } from "@/lib/queries";
+import {
+  useLessonNote,
+  useLessonProgress,
+  useRecordTopicMastery,
+  useSaveLessonNote,
+  useSaveLessonProgress,
+} from "@/lib/learning";
 import { useCurriculum } from "@/lib/curriculum";
+import { buildLessonSections, lessonReadingMinutes } from "@/lib/lesson-sections";
 import { toast } from "sonner";
-import { ArrowLeft, ArrowRight, CheckCircle2, Lightbulb } from "lucide-react";
+import { ArrowLeft, ArrowRight, Clock, List, MessageCircleQuestion, NotebookPen } from "lucide-react";
+
+const searchSchema = z.object({
+  section: z.string().optional(),
+});
 
 export const Route = createFileRoute("/_authenticated/seance/$moduleId")({
+  validateSearch: searchSchema,
   head: () => ({
     meta: [
       { title: "Séance de préparation — PREPA CERTIF" },
       {
         name: "description",
         content:
-          "Séance de préparation : exigences du chapitre, points à retenir et auto-évaluation.",
+          "Cours séquencé : comprendre, exemples, regard de l'auditeur, point examen, mise en situation et quiz.",
       },
       { property: "og:title", content: "Séance de préparation — PREPA CERTIF" },
       {
         property: "og:description",
-        content: "Exigences du chapitre, points clés et auto-évaluation.",
+        content: "Cours découpé en étapes courtes, avec flashcards et quiz de fin de séance.",
       },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary" },
@@ -42,12 +59,59 @@ export const Route = createFileRoute("/_authenticated/seance/$moduleId")({
 
 function Seance() {
   const { moduleId } = Route.useParams();
+  const { section: sectionParam } = Route.useSearch();
+  const navigate = useNavigate();
   const id = Number(moduleId);
   const { curriculum } = useCurriculum();
   const modules = curriculum.modules;
   const module = modules.find((m) => m.id === id);
+
   const { data: progress = [] } = useProgress();
   const setProgress = useSetModuleProgress();
+  const { data: lessonProgress } = useLessonProgress(id);
+  const saveLessonProgress = useSaveLessonProgress();
+  const recordMastery = useRecordTopicMastery();
+  const { data: note = "" } = useLessonNote(id);
+  const saveNote = useSaveLessonNote(id);
+
+  const [readIds, setReadIds] = useState<string[]>([]);
+  const [noteDraft, setNoteDraft] = useState("");
+  const [noteOpen, setNoteOpen] = useState(false);
+
+  const sections = useMemo(() => (module ? buildLessonSections(module) : []), [module]);
+  const currentId =
+    sectionParam && sections.some((s) => s.id === sectionParam)
+      ? sectionParam
+      : (sections[0]?.id ?? "");
+  const currentIndex = Math.max(
+    0,
+    sections.findIndex((s) => s.id === currentId),
+  );
+  const current = sections[currentIndex];
+
+  useEffect(() => {
+    if (lessonProgress?.sections_read) setReadIds(lessonProgress.sections_read);
+  }, [lessonProgress?.sections_read]);
+
+  useEffect(() => {
+    setNoteDraft(note);
+  }, [note]);
+
+  // Marque automatiquement la section affichée comme lue.
+  useEffect(() => {
+    if (!module || !currentId) return;
+    if (readIds.includes(currentId)) return;
+    const next = [...readIds, currentId];
+    setReadIds(next);
+    saveLessonProgress.mutate({
+      moduleId: id,
+      sectionsRead: next,
+      currentSection: currentId,
+      quizSubmitted: lessonProgress?.quiz_submitted ?? false,
+      completed: lessonProgress?.completed ?? false,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentId, module?.id]);
 
   if (!module) {
     return (
@@ -64,92 +128,209 @@ function Seance() {
     );
   }
 
+  const requiredIds = sections.filter((s) => s.required).map((s) => s.id);
+  const readRequired = requiredIds.filter((sid) => readIds.includes(sid)).length;
+  const quizSection = sections.find((s) => s.kind === "quiz");
+  const quizSubmitted = lessonProgress?.quiz_submitted ?? false;
+  const allRequiredRead = readRequired === requiredIds.length;
+  const canComplete = allRequiredRead && (!quizSection || quizSubmitted);
   const done = progress.some((p) => p.module_id === id && p.completed);
-  const index = modules.findIndex((m) => m.id === id);
-  const previous = index > 0 ? modules[index - 1] : undefined;
-  const next = index < modules.length - 1 ? modules[index + 1] : undefined;
+  const percent = requiredIds.length ? (readRequired / requiredIds.length) * 100 : 0;
 
+  const goTo = (sid: string) => {
+    void navigate({
+      to: "/seance/$moduleId",
+      params: { moduleId },
+      search: { section: sid },
+    });
+  };
+
+  const previousSection = sections[currentIndex - 1];
+  const nextSection = sections[currentIndex + 1];
+  const moduleIndex = modules.findIndex((m) => m.id === id);
+  const nextModule = modules[moduleIndex + 1];
+
+  const markComplete = () => {
+    setProgress.mutate(
+      { moduleId: id, completed: !done },
+      {
+        onSuccess: () => toast.success(done ? "Séance rouverte." : "Séance terminée."),
+      },
+    );
+    saveLessonProgress.mutate({
+      moduleId: id,
+      sectionsRead: readIds,
+      currentSection: currentId,
+      quizSubmitted,
+      completed: !done,
+    });
+  };
+
+  const nav = (
+    <SectionNav sections={sections} currentId={currentId} readIds={readIds} onSelect={goTo} />
+  );
 
   return (
     <AppShell title="Séance">
-      <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
-        <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-          <Link to="/dashboard" className="hover:text-foreground">
-            Programme
-          </Link>
-          <span>/</span>
-          <span>{module.dayLabel}</span>
-          <Badge variant="secondary">{typeLabels[module.type]}</Badge>
-        </div>
-
-        <h1 className="mt-3 font-serif text-2xl font-semibold leading-tight sm:text-3xl">{module.title}</h1>
-        <p className="mt-3 rounded-md border-l-2 border-primary bg-secondary/50 p-3 text-sm">
-          <strong className="font-medium">Objectif :</strong> {module.objective}
-        </p>
-
-        <article className="mt-8">
-          <MarkdownView>{module.contentMarkdown}</MarkdownView>
-        </article>
-
-        {module.keyTakeaway ? (
-          <Card className="mt-8 border-accent/60 bg-accent/10">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 font-serif text-base">
-                <Lightbulb className="size-4" aria-hidden />À retenir
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-sm">{module.keyTakeaway}</CardContent>
-          </Card>
-        ) : null}
-
-        {module.quiz.length > 0 ? (
-          <section className="mt-10">
-            <h2 className="font-serif text-xl font-semibold">Auto-évaluation</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Répondez mentalement ou par écrit, puis comparez avec la réponse attendue.
+      <div className="mx-auto flex w-full max-w-6xl gap-8 px-4 py-6 md:py-10">
+        <aside className="hidden w-60 shrink-0 lg:block">
+          <div className="sticky top-6 space-y-3">
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Sommaire
             </p>
-            <div className="mt-4">
-              <Quiz items={module.quiz} />
-            </div>
-          </section>
-        ) : null}
-
-        <div className="mt-10 flex flex-wrap items-center gap-3 border-t border-border pt-6">
-          <Button
-            variant={done ? "secondary" : "default"}
-            disabled={setProgress.isPending}
-            onClick={() =>
-              setProgress.mutate(
-                { moduleId: id, completed: !done },
-                {
-                  onSuccess: () =>
-                    toast.success(done ? "Séance rouverte." : "Séance marquée comme terminée."),
-                  onError: () => toast.error("Impossible d'enregistrer la progression."),
-                },
-              )
-            }
-          >
-            <CheckCircle2 className="size-4" aria-hidden />
-            {done ? "Terminée — annuler" : "Marquer comme terminée"}
-          </Button>
-          <div className="ml-auto flex gap-2">
-            {previous ? (
-              <Button asChild variant="outline" size="sm">
-                <Link to="/seance/$moduleId" params={{ moduleId: String(previous.id) }}>
-                  <ArrowLeft className="size-4" aria-hidden />
-                  Précédente
-                </Link>
-              </Button>
-            ) : null}
-            {next ? (
-              <Button asChild variant="outline" size="sm">
-                <Link to="/seance/$moduleId" params={{ moduleId: String(next.id) }}>
-                  Suivante
-                  <ArrowRight className="size-4" aria-hidden />
-                </Link>
-              </Button>
-            ) : null}
+            {nav}
           </div>
+        </aside>
+
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+            <Link to="/dashboard" className="hover:text-foreground">
+              Programme
+            </Link>
+            <span>/</span>
+            <span>{module.dayLabel}</span>
+            <Badge variant="secondary">{typeLabels[module.type]}</Badge>
+            <span className="flex items-center gap-1">
+              <Clock className="size-3" aria-hidden />
+              {lessonReadingMinutes(module)} min
+            </span>
+          </div>
+
+          <h1 className="mt-3 text-2xl font-semibold leading-tight sm:text-3xl">{module.title}</h1>
+
+          <div className="sticky top-0 z-10 -mx-4 mt-4 bg-background/95 px-4 py-3 backdrop-blur">
+            <CourseProgressBar value={percent} />
+            <div className="mt-2 flex items-center justify-between gap-2 text-xs text-muted-foreground">
+              <span>
+                Étape {currentIndex + 1} / {sections.length} — {readRequired}/{requiredIds.length}{" "}
+                sections lues
+              </span>
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="sm" className="lg:hidden">
+                    <List className="size-4" aria-hidden />
+                    Sommaire
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-72 overflow-y-auto p-4">
+                  <SheetHeader className="p-0">
+                    <SheetTitle className="text-sm">Sommaire du cours</SheetTitle>
+                  </SheetHeader>
+                  <div className="mt-4">{nav}</div>
+                </SheetContent>
+              </Sheet>
+            </div>
+          </div>
+
+          {current ? (
+            <section className="mt-6" aria-labelledby="section-title">
+              <h2 id="section-title" className="text-xl font-semibold">
+                {current.title}
+              </h2>
+              <div className="mt-4">
+                {current.kind === "quiz" && quizSection ? (
+                  <LessonQuiz
+                    items={module.quiz}
+                    submitted={quizSubmitted}
+                    onSubmit={(result) => {
+                      saveLessonProgress.mutate({
+                        moduleId: id,
+                        sectionsRead: readIds,
+                        currentSection: currentId,
+                        quizSubmitted: true,
+                        completed: done,
+                      });
+                      recordMastery.mutate(
+                        Array.from({ length: result.total }, (_, i) => ({
+                          topic: module.title,
+                          correct: i < result.correct,
+                        })),
+                      );
+                      toast.success("Quiz enregistré.");
+                    }}
+                  />
+                ) : (
+                  <LessonBlocks blocks={current.blocks} moduleId={id} />
+                )}
+              </div>
+            </section>
+          ) : null}
+
+          <div className="mt-8 flex flex-wrap items-center gap-2 border-t border-border pt-6">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={!previousSection}
+              onClick={() => previousSection && goTo(previousSection.id)}
+            >
+              <ArrowLeft className="size-4" aria-hidden />
+              Précédent
+            </Button>
+            {nextSection ? (
+              <Button size="sm" onClick={() => goTo(nextSection.id)}>
+                Continuer
+                <ArrowRight className="size-4" aria-hidden />
+              </Button>
+            ) : (
+              <Button size="sm" variant={done ? "secondary" : "default"} onClick={markComplete} disabled={!canComplete && !done}>
+                {done ? "Rouvrir la séance" : "Terminer la séance"}
+              </Button>
+            )}
+
+            <Button variant="ghost" size="sm" onClick={() => setNoteOpen((v) => !v)}>
+              <NotebookPen className="size-4" aria-hidden />
+              Ma note
+            </Button>
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/assistant">
+                <MessageCircleQuestion className="size-4" aria-hidden />
+                Demander à l'IA
+              </Link>
+            </Button>
+          </div>
+
+          {!canComplete && !done ? (
+            <p className="mt-3 text-xs text-muted-foreground">
+              La séance sera marquée terminée une fois toutes les sections parcourues et le quiz
+              validé.
+            </p>
+          ) : null}
+
+          {noteOpen ? (
+            <div className="mt-6 space-y-2">
+              <label htmlFor="lesson-note" className="text-sm font-medium">
+                Note personnelle
+              </label>
+              <Textarea
+                id="lesson-note"
+                value={noteDraft}
+                onChange={(e) => setNoteDraft(e.target.value)}
+                rows={5}
+                placeholder="Vos remarques, points à revoir, questions à poser…"
+              />
+              <Button
+                size="sm"
+                disabled={saveNote.isPending}
+                onClick={() =>
+                  saveNote.mutate(noteDraft, { onSuccess: () => toast.success("Note enregistrée.") })
+                }
+              >
+                Enregistrer la note
+              </Button>
+            </div>
+          ) : null}
+
+          {nextModule ? (
+            <div className="mt-8 border-t border-border pt-6">
+              <Link
+                to="/seance/$moduleId"
+                params={{ moduleId: String(nextModule.id) }}
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
+                Séance suivante : {nextModule.title}
+              </Link>
+            </div>
+          ) : null}
         </div>
       </div>
     </AppShell>
