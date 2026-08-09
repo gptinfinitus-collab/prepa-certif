@@ -13,13 +13,13 @@ import { LogOut, Moon, CalendarRange } from "lucide-react";
 export const Route = createFileRoute("/_authenticated/parametres")({
   head: () => ({
     meta: [
-      { title: "Paramètres — PREPA IRCA 45001" },
+      { title: "Paramètres — PREPA ISO" },
       {
         name: "description",
         content:
-          "Gérez votre profil, votre photo, votre prénom et nom, et activez le mode sombre bleu nuit de PREPA IRCA 45001.",
+          "Gérez votre profil, votre photo, votre prénom et nom, et activez le mode sombre bleu nuit de PREPA ISO.",
       },
-      { property: "og:title", content: "Paramètres — PREPA IRCA 45001" },
+      { property: "og:title", content: "Paramètres — PREPA ISO" },
       { property: "og:description", content: "Profil, apparence et préférences d'étude." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

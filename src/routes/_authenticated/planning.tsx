@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Toggle } from "@/components/ui/toggle";
 import { toast } from "sonner";
-import { modules } from "@/data/program";
+import { useCurriculum } from "@/lib/curriculum";
 import {
   buildSchedule,
   dayNames,
@@ -21,34 +21,36 @@ import { useSaveStudyPlan, useStudyPlan } from "@/lib/queries";
 export const Route = createFileRoute("/_authenticated/planning")({
   head: () => ({
     meta: [
-      { title: "Mon planning — PREPA IRCA 45001" },
+      { title: "Mon planning — PREPA ISO" },
       {
         name: "description",
         content:
-          "Définissez la durée de votre préparation IRCA ISO 45001 : date de début, date d'examen, jours travaillés et séances par jour.",
+          "Définissez la durée de votre préparation ISO : date de début, date d'examen, jours travaillés et séances par jour.",
       },
-      { property: "og:title", content: "Mon planning — PREPA IRCA 45001" },
+      { property: "og:title", content: "Mon planning — PREPA ISO" },
       {
         property: "og:description",
-        content: "Un calendrier de préparation ISO 45001 entièrement configurable.",
+        content: "Un calendrier de préparation à la certification entièrement configurable.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
   }),
+
   component: Planning,
 });
 
 function Planning() {
   const { data: saved } = useStudyPlan();
   const save = useSaveStudyPlan();
+  const { curriculum, certificationName } = useCurriculum();
   const [plan, setPlan] = useState<StudyPlan>(defaultPlan);
 
   useEffect(() => {
     if (saved) setPlan(saved);
   }, [saved]);
 
-  const schedule = buildSchedule(plan);
+  const schedule = buildSchedule(plan, curriculum.modules);
 
   function toggleDay(value: number) {
     setPlan((prev) => ({
@@ -64,10 +66,11 @@ function Planning() {
       <div className="mx-auto max-w-6xl px-4 py-6 md:py-10">
         <h1 className="font-serif text-3xl font-semibold">Mon planning</h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-          La préparation n'a pas de durée imposée : les {modules.length} séances se répartissent
-          automatiquement sur les jours que vous choisissez, jusqu'à votre date d'examen le cas
-          échéant.
+          La préparation n'a pas de durée imposée : les {curriculum.modules.length} séances de{" "}
+          {certificationName} se répartissent automatiquement sur les jours que vous choisissez,
+          jusqu'à votre date d'examen le cas échéant.
         </p>
+
 
         <div className="mt-8 grid gap-6 lg:grid-cols-[380px_1fr]">
           <Card className="h-fit">

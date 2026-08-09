@@ -1,36 +1,34 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
 import { MarkdownView } from "@/components/MarkdownView";
 import { Quiz } from "@/components/Quiz";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getModule, modules, typeLabels } from "@/data/program";
+import { typeLabels } from "@/data/program";
 import { useProgress, useSetModuleProgress } from "@/lib/queries";
+import { useCurriculum } from "@/lib/curriculum";
 import { toast } from "sonner";
 import { ArrowLeft, ArrowRight, CheckCircle2, Lightbulb } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/seance/$moduleId")({
-  head: ({ params }) => {
-    const module = getModule(Number(params.moduleId));
-    const title = module ? `${module.title} — PREPA IRCA 45001` : "Séance — PREPA IRCA 45001";
-    const description = module?.objective ?? "Séance de préparation à l'audit ISO 45001.";
-    return {
-      meta: [
-        { title },
-        { name: "description", content: description.slice(0, 155) },
-        { property: "og:title", content: title },
-        { property: "og:description", content: description.slice(0, 155) },
-        { property: "og:type", content: "article" },
-        { name: "twitter:card", content: "summary" },
-      ],
-    };
-  },
-  loader: ({ params }) => {
-    const module = getModule(Number(params.moduleId));
-    if (!module) throw notFound();
-    return null;
-  },
+  head: () => ({
+    meta: [
+      { title: "Séance de préparation — PREPA ISO" },
+      {
+        name: "description",
+        content:
+          "Séance de préparation : exigences du chapitre, points à retenir et auto-évaluation.",
+      },
+      { property: "og:title", content: "Séance de préparation — PREPA ISO" },
+      {
+        property: "og:description",
+        content: "Exigences du chapitre, points clés et auto-évaluation.",
+      },
+      { property: "og:type", content: "article" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
   errorComponent: () => (
     <div className="p-10 text-center text-sm text-muted-foreground">
       Cette séance n'a pas pu être chargée.
@@ -45,16 +43,32 @@ export const Route = createFileRoute("/_authenticated/seance/$moduleId")({
 function Seance() {
   const { moduleId } = Route.useParams();
   const id = Number(moduleId);
-  const module = getModule(id);
+  const { curriculum } = useCurriculum();
+  const modules = curriculum.modules;
+  const module = modules.find((m) => m.id === id);
   const { data: progress = [] } = useProgress();
   const setProgress = useSetModuleProgress();
 
-  if (!module) return null;
+  if (!module) {
+    return (
+      <AppShell title="Séance">
+        <div className="mx-auto max-w-3xl px-4 py-16 text-center">
+          <p className="text-sm text-muted-foreground">
+            Cette séance n'existe pas dans le cursus de la certification active.
+          </p>
+          <Button asChild className="mt-4" size="sm">
+            <Link to="/dashboard">Revenir au programme</Link>
+          </Button>
+        </div>
+      </AppShell>
+    );
+  }
 
   const done = progress.some((p) => p.module_id === id && p.completed);
   const index = modules.findIndex((m) => m.id === id);
   const previous = index > 0 ? modules[index - 1] : undefined;
   const next = index < modules.length - 1 ? modules[index + 1] : undefined;
+
 
   return (
     <AppShell title="Séance">

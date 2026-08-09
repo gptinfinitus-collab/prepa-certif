@@ -2,21 +2,21 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Quiz } from "@/components/Quiz";
-import { program } from "@/data/program";
+import { useCurriculum } from "@/lib/curriculum";
 
 export const Route = createFileRoute("/annexes")({
   head: () => ({
     meta: [
-      { title: "Annexes et trames d'audit — PREPA IRCA 45001" },
+      { title: "Annexes et trames d'audit — PREPA ISO" },
       {
         name: "description",
         content:
-          "Trame de plan d'audit, fiche de non-conformité, checklist générique et examen blanc final pour préparer la certification IRCA ISO 45001.",
+          "Trame de plan d'audit, fiche de non-conformité, checklist générique et examen blanc pour préparer votre certification ISO.",
       },
-      { property: "og:title", content: "Annexes — PREPA IRCA 45001" },
+      { property: "og:title", content: "Annexes et trames d'audit — PREPA ISO" },
       {
         property: "og:description",
-        content: "Trames opérationnelles et examen blanc pour la certification IRCA ISO 45001.",
+        content: "Trames opérationnelles et examen blanc pour votre certification ISO.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -26,7 +26,9 @@ export const Route = createFileRoute("/annexes")({
 });
 
 function Annexes() {
-  const { annexes } = program;
+  const { curriculum } = useCurriculum();
+  const { annexes } = curriculum;
+
   return (
     <AppShell title="Annexes">
       <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
@@ -82,13 +84,23 @@ function Annexes() {
 
         <section className="mt-10">
           <h2 className="font-serif text-2xl font-semibold">Examen blanc final</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Traitez les questions en conditions réelles avant d'afficher les réponses.
-          </p>
-          <div className="mt-4">
-            <Quiz items={annexes.finalMockExam.mcq} />
-          </div>
+          {annexes.finalMockExam.mcq.length > 0 ? (
+            <>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Traitez les questions en conditions réelles avant d'afficher les réponses.
+              </p>
+              <div className="mt-4">
+                <Quiz items={annexes.finalMockExam.mcq} />
+              </div>
+            </>
+          ) : (
+            <p className="mt-1 text-sm text-muted-foreground">
+              Aucun examen blanc rédigé pour ce référentiel pour le moment : appuyez-vous sur les
+              résumés par chapitre et sur vos propres documents.
+            </p>
+          )}
         </section>
+
       </div>
     </AppShell>
   );

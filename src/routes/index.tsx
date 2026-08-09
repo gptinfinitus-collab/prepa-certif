@@ -2,23 +2,24 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppHeader } from "@/components/AppHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { program, modules } from "@/data/program";
+import { program } from "@/data/program";
+import { standardSpecs } from "@/data/standards";
 import { CalendarRange, BookOpenCheck, ClipboardList, Library } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "PREPA IRCA 45001 — Préparation à l'audit SMSST ISO 45001" },
+      { title: "PREPA ISO — Préparez votre certification d'auditeur ISO" },
       {
         name: "description",
         content:
-          "Préparez la certification IRCA Responsable d'Audit ISO 45001:2018 : planning sur mesure, 21 séances de cours, quiz, examen blanc et suivi de progression.",
+          "Préparez les certifications ISO 9001, 14001, 45001, 27001, 22000 et plus : planning sur mesure, séances par chapitre, quiz, examen blanc et suivi de progression.",
       },
-      { property: "og:title", content: "PREPA IRCA 45001" },
+      { property: "og:title", content: "PREPA ISO — Préparez votre certification d'auditeur ISO" },
       {
         property: "og:description",
         content:
-          "Programme complet de préparation à la certification Responsable d'Audit SMSST ISO 45001:2018.",
+          "Une plateforme de préparation pour les principales normes ISO, avec planning configurable et suivi de progression.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -35,19 +36,28 @@ const features = [
   },
   {
     icon: BookOpenCheck,
-    title: "21 séances structurées",
-    text: "Cours, points clés, mises en pratique et révisions couvrant les chapitres 4 à 10 de l'ISO 45001 et la conduite d'audit selon l'ISO 19011.",
+    title: "Une préparation par norme",
+    text: "Chapitres 4 à 10 du référentiel choisi, exigences clés, méthodologie d'audit selon l'ISO 19011 et glossaire dédié.",
   },
   {
     icon: ClipboardList,
     title: "Quiz et examen blanc",
-    text: "Auto-évaluation à chaque séance, trames d'audit, fiches de non-conformité et examen blanc final.",
+    text: "Auto-évaluation à chaque séance, trames d'audit, fiches de non-conformité et examen blanc.",
   },
   {
     icon: Library,
     title: "Bibliothèque personnelle",
-    text: "Déposez vos exemplaires achetés des normes ISO dans un espace privé et chiffré, accessible pendant vos révisions.",
+    text: "Déposez vos exemplaires achetés des normes et vos documents de cours dans un espace privé, accessible pendant vos révisions.",
   },
+];
+
+const catalogue = [
+  { code: "ISO 45001:2018", label: "Santé et sécurité au travail", ready: true },
+  ...Object.values(standardSpecs).map((s) => ({
+    code: s.label,
+    label: s.subject.replace(/^l[ae'] ?/, ""),
+    ready: false,
+  })),
 ];
 
 function Home() {
@@ -58,36 +68,24 @@ function Home() {
         <section className="border-b border-border bg-secondary/40">
           <div className="mx-auto max-w-6xl px-4 py-16 sm:py-24">
             <p className="font-medium uppercase tracking-[0.18em] text-accent-foreground/80 text-xs">
-              Certification IRCA · ISO 45001:2018
+              Certifications d'auditeur · Normes ISO
             </p>
             <h1 className="mt-4 max-w-3xl font-serif text-4xl font-semibold leading-tight sm:text-5xl">
-              {program.meta.title}
+              Préparez votre certification ISO à votre rythme
             </h1>
             <p className="mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
-              {program.meta.subtitle}
+              Choisissez la norme que vous préparez, construisez votre planning, travaillez chapitre
+              par chapitre et suivez votre progression. Plusieurs certifications peuvent être
+              suivies en parallèle.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg">
-                <Link to="/planning">Construire mon planning</Link>
+                <Link to="/certifications">Choisir ma certification</Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link to="/dashboard">Voir le programme</Link>
+                <Link to="/dashboard">Voir mon programme</Link>
               </Button>
             </div>
-            <dl className="mt-12 grid max-w-2xl grid-cols-3 gap-6">
-              <div>
-                <dt className="text-xs uppercase tracking-wide text-muted-foreground">Séances</dt>
-                <dd className="font-serif text-3xl font-semibold">{modules.length}</dd>
-              </div>
-              <div>
-                <dt className="text-xs uppercase tracking-wide text-muted-foreground">Blocs</dt>
-                <dd className="font-serif text-3xl font-semibold">{program.weeks.length}</dd>
-              </div>
-              <div>
-                <dt className="text-xs uppercase tracking-wide text-muted-foreground">Termes au glossaire</dt>
-                <dd className="font-serif text-3xl font-semibold">{program.glossary.length}</dd>
-              </div>
-            </dl>
           </div>
         </section>
 
@@ -108,23 +106,23 @@ function Home() {
 
         <section className="border-t border-border bg-card">
           <div className="mx-auto max-w-6xl px-4 py-14">
-            <h2 className="font-serif text-2xl font-semibold">Déroulé du programme</h2>
-            <ol className="mt-6 space-y-4">
-              {program.weeks.map((week) => (
-                <li key={week.id} className="rounded-lg border border-border p-4">
-                  <p className="font-serif text-lg font-semibold">{week.title}</p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {week.dayIds.length} séances ·{" "}
-                    {week.dayIds
-                      .map((id) => modules.find((m) => m.id === id)?.title)
-                      .filter(Boolean)
-                      .slice(0, 3)
-                      .join(" · ")}
-                    {week.dayIds.length > 3 ? "…" : ""}
+            <h2 className="font-serif text-2xl font-semibold">Normes prises en charge</h2>
+            <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+              Le cursus rédigé complet est disponible pour l'ISO 45001. Les autres normes démarrent
+              avec leur squelette officiel : chapitres, exigences clés, glossaire et références. Un
+              référentiel personnalisé peut aussi être créé.
+            </p>
+            <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {catalogue.map((item) => (
+                <li key={item.code} className="rounded-lg border border-border p-4">
+                  <p className="font-serif text-base font-semibold">{item.code}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{item.label}</p>
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    {item.ready ? "Cursus complet disponible" : "Préparation libre"}
                   </p>
                 </li>
               ))}
-            </ol>
+            </ul>
           </div>
         </section>
 

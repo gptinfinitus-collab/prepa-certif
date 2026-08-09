@@ -7,11 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { modules, program, typeLabels } from "@/data/program";
+import { typeLabels } from "@/data/program";
 import { buildSchedule, scheduleByModuleId, computePace, formatShortDate } from "@/lib/schedule";
 import { useProgress, useStudyPlan } from "@/lib/queries";
-import { useActiveCertification } from "@/lib/certifications";
-import { CheckCircle2, Circle, CalendarClock } from "lucide-react";
+import { useCurriculum } from "@/lib/curriculum";
+import { CheckCircle2, Circle, CalendarClock, PenLine } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
@@ -38,66 +38,18 @@ function Dashboard() {
   const { data: plan } = useStudyPlan();
   const { data: progress = [] } = useProgress();
   const { data: profile } = useProfile();
-  const { certification } = useActiveCertification();
+  const { curriculum, certificationName } = useCurriculum();
+  const modules = curriculum.modules;
 
   const completedIds = new Set(progress.filter((p) => p.completed).map((p) => p.module_id));
-  const schedule = plan ? buildSchedule(plan) : null;
+  const schedule = plan ? buildSchedule(plan, modules) : null;
   const dates = schedule ? scheduleByModuleId(schedule) : new Map<number, Date>();
   const pace = schedule ? computePace(schedule, completedIds.size) : null;
-  const percent = Math.round((completedIds.size / modules.length) * 100);
+  const percent = modules.length
+    ? Math.round((completedIds.size / modules.length) * 100)
+    : 0;
   const next = modules.find((m) => !completedIds.has(m.id));
   const firstName = profile?.first_name?.trim() || profile?.display_name?.split(" ")[0] || "";
-
-  if (certification && !certification.has_curriculum) {
-    return (
-      <AppShell title={certification.name}>
-        <div className="mx-auto max-w-4xl px-4 py-6 md:py-10">
-          <h1 className="font-serif text-3xl font-semibold">{certification.name}</h1>
-          <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-            {certification.description}
-          </p>
-          <Card className="mt-6">
-            <CardHeader>
-              <CardTitle className="font-serif text-lg">Préparation libre</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                Le cursus rédigé de cette norme est en cours de préparation. En attendant, vous
-                pouvez organiser vos révisions chapitre par chapitre, déposer vos documents et
-                utiliser vos propres supports.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <Button asChild size="sm">
-                  <Link to="/planning">Organiser mon planning</Link>
-                </Button>
-                <Button asChild size="sm" variant="outline">
-                  <Link to="/bibliotheque">Déposer mes documents</Link>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          <section className="mt-8">
-            <h2 className="font-serif text-xl font-semibold">Chapitres de la norme</h2>
-            <ul className="mt-3 divide-y divide-border rounded-lg border border-border bg-card">
-              {certification.chapters.map((chapter) => (
-                <li key={chapter} className="flex items-center gap-3 px-4 py-3 text-sm">
-                  <Circle className="size-4 shrink-0 text-muted-foreground" aria-hidden />
-                  {chapter}
-                </li>
-              ))}
-              {certification.chapters.length === 0 && (
-                <li className="px-4 py-3 text-sm text-muted-foreground">
-                  Aucun chapitre renseigné pour ce référentiel.
-                </li>
-              )}
-            </ul>
-          </section>
-        </div>
-      </AppShell>
-    );
-  }
-
 
   return (
     <AppShell title="Mon programme">
@@ -147,15 +99,27 @@ function Dashboard() {
           </p>
         </section>
 
-        <h1 className="hidden font-serif text-3xl font-semibold md:block">Mon programme</h1>
+        <h1 className="hidden font-serif text-3xl font-semibold md:block">{certificationName}</h1>
         <p className="mt-2 hidden text-sm text-muted-foreground md:block">
           {schedule?.endDate
             ? `Fin estimée le ${formatShortDate(schedule.endDate)} · ${schedule.effectiveModulesPerDay} séance(s) par jour travaillé`
             : "Configurez votre planning pour dater vos séances."}
         </p>
 
-        <div className="mt-6 hidden gap-4 sm:grid-cols-3 md:grid">
+        {!curriculum.complete ? (
+          <div className="mt-6 flex flex-wrap items-center gap-3 rounded-lg border border-border bg-secondary/40 px-4 py-3">
+            <PenLine className="size-4 shrink-0 text-primary" aria-hidden />
+            <p className="flex-1 text-sm text-muted-foreground">
+              Cursus rédigé en cours de préparation : vous travaillez ici à partir des chapitres
+              officiels du référentiel, de la méthodologie d'audit et de vos propres documents.
+            </p>
+            <Button asChild size="sm" variant="outline">
+              <Link to="/bibliotheque">Ajouter mes documents</Link>
+            </Button>
+          </div>
+        ) : null}
 
+        <div className="mt-6 hidden gap-4 sm:grid-cols-3 md:grid">
           <Card>
             <CardHeader>
               <CardTitle className="text-sm font-medium text-muted-foreground">Progression</CardTitle>
@@ -208,7 +172,7 @@ function Dashboard() {
         </div>
 
         <div className="mt-10 space-y-8">
-          {program.weeks.map((week) => (
+          {curriculum.weeks.map((week) => (
             <section key={week.id}>
               <h2 className="font-serif text-xl font-semibold">{week.title}</h2>
               <ul className="mt-3 divide-y divide-border rounded-lg border border-border bg-card">

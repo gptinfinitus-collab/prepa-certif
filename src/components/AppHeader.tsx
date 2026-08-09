@@ -33,7 +33,7 @@ export function AppHeader() {
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
         <Link to="/" className="flex items-center gap-2">
           <ShieldCheck className="size-5 text-primary" aria-hidden />
-          <span className="font-serif text-base font-semibold tracking-tight">PREPA IRCA 45001</span>
+          <span className="font-serif text-base font-semibold tracking-tight">PREPA ISO</span>
         </Link>
         <nav className="flex flex-1 flex-wrap items-center gap-x-4 gap-y-1 text-sm">
           {navItems.map((item) => (
