@@ -11,6 +11,8 @@ import {
   Home,
   Library,
   ListChecks,
+  Menu,
+  MoreHorizontal,
   PanelLeft,
   PanelLeftClose,
   Plus,
@@ -18,6 +20,7 @@ import {
   ShieldCheck,
   SpellCheck,
 } from "lucide-react";
+
 import { useSession } from "@/lib/queries";
 import { useMyCertifications, useSetActiveCertification } from "@/lib/certifications";
 import { Button } from "@/components/ui/button";
