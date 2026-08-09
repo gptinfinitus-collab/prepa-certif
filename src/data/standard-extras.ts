@@ -585,27 +585,56 @@ const overrides: Record<string, Overrides> = {
   },
 
   "iso-13485": {
-    "8": {
+    "4": {
+      examFocus: [
+        "ISO 13485:2016 ne suit pas la structure harmonisée en 10 chapitres : elle conserve la structure en 8 chapitres (4 Système de management de la qualité, 5 Responsabilité de la direction, 6 Management des ressources, 7 Réalisation du produit, 8 Mesure, analyse et amélioration).",
+        "Le chapitre 4 exige un manuel qualité et un dossier du dispositif médical par type ou famille de dispositifs : deux documents que les autres normes n'imposent pas.",
+      ],
+      flashcards: [
+        fc("Quelle est la structure d'ISO 13485:2016 ?", "Huit chapitres, dont 4 à 8 sont normatifs : système de management de la qualité, responsabilité de la direction, management des ressources, réalisation du produit, mesure, analyse et amélioration."),
+      ],
+    },
+    "5": {
+      examFocus: [
+        "Le chapitre 5 s'intitule « Responsabilité de la direction », pas « Leadership » : ISO 13485 maintient l'exigence d'un représentant de la direction nommé (§5.5.2), supprimée dans les normes à structure harmonisée.",
+        "La politique et les objectifs qualité doivent intégrer explicitement les exigences réglementaires applicables au dispositif et aux marchés visés.",
+      ],
+      flashcards: [
+        fc("ISO 13485 exige-t-elle un représentant de la direction ?", "Oui : le §5.5.2 impose de nommer un membre de la direction chargé du système qualité et du reporting à la direction, contrairement à ISO 9001:2015."),
+      ],
+    },
+    "6": {
+      examFocus: [
+        "Le chapitre 6 d'ISO 13485 est « Management des ressources » : il ne contient pas d'exigence « risques et opportunités » au sens de la structure harmonisée. La gestion des risques produit relève du §7.1 et d'ISO 14971.",
+        "La maîtrise de la contamination et l'environnement de travail (§6.4) sont des exigences propres aux dispositifs stériles ou sensibles.",
+      ],
+    },
+    "7": {
       examples: [
         ex("Dispositifs médicaux", "Le dossier du dispositif regroupe spécifications, résultats de vérification et de validation, et l'historique des modifications : la traçabilité est démontrée."),
         ex("Dispositifs médicaux", "Une modification de fournisseur de composant stérile est réalisée sans revalidation : la maîtrise des modifications est défaillante."),
       ],
       examFocus: [
         "Vérification et validation sont deux étapes distinctes : la vérification confirme la conformité aux spécifications, la validation confirme l'aptitude à l'usage prévu.",
-        "ISO 13485 privilégie l'efficacité documentée et la conformité réglementaire ; l'amélioration continue y est moins centrale que dans ISO 9001.",
+        "La gestion des risques (ISO 14971) est exigée tout au long de la réalisation du produit, au §7.1.",
       ],
       flashcards: [
         fc("Vérification ou validation ?", "La vérification prouve que le produit est conforme aux spécifications. La validation prouve qu'il répond à l'usage prévu par l'utilisateur."),
         fc("Qu'est-ce que le dossier du dispositif médical ?", "L'ensemble des documents démontrant la conformité du dispositif aux exigences applicables tout au long de son cycle de vie."),
       ],
     },
-    "9": {
+    "8": {
       examples: [
         ex("Dispositifs médicaux", "Les réclamations sont analysées sous 48 h et évaluées au regard des obligations de vigilance : l'exigence réglementaire est intégrée."),
         ex("Dispositifs médicaux", "Une réclamation grave est traitée comme une réclamation ordinaire, sans évaluation de la nécessité de notifier l'autorité compétente."),
       ],
+      examFocus: [
+        "ISO 13485 privilégie l'efficacité documentée et la conformité réglementaire ; l'amélioration continue y est moins centrale que dans ISO 9001.",
+        "Le chapitre 8 conserve les actions préventives (§8.5.3), disparues des normes à structure harmonisée.",
+      ],
     },
   },
+
 
   "iso-22301": {
     "8": {
