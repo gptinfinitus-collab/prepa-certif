@@ -58,8 +58,49 @@ const mobileItems = [
   { to: "/planning", label: "Planning", icon: CalendarRange },
   { to: "/quiz", label: "Quiz", icon: Brain },
   { to: "/assistant", label: "Assistant", icon: Bot },
-  { to: "/bibliotheque", label: "Docs", icon: Library },
 ];
+
+const linkClass = (active: boolean, collapsed: boolean) =>
+  cn(
+    "flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground",
+    collapsed && "justify-center px-0",
+    active &&
+      "bg-sidebar-primary/12 font-medium text-sidebar-primary hover:bg-sidebar-primary/16 hover:text-sidebar-primary",
+  );
+
+/** Liste de navigation partagée entre la barre latérale et le panneau mobile. */
+function NavLinks({
+  isActive,
+  collapsed = false,
+  onNavigate,
+}: {
+  isActive: (to: string) => boolean;
+  collapsed?: boolean;
+  onNavigate?: () => void;
+}) {
+  const isSuperAdmin = useIsSuperAdmin();
+  const items = isSuperAdmin
+    ? [...navItems, { to: "/admin", label: "Administration", icon: ShieldCheck }]
+    : navItems;
+
+  return (
+    <>
+      {items.map((item) => (
+        <Link
+          key={item.to}
+          to={item.to}
+          title={item.label}
+          onClick={onNavigate}
+          className={linkClass(isActive(item.to), collapsed)}
+        >
+          <item.icon className="size-4 shrink-0" aria-hidden />
+          {!collapsed && <span className="truncate">{item.label}</span>}
+        </Link>
+      ))}
+    </>
+  );
+}
+
 
 /** Sélecteur de certification active. */
 function CertificationSwitcher({ compact = false }: { compact?: boolean }) {
