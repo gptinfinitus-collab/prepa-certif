@@ -1,46 +1,34 @@
-# Refonte visuelle de la page de connexion (skill « admin-login-page »)
+# E-mails d'authentification en français, à la charte PREPA CERTIF
 
-Le skill s'appelle **admin-login-page**. On l'applique ici à la page publique `/auth` de PREPA CERTIF (pas de page admin séparée) : même mise en scène visuelle (halo lumineux, icônes flottantes, carte centrée), mais on garde la logique d'authentification existante.
+Aujourd'hui les e-mails (réinitialisation de mot de passe, confirmation d'inscription…) partent d'un expéditeur générique `no-reply@auth.lovable.cloud`, avec le nom « PREPA-45001 » et un contenu en anglais — d'où le classement en spam constaté.
 
-## Ce qui change
+## Ce qui sera fait
 
-1. **Fond animé** : 12 icônes Lucide thématiques « certification / qualité / audit » (ex. ShieldCheck, FileCheck2, ClipboardCheck, BookOpen, Award, BadgeCheck, Scale, Target, Recycle, Leaf, Lock, GraduationCap), positionnées en absolu, opacité 0.12, tailles 38–64 px, rotations variées.
-2. **Halo de marque** : deux dégradés radiaux flous empilés derrière la carte, dont un en pulsation douce, couleur dérivée du token de marque (donc automatiquement adaptée à la certification active et au mode sombre bleu nuit).
-3. **Carte** : centrée, `max-w-md`, ombre portée, bordure adoucie, au-dessus du décor.
-4. **En-tête** : logo BrandLogo agrandi, titre « PREPA CERTIF », sous-titre inchangé.
-5. **Boutons sociaux côte à côte** : Google et Apple sur une seule ligne (grille 2 colonnes), chacun avec son logo officiel (SVG Google multicolore, logo Apple monochrome) et un libellé court. Empilés seulement sur très petits écrans si nécessaire.
-6. **Œil afficher/masquer** : bouton dans le champ mot de passe (onglets Connexion et Création), icônes Eye / EyeOff, `aria-label` explicite.
-7. **Mot de passe oublié** : lien « Mot de passe oublié ? » sous le champ mot de passe en mode Connexion, ouvrant un écran de demande (saisie e-mail + envoi du lien de réinitialisation), avec message de confirmation neutre. Nouvelle page `/reset-password` publique permettant de définir le nouveau mot de passe puis de revenir connecté.
-8. **Contenu conservé** : séparateur « ou », onglets Connexion / Créer un compte, message de confirmation d'inscription. Ajout d'un bloc d'erreur inline (message + bouton « Réessayer »).
-9. **Responsive** : décor réduit sous 640 px pour éviter la surcharge sur mobile ; halo conservé.
+1. **Domaine d'envoi**
+   Configuration de l'envoi depuis le domaine du projet `prepa-certif.app` (sous-domaine d'envoi dédié, ex. `notify.prepa-certif.app`). Cette étape passe par l'assistant de configuration d'e-mail : je l'affiche à la fin de ce plan, tu le valides, et la vérification DNS se fait automatiquement. Résultat : expéditeur du type « PREPA CERTIF <no-reply@prepa-certif.app> », meilleure délivrabilité, moins de spam.
+
+2. **Modèles d'e-mails personnalisés (6 types)**
+   Création des gabarits pour : confirmation d'inscription, lien magique, réinitialisation de mot de passe, invitation, changement d'adresse e-mail, ré-authentification.
+
+3. **Rédaction 100 % française**
+   Objets et contenus réécrits en français, ton sobre et professionnel. Exemple pour la réinitialisation :
+   - Objet : « Réinitialisation de votre mot de passe — PREPA CERTIF »
+   - Corps : « Vous avez demandé la réinitialisation de votre mot de passe. Cliquez sur le bouton ci-dessous pour en choisir un nouveau. Ce lien expire dans 1 heure. Si vous n'êtes pas à l'origine de cette demande, ignorez cet e-mail. »
+   - Bouton : « Choisir un nouveau mot de passe »
+
+4. **Charte graphique**
+   Reprise de l'identité de l'app : logo PREPA CERTIF en en-tête, couleur d'accent bleu nuit du thème, typographie proche d'Inter (polices sûres en e-mail), bouton arrondi à la couleur primaire, pied de page avec le nom de l'éditeur et les liens vers les mentions légales / politique de confidentialité (contenus déjà présents dans l'app).
+
+5. **Nom d'expéditeur**
+   Remplacement de « PREPA-45001 » par « PREPA CERTIF » partout.
 
 ## Détails techniques
 
-- Fichiers : `src/routes/auth.tsx` (refonte visuelle + œil + lien mot de passe oublié), nouveau `src/routes/reset-password.tsx` (route publique, `ssr: false`, `head()` propre), petit composant d'icônes de marque pour les logos Google/Apple.
-- Mot de passe oublié : `supabase.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + "/reset-password" })` ; la page de réinitialisation appelle `supabase.auth.updateUser({ password })` puis redirige vers le tableau de bord.
-- Aucune modification de la logique OAuth Lovable existante ni des redirections actuelles.
-- Le projet utilise des tokens OKLCH dans `src/styles.css` : le halo utilisera `color-mix(in oklab, var(--primary) X%, transparent)`, et un token `--glow` sera ajouté (clair + sombre) avec repli sur `--primary`.
-- Aucune couleur en dur (hors couleurs officielles du logo Google) : tokens sémantiques uniquement.
-- Validation Zod des champs e-mail / mot de passe (longueur min. 6, format e-mail) avant appel réseau, erreurs affichées sous les champs.
-- Vérification visuelle finale en mode clair et mode sombre.
+- Génération des gabarits React Email dans `src/lib/email-templates/` + route webhook d'authentification, via l'outil de scaffolding Lovable.
+- Styles inline dérivés des jetons OKLCH de `src/styles.css` (fond du corps blanc, accents à la couleur primaire).
+- Informations éditeur reprises de `src/lib/legal.ts` (nom, e-mail de contact, URL du site).
+- Aucune migration de base de données, aucune file d'attente : l'envoi est géré par l'infrastructure e-mail Lovable.
 
-## Documents légaux
+## Prérequis à valider par toi
 
-Quatre pages publiques (SSR, indexables, avec `head()` propre : titre, description, og:title, og:description, canonical) :
-
-- `/cgu` — Conditions générales d'utilisation : objet du service, création de compte, usage autorisé, contenus déposés par l'utilisateur (documents de cours), propriété intellectuelle (les textes ISO restent la propriété de l'ISO — usage strictement personnel), limitation de responsabilité (outil de préparation, aucune garantie de réussite ni affiliation avec l'ISO ou IRCA), suspension/résiliation, droit applicable.
-- `/confidentialite` — Politique de confidentialité (RGPD) : responsable de traitement, données collectées (compte, profil, documents importés, historique de quiz et de conversations IA), finalités et bases légales, sous-traitants (hébergement/base de données, fournisseur de modèles IA), durées de conservation, droits (accès, rectification, effacement, portabilité, opposition) et adresse de contact, transferts hors UE, sécurité.
-- `/cookies` — Politique de cookies : cookies strictement nécessaires (session d'authentification, préférence de thème), absence de traceurs publicitaires.
-- `/mentions-legales` — Mentions légales : éditeur, directeur de publication, contact, hébergeur.
-
-Intégration :
-
-- Un fichier partagé `src/lib/legal.ts` centralise les informations de l'éditeur (nom, e-mail de contact, hébergeur, date de dernière mise à jour) pour éviter la duplication.
-- Un composant `LegalPage` commun (mise en page lisible `prose`, titre, date de mise à jour, retour à l'accueil) utilisé par les quatre routes.
-- Liens vers CGU / Confidentialité sous la carte de connexion, avec mention « En créant un compte, vous acceptez les CGU et la politique de confidentialité ».
-- Liens légaux également accessibles depuis la page Paramètres.
-- Ajout des quatre URLs au sitemap si un sitemap existe.
-
-Informations à confirmer (des valeurs génériques seront mises en place à défaut) : raison sociale ou nom de l'éditeur, adresse, e-mail de contact RGPD, et nom du directeur de publication.
-
-
+La configuration du domaine d'envoi (étape 1) nécessite ta validation dans l'assistant. Les e-mails deviennent actifs une fois la vérification DNS terminée (jusqu'à quelques heures) ; les gabarits peuvent être créés en attendant.
