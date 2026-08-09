@@ -58,6 +58,8 @@ export function AssistantChat({ threadId }: { threadId: string }) {
   const [streamed, setStreamed] = useState("");
   const [busy, setBusy] = useState(false);
   const [input, setInput] = useState("");
+  const [historyOpen, setHistoryOpen] = useState(false);
+
   const bottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
