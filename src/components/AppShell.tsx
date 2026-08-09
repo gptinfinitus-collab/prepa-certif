@@ -141,6 +141,9 @@ function useCertificationGuard() {
 
 export function AppShell({ children, title }: { children: ReactNode; title?: string }) {
   const [collapsed, setCollapsed] = useState(false);
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.innerWidth < 1024) setCollapsed(true);
+  }, []);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isActive = (to: string) => pathname === to || pathname.startsWith(`${to}/`);
   const activeMobile = mobileItems.some((i) => isActive(i.to));

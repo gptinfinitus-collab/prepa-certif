@@ -128,18 +128,18 @@ export function AssistantChat({ threadId }: { threadId: string }) {
   }
 
   return (
-    <div className="mx-auto grid w-full min-w-0 max-w-6xl gap-6 px-4 py-6 md:grid-cols-[220px_minmax(0,1fr)] md:py-10 lg:grid-cols-[240px_minmax(0,1fr)]">
+    <div className="mx-auto grid w-full min-w-0 max-w-6xl gap-6 px-4 py-6 md:py-10 lg:grid-cols-[240px_minmax(0,1fr)]">
       <aside className="flex min-w-0 flex-col gap-2">
         <Button onClick={startThread} disabled={createThread.isPending} className="w-full">
           <MessageSquarePlus className="size-4" aria-hidden />
           Nouvelle conversation
         </Button>
-        <nav className="-mx-1 flex max-w-full gap-2 overflow-x-auto px-1 pb-1 md:mx-0 md:flex-col md:overflow-visible md:px-0">
+        <nav className="-mx-1 flex max-w-full gap-2 overflow-x-auto px-1 pb-1 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0">
           {(threads.data ?? []).map((thread) => (
             <div
               key={thread.id}
               className={cn(
-                "flex w-[190px] shrink-0 items-center gap-1 rounded-lg border border-border px-1 md:w-auto md:shrink",
+                "flex w-[190px] shrink-0 items-center gap-1 rounded-lg border border-border px-1 lg:w-auto lg:shrink",
                 thread.id === threadId ? "bg-secondary" : "bg-card",
               )}
             >
@@ -260,7 +260,7 @@ function Bubble({
       </span>
       <div
         className={cn(
-          "min-w-0 max-w-[calc(100%-2.75rem)] rounded-xl border border-border px-3 py-3 text-sm leading-relaxed sm:max-w-[85%] sm:px-4",
+          "min-w-0 max-w-[calc(100%-2.75rem)] rounded-xl border border-border px-3 py-3 text-sm leading-relaxed sm:px-4 lg:max-w-[85%]",
           role === "user" ? "bg-secondary" : "bg-card",
         )}
       >
