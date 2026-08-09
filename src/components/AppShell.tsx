@@ -34,11 +34,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { UserMenu } from "@/components/UserMenu";
 import { BrandLogo } from "@/components/BrandLogo";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { certificationAccentStyle } from "@/lib/cert-theme";
 import { useIsSuperAdmin } from "@/lib/admin";
 
 const navItems = [
+
   { to: "/dashboard", label: "Programme", icon: Home },
   { to: "/planning", label: "Mon planning", icon: CalendarRange },
   { to: "/quiz", label: "Quiz", icon: Brain },
