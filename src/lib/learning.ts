@@ -47,6 +47,41 @@ export function useSetActiveTrack() {
   });
 }
 
+/* ------------------------------------------------------ Organisme d'examen */
+
+export function useExamBody() {
+  const query = useQuery({
+    queryKey: ["exam_body"],
+    queryFn: async (): Promise<ExamBodyId | null> => {
+      const { data: userData } = await supabase.auth.getUser();
+      if (!userData.user) return null;
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("exam_body")
+        .eq("id", userData.user.id)
+        .maybeSingle();
+      if (error) throw error;
+      return isExamBodyId(data?.exam_body) ? data.exam_body : null;
+    },
+  });
+  return { examBody: query.data ?? null, isLoading: query.isLoading };
+}
+
+export function useSetExamBody() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (examBody: ExamBodyId | null) => {
+      const user = await requireUser();
+      const { error } = await supabase
+        .from("profiles")
+        .upsert({ id: user.id, exam_body: examBody }, { onConflict: "id" });
+      if (error) throw error;
+      return examBody;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["exam_body"] }),
+  });
+}
+
 /* --------------------------------------------------------- Progression fine */
 
 export interface LessonProgress {
