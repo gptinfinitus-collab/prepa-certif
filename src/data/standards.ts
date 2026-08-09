@@ -302,9 +302,13 @@ export const standardSpecs: Record<string, StandardSpec> = {
       extra: {
         8: [
           "8.2 Programmes prérequis (PRP)",
-          "8.5 Analyse des dangers, PRP opérationnels et plan HACCP (CCP, limites critiques)",
+          "8.3 Système de traçabilité",
+          "8.4 Préparation et réponse aux situations d'urgence",
+          "8.5 Maîtrise des dangers : analyse des dangers, PRP opérationnels et plan HACCP (CCP, limites critiques)",
+          "8.6 Mise à jour des informations relatives aux PRP et au plan de maîtrise des dangers",
           "8.7 Maîtrise de la surveillance et du mesurage",
-          "8.9 Maîtrise des non-conformités produit, retraits et rappels",
+          "8.8 Vérification liée aux PRP et au plan de maîtrise des dangers",
+          "8.9 Maîtrise des non-conformités : corrections, actions correctives, retraits et rappels",
         ],
       },
     }),
