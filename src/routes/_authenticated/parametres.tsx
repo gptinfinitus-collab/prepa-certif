@@ -8,6 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { useTheme } from "@/components/theme-provider";
 import { supabase } from "@/integrations/supabase/client";
+import { legalDocuments } from "@/lib/legal";
 import { LogOut, Moon, CalendarRange } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/parametres")({
@@ -123,6 +124,20 @@ function Parametres() {
                 <LogOut className="size-4" aria-hidden />
                 Se déconnecter
               </Button>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="font-serif text-lg">Documents légaux</CardTitle>
+              <CardDescription>Conditions, confidentialité et informations éditeur.</CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-wrap gap-2">
+              {legalDocuments.map((doc) => (
+                <Button key={doc.slug} asChild size="sm" variant="outline">
+                  <Link to={doc.path}>{doc.title}</Link>
+                </Button>
+              ))}
             </CardContent>
           </Card>
         </div>
