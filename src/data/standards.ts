@@ -73,7 +73,6 @@ function hlsClauses(input: HlsInput): ClauseSpec[] {
       summary: `Planifier les actions face aux ${riskTerm} et aux opportunités, fixer des objectifs mesurables et planifier les modifications.`,
       requirements: [
         `6.1 Actions à mettre en œuvre face aux ${riskTerm} et opportunités`,
-        "6.1 Exigences légales et autres exigences applicables",
         "6.2 Objectifs et planification des actions pour les atteindre",
         "6.3 Planification des modifications du système",
         ...(extra[6] ?? []),
@@ -95,11 +94,9 @@ function hlsClauses(input: HlsInput): ClauseSpec[] {
     {
       clause: "8. Réalisation des activités opérationnelles",
       title: "Maîtrise opérationnelle",
-      summary: `Planifier, mettre en œuvre et maîtriser les processus nécessaires pour satisfaire les exigences, y compris les processus externalisés et la gestion des situations particulières liées à ${subject}.`,
+      summary: `Planifier, mettre en œuvre et maîtriser les processus nécessaires pour satisfaire les exigences liées à ${subject}. Les sous-chapitres du chapitre 8 sont propres à chaque norme.`,
       requirements: [
         "8.1 Planification et maîtrise opérationnelles, critères des processus",
-        "8.1 Maîtrise des processus externalisés et des fournisseurs",
-        "8.2 Préparation et réponse aux situations d'urgence ou incidents",
         ...(extra[8] ?? []),
       ],
     },
