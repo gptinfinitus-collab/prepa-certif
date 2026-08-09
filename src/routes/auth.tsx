@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { ShieldCheck } from "lucide-react";
+import { BrandLogo } from "@/components/BrandLogo";
 
 const searchSchema = z.object({
   redirect: z.string().optional(),
@@ -114,7 +114,7 @@ function AuthPage() {
     <div className="flex min-h-screen items-center justify-center bg-secondary/40 px-4 py-12">
       <Card className="w-full max-w-md">
         <CardHeader className="items-center text-center">
-          <ShieldCheck className="size-6 text-primary" aria-hidden />
+          <BrandLogo className="size-8 text-primary" />
           <CardTitle className="font-serif text-2xl">PREPA ISO</CardTitle>
           <CardDescription>
             Connectez-vous pour retrouver votre planning et votre progression.

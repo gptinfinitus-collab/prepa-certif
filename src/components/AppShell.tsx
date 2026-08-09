@@ -15,7 +15,6 @@ import {
   ListChecks,
   Plus,
   Settings,
-  ShieldCheck,
   SpellCheck,
 } from "lucide-react";
 import { useSession } from "@/lib/queries";
@@ -30,6 +29,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { UserMenu } from "@/components/UserMenu";
+import { BrandLogo } from "@/components/BrandLogo";
 import { cn } from "@/lib/utils";
 import { certificationAccentStyle } from "@/lib/cert-theme";
 
@@ -169,7 +169,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
             collapsed && "flex-col justify-center gap-3 px-2",
           )}
         >
-          <ShieldCheck className="size-6 shrink-0 text-sidebar-primary" aria-hidden />
+          <BrandLogo className="size-7 shrink-0 text-sidebar-primary" />
           {!collapsed && (
             <Link to="/" className="min-w-0 flex-1">
               <span className="block truncate text-sm font-semibold leading-tight">PREPA ISO</span>
@@ -228,7 +228,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
         {/* Mobile header */}
         <header className="sticky top-0 z-30 border-b border-border bg-card/90 px-4 py-3 backdrop-blur md:hidden">
           <div className="flex items-center gap-3">
-            <ShieldCheck className="size-5 shrink-0 text-primary" aria-hidden />
+            <BrandLogo className="size-6 shrink-0 text-primary" />
             <span className="min-w-0 flex-1 truncate text-base font-semibold">PREPA ISO</span>
             <UserMenu />
           </div>
