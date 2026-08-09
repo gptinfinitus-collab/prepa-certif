@@ -22,7 +22,7 @@ export const Route = createFileRoute("/annexes")({
       { name: "twitter:card", content: "summary" },
     ],
   }),
-  component: Annexes;
+  component: Annexes,
 });
 
 function Annexes() {
