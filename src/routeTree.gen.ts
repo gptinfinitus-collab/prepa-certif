@@ -15,7 +15,6 @@ import { Route as AnnexesRouteImport } from './routes/annexes'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as GlossaireRouteImport } from './routes/glossaire'
 import { Route as ReferencesRouteImport } from './routes/references'
-import { Route as AuthenticatedAssistantRouteImport } from './routes/_authenticated/assistant'
 import { Route as AuthenticatedBibliothequeRouteImport } from './routes/_authenticated/bibliotheque'
 import { Route as AuthenticatedCertificationsRouteImport } from './routes/_authenticated/certifications'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
@@ -56,11 +55,6 @@ const ReferencesRoute = ReferencesRouteImport.update({
   id: '/references',
   path: '/references',
   getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedAssistantRoute = AuthenticatedAssistantRouteImport.update({
-  id: '/assistant',
-  path: '/assistant',
-  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedBibliothequeRoute =
   AuthenticatedBibliothequeRouteImport.update({
@@ -106,15 +100,15 @@ const ApiChatRoute = ApiChatRouteImport.update({
 } as any)
 const AuthenticatedAssistantIndexRoute =
   AuthenticatedAssistantIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => AuthenticatedAssistantRoute,
+    id: '/assistant/',
+    path: '/assistant/',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAssistantThreadIdRoute =
   AuthenticatedAssistantThreadIdRouteImport.update({
-    id: '/$threadId',
-    path: '/$threadId',
-    getParentRoute: () => AuthenticatedAssistantRoute,
+    id: '/assistant/$threadId',
+    path: '/assistant/$threadId',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedSeanceModuleIdRoute =
   AuthenticatedSeanceModuleIdRouteImport.update({
@@ -129,7 +123,6 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/glossaire': typeof GlossaireRoute
   '/references': typeof ReferencesRoute
-  '/assistant': typeof AuthenticatedAssistantRouteWithChildren
   '/bibliotheque': typeof AuthenticatedBibliothequeRoute
   '/certifications': typeof AuthenticatedCertificationsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -168,7 +161,6 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/glossaire': typeof GlossaireRoute
   '/references': typeof ReferencesRoute
-  '/_authenticated/assistant': typeof AuthenticatedAssistantRouteWithChildren
   '/_authenticated/bibliotheque': typeof AuthenticatedBibliothequeRoute
   '/_authenticated/certifications': typeof AuthenticatedCertificationsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -189,7 +181,6 @@ export interface FileRouteTypes {
     | '/auth'
     | '/glossaire'
     | '/references'
-    | '/assistant'
     | '/bibliotheque'
     | '/certifications'
     | '/dashboard'
@@ -227,7 +218,6 @@ export interface FileRouteTypes {
     | '/auth'
     | '/glossaire'
     | '/references'
-    | '/_authenticated/assistant'
     | '/_authenticated/bibliotheque'
     | '/_authenticated/certifications'
     | '/_authenticated/dashboard'
@@ -295,13 +285,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReferencesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/assistant': {
-      id: '/_authenticated/assistant'
-      path: '/assistant'
-      fullPath: '/assistant'
-      preLoaderRoute: typeof AuthenticatedAssistantRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/bibliotheque': {
       id: '/_authenticated/bibliotheque'
       path: '/bibliotheque'
@@ -360,17 +343,17 @@ declare module '@tanstack/react-router' {
     }
     '/_authenticated/assistant/': {
       id: '/_authenticated/assistant/'
-      path: '/'
+      path: '/assistant'
       fullPath: '/assistant/'
       preLoaderRoute: typeof AuthenticatedAssistantIndexRouteImport
-      parentRoute: typeof AuthenticatedAssistantRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/assistant/$threadId': {
       id: '/_authenticated/assistant/$threadId'
-      path: '/$threadId'
+      path: '/assistant/$threadId'
       fullPath: '/assistant/$threadId'
       preLoaderRoute: typeof AuthenticatedAssistantThreadIdRouteImport
-      parentRoute: typeof AuthenticatedAssistantRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/seance/$moduleId': {
       id: '/_authenticated/seance/$moduleId'
@@ -382,24 +365,7 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface AuthenticatedAssistantRouteChildren {
-  AuthenticatedAssistantThreadIdRoute: typeof AuthenticatedAssistantThreadIdRoute
-  AuthenticatedAssistantIndexRoute: typeof AuthenticatedAssistantIndexRoute
-}
-
-const AuthenticatedAssistantRouteChildren: AuthenticatedAssistantRouteChildren =
-  {
-    AuthenticatedAssistantThreadIdRoute: AuthenticatedAssistantThreadIdRoute,
-    AuthenticatedAssistantIndexRoute: AuthenticatedAssistantIndexRoute,
-  }
-
-const AuthenticatedAssistantRouteWithChildren =
-  AuthenticatedAssistantRoute._addFileChildren(
-    AuthenticatedAssistantRouteChildren,
-  )
-
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAssistantRoute: typeof AuthenticatedAssistantRouteWithChildren
   AuthenticatedBibliothequeRoute: typeof AuthenticatedBibliothequeRoute
   AuthenticatedCertificationsRoute: typeof AuthenticatedCertificationsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
@@ -407,11 +373,12 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPlanningRoute: typeof AuthenticatedPlanningRoute
   AuthenticatedProfilRoute: typeof AuthenticatedProfilRoute
   AuthenticatedQuizRoute: typeof AuthenticatedQuizRoute
+  AuthenticatedAssistantThreadIdRoute: typeof AuthenticatedAssistantThreadIdRoute
   AuthenticatedSeanceModuleIdRoute: typeof AuthenticatedSeanceModuleIdRoute
+  AuthenticatedAssistantIndexRoute: typeof AuthenticatedAssistantIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAssistantRoute: AuthenticatedAssistantRouteWithChildren,
   AuthenticatedBibliothequeRoute: AuthenticatedBibliothequeRoute,
   AuthenticatedCertificationsRoute: AuthenticatedCertificationsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
@@ -419,7 +386,9 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPlanningRoute: AuthenticatedPlanningRoute,
   AuthenticatedProfilRoute: AuthenticatedProfilRoute,
   AuthenticatedQuizRoute: AuthenticatedQuizRoute,
+  AuthenticatedAssistantThreadIdRoute: AuthenticatedAssistantThreadIdRoute,
   AuthenticatedSeanceModuleIdRoute: AuthenticatedSeanceModuleIdRoute,
+  AuthenticatedAssistantIndexRoute: AuthenticatedAssistantIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
