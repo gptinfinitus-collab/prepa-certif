@@ -61,7 +61,7 @@ export function splitMarkdownSections(markdown: string): { heading: string | nul
     const match = /^###\s+(.*)$/.exec(line.trim());
     if (match) {
       if (current.heading !== null || current.body.join("").trim().length > 0) parts.push(current);
-      current = { heading: match[1].trim(), body: [] };
+      current = { heading: (match[1] ?? "").trim(), body: [] };
     } else {
       current.body.push(line);
     }
