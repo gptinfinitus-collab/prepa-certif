@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { useActiveTrack, useExamBody } from "@/lib/learning";
 
 interface GeneratedQuestion {
   question: string;
