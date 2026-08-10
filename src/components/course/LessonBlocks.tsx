@@ -99,18 +99,60 @@ function ScenarioBlock({ scenario }: { scenario: LessonScenario }) {
 
 function FlashcardDeck({ moduleId, cards }: { moduleId: number; cards: Flashcard[] }) {
   const [index, setIndex] = useState(0);
-  const [flipped, setFlipped] = useState(false);
-  const { data: statuses = {} } = useFlashcardProgress(moduleId);
+  const [userAnswer, setUserAnswer] = useState("");
+  const [evaluated, setEvaluated] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const { data: progress = {} } = useFlashcardProgress(moduleId);
   const setStatus = useSetFlashcardStatus(moduleId);
+  const evaluate = useEvaluateFlashcardAnswer(moduleId);
+
   const card = cards[index];
   if (!card) return null;
   const cardKey = `${index}`;
-  const mastered = Object.values(statuses).filter((s) => s === "mastered").length;
+  const item = progress[cardKey];
+  const mastered = Object.values(progress).filter((p) => p.status === "mastered").length;
 
   const go = (next: number) => {
     setIndex((next + cards.length) % cards.length);
-    setFlipped(false);
+    setUserAnswer("");
+    setEvaluated(false);
+    setError(null);
   };
+
+  const handleEvaluate = async () => {
+    if (!userAnswer.trim()) return;
+    setError(null);
+    try {
+      await evaluate.mutateAsync({
+        cardKey,
+        question: card.front,
+        expectedAnswer: card.back,
+        userAnswer: userAnswer.trim(),
+      });
+      setEvaluated(true);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Erreur lors de l'évaluation.");
+    }
+  };
+
+  const handleManualFlip = () => {
+    setEvaluated(true);
+    setError(null);
+  };
+
+  const statusColor: Record<EvaluationStatus, string> = {
+    correct: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
+    partial: "bg-amber-500/10 text-amber-600 border-amber-500/20",
+    incorrect: "bg-rose-500/10 text-rose-600 border-rose-500/20",
+  };
+
+  const statusLabel: Record<EvaluationStatus, string> = {
+    correct: "Correct",
+    partial: "Partiel",
+    incorrect: "À retravailler",
+  };
+
+  const showBack = evaluated || item?.evaluationStatus;
 
   return (
     <div className="space-y-3">
@@ -120,38 +162,84 @@ function FlashcardDeck({ moduleId, cards }: { moduleId: number; cards: Flashcard
         </span>
         <span>{mastered} acquise(s)</span>
       </div>
-      <Card className="min-h-40 justify-center p-6 text-center">
+
+      <Card className="min-h-40 justify-center p-5 text-center">
         <p className="text-sm font-medium leading-relaxed">{card.front}</p>
-        {flipped ? (
+        {showBack ? (
           <p className="mt-3 border-t border-border pt-3 text-sm leading-relaxed text-muted-foreground">
             {card.back}
           </p>
         ) : null}
       </Card>
-      <div className="flex flex-wrap gap-2">
-        <Button variant="outline" size="sm" onClick={() => setFlipped((v) => !v)}>
-          {flipped ? "Masquer" : "Retourner"}
-        </Button>
-        <Button
-          variant="secondary"
-          size="sm"
-          onClick={() => {
-            setStatus.mutate({ cardKey, status: "again" });
-            go(index + 1);
-          }}
-        >
-          À revoir
-        </Button>
-        <Button
-          size="sm"
-          onClick={() => {
-            setStatus.mutate({ cardKey, status: "mastered" });
-            go(index + 1);
-          }}
-        >
-          Acquise
-        </Button>
-      </div>
+
+      {!showBack ? (
+        <div className="space-y-2">
+          <Textarea
+            value={userAnswer}
+            onChange={(e) => setUserAnswer(e.target.value)}
+            placeholder="Écrivez votre réponse ici..."
+            className="min-h-20 resize-none text-sm"
+          />
+          {error ? <p className="text-xs text-destructive">{error}</p> : null}
+          <div className="flex flex-wrap gap-2">
+            <Button
+              size="sm"
+              disabled={!userAnswer.trim() || evaluate.isPending}
+              onClick={handleEvaluate}
+            >
+              {evaluate.isPending ? (
+                <>
+                  <Loader2 className="mr-1 h-3.5 w-3.5 animate-spin" />
+                  Vérification...
+                </>
+              ) : (
+                "Vérifier ma réponse"
+              )}
+            </Button>
+            <Button variant="outline" size="sm" onClick={handleManualFlip}>
+              Voir la réponse
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {item?.evaluationStatus ? (
+            <div
+              className={cn(
+                "rounded-lg border px-3 py-2 text-sm",
+                statusColor[item.evaluationStatus],
+              )}
+            >
+              <p className="font-medium">{statusLabel[item.evaluationStatus]}</p>
+              {item.evaluationFeedback ? (
+                <p className="mt-1 text-xs opacity-90">{item.evaluationFeedback}</p>
+              ) : null}
+            </div>
+          ) : null}
+
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => {
+                setStatus.mutate({ cardKey, status: "again" });
+                go(index + 1);
+              }}
+            >
+              À revoir
+            </Button>
+            <Button
+              size="sm"
+              onClick={() => {
+                setStatus.mutate({ cardKey, status: "mastered" });
+                go(index + 1);
+              }}
+            >
+              Acquise
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
