@@ -57,7 +57,7 @@ function ShareOption({ label, icon, onClick, colorClass }: ShareOptionProps) {
     <button
       type="button"
       onClick={onClick}
-      className="group flex flex-col items-center gap-1.5 rounded-xl border border-border bg-card p-2 transition-all hover:border-primary/30 hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:gap-2 sm:p-3"
+      className="group flex min-w-0 flex-col items-center gap-1.5 rounded-xl border border-border bg-card p-2 transition-all hover:border-primary/30 hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:gap-2 sm:p-3"
     >
       <div
         className={cn(
