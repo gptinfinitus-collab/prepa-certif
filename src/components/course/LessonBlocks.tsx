@@ -3,16 +3,23 @@ import { MarkdownView } from "@/components/MarkdownView";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import type { ContentBlock } from "@/lib/lesson-sections";
 import type { Flashcard, LessonScenario } from "@/data/lesson-extras";
-import { useFlashcardProgress, useSetFlashcardStatus } from "@/lib/learning";
+import {
+  useFlashcardProgress,
+  useSetFlashcardStatus,
+  useEvaluateFlashcardAnswer,
+} from "@/lib/learning";
+import type { EvaluationStatus } from "@/lib/flashcards.functions";
 import {
   AlertTriangle,
   Briefcase,
   CheckCircle2,
   FileSearch,
   GraduationCap,
+  Loader2,
   Search,
   Target,
 } from "lucide-react";
