@@ -269,7 +269,8 @@ function Seance() {
               className="h-auto w-full flex-col gap-1 py-2 lg:h-9 lg:w-auto lg:flex-row lg:py-0"
             >
               <ArrowLeft className="size-4 shrink-0" aria-hidden />
-              <span className="text-[10px] leading-none lg:text-sm">Préc.</span>
+              <span className="text-[10px] leading-none lg:hidden">Préc.</span>
+              <span className="hidden lg:inline">Précédent</span>
             </Button>
             {nextSection ? (
               <Button
@@ -277,7 +278,8 @@ function Seance() {
                 onClick={() => goTo(nextSection.id)}
                 className="h-auto w-full flex-col gap-1 py-2 lg:h-9 lg:w-auto lg:flex-row lg:py-0"
               >
-                <span className="text-[10px] leading-none lg:text-sm">Continuer</span>
+                <span className="text-[10px] leading-none lg:hidden">Continuer</span>
+                <span className="hidden lg:inline">Continuer</span>
                 <ArrowRight className="size-4 shrink-0" aria-hidden />
               </Button>
             ) : (
@@ -288,8 +290,11 @@ function Seance() {
                 disabled={!canComplete && !done}
                 className="h-auto w-full flex-col gap-1 py-2 lg:h-9 lg:w-auto lg:flex-row lg:py-0"
               >
-                <span className="text-[10px] leading-none lg:text-sm">
+                <span className="text-[10px] leading-none lg:hidden">
                   {done ? "Rouvrir" : "Terminer"}
+                </span>
+                <span className="hidden lg:inline">
+                  {done ? "Rouvrir la séance" : "Terminer la séance"}
                 </span>
               </Button>
             )}
@@ -301,7 +306,8 @@ function Seance() {
               className="h-auto w-full flex-col gap-1 py-2 lg:h-9 lg:w-auto lg:flex-row lg:py-0"
             >
               <NotebookPen className="size-4 shrink-0" aria-hidden />
-              <span className="text-[10px] leading-none lg:text-sm">Note</span>
+              <span className="text-[10px] leading-none lg:hidden">Note</span>
+              <span className="hidden lg:inline">Ma note</span>
             </Button>
             <Button
               variant="ghost"
@@ -311,7 +317,8 @@ function Seance() {
             >
               <Link to="/assistant">
                 <MessageCircleQuestion className="size-4 shrink-0" aria-hidden />
-                <span className="text-[10px] leading-none lg:text-sm">IA</span>
+                <span className="text-[10px] leading-none lg:hidden">IA</span>
+                <span className="hidden lg:inline">Demander à l'IA</span>
               </Link>
             </Button>
           </div>
