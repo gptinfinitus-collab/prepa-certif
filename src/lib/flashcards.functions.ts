@@ -1,18 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
-import { generateText, Output, NoObjectGeneratedError } from "ai";
 import { z } from "zod";
+
+const GATEWAY = "https://ai.gateway.lovable.dev/v1";
+const EVAL_MODEL = "google/gemini-3.6-flash";
 
 const EvaluateInput = z.object({
   question: z.string().min(1),
   expectedAnswer: z.string().min(1),
   userAnswer: z.string().min(1),
-});
-
-const EvaluationSchema = z.object({
-  status: z.enum(["correct", "partial", "incorrect"]),
-  feedback: z.string().min(1),
 });
 
 export type EvaluationStatus = "correct" | "partial" | "incorrect";
@@ -31,9 +27,6 @@ export const evaluateFlashcardAnswer = createServerFn({ method: "POST" })
       throw new Error("Service IA indisponible.");
     }
 
-    const gateway = createLovableAiGatewayProvider(key);
-    const model = gateway("google/gemini-3.6-flash");
-
     const prompt = [
       "Tu évalues une réponse d'apprentissage par rapport à une réponse attendue.",
       "Sois pédagogue et concis (2 à 3 phrases maximum).",
@@ -41,6 +34,9 @@ export const evaluateFlashcardAnswer = createServerFn({ method: "POST" })
       "- 'correct' : la réponse saisie capture le sens essentiel de la réponse attendue, même avec des synonymes ou une formulation différente.",
       "- 'partial' : l'idée générale est présente mais il manque un élément important ou la formulation est imprécise.",
       "- 'incorrect' : la réponse est fausse, hors sujet ou ne reprend pas l'essentiel.",
+      "",
+      "Réponds UNIQUEMENT au format JSON suivant :",
+      '{"status": "correct|partial|incorrect", "feedback": "..."}',
       "",
       "Question :",
       data.question,
@@ -52,30 +48,67 @@ export const evaluateFlashcardAnswer = createServerFn({ method: "POST" })
       data.userAnswer,
     ].join("\n");
 
-    try {
-      const { output } = await generateText({
-        model,
-        output: Output.object({ schema: EvaluationSchema }),
-        prompt,
-      });
-      return output;
-    } catch (error) {
-      if (NoObjectGeneratedError.isInstance(error)) {
-        const fallback = parseFallbackEvaluation(error.text);
-        if (fallback) return fallback;
-      }
-      throw error;
+    const response = await fetch(`${GATEWAY}/chat/completions`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${key}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        model: EVAL_MODEL,
+        messages: [
+          { role: "system", content: "Tu es un évaluateur pédagogique. Tu réponds uniquement en JSON." },
+          { role: "user", content: prompt },
+        ],
+        temperature: 0.2,
+        response_format: { type: "json_object" },
+      }),
+    });
+
+    if (response.status === 429) {
+      throw new Error("Limite de requêtes IA atteinte, réessayez dans un instant.");
     }
+    if (response.status === 402) {
+      throw new Error("Crédits IA épuisés pour cet espace de travail.");
+    }
+    if (!response.ok) {
+      const detail = await response.text().catch(() => "");
+      throw new Error(`Réponse IA indisponible (${response.status}): ${detail.slice(0, 200)}`);
+    }
+
+    const payload = (await response.json()) as {
+      choices?: { message?: { content?: string } }[];
+    };
+    const content = payload.choices?.[0]?.message?.content ?? "";
+    const parsed = parseEvaluationJson(content);
+    if (!parsed) {
+      throw new Error("L'évaluation IA n'a pas pu être lue.");
+    }
+    return parsed;
   });
 
-function parseFallbackEvaluation(text: string): EvaluationResult | null {
-  const lower = text.toLowerCase();
-  let status: EvaluationStatus = "incorrect";
-  if (lower.includes('"status": "correct"') || lower.includes("'status': 'correct'")) {
-    status = "correct";
-  } else if (lower.includes('"status": "partial"') || lower.includes("'status': 'partial'")) {
-    status = "partial";
+function parseEvaluationJson(content: string): EvaluationResult | null {
+  try {
+    const parsed = JSON.parse(content) as Record<string, unknown>;
+    const status = parsed.status;
+    const feedback = parsed.feedback;
+    if (
+      (status === "correct" || status === "partial" || status === "incorrect") &&
+      typeof feedback === "string" &&
+      feedback.length > 0
+    ) {
+      return { status, feedback };
+    }
+  } catch {
+    // fallback regex
+    const statusMatch = /"status"\s*:\s*"(correct|partial|incorrect)"/.exec(content);
+    const feedbackMatch = /"feedback"\s*:\s*"([^"]*)"/.exec(content);
+    if (statusMatch) {
+      return {
+        status: statusMatch[1] as EvaluationStatus,
+        feedback: feedbackMatch?.[1] ?? "Évaluation indisponible.",
+      };
+    }
   }
-  const feedback = text.replace(/.*"feedback"\s*[:=]\s*["']?/s, "").replace(/["']?\s*\}?\s*$/s, "").trim();
-  return { status, feedback: feedback || "Évaluation indisponible." };
+  return null;
 }
