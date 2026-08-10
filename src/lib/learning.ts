@@ -213,21 +213,36 @@ export function useSaveLessonNote(moduleId: number) {
 
 export type FlashcardStatus = "again" | "mastered";
 
+export interface FlashcardProgressItem {
+  status: FlashcardStatus;
+  userAnswer: string | null;
+  evaluationStatus: EvaluationStatus | null;
+  evaluationFeedback: string | null;
+  evaluatedAt: string | null;
+}
+
 export function useFlashcardProgress(moduleId: number) {
   return useQuery({
     queryKey: ["flashcard_progress", moduleId],
-    queryFn: async (): Promise<Record<string, FlashcardStatus>> => {
+    queryFn: async (): Promise<Record<string, FlashcardProgressItem>> => {
       const { data: userData } = await supabase.auth.getUser();
       if (!userData.user) return {};
       const { data, error } = await supabase
         .from("user_flashcard_progress")
-        .select("card_key, status")
+        .select("card_key, status, user_answer, evaluation_status, evaluation_feedback, evaluated_at")
         .eq("user_id", userData.user.id)
         .eq("module_id", moduleId);
       if (error) throw error;
-      const map: Record<string, FlashcardStatus> = {};
+      const map: Record<string, FlashcardProgressItem> = {};
       for (const row of data ?? []) {
-        map[row.card_key] = row.status === "mastered" ? "mastered" : "again";
+        const status = row.status === "mastered" ? "mastered" : "again";
+        map[row.card_key] = {
+          status,
+          userAnswer: row.user_answer ?? null,
+          evaluationStatus: (row.evaluation_status as EvaluationStatus | null) ?? null,
+          evaluationFeedback: row.evaluation_feedback ?? null,
+          evaluatedAt: row.evaluated_at ?? null,
+        };
       }
       return map;
     },
@@ -252,6 +267,49 @@ export function useSetFlashcardStatus(moduleId: number) {
         { onConflict: "user_id,module_id,card_key" },
       );
       if (error) throw error;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["flashcard_progress", moduleId] }),
+  });
+}
+
+export function useEvaluateFlashcardAnswer(moduleId: number) {
+  const queryClient = useQueryClient();
+  const { certificationId } = useActiveCertification();
+  const evaluate = evaluateFlashcardAnswer;
+
+  return useMutation({
+    mutationFn: async (input: {
+      cardKey: string;
+      question: string;
+      expectedAnswer: string;
+      userAnswer: string;
+    }) => {
+      const user = await requireUser();
+      const evaluation: EvaluationResult = await evaluate({
+        data: {
+          question: input.question,
+          expectedAnswer: input.expectedAnswer,
+          userAnswer: input.userAnswer,
+        },
+      });
+
+      const { error } = await supabase.from("user_flashcard_progress").upsert(
+        {
+          user_id: user.id,
+          certification_id: certificationId ?? null,
+          module_id: moduleId,
+          card_key: input.cardKey,
+          status: evaluation.status === "correct" ? "mastered" : "again",
+          user_answer: input.userAnswer,
+          evaluation_status: evaluation.status,
+          evaluation_feedback: evaluation.feedback,
+          evaluated_at: new Date().toISOString(),
+          reviewed_at: new Date().toISOString(),
+        },
+        { onConflict: "user_id,module_id,card_key" },
+      );
+      if (error) throw error;
+      return evaluation;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["flashcard_progress", moduleId] }),
   });
