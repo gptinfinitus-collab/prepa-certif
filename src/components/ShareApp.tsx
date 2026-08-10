@@ -189,10 +189,10 @@ export function ShareApp() {
           )}
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex min-w-0 flex-col gap-2">
           <span className="text-xs font-medium text-muted-foreground">Aperçu du message</span>
-          <div className="flex items-center gap-2 rounded-lg border border-border bg-muted p-3">
-            <p className="flex-1 truncate text-sm text-foreground">{SHARE_MESSAGE}</p>
+          <div className="flex min-w-0 items-center gap-2 rounded-lg border border-border bg-muted p-3">
+            <p className="min-w-0 flex-1 truncate text-sm text-foreground">{SHARE_MESSAGE}</p>
             <Button variant="ghost" size="icon" onClick={() => void copyLink()} aria-label="Copier le lien">
               {copied ? (
                 <Check className="size-4 text-green-500" aria-hidden />
