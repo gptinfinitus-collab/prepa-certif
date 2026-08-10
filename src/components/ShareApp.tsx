@@ -154,7 +154,7 @@ export function ShareApp() {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="grid grid-cols-3 gap-2 py-4 sm:grid-cols-5 sm:gap-3">
+        <div className="grid grid-cols-2 gap-2 py-4 sm:grid-cols-5 sm:gap-3">
           <ShareOption
             label="WhatsApp"
             icon={<WhatsAppIcon />}
