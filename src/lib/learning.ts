@@ -3,6 +3,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { useActiveCertification } from "@/lib/certifications";
 import { DEFAULT_TRACK, isTrackId, type TrackId } from "@/lib/tracks";
 import { isExamBodyId, type ExamBodyId } from "@/lib/exam-bodies";
+import {
+  evaluateFlashcardAnswer,
+  type EvaluationResult,
+  type EvaluationStatus,
+} from "@/lib/flashcards.functions";
 
 async function requireUser() {
   const { data } = await supabase.auth.getUser();
