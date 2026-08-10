@@ -146,7 +146,7 @@ export function ShareApp() {
           Partager
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[calc(100%-2rem)] rounded-2xl p-4 sm:max-w-md sm:p-6">
+      <DialogContent className="max-w-[90vw] overflow-hidden rounded-2xl p-4 sm:max-w-md sm:p-6">
         <DialogHeader>
           <DialogTitle>Partager PREPA CERTIF</DialogTitle>
           <DialogDescription>
