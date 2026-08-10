@@ -90,8 +90,8 @@ export const evaluateFlashcardAnswer = createServerFn({ method: "POST" })
 function parseEvaluationJson(content: string): EvaluationResult | null {
   try {
     const parsed = JSON.parse(content) as Record<string, unknown>;
-    const status = parsed.status;
-    const feedback = parsed.feedback;
+    const status = parsed["status"];
+    const feedback = parsed["feedback"];
     if (
       (status === "correct" || status === "partial" || status === "incorrect") &&
       typeof feedback === "string" &&
