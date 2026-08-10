@@ -512,36 +512,48 @@ export type Database = {
           card_key: string
           certification_id: string | null
           created_at: string
+          evaluated_at: string | null
+          evaluation_feedback: string | null
+          evaluation_status: string | null
           id: string
           module_id: number
           review_count: number
           reviewed_at: string
           status: string
           updated_at: string
+          user_answer: string | null
           user_id: string
         }
         Insert: {
           card_key: string
           certification_id?: string | null
           created_at?: string
+          evaluated_at?: string | null
+          evaluation_feedback?: string | null
+          evaluation_status?: string | null
           id?: string
           module_id: number
           review_count?: number
           reviewed_at?: string
           status?: string
           updated_at?: string
+          user_answer?: string | null
           user_id: string
         }
         Update: {
           card_key?: string
           certification_id?: string | null
           created_at?: string
+          evaluated_at?: string | null
+          evaluation_feedback?: string | null
+          evaluation_status?: string | null
           id?: string
           module_id?: number
           review_count?: number
           reviewed_at?: string
           status?: string
           updated_at?: string
+          user_answer?: string | null
           user_id?: string
         }
         Relationships: [
