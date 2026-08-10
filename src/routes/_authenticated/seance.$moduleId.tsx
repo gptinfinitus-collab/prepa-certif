@@ -260,35 +260,65 @@ function Seance() {
             </section>
           ) : null}
 
-          <div className="mt-8 flex flex-wrap items-center gap-2 border-t border-border pt-6">
+          <div className="mt-8 grid grid-cols-4 gap-2 border-t border-border pt-6 lg:flex lg:flex-wrap lg:items-center lg:gap-2">
             <Button
               variant="outline"
               size="sm"
               disabled={!previousSection}
               onClick={() => previousSection && goTo(previousSection.id)}
+              className="h-auto w-full flex-col gap-1 py-2 lg:h-9 lg:w-auto lg:flex-row lg:py-0"
             >
-              <ArrowLeft className="size-4" aria-hidden />
-              Précédent
+              <ArrowLeft className="size-4 shrink-0" aria-hidden />
+              <span className="text-[10px] leading-none lg:hidden">Préc.</span>
+              <span className="hidden lg:inline">Précédent</span>
             </Button>
             {nextSection ? (
-              <Button size="sm" onClick={() => goTo(nextSection.id)}>
-                Continuer
-                <ArrowRight className="size-4" aria-hidden />
+              <Button
+                size="sm"
+                onClick={() => goTo(nextSection.id)}
+                className="h-auto w-full flex-col gap-1 py-2 lg:h-9 lg:w-auto lg:flex-row lg:py-0"
+              >
+                <span className="text-[10px] leading-none lg:hidden">Continuer</span>
+                <span className="hidden lg:inline">Continuer</span>
+                <ArrowRight className="size-4 shrink-0" aria-hidden />
               </Button>
             ) : (
-              <Button size="sm" variant={done ? "secondary" : "default"} onClick={markComplete} disabled={!canComplete && !done}>
-                {done ? "Rouvrir la séance" : "Terminer la séance"}
+              <Button
+                size="sm"
+                variant={done ? "secondary" : "default"}
+                onClick={markComplete}
+                disabled={!canComplete && !done}
+                className="h-auto w-full flex-col gap-1 py-2 lg:h-9 lg:w-auto lg:flex-row lg:py-0"
+              >
+                <span className="text-[10px] leading-none lg:hidden">
+                  {done ? "Rouvrir" : "Terminer"}
+                </span>
+                <span className="hidden lg:inline">
+                  {done ? "Rouvrir la séance" : "Terminer la séance"}
+                </span>
               </Button>
             )}
 
-            <Button variant="ghost" size="sm" onClick={() => setNoteOpen((v) => !v)}>
-              <NotebookPen className="size-4" aria-hidden />
-              Ma note
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setNoteOpen((v) => !v)}
+              className="h-auto w-full flex-col gap-1 py-2 lg:h-9 lg:w-auto lg:flex-row lg:py-0"
+            >
+              <NotebookPen className="size-4 shrink-0" aria-hidden />
+              <span className="text-[10px] leading-none lg:hidden">Note</span>
+              <span className="hidden lg:inline">Ma note</span>
             </Button>
-            <Button variant="ghost" size="sm" asChild>
+            <Button
+              variant="ghost"
+              size="sm"
+              asChild
+              className="h-auto w-full flex-col gap-1 py-2 lg:h-9 lg:w-auto lg:flex-row lg:py-0"
+            >
               <Link to="/assistant">
-                <MessageCircleQuestion className="size-4" aria-hidden />
-                Demander à l'IA
+                <MessageCircleQuestion className="size-4 shrink-0" aria-hidden />
+                <span className="text-[10px] leading-none lg:hidden">IA</span>
+                <span className="hidden lg:inline">Demander à l'IA</span>
               </Link>
             </Button>
           </div>
