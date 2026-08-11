@@ -487,6 +487,170 @@ export const standardSpecs: Record<string, StandardSpec> = {
     ],
     { code: "ISO 37001:2016", title: "Systèmes de management anti-corruption — Exigences", role: "Norme d'exigences auditée, chapitres 4 à 10.", url: isoUrl("65034") },
   ),
+  "iso-19011": spec(
+    "iso-19011",
+    "ISO 19011",
+    "programme d'audit",
+    "l'audit des systèmes de management",
+    [
+      {
+        clause: "4. Principes de l'audit",
+        title: "Les sept principes qui fondent la crédibilité de l'audit",
+        summary:
+          "L'audit repose sur des principes qui garantissent que ses conclusions sont pertinentes, suffisantes et comparables d'un auditeur à l'autre.",
+        guidance: true,
+        requirements: [
+          "Intégrité : fondement du professionnalisme de l'auditeur",
+          "Présentation impartiale : rendre compte avec sincérité et exactitude, y compris des divergences non résolues",
+          "Conscience professionnelle : diligence et jugement dans chaque situation d'audit",
+          "Confidentialité : sécurité des informations obtenues",
+          "Indépendance : absence de responsabilité vis-à-vis de l'activité auditée, objectivité des conclusions",
+          "Approche fondée sur des preuves : conclusions vérifiables issues d'un échantillonnage raisonné",
+          "Approche par les risques : concentrer l'audit sur ce qui compte pour le client d'audit et l'organisme",
+        ],
+        quiz: [
+          {
+            question: "Citez trois des sept principes de l'audit.",
+            answer:
+              "Parmi : intégrité, présentation impartiale, conscience professionnelle, confidentialité, indépendance, approche fondée sur des preuves, approche par les risques.",
+          },
+          {
+            question: "Pourquoi ISO 19011 n'est-elle pas une norme certifiable ?",
+            answer:
+              "Elle donne des lignes directrices, pas des exigences. Les exigences applicables aux organismes de certification relèvent d'ISO/IEC 17021-1.",
+          },
+        ],
+      },
+      {
+        clause: "5. Management d'un programme d'audit",
+        title: "Piloter l'ensemble des audits, pas un audit isolé",
+        summary:
+          "Le programme d'audit couvre tous les audits planifiés sur une période donnée : objectifs, risques et opportunités, ressources, mise en œuvre, suivi, revue et amélioration.",
+        guidance: true,
+        requirements: [
+          "5.1 Établir les objectifs du programme d'audit à partir des enjeux et priorités de l'organisme",
+          "5.2 Déterminer et évaluer les risques et opportunités du programme",
+          "5.3 Établir le programme : étendue, calendrier, méthodes, critères, ressources, compétences requises",
+          "5.4 Mettre en œuvre : désigner les responsables d'équipe, constituer les équipes, gérer les résultats et les enregistrements",
+          "5.5 Surveiller le programme et son efficacité",
+          "5.6 Revoir et améliorer le programme au vu des résultats et des retours",
+        ],
+        quiz: [
+          {
+            question: "Quelle différence entre programme d'audit et plan d'audit ?",
+            answer:
+              "Le programme couvre l'ensemble des audits prévus sur une période ; le plan décrit le déroulement d'un audit donné (horaires, périmètre, interlocuteurs).",
+          },
+        ],
+      },
+      {
+        clause: "6. Réalisation d'un audit",
+        title: "Du déclenchement au suivi, étape par étape",
+        summary:
+          "Séquence type d'un audit : déclenchement, préparation, réalisation des activités sur site ou à distance, préparation et diffusion du rapport, clôture et suivi.",
+        guidance: true,
+        requirements: [
+          "6.1 Déclenchement : contact avec l'audité, faisabilité de l'audit",
+          "6.2 Préparation : revue des informations documentées, plan d'audit, répartition des tâches, documents de travail",
+          "6.3 Réalisation : réunion d'ouverture, communication pendant l'audit, rôle des guides et observateurs, recueil et vérification des informations",
+          "6.4 Constats d'audit : évaluation des preuves par rapport aux critères, conclusions, réunion de clôture",
+          "6.5 Rapport d'audit : préparation, contenu, diffusion",
+          "6.6 Clôture de l'audit et 6.7 suivi des actions décidées par l'audité",
+        ],
+        quiz: [
+          {
+            question: "Quels sont les trois éléments d'un constat de non-conformité recevable ?",
+            answer: "Le fait observé, l'exigence non satisfaite, la preuve associée.",
+          },
+          {
+            question: "Qui décide des actions correctives à l'issue de l'audit ?",
+            answer:
+              "L'audité : l'équipe d'audit constate et conclut, elle ne prescrit pas la solution.",
+          },
+        ],
+      },
+      {
+        clause: "7. Compétence et évaluation des auditeurs",
+        title: "Ce qui rend un auditeur — et un responsable d'équipe — compétent",
+        summary:
+          "La compétence combine comportement personnel, connaissances et aptitudes génériques d'audit, connaissances propres à la discipline et au secteur, entretenues par une amélioration continue.",
+        guidance: true,
+        requirements: [
+          "7.2 Déterminer la compétence nécessaire au regard des objectifs du programme",
+          "Comportement personnel attendu : éthique, ouverture d'esprit, diplomatie, sens de l'observation, ténacité, capacité de décision",
+          "Connaissances et aptitudes génériques, spécifiques à la discipline, et propres au responsable de l'équipe d'audit",
+          "7.3 Établir les critères d'évaluation, 7.4 choisir la méthode appropriée, 7.5 conduire l'évaluation",
+          "7.6 Entretenir et améliorer la compétence (expérience, formation, participation à des audits)",
+        ],
+        quiz: [
+          {
+            question:
+              "Citez trois comportements personnels attendus d'un auditeur selon ISO 19011.",
+            answer:
+              "Parmi : éthique, ouverture d'esprit, diplomatie, sens de l'observation, perspicacité, polyvalence, ténacité, capacité de décision, autonomie, courage, organisation.",
+          },
+        ],
+      },
+      {
+        clause: "Annexe A",
+        title: "Recommandations complémentaires pour l'auditeur",
+        summary:
+          "Compléments pratiques : application des méthodes d'audit, audit à distance, audit du contexte, du leadership et de l'engagement, de la conformité, de la chaîne d'approvisionnement, ainsi que la vérification des informations et l'échantillonnage.",
+        guidance: true,
+        requirements: [
+          "Méthodes d'audit sur site et à distance, interactives ou non",
+          "Audit du contexte, du leadership, des risques et opportunités, du cycle de vie",
+          "Professionnalisme : jugement professionnel, résultats de performance",
+          "Vérification des informations, échantillonnage, audit de la conformité réglementaire",
+        ],
+      },
+    ],
+    [
+      {
+        term: "Programme d'audit",
+        definition:
+          "Dispositions relatives à un ensemble d'audits planifiés sur une durée déterminée et visant un objectif spécifique.",
+      },
+      {
+        term: "Plan d'audit",
+        definition: "Description des activités et des dispositions pratiques d'un audit donné.",
+      },
+      {
+        term: "Client d'audit",
+        definition: "Organisme ou personne demandant un audit.",
+      },
+      {
+        term: "Audité",
+        definition: "Organisme dans son ensemble, ou partie de celui-ci, qui est audité.",
+      },
+      {
+        term: "Guide",
+        definition:
+          "Personne désignée par l'audité pour assister l'équipe d'audit ; elle n'influence ni ne perturbe la réalisation de l'audit.",
+      },
+      {
+        term: "Observateur",
+        definition:
+          "Personne qui accompagne l'équipe d'audit sans auditer et sans influencer la réalisation de l'audit.",
+      },
+      {
+        term: "Expert technique",
+        definition:
+          "Personne apportant à l'équipe d'audit des connaissances ou une expertise spécifiques ; elle n'agit pas comme auditeur.",
+      },
+      {
+        term: "Risque d'audit",
+        definition:
+          "Risque de parvenir à des conclusions d'audit erronées ou incomplètes, notamment par un échantillonnage insuffisant.",
+      },
+    ],
+    {
+      code: "ISO 19011:2026",
+      title: "Lignes directrices pour l'audit des systèmes de management",
+      role: "Référentiel étudié : principes, programme d'audit, réalisation de l'audit et compétence des auditeurs. Lignes directrices, non certifiables.",
+      url: isoUrl("70017"),
+    },
+  ),
 };
 
 export function getStandardSpec(code: string | null | undefined): StandardSpec | null {
