@@ -82,19 +82,22 @@ function clauseModule(
   ctx: StandardContext,
 ): ProgramModule {
   const label = ctx.label;
+  const isGuidance = clause.guidance === true;
 
   const body = [
     `## ${clause.title}`,
     "",
     clause.summary,
     "",
-    "### Exigences à maîtriser",
+    isGuidance ? "### Recommandations à maîtriser" : "### Exigences à maîtriser",
     "",
     ...clause.requirements.map((r) => `- ${r}`),
     "",
     "### Questions à se poser en audit",
     "",
-    "- Quelle preuve documentée démontre la mise en œuvre de cette exigence ?",
+    isGuidance
+      ? "- Comment cette recommandation se traduit-elle concrètement dans ma pratique d'audit ?"
+      : "- Quelle preuve documentée démontre la mise en œuvre de cette exigence ?",
     "- Qui en est responsable et comment le sait-il ?",
     "- Comment l'efficacité est-elle vérifiée et améliorée ?",
   ].join("\n");
@@ -105,12 +108,16 @@ function clauseModule(
     type: "lesson",
     dayLabel: `Séance ${id}`,
     title: `${clause.clause} — ${clause.title}`,
-    objective: `Maîtriser les exigences du chapitre « ${clause.clause} » de ${label} et savoir les auditer.`,
+    objective: isGuidance
+      ? `Maîtriser les recommandations du chapitre « ${clause.clause} » de ${label} et savoir les appliquer en audit.`
+      : `Maîtriser les exigences du chapitre « ${clause.clause} » de ${label} et savoir les auditer.`,
     contentMarkdown: body,
     keyTakeaway: clause.summary,
     quiz: clause.quiz ?? [
       {
-        question: `Citez deux exigences clés du chapitre « ${clause.clause} ».`,
+        question: isGuidance
+          ? `Citez deux recommandations clés du chapitre « ${clause.clause} ».`
+          : `Citez deux exigences clés du chapitre « ${clause.clause} ».`,
         answer: clause.requirements.slice(0, 2).join(" / "),
       },
     ],
