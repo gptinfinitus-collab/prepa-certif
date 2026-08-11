@@ -142,6 +142,66 @@ export type Database = {
           },
         ]
       }
+      cpd_entries: {
+        Row: {
+          created_at: string
+          date: string
+          hours: number
+          id: string
+          notes: string | null
+          reference: string | null
+          title: string
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          hours?: number
+          id?: string
+          notes?: string | null
+          reference?: string | null
+          title: string
+          type?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          hours?: number
+          id?: string
+          notes?: string | null
+          reference?: string | null
+          title?: string
+          type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      cpd_settings: {
+        Row: {
+          annual_target_hours: number
+          created_at: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          annual_target_hours?: number
+          created_at?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          annual_target_hours?: number
+          created_at?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       document_chunks: {
         Row: {
           chunk_index: number
