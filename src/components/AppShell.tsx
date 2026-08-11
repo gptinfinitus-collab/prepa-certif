@@ -13,6 +13,7 @@ import {
   ListChecks,
   Menu,
   MoreHorizontal,
+  NotebookPen,
   PanelLeft,
   PanelLeftClose,
   Plus,
