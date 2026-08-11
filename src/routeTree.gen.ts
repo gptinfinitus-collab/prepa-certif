@@ -17,6 +17,7 @@ import { Route as CguRouteImport } from './routes/cgu'
 import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as GlossaireRouteImport } from './routes/glossaire'
+import { Route as LiensUtilesRouteImport } from './routes/liens-utiles'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as ReferencesRouteImport } from './routes/references'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
@@ -74,6 +75,11 @@ const CookiesRoute = CookiesRouteImport.update({
 const GlossaireRoute = GlossaireRouteImport.update({
   id: '/glossaire',
   path: '/glossaire',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LiensUtilesRoute = LiensUtilesRouteImport.update({
+  id: '/liens-utiles',
+  path: '/liens-utiles',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
@@ -185,6 +191,7 @@ export interface FileRoutesByFullPath {
   '/confidentialite': typeof ConfidentialiteRoute
   '/cookies': typeof CookiesRoute
   '/glossaire': typeof GlossaireRoute
+  '/liens-utiles': typeof LiensUtilesRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/references': typeof ReferencesRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -213,6 +220,7 @@ export interface FileRoutesByTo {
   '/confidentialite': typeof ConfidentialiteRoute
   '/cookies': typeof CookiesRoute
   '/glossaire': typeof GlossaireRoute
+  '/liens-utiles': typeof LiensUtilesRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/references': typeof ReferencesRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -243,6 +251,7 @@ export interface FileRoutesById {
   '/confidentialite': typeof ConfidentialiteRoute
   '/cookies': typeof CookiesRoute
   '/glossaire': typeof GlossaireRoute
+  '/liens-utiles': typeof LiensUtilesRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/references': typeof ReferencesRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -273,6 +282,7 @@ export interface FileRouteTypes {
     | '/confidentialite'
     | '/cookies'
     | '/glossaire'
+    | '/liens-utiles'
     | '/mentions-legales'
     | '/references'
     | '/reset-password'
@@ -301,6 +311,7 @@ export interface FileRouteTypes {
     | '/confidentialite'
     | '/cookies'
     | '/glossaire'
+    | '/liens-utiles'
     | '/mentions-legales'
     | '/references'
     | '/reset-password'
@@ -330,6 +341,7 @@ export interface FileRouteTypes {
     | '/confidentialite'
     | '/cookies'
     | '/glossaire'
+    | '/liens-utiles'
     | '/mentions-legales'
     | '/references'
     | '/reset-password'
@@ -360,6 +372,7 @@ export interface RootRouteChildren {
   ConfidentialiteRoute: typeof ConfidentialiteRoute
   CookiesRoute: typeof CookiesRoute
   GlossaireRoute: typeof GlossaireRoute
+  LiensUtilesRoute: typeof LiensUtilesRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   ReferencesRoute: typeof ReferencesRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
@@ -425,6 +438,13 @@ declare module '@tanstack/react-router' {
       path: '/glossaire'
       fullPath: '/glossaire'
       preLoaderRoute: typeof GlossaireRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/liens-utiles': {
+      id: '/liens-utiles'
+      path: '/liens-utiles'
+      fullPath: '/liens-utiles'
+      preLoaderRoute: typeof LiensUtilesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mentions-legales': {
@@ -605,6 +625,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConfidentialiteRoute: ConfidentialiteRoute,
   CookiesRoute: CookiesRoute,
   GlossaireRoute: GlossaireRoute,
+  LiensUtilesRoute: LiensUtilesRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   ReferencesRoute: ReferencesRoute,
   ResetPasswordRoute: ResetPasswordRoute,
@@ -616,13 +637,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
