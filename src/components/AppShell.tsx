@@ -49,6 +49,7 @@ const navItems = [
   { to: "/glossaire", label: "Glossaire", icon: SpellCheck },
   { to: "/annexes", label: "Annexes", icon: ListChecks },
   { to: "/bibliotheque", label: "Mes documents", icon: Library },
+  { to: "/cpd", label: "Journal CPD", icon: NotebookPen },
   { to: "/certifications", label: "Mes certifications", icon: GraduationCap },
   { to: "/parametres", label: "Paramètres", icon: Settings },
 ];
