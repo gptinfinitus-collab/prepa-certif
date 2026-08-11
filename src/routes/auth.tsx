@@ -2,7 +2,6 @@ import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-r
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable/index";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -97,15 +96,14 @@ function AuthPage() {
     resetErrors();
     try {
       sessionStorage.setItem("prepa_certif_redirect", destination);
-      const result = await lovable.auth.signInWithOAuth(provider, {
-        redirect_uri: window.location.origin,
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: { redirectTo: window.location.origin },
       });
-      if (result.error) {
+      if (error) {
         setFormError("La connexion a échoué. Merci de réessayer.");
         return;
       }
-      if (result.redirected) return;
-      navigate({ to: destination, replace: true });
     } finally {
       setLoading(false);
     }
