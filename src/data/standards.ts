@@ -7,6 +7,8 @@ export interface ClauseSpec {
   summary: string;
   requirements: string[];
   quiz?: QuizItem[];
+  /** Vrai pour un référentiel de lignes directrices (non certifiable), ex. ISO 19011. */
+  guidance?: boolean;
 }
 
 export interface StandardReference {
