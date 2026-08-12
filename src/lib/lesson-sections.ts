@@ -71,8 +71,8 @@ const KIND_TITLES: Record<Locale, Record<SectionKind, string>> = {
 };
 
 const OBJECTIVE_LABEL: Record<Locale, string> = {
-  fr: "Objectif de la séance",
-  en: "Session objective",
+  fr: "Objectif de la séance :",
+  en: "Session objective:",
 };
 
 export function sectionTitle(kind: SectionKind, locale: Locale = "fr"): string {
@@ -132,7 +132,7 @@ export function buildLessonSections(module: ProgramModule, locale: Locale = "fr"
     title: titles.intro,
     required: true,
     blocks: [
-      { type: "markdown", content: `**${OBJECTIVE_LABEL[locale]} :** ${module.objective}` },
+      { type: "markdown", content: `**${OBJECTIVE_LABEL[locale]}** ${module.objective}` },
       ...(intro
         ? [{ type: "markdown" as const, content: intro.body.split("\n\n").slice(0, 1).join("\n\n") }]
         : []),
