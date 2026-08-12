@@ -186,6 +186,9 @@ export function toCsv(entries: CpdEntry[], headers: CsvHeaders): string {
   return [header.map(csvCell).join(";"), ...rows].join("\r\n");
 }
 
-export function formatHours(hours: number): string {
-  return Number.isInteger(hours) ? `${hours} h` : `${hours.toFixed(1).replace(".", ",")} h`;
+export function formatHours(hours: number, bcp47 = "fr-FR"): string {
+  const value = Number.isInteger(hours)
+    ? String(hours)
+    : hours.toFixed(1).replace(".", bcp47.startsWith("fr") ? "," : ".");
+  return `${value} h`;
 }

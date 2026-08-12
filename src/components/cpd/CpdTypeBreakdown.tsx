@@ -1,4 +1,5 @@
 import { formatHours, hoursByType, type CpdEntry } from "@/lib/cpd";
+import { useLocale } from "@/i18n";
 import { useT } from "@/i18n";
 
 /** Répartition des heures CPD par type d'activité. */
@@ -20,7 +21,7 @@ export function CpdTypeBreakdown({ entries }: { entries: CpdEntry[] }) {
           <div className="flex items-baseline justify-between gap-3 text-sm">
             <span className="truncate">{t(`cpd.types.${row.type}`, { defaultValue: row.type })}</span>
             <span className="shrink-0 tabular-nums text-muted-foreground">
-              {formatHours(row.hours)}
+              {formatHours(row.hours, bcp47)}
             </span>
           </div>
           <div className="h-2 overflow-hidden rounded-full bg-muted">

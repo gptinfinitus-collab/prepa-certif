@@ -212,7 +212,7 @@ function CpdPage() {
                 <p className="text-sm text-muted-foreground">
                   {yearTotal >= target
                     ? t("cpd.targetReached")
-                    : t("cpd.remainingToComplete", { hours: formatHours(Math.round((target - yearTotal) * 100) / 100) })}
+                    : t("cpd.remainingToComplete", { hours: formatHours(Math.round((target - yearTotal) * 100) / 100, bcp47) })}
                 </p>
               </div>
             </CardContent>
@@ -315,7 +315,7 @@ function CpdPage() {
                             <Badge variant="secondary">{t(`cpd.types.${entry.type}`)}</Badge>
                           </TableCell>
                           <TableCell className="text-right tabular-nums">
-                            {formatHours(entry.hours)}
+                            {formatHours(entry.hours, bcp47)}
                           </TableCell>
                           <TableCell>
                             <div className="flex justify-end gap-1">
@@ -354,7 +354,7 @@ function CpdPage() {
                         <div className="min-w-0">
                           <p className="truncate font-medium">{entry.title}</p>
                           <p className="mt-0.5 text-xs text-muted-foreground">
-                            {formatCpdDate(entry.date, bcp47)} · {formatHours(entry.hours)}
+                            {formatCpdDate(entry.date, bcp47)} · {formatHours(entry.hours, bcp47)}
                           </p>
                         </div>
                         <Badge variant="secondary" className="shrink-0">
