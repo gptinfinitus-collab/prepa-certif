@@ -199,7 +199,7 @@ export function Onboarding({ open, onClose }: OnboardingProps) {
                       variant={currentBody === body.id ? "default" : "outline"}
                       onClick={() => setSelectedBody(body.id)}
                     >
-                      {body.short}
+                      {t(`quiz.examBodies.${body.id}.short`)}
                     </Button>
                   ))}
                 </div>
@@ -245,7 +245,7 @@ export function Onboarding({ open, onClose }: OnboardingProps) {
                   <span className="text-xs text-muted-foreground">{t("common.onboarding.maxPace")}</span>
                 )}
               </div>
-              <p className="mt-2 text-sm text-muted-foreground">{paceSummary(plan, moduleCount)}</p>
+              <p className="mt-2 text-sm text-muted-foreground">{(() => { const p = paceSummary(plan, moduleCount); return t(`common.onboarding.${p.key}`, p.params); })()}</p>
             </div>
           </div>
         )}

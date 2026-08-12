@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { EXAM_BODIES, EXAM_BODY_DISCLAIMER, type ExamBodyId } from "@/lib/exam-bodies";
+import { EXAM_BODIES, type ExamBodyId } from "@/lib/exam-bodies";
 import { useExamBody, useSetExamBody } from "@/lib/learning";
 import { Check } from "lucide-react";
 import { useT } from "@/i18n";
@@ -48,15 +48,15 @@ export function ExamBodyPicker({
               )}
             >
               <span className="min-w-0 flex-1">
-                <span className="block text-sm font-medium">{body.name}</span>
-                <span className="mt-1 block text-xs text-muted-foreground">{body.description}</span>
+                <span className="block text-sm font-medium">{t(`quiz.examBodies.${body.id}.name`)}</span>
+                <span className="mt-1 block text-xs text-muted-foreground">{t(`quiz.examBodies.${body.id}.description`)}</span>
               </span>
               {isActive ? <Check className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden /> : null}
             </button>
           );
         })}
       </div>
-      <p className="text-xs text-muted-foreground">{EXAM_BODY_DISCLAIMER}</p>
+      <p className="text-xs text-muted-foreground">{t("quiz.examBodyDisclaimer")}</p>
       {examBody ? (
         <Button
           variant="ghost"
