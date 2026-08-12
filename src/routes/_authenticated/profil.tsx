@@ -4,21 +4,14 @@ import { useT } from "@/i18n";
 import { ProfileEditor } from "@/components/ProfileEditor";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
+import { pageHead } from "@/lib/seo";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
+
 export const Route = createFileRoute("/_authenticated/profil")({
-  head: () => ({
-    meta: [
-      { title: "Mon profil — PREPA CERTIF" },
-      {
-        name: "description",
-        content:
-          "Modifiez votre photo, votre prénom et votre nom pour personnaliser votre espace de préparation aux certifications ISO.",
-      },
-      { property: "og:title", content: "Mon profil — PREPA CERTIF" },
-      { property: "og:description", content: "Photo, prénom et nom de votre compte PREPA CERTIF." },
-      { property: "og:type", content: "profile" },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    return pageHead(locale, "profile", "/profil");
+  },
   component: Profil,
 });
 

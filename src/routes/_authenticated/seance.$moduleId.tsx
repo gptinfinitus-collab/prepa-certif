@@ -35,25 +35,15 @@ const searchSchema = z.object({
   section: z.string().optional(),
 });
 
+import { pageHead } from "@/lib/seo";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
+
 export const Route = createFileRoute("/_authenticated/seance/$moduleId")({
   validateSearch: searchSchema,
-  head: () => ({
-    meta: [
-      { title: "Séance de préparation — PREPA CERTIF" },
-      {
-        name: "description",
-        content:
-          "Cours séquencé : comprendre, exemples, regard de l'auditeur, point examen, mise en situation et quiz.",
-      },
-      { property: "og:title", content: "Séance de préparation — PREPA CERTIF" },
-      {
-        property: "og:description",
-        content: "Cours découpé en étapes courtes, avec flashcards et quiz de fin de séance.",
-      },
-      { property: "og:type", content: "article" },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    return pageHead(locale, "session", "/seance/$moduleId");
+  },
   errorComponent: () => <SeanceMessage messageKey="course.loadError" />,
   notFoundComponent: () => <SeanceMessage messageKey="course.notFound" />,
   component: Seance,

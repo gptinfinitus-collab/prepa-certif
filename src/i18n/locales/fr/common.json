@@ -263,5 +263,34 @@
   "linkUrlInvalid": "Indiquez une adresse web valide (http ou https).",
   "shareText": "Prépare ta certification ISO avec PREPA CERTIF : cours structurés, quiz et assistant IA.",
   "trainingBodiesPlaceholder": "Organismes de formation",
-  "sessionExpired": "Session expirée, reconnectez-vous."
+  "sessionExpired": "Session expirée, reconnectez-vous.",
+  "errors": {
+    "notSignedIn": "Vous n'êtes pas connecté.",
+    "noCertificationSelected": "Aucune certification sélectionnée.",
+    "sessionExpired": "Session expirée, reconnectez-vous.",
+    "backendConfigMissing": "Configuration du service indisponible.",
+    "aiUnavailable": "Service IA indisponible.",
+    "aiRateLimited": "Limite de requêtes IA atteinte, réessayez dans un instant.",
+    "aiCreditsExhausted": "Crédits IA épuisés pour cet espace de travail.",
+    "aiEvaluationUnreadable": "L'évaluation IA n'a pas pu être lue.",
+    "documentNotFound": "Document introuvable.",
+    "fileUnreadable": "Fichier illisible dans la bibliothèque.",
+    "noExtractableText": "Aucun texte exploitable trouvé dans ce document.",
+    "quizGenerationFailed": "La génération IA n'a pas renvoyé de questions exploitables.",
+    "gradingFailed": "La correction IA a échoué, réessayez.",
+    "needTrainingFirst": "Réalisez au moins un entraînement pour obtenir une analyse.",
+    "analysisFailed": "L'analyse IA a échoué, réessayez.",
+    "accessDenied": "Accès refusé.",
+    "cannotDisableSelf": "Vous ne pouvez pas désactiver votre propre compte.",
+    "cannotDeleteSelf": "Vous ne pouvez pas supprimer votre propre compte.",
+    "unsupportedFormat": "Format non analysable : convertissez le document en PDF, TXT ou Markdown."
+  },
+  "free": "gratuit",
+  "paid": "payant",
+  "internalLinks": {
+    "references": "Textes normatifs et résumés par chapitre.",
+    "glossary": "Définitions clés attendues à l'examen.",
+    "annexes": "Trames d'audit et examen blanc.",
+    "cpd": "Suivi de votre développement professionnel."
+  }
 }

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { cn, translateAppError } from "@/lib/utils";
 import { certificationAccentStyle } from "@/lib/cert-theme";
 import {
   useActiveCertification,
@@ -109,7 +109,7 @@ export function Onboarding({ open, onClose }: OnboardingProps) {
       toast.success(t("common.onboarding.planningReady"));
       onClose();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : t("common.onboarding.actionImpossible"));
+      toast.error(translateAppError(t, error, "common.onboarding.actionImpossible"));
     }
   }
 
@@ -180,8 +180,8 @@ export function Onboarding({ open, onClose }: OnboardingProps) {
                       active ? "border-primary ring-1 ring-primary/30" : "border-border hover:bg-accent",
                     )}
                   >
-                    <span className="font-medium">{definition.name}</span>
-                    <p className="text-xs text-muted-foreground">{definition.description}</p>
+                    <span className="font-medium">{t(`quiz.tracks.${definition.id}.name`)}</span>
+                    <p className="text-xs text-muted-foreground">{t(`quiz.tracks.${definition.id}.description`)}</p>
                   </button>
                 );
               })}

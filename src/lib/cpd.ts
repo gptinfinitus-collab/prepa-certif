@@ -60,7 +60,7 @@ export function useUpsertCpdEntry() {
     mutationFn: async (input: CpdEntryInput) => {
       const { data: userData } = await supabase.auth.getUser();
       const user = userData.user;
-      if (!user) throw new Error("Non connecté");
+      if (!user) throw new Error("notSignedIn");
       const payload = {
         user_id: user.id,
         date: input.date,
@@ -124,7 +124,7 @@ export function useSaveCpdTarget() {
     mutationFn: async (hours: number) => {
       const { data: userData } = await supabase.auth.getUser();
       const user = userData.user;
-      if (!user) throw new Error("Non connecté");
+      if (!user) throw new Error("notSignedIn");
       const { error } = await supabase
         .from("cpd_settings")
         .upsert({ user_id: user.id, annual_target_hours: hours }, { onConflict: "user_id" });
@@ -168,15 +168,27 @@ function csvCell(value: string | number | null): string {
   return `"${text.replace(/"/g, '""')}"`;
 }
 
-/** Export CSV (séparateur point-virgule, compatible Excel FR). */
-export function toCsv(entries: CpdEntry[]): string {
-  const header = ["Date", "Activité", "Type", "Heures", "Référence", "Notes"];
+export interface CsvHeaders {
+  date: string;
+  activity: string;
+  type: string;
+  hours: string;
+  reference: string;
+  notes: string;
+}
+
+/** Export CSV (séparateur point-virgule, compatible Excel). Les en-têtes sont fournies traduites par l'appelant. */
+export function toCsv(entries: CpdEntry[], headers: CsvHeaders): string {
+  const header = [headers.date, headers.activity, headers.type, headers.hours, headers.reference, headers.notes];
   const rows = entries.map((e) =>
     [e.date, e.title, e.type, e.hours, e.reference ?? "", e.notes ?? ""].map(csvCell).join(";"),
   );
   return [header.map(csvCell).join(";"), ...rows].join("\r\n");
 }
 
-export function formatHours(hours: number): string {
-  return Number.isInteger(hours) ? `${hours} h` : `${hours.toFixed(1).replace(".", ",")} h`;
+export function formatHours(hours: number, bcp47 = "fr-FR"): string {
+  const value = Number.isInteger(hours)
+    ? String(hours)
+    : hours.toFixed(1).replace(".", bcp47.startsWith("fr") ? "," : ".");
+  return `${value} h`;
 }

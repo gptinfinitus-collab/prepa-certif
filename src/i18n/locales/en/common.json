@@ -263,5 +263,34 @@
   "linkUrlInvalid": "Enter a valid web address (http or https).",
   "shareText": "Prepare your ISO certification with PREPA CERTIF: structured lessons, quizzes and an AI assistant.",
   "trainingBodiesPlaceholder": "Training bodies",
-  "sessionExpired": "Session expired, please sign in again."
+  "sessionExpired": "Session expired, please sign in again.",
+  "errors": {
+    "notSignedIn": "You are not signed in.",
+    "noCertificationSelected": "No certification selected.",
+    "sessionExpired": "Session expired, please sign in again.",
+    "backendConfigMissing": "Service configuration unavailable.",
+    "aiUnavailable": "AI service unavailable.",
+    "aiRateLimited": "AI rate limit reached, please try again shortly.",
+    "aiCreditsExhausted": "AI credits exhausted for this workspace.",
+    "aiEvaluationUnreadable": "The AI assessment could not be read.",
+    "documentNotFound": "Document not found.",
+    "fileUnreadable": "File unreadable in the library.",
+    "noExtractableText": "No usable text found in this document.",
+    "quizGenerationFailed": "The AI did not return usable questions.",
+    "gradingFailed": "AI grading failed, please try again.",
+    "needTrainingFirst": "Complete at least one practice session to get an analysis.",
+    "analysisFailed": "AI analysis failed, please try again.",
+    "accessDenied": "Access denied.",
+    "cannotDisableSelf": "You cannot deactivate your own account.",
+    "cannotDeleteSelf": "You cannot delete your own account.",
+    "unsupportedFormat": "Unsupported format: convert the document to PDF, TXT or Markdown."
+  },
+  "free": "free",
+  "paid": "paid",
+  "internalLinks": {
+    "references": "Normative texts and clause-by-clause summaries.",
+    "glossary": "Key definitions expected at the exam.",
+    "annexes": "Audit templates and mock exam.",
+    "cpd": "Tracking of your professional development."
+  }
 }

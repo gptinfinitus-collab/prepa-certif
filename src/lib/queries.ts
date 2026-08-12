@@ -54,8 +54,8 @@ export function useSaveStudyPlan() {
     mutationFn: async (plan: StudyPlan) => {
       const { data: userData } = await supabase.auth.getUser();
       const user = userData.user;
-      if (!user) throw new Error("Non connecté");
-      if (!certificationId) throw new Error("Aucune certification sélectionnée");
+      if (!user) throw new Error("notSignedIn");
+      if (!certificationId) throw new Error("noCertificationSelected");
       const { error } = await supabase.from("study_plans").upsert(
         {
           user_id: user.id,
@@ -103,8 +103,8 @@ export function useSetModuleProgress() {
     mutationFn: async (input: { moduleId: number; completed: boolean; selfScore?: number | null }) => {
       const { data: userData } = await supabase.auth.getUser();
       const user = userData.user;
-      if (!user) throw new Error("Non connecté");
-      if (!certificationId) throw new Error("Aucune certification sélectionnée");
+      if (!user) throw new Error("notSignedIn");
+      if (!certificationId) throw new Error("noCertificationSelected");
       const { error } = await supabase.from("module_progress").upsert(
         {
           user_id: user.id,
@@ -178,7 +178,7 @@ export function useUpdateProfile() {
     mutationFn: async (input: { first_name: string; last_name: string }) => {
       const { data: userData } = await supabase.auth.getUser();
       const user = userData.user;
-      if (!user) throw new Error("Non connecté");
+      if (!user) throw new Error("notSignedIn");
       const display = [input.first_name, input.last_name].filter(Boolean).join(" ").trim();
       const { error } = await supabase.from("profiles").upsert(
         {
@@ -201,7 +201,7 @@ export function useUploadAvatar() {
     mutationFn: async (blob: Blob) => {
       const { data: userData } = await supabase.auth.getUser();
       const user = userData.user;
-      if (!user) throw new Error("Non connecté");
+      if (!user) throw new Error("notSignedIn");
       const path = `${user.id}/avatar-${Date.now()}.jpg`;
       const { error: uploadError } = await supabase.storage
         .from("avatars")

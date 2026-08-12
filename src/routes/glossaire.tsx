@@ -5,31 +5,14 @@ import { Input } from "@/components/ui/input";
 import { useCurriculum } from "@/lib/curriculum";
 import { useT } from "@/i18n";
 
+import { pageHead } from "@/lib/seo";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
+
 export const Route = createFileRoute("/glossaire")({
-  head: () => ({
-    meta: [
-      { title: "Glossaire de l'audit ISO — PREPA CERTIF" },
-      {
-        name: "description",
-        content:
-          "Définitions des termes clés des systèmes de management et de l'audit : constat, non-conformité, preuve d'audit, périmètre, partie intéressée et plus.",
-      },
-      { property: "og:title", content: "Glossaire de l'audit ISO — PREPA CERTIF" },
-      {
-        property: "og:description",
-        content: "Termes clés de l'audit et des systèmes de management expliqués simplement.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://prepa-certif.app/og-image.png" },
-      { property: "og:image:width", content: "1200" },
-      { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "PREPA CERTIF — Préparation aux certifications ISO" },
-      { name: "twitter:image", content: "https://prepa-certif.app/og-image.png" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:url", content: "https://prepa-certif.app/glossaire" },
-    ],
-    links: [{ rel: "canonical", href: "https://prepa-certif.app/glossaire" }],
-  }),
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    return pageHead(locale, "glossary", "/glossaire");
+  },
   component: Glossaire,
 });
 

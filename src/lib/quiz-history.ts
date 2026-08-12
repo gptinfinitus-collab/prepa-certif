@@ -37,10 +37,10 @@ export type ResultFilter = "all" | "correct" | "incorrect";
 export const ALL_TOPICS = "__all__";
 
 /** Thèmes disponibles dans l'historique (chapitre travaillé, sinon portée). */
-export function sessionTopics(sessions: QuizSessionRow[]): string[] {
+export function sessionTopics(sessions: QuizSessionRow[], locale = "fr"): string[] {
   const set = new Set<string>();
   for (const session of sessions) set.add(session.topic ?? session.scope);
-  return [...set].sort((a, b) => a.localeCompare(b, "fr"));
+  return [...set].sort((a, b) => a.localeCompare(b, locale));
 }
 
 /** Filtre les sessions par thème et par résultat (réussie = score ≥ 60). */
@@ -120,8 +120,9 @@ export function scoreTrend(sessions: Pick<QuizSessionRow, "score">[]): number {
   return recent - older;
 }
 
-export function formatSessionDate(iso: string): string {
-  return new Intl.DateTimeFormat("fr-FR", {
+/** `bcp47` : étiquette de langue active (`fr-FR`, `en-GB`). */
+export function formatSessionDate(iso: string, bcp47 = "fr-FR"): string {
+  return new Intl.DateTimeFormat(bcp47, {
     day: "2-digit",
     month: "short",
     year: "numeric",

@@ -17,26 +17,16 @@ import {
   type StudyPlan,
 } from "@/lib/schedule";
 import { useSaveStudyPlan, useStudyPlan } from "@/lib/queries";
-import { useT } from "@/i18n";
+import { useLocale, useT } from "@/i18n";
+
+import { pageHead } from "@/lib/seo";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 
 export const Route = createFileRoute("/_authenticated/planning")({
-  head: () => ({
-    meta: [
-      { title: "Mon planning — PREPA CERTIF" },
-      {
-        name: "description",
-        content:
-          "Définissez la durée de votre préparation ISO : date de début, date d'examen, jours travaillés et séances par jour.",
-      },
-      { property: "og:title", content: "Mon planning — PREPA CERTIF" },
-      {
-        property: "og:description",
-        content: "Un calendrier de préparation à la certification entièrement configurable.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    return pageHead(locale, "planning", "/planning");
+  },
 
   component: Planning,
 });
@@ -53,6 +43,7 @@ const dayLabelKeys: Record<number, string> = {
 
 function Planning() {
   const t = useT();
+  const { bcp47 } = useLocale();
   const { data: saved } = useStudyPlan();
   const save = useSaveStudyPlan();
   const { curriculum, certificationName } = useCurriculum();
@@ -169,7 +160,7 @@ function Planning() {
                   __html: t("common.workDaysSummary", {
                     days: schedule.days.length,
                     perDay: schedule.effectiveModulesPerDay,
-                    end: schedule.endDate ? formatFrenchDate(schedule.endDate) : "—",
+                    end: schedule.endDate ? formatFrenchDate(schedule.endDate, bcp47) : "—",
                   }),
                 }}
               />
@@ -187,7 +178,7 @@ function Planning() {
                   className="flex flex-wrap items-baseline gap-x-4 gap-y-1 rounded-md border border-border bg-card px-4 py-3"
                 >
                   <span className="w-32 shrink-0 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                    {formatShortDate(day.date)}
+                    {formatShortDate(day.date, bcp47)}
                   </span>
                   <span className="flex-1 text-sm">
                     {day.modules.map((m) => m.title).join(" · ")}

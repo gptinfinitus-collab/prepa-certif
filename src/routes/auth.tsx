@@ -27,33 +27,16 @@ const searchSchema = z.object({
   redirect: z.string().optional(),
 });
 
+import { pageHead } from "@/lib/seo";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
+
 export const Route = createFileRoute("/auth")({
   ssr: false,
   validateSearch: searchSchema,
-  head: () => ({
-    meta: [
-      { title: "Connexion — PREPA CERTIF" },
-      {
-        name: "description",
-        content:
-          "Connectez-vous avec Google, Apple ou votre e-mail pour accéder à votre préparation aux certifications ISO.",
-      },
-      { property: "og:title", content: "Connexion — PREPA CERTIF" },
-      {
-        property: "og:description",
-        content: "Accédez à votre programme de préparation aux certifications ISO.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://prepa-certif.app/og-image.png" },
-      { property: "og:image:width", content: "1200" },
-      { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "PREPA CERTIF — Préparation aux certifications ISO" },
-      { name: "twitter:image", content: "https://prepa-certif.app/og-image.png" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:url", content: "https://prepa-certif.app/auth" },
-    ],
-    links: [{ rel: "canonical", href: "https://prepa-certif.app/auth" }],
-  }),
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    return pageHead(locale, "auth", "/auth");
+  },
   component: AuthPage,
 });
 

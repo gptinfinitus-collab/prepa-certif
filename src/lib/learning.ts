@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useLocale } from "@/i18n";
 import { useActiveCertification } from "@/lib/certifications";
 import { DEFAULT_TRACK, isTrackId, type TrackId } from "@/lib/tracks";
 import { isExamBodyId, type ExamBodyId } from "@/lib/exam-bodies";
@@ -11,7 +12,7 @@ import {
 
 async function requireUser() {
   const { data } = await supabase.auth.getUser();
-  if (!data.user) throw new Error("Non connecté");
+  if (!data.user) throw new Error("notSignedIn");
   return data.user;
 }
 
@@ -142,7 +143,7 @@ export function useSaveLessonProgress() {
       completed?: boolean;
     }) => {
       const user = await requireUser();
-      if (!certificationId) throw new Error("Aucune certification sélectionnée");
+      if (!certificationId) throw new Error("noCertificationSelected");
       const { error } = await supabase.from("user_lesson_progress").upsert(
         {
           user_id: user.id,
@@ -276,6 +277,7 @@ export function useEvaluateFlashcardAnswer(moduleId: number) {
   const queryClient = useQueryClient();
   const { certificationId } = useActiveCertification();
   const evaluate = evaluateFlashcardAnswer;
+  const { locale } = useLocale();
 
   return useMutation({
     mutationFn: async (input: {
@@ -290,6 +292,7 @@ export function useEvaluateFlashcardAnswer(moduleId: number) {
           question: input.question,
           expectedAnswer: input.expectedAnswer,
           userAnswer: input.userAnswer,
+          locale,
         },
       });
 

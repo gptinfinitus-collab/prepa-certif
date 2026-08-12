@@ -5,6 +5,7 @@ import { toast } from "sonner";
 
 import { AppShell } from "@/components/AppShell";
 import { useLocale, useT } from "@/i18n";
+import { formatDate } from "@/lib/utils";
 import { CpdEntryDialog } from "@/components/cpd/CpdEntryDialog";
 import { CpdRing } from "@/components/cpd/CpdRing";
 import { CpdTypeBreakdown } from "@/components/cpd/CpdTypeBreakdown";
@@ -54,35 +55,25 @@ import {
   type CpdEntryInput,
 } from "@/lib/cpd";
 
+import { pageHead } from "@/lib/seo";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
+
 export const Route = createFileRoute("/_authenticated/cpd")({
-  head: () => ({
-    meta: [
-      { title: "Journal CPD — PREPA CERTIF" },
-      {
-        name: "description",
-        content:
-          "Suivez vos heures de développement professionnel continu (CPD) pour le maintien de votre certification Lead Auditor.",
-      },
-      { property: "og:title", content: "Journal CPD — PREPA CERTIF" },
-      {
-        property: "og:description",
-        content: "Objectif annuel, répartition par type d'activité et export CSV de vos heures CPD.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    return pageHead(locale, "cpd", "/cpd");
+  },
   component: CpdPage,
 });
 
-function formatDate(iso: string, locale: string) {
+function formatCpdDate(iso: string, bcp47: string) {
   const date = new Date(`${iso}T00:00:00`);
-  return date.toLocaleDateString(locale === "en" ? "en-US" : "fr-FR", { day: "2-digit", month: "short", year: "numeric" });
+  return formatDate(date, bcp47, { day: "2-digit", month: "short", year: "numeric" });
 }
 
 function CpdPage() {
   const t = useT();
-  const { locale } = useLocale();
+  const { bcp47 } = useLocale();
   const currentYear = new Date().getFullYear();
   const { data: entries = [], isLoading } = useCpdEntries();
   const { data: target = 20 } = useCpdTarget();
@@ -149,7 +140,15 @@ function CpdPage() {
       toast.error(t("cpd.noEntryToExport"));
       return;
     }
-    const blob = new Blob([`\uFEFF${toCsv(entries)}`], { type: "text/csv;charset=utf-8;" });
+    const headers = {
+      date: t("cpd.csvHeaders.date"),
+      activity: t("cpd.csvHeaders.activity"),
+      type: t("cpd.csvHeaders.type"),
+      hours: t("cpd.csvHeaders.hours"),
+      reference: t("cpd.csvHeaders.reference"),
+      notes: t("cpd.csvHeaders.notes"),
+    };
+    const blob = new Blob([`\uFEFF${toCsv(entries, headers)}`], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
@@ -213,7 +212,7 @@ function CpdPage() {
                 <p className="text-sm text-muted-foreground">
                   {yearTotal >= target
                     ? t("cpd.targetReached")
-                    : t("cpd.remainingToComplete", { hours: formatHours(Math.round((target - yearTotal) * 100) / 100) })}
+                    : t("cpd.remainingToComplete", { hours: formatHours(Math.round((target - yearTotal) * 100) / 100, bcp47) })}
                 </p>
               </div>
             </CardContent>
@@ -302,7 +301,7 @@ function CpdPage() {
                       {filtered.map((entry) => (
                         <TableRow key={entry.id}>
                           <TableCell className="whitespace-nowrap text-muted-foreground">
-                            {formatDate(entry.date, locale)}
+                            {formatCpdDate(entry.date, bcp47)}
                           </TableCell>
                           <TableCell>
                             <span className="font-medium">{entry.title}</span>
@@ -316,7 +315,7 @@ function CpdPage() {
                             <Badge variant="secondary">{t(`cpd.types.${entry.type}`)}</Badge>
                           </TableCell>
                           <TableCell className="text-right tabular-nums">
-                            {formatHours(entry.hours)}
+                            {formatHours(entry.hours, bcp47)}
                           </TableCell>
                           <TableCell>
                             <div className="flex justify-end gap-1">
@@ -355,7 +354,7 @@ function CpdPage() {
                         <div className="min-w-0">
                           <p className="truncate font-medium">{entry.title}</p>
                           <p className="mt-0.5 text-xs text-muted-foreground">
-                            {formatDate(entry.date, locale)} · {formatHours(entry.hours)}
+                            {formatCpdDate(entry.date, bcp47)} · {formatHours(entry.hours, bcp47)}
                           </p>
                         </div>
                         <Badge variant="secondary" className="shrink-0">

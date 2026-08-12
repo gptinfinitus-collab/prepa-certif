@@ -5,31 +5,14 @@ import { Quiz } from "@/components/Quiz";
 import { useCurriculum } from "@/lib/curriculum";
 import { useT } from "@/i18n";
 
+import { pageHead } from "@/lib/seo";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
+
 export const Route = createFileRoute("/annexes")({
-  head: () => ({
-    meta: [
-      { title: "Annexes et trames d'audit — PREPA CERTIF" },
-      {
-        name: "description",
-        content:
-          "Trame de plan d'audit, fiche de non-conformité, checklist générique et examen blanc pour préparer votre certification ISO.",
-      },
-      { property: "og:title", content: "Annexes et trames d'audit — PREPA CERTIF" },
-      {
-        property: "og:description",
-        content: "Trames opérationnelles et examen blanc pour votre certification ISO.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://prepa-certif.app/og-image.png" },
-      { property: "og:image:width", content: "1200" },
-      { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "PREPA CERTIF — Préparation aux certifications ISO" },
-      { name: "twitter:image", content: "https://prepa-certif.app/og-image.png" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:url", content: "https://prepa-certif.app/annexes" },
-    ],
-    links: [{ rel: "canonical", href: "https://prepa-certif.app/annexes" }],
-  }),
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    return pageHead(locale, "annexes", "/annexes");
+  },
   component: Annexes,
 });
 

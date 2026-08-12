@@ -20,30 +20,20 @@ import { LeadAuditorNotice, TrackSwitcher } from "@/components/TrackSwitcher";
 import { CheckCircle2, Circle, CalendarClock, PenLine } from "lucide-react";
 import { useLocale, useT } from "@/i18n";
 
+import { pageHead } from "@/lib/seo";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
+
 export const Route = createFileRoute("/_authenticated/dashboard")({
-  head: () => ({
-    meta: [
-      { title: "Mon programme — PREPA CERTIF" },
-      {
-        name: "description",
-        content:
-          "Suivez vos séances de préparation à la certification ISO que vous avez choisie, votre avancement et votre rythme par rapport au planning.",
-      },
-      { property: "og:title", content: "Mon programme — PREPA CERTIF" },
-      {
-        property: "og:description",
-        content: "Progression et séances de votre cursus de préparation ISO.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    return pageHead(locale, "dashboard", "/dashboard");
+  },
   component: Dashboard,
 });
 
 function Dashboard() {
   const t = useT();
-  const { locale } = useLocale();
+  const { locale, bcp47 } = useLocale();
   const typeLabels = getTypeLabels(locale);
   const { data: plan } = useStudyPlan();
   const { data: progress = [] } = useProgress();
@@ -115,7 +105,7 @@ function Dashboard() {
           ) : null}
           <p className="mt-4 text-xs text-muted-foreground">
             {schedule?.endDate
-              ? `${t("common.estimatedEndDate", { date: formatShortDate(schedule.endDate) })} · ${pace?.label ?? ""}`
+              ? `${t("common.estimatedEndDate", { date: formatShortDate(schedule.endDate, bcp47) })} · ${pace?.label ?? ""}`
               : t("common.configurePlanningNotice")}
           </p>
         </section>
@@ -127,13 +117,13 @@ function Dashboard() {
 
         <p className="mt-2 hidden text-sm text-muted-foreground md:block">
           {schedule?.endDate
-            ? `${t("common.estimatedEndDate", { date: formatShortDate(schedule.endDate) })} · ${t("common.sessionsPerWorkedDay", { count: schedule.effectiveModulesPerDay })}`
+            ? `${t("common.estimatedEndDate", { date: formatShortDate(schedule.endDate, bcp47) })} · ${t("common.sessionsPerWorkedDay", { count: schedule.effectiveModulesPerDay })}`
             : t("common.configurePlanningNotice")}
         </p>
 
         <div className="mt-5 rounded-xl border border-border bg-card p-4">
           <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-            {t("common.trackLevel", { trackName: trackDefinition.name })}
+            {t("common.trackLevel", { trackName: t(`quiz.tracks.${trackDefinition.id}.name`) })}
           </p>
           <TrackSwitcher className="mt-3" />
           <LeadAuditorNotice />
@@ -232,7 +222,7 @@ function Dashboard() {
                         {date ? (
                           <span className="flex items-center gap-1 text-xs text-muted-foreground">
                             <CalendarClock className="size-3.5" aria-hidden />
-                            {formatShortDate(date)}
+                            {formatShortDate(date, bcp47)}
                           </span>
                         ) : null}
                       </Link>

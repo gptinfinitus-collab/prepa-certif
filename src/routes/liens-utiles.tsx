@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { UserLinkDialog } from "@/components/links/UserLinkDialog";
-import { INTERNAL_LINKS, USEFUL_LINKS, groupLinksByCategory } from "@/data/useful-links";
+import { getCategoryLabel, getUsefulLinks, groupLinksByCategory, type LinkCategory } from "@/data/useful-links";
 import {
   hostLabel,
   useDeleteUserLink,
@@ -16,36 +16,31 @@ import {
   useUserLinks,
   type UserLink,
 } from "@/lib/useful-links";
-import { useT } from "@/i18n";
+import { useLocale, useT } from "@/i18n";
 
-const TITLE = "Liens utiles — PREPA CERTIF";
-const DESCRIPTION =
-  "Tous les liens utiles pour préparer votre certification ISO : textes officiels, schémas de certification d'auditeurs, accréditation, réglementation S&ST et ressources gratuites.";
+
+import { pageHead } from "@/lib/seo";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 
 export const Route = createFileRoute("/liens-utiles")({
-  head: () => ({
-    meta: [
-      { title: TITLE },
-      { name: "description", content: DESCRIPTION },
-      { property: "og:title", content: TITLE },
-      { property: "og:description", content: DESCRIPTION },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://prepa-certif.app/liens-utiles" },
-      { property: "og:image", content: "https://prepa-certif.app/og-image.png" },
-      { property: "og:image:width", content: "1200" },
-      { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "PREPA CERTIF — Préparation aux certifications ISO" },
-      { name: "twitter:image", content: "https://prepa-certif.app/og-image.png" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: "https://prepa-certif.app/liens-utiles" }],
-  }),
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    return pageHead(locale, "usefulLinks", "/liens-utiles");
+  },
   component: UsefulLinksPage,
 });
 
 function UsefulLinksPage() {
   const t = useT();
-  const groups = groupLinksByCategory(USEFUL_LINKS);
+  const { locale } = useLocale();
+  const groups = groupLinksByCategory(getUsefulLinks(locale));
+  // Liens internes : libellés repris de la navigation, donc déjà traduits.
+  const internalLinks = [
+    { to: "/references" as const, label: t("nav.references"), description: t("common.internalLinks.references") },
+    { to: "/glossaire" as const, label: t("nav.glossary"), description: t("common.internalLinks.glossary") },
+    { to: "/annexes" as const, label: t("nav.annexes"), description: t("common.internalLinks.annexes") },
+    { to: "/cpd" as const, label: t("nav.cpd"), description: t("common.internalLinks.cpd") },
+  ];
   const { data: signedIn = false } = useIsSignedIn();
   const { data: myLinks = [], isLoading } = useUserLinks();
   const upsert = useUpsertUserLink();
@@ -65,7 +60,7 @@ function UsefulLinksPage() {
 
         {groups.map((group) => (
           <section key={group.category} className="mt-8">
-            <h2 className="font-sans text-lg font-semibold">{group.category}</h2>
+            <h2 className="font-sans text-lg font-semibold">{getCategoryLabel(group.category as LinkCategory, locale)}</h2>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               {group.links.map((link) => (
                 <Card key={link.url} className="flex flex-col">
@@ -73,7 +68,7 @@ function UsefulLinksPage() {
                     <div className="flex items-start justify-between gap-2">
                       <CardTitle className="font-sans text-base">{link.title}</CardTitle>
                       <Badge variant={link.cost === "gratuit" ? "secondary" : "outline"}>
-                        {link.cost}
+                        {link.cost === "gratuit" ? t("common.free") : t("common.paid")}
                       </Badge>
                     </div>
                     <CardDescription>{link.description}</CardDescription>
@@ -95,7 +90,7 @@ function UsefulLinksPage() {
         <section className="mt-10">
           <h2 className="font-sans text-lg font-semibold">{t("common.inTheApp")}</h2>
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            {INTERNAL_LINKS.map((item) => (
+            {internalLinks.map((item) => (
               <Card key={item.to}>
                 <CardHeader className="pb-2">
                   <CardTitle className="font-sans text-base">{item.label}</CardTitle>

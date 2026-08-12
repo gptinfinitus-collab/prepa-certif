@@ -14,7 +14,7 @@ function isNewSupabaseApiKey(value: string): boolean {
 export async function supabaseFromRequest(request: Request) {
   const url = process.env["SUPABASE_URL"];
   const key = process.env["SUPABASE_PUBLISHABLE_KEY"];
-  if (!url || !key) throw new Error("Configuration Supabase manquante.");
+  if (!url || !key) throw new Error("backendConfigMissing");
 
   const authHeader = request.headers.get("authorization") ?? "";
   const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : "";
@@ -43,7 +43,7 @@ export async function supabaseFromRequest(request: Request) {
 /** Appelle le modèle en streaming et renvoie chaque fragment de texte produit. */
 export async function* streamChat(messages: ChatMessage[]): AsyncGenerator<string> {
   const key = process.env["LOVABLE_API_KEY"];
-  if (!key) throw new Error("Service IA indisponible.");
+  if (!key) throw new Error("aiUnavailable");
 
   const response = await fetch(`${GATEWAY}/chat/completions`, {
     method: "POST",
@@ -51,8 +51,8 @@ export async function* streamChat(messages: ChatMessage[]): AsyncGenerator<strin
     body: JSON.stringify({ model: CHAT_MODEL, messages, temperature: 0.3, stream: true }),
   });
 
-  if (response.status === 429) throw new Error("Limite de requêtes IA atteinte, réessayez dans un instant.");
-  if (response.status === 402) throw new Error("Crédits IA épuisés pour cet espace de travail.");
+  if (response.status === 429) throw new Error("aiRateLimited");
+  if (response.status === 402) throw new Error("aiCreditsExhausted");
   if (!response.ok || !response.body) {
     const detail = await response.text().catch(() => "");
     throw new Error(`Réponse IA indisponible (${response.status}): ${detail.slice(0, 200)}`);

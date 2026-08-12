@@ -38,6 +38,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { formatDate } from "@/lib/utils";
 import { useAdminUsers, useDeleteUser, useIsSuperAdmin, useToggleUserDisabled } from "@/lib/admin";
 import {
   type AdminSortKey,
@@ -46,30 +47,20 @@ import {
   sortAdminUsers,
 } from "@/lib/admin-users";
 
+import { pageHead } from "@/lib/seo";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
+
 export const Route = createFileRoute("/_authenticated/admin")({
-  head: () => ({
-    meta: [
-      { title: "Administration — PREPA CERTIF" },
-      {
-        name: "description",
-        content:
-          "Espace super administrateur : suivez les comptes inscrits, leur activité de préparation, désactivez ou supprimez un utilisateur.",
-      },
-      { property: "og:title", content: "Administration — PREPA CERTIF" },
-      {
-        property: "og:description",
-        content: "Suivi des comptes et de l'activité des apprenants PREPA CERTIF.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    return pageHead(locale, "admin", "/admin");
+  },
   component: AdminPage,
 });
 
-function formatDate(value: string | null, locale: string) {
+function formatAdminDate(value: string | null, bcp47: string) {
   if (!value) return "—";
-  return new Date(value).toLocaleDateString(locale === "en" ? "en-GB" : "fr-FR", {
+  return formatDate(new Date(value), bcp47, {
     day: "2-digit",
     month: "short",
     year: "numeric",
@@ -113,7 +104,7 @@ function SortButton({
 
 function AdminPage() {
   const t = useT();
-  const { locale } = useLocale();
+  const { bcp47 } = useLocale();
   const isSuperAdmin = useIsSuperAdmin();
   const { data: users = [], isLoading, refetch, isFetching } = useAdminUsers(isSuperAdmin);
   const toggle = useToggleUserDisabled();
@@ -292,10 +283,10 @@ function AdminPage() {
                           {u.documentsCount}
                         </TableCell>
                         <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
-                          {formatDate(u.createdAt, locale)}
+                          {formatAdminDate(u.createdAt, bcp47)}
                         </TableCell>
                         <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
-                          {formatDate(u.lastSignInAt, locale)}
+                          {formatAdminDate(u.lastSignInAt, bcp47)}
                         </TableCell>
                         <TableCell className="text-right">
                           <div className="flex justify-end gap-1">

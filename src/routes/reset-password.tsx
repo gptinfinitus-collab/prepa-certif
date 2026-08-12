@@ -12,25 +12,19 @@ import { toast } from "sonner";
 import { authErrorMessage, fieldErrors, newPasswordSchema } from "@/lib/auth-schemas";
 import { useT } from "@/i18n";
 
+import { pageHead } from "@/lib/seo";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
+
 export const Route = createFileRoute("/reset-password")({
   ssr: false,
-  head: () => ({
-    meta: [
-      { title: "Nouveau mot de passe — PREPA CERTIF" },
-      {
-        name: "description",
-        content: "Définissez un nouveau mot de passe pour votre compte PREPA CERTIF.",
-      },
-      { property: "og:title", content: "Nouveau mot de passe — PREPA CERTIF" },
-      {
-        property: "og:description",
-        content: "Choisissez un nouveau mot de passe sécurisé pour votre compte.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "robots", content: "noindex" },
-    ],
-  }),
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    const base = pageHead(locale, "resetPassword", "/reset-password");
+    return {
+      meta: [...base.meta, { name: "robots", content: "noindex" }],
+      links: base.links,
+    };
+  },
   component: ResetPasswordPage,
 });
 

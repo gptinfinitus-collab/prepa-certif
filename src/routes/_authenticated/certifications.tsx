@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/AppShell";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { cn, translateAppError } from "@/lib/utils";
 import { certificationAccentStyle } from "@/lib/cert-theme";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,24 +30,14 @@ import {
 import { Check, CircleDashed, Plus, Search, Sparkles } from "lucide-react";
 import { useT } from "@/i18n";
 
+import { pageHead } from "@/lib/seo";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
+
 export const Route = createFileRoute("/_authenticated/certifications")({
-  head: () => ({
-    meta: [
-      { title: "Mes certifications — PREPA CERTIF" },
-      {
-        name: "description",
-        content:
-          "Choisissez la certification que vous préparez : ISO 9001, 14001, 45001, 27001, 22000, 50001, 13485, 22301, 37001 ou votre propre référentiel.",
-      },
-      { property: "og:title", content: "Mes certifications — PREPA CERTIF" },
-      {
-        property: "og:description",
-        content: "Sélectionnez et suivez plusieurs cursus de préparation à la certification ISO.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    return pageHead(locale, "certifications", "/certifications");
+  },
   component: CertificationsPage,
 });
 
@@ -82,7 +72,7 @@ function CustomCertificationDialog() {
       setChapters("");
       toast.success(t("common.referentialCreated"));
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : t("common.creationImpossible"));
+      toast.error(translateAppError(t, error, "common.creationImpossible"));
     }
   }
 
@@ -181,7 +171,7 @@ function CertificationsPage() {
       toast.success(t("common.certificationActivated"));
       navigate({ to: "/dashboard" });
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : t("common.actionImpossible"));
+      toast.error(translateAppError(t, error, "common.actionImpossible"));
     }
   }
 

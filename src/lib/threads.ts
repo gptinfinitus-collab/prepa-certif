@@ -61,7 +61,7 @@ export function useCreateThread() {
     mutationFn: async (certificationId: string | null): Promise<ChatThread> => {
       const { data: userData } = await supabase.auth.getUser();
       const userId = userData.user?.id;
-      if (!userId) throw new Error("Session expirée.");
+      if (!userId) throw new Error("sessionExpired");
       const { data, error } = await supabase
         .from("chat_threads")
         .insert({ user_id: userId, certification_id: certificationId })

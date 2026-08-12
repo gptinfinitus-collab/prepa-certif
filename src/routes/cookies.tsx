@@ -2,9 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { LegalPage } from "@/components/LegalPage";
 import { legalDocument, legalHead, legalInfo } from "@/lib/legal";
 import { useLocale } from "@/i18n";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 
 export const Route = createFileRoute("/cookies")({
-  head: () => legalHead("cookies"),
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    return legalHead("cookies", locale);
+  },
   component: CookiesPage,
 });
 

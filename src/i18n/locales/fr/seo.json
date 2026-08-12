@@ -1,0 +1,123 @@
+{
+  "imageAlt": "PREPA CERTIF — Préparation aux certifications ISO",
+  "home": {
+    "title": "PREPA CERTIF — Préparation aux certifications d'auditeur ISO",
+    "description": "Connectez-vous à PREPA CERTIF pour préparer vos certifications ISO : planning sur mesure, quiz, examen blanc et suivi de progression.",
+    "ogTitle": "PREPA CERTIF — Préparation aux certifications ISO",
+    "ogDescription": "Accédez à votre espace de préparation aux certifications d'auditeur ISO."
+  },
+  "root": {
+    "title": "PREPA CERTIF — Préparation aux certifications d'auditeur ISO",
+    "description": "Préparation aux certifications d'auditeur ISO (9001, 14001, 45001, 27001…) : planning personnalisable, cours, quiz et suivi de progression.",
+    "ogTitle": "PREPA CERTIF",
+    "ogDescription": "Préparation structurée aux certifications d'auditeur des normes ISO."
+  },
+  "auth": {
+    "title": "Connexion — PREPA CERTIF",
+    "description": "Connectez-vous ou créez votre compte PREPA CERTIF pour préparer vos certifications d'auditeur ISO.",
+    "ogTitle": "Connexion — PREPA CERTIF",
+    "ogDescription": "Accédez à votre espace de préparation aux certifications ISO."
+  },
+  "resetPassword": {
+    "title": "Nouveau mot de passe — PREPA CERTIF",
+    "description": "Définissez un nouveau mot de passe pour votre compte PREPA CERTIF.",
+    "ogTitle": "Nouveau mot de passe — PREPA CERTIF",
+    "ogDescription": "Choisissez un nouveau mot de passe sécurisé pour votre compte."
+  },
+  "dashboard": {
+    "title": "Mon programme — PREPA CERTIF",
+    "description": "Votre programme de préparation : séances, progression et prochaines étapes.",
+    "ogTitle": "Mon programme — PREPA CERTIF",
+    "ogDescription": "Suivez votre progression de préparation à la certification ISO."
+  },
+  "planning": {
+    "title": "Mon planning — PREPA CERTIF",
+    "description": "Planifiez vos séances de préparation à votre rythme, sur la durée de votre choix.",
+    "ogTitle": "Mon planning — PREPA CERTIF",
+    "ogDescription": "Organisez vos séances de révision jusqu'à l'examen."
+  },
+  "quiz": {
+    "title": "Quiz IA et niveau de préparation — PREPA CERTIF",
+    "description": "Entraînez-vous avec des quiz générés par IA et analysez votre niveau de préparation.",
+    "ogTitle": "Quiz IA — PREPA CERTIF",
+    "ogDescription": "Entraînements ciblés et analyse de vos points faibles."
+  },
+  "assistant": {
+    "title": "Assistant IA — PREPA CERTIF",
+    "description": "Posez vos questions d'audit et de norme à l'assistant IA, appuyé sur vos documents.",
+    "ogTitle": "Assistant IA — PREPA CERTIF",
+    "ogDescription": "Un assistant de préparation qui s'appuie sur vos documents."
+  },
+  "assistantThread": {
+    "title": "Conversation — Assistant IA PREPA CERTIF",
+    "description": "Reprenez votre conversation avec l'assistant de préparation.",
+    "ogTitle": "Conversation — Assistant IA PREPA CERTIF",
+    "ogDescription": "Historique de vos échanges avec l'assistant."
+  },
+  "references": {
+    "title": "Références ISO — PREPA CERTIF",
+    "description": "Normes de référence de votre certification et de l'audit : liens officiels ISO, rôle de chaque texte et résumés par chapitre.",
+    "ogTitle": "Références ISO — PREPA CERTIF",
+    "ogDescription": "Textes normatifs de référence et résumés par chapitre pour votre certification."
+  },
+  "glossary": {
+    "title": "Glossaire de l'audit ISO — PREPA CERTIF",
+    "description": "Définitions des termes clés des normes ISO et de l'audit de systèmes de management.",
+    "ogTitle": "Glossaire de l'audit ISO — PREPA CERTIF",
+    "ogDescription": "Les termes définis à connaître pour votre certification."
+  },
+  "annexes": {
+    "title": "Annexes et trames d'audit — PREPA CERTIF",
+    "description": "Trame de plan d'audit, fiche de non-conformité, checklist générique et examen blanc pour préparer votre certification ISO.",
+    "ogTitle": "Annexes et trames d'audit — PREPA CERTIF",
+    "ogDescription": "Trames opérationnelles et examen blanc pour votre certification ISO."
+  },
+  "usefulLinks": {
+    "title": "Liens utiles — PREPA CERTIF",
+    "description": "Sites officiels, organismes d'accréditation, référentiels et ressources utiles pour préparer votre certification.",
+    "ogTitle": "Liens utiles — PREPA CERTIF",
+    "ogDescription": "Ressources officielles et outils pour votre préparation."
+  },
+  "library": {
+    "title": "Mes documents — PREPA CERTIF",
+    "description": "Déposez vos documents de cours : ils alimentent l'assistant IA de préparation.",
+    "ogTitle": "Mes documents — PREPA CERTIF",
+    "ogDescription": "Votre bibliothèque documentaire de préparation."
+  },
+  "cpd": {
+    "title": "Journal CPD — PREPA CERTIF",
+    "description": "Enregistrez vos heures de développement professionnel continu et exportez votre journal.",
+    "ogTitle": "Journal CPD — PREPA CERTIF",
+    "ogDescription": "Suivi de votre développement professionnel continu d'auditeur."
+  },
+  "certifications": {
+    "title": "Mes certifications — PREPA CERTIF",
+    "description": "Choisissez et gérez les certifications ISO que vous préparez.",
+    "ogTitle": "Mes certifications — PREPA CERTIF",
+    "ogDescription": "Gérez vos cursus de certification ISO."
+  },
+  "settings": {
+    "title": "Paramètres — PREPA CERTIF",
+    "description": "Langue, thème, notifications et partage de l'application.",
+    "ogTitle": "Paramètres — PREPA CERTIF",
+    "ogDescription": "Personnalisez votre espace de préparation."
+  },
+  "profile": {
+    "title": "Mon profil — PREPA CERTIF",
+    "description": "Votre photo, votre nom et vos informations de compte.",
+    "ogTitle": "Mon profil — PREPA CERTIF",
+    "ogDescription": "Gérez vos informations personnelles."
+  },
+  "admin": {
+    "title": "Administration — PREPA CERTIF",
+    "description": "Espace d'administration de PREPA CERTIF.",
+    "ogTitle": "Administration — PREPA CERTIF",
+    "ogDescription": "Gestion des utilisateurs et des accès."
+  },
+  "session": {
+    "title": "Séance de préparation — PREPA CERTIF",
+    "description": "Cours, exemples d'audit, points d'examen, flashcards et quiz de fin de séance.",
+    "ogTitle": "Séance de préparation — PREPA CERTIF",
+    "ogDescription": "Une séance structurée de préparation à la certification ISO."
+  }
+}
