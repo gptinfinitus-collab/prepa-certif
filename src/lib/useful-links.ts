@@ -74,7 +74,7 @@ export function useUpsertUserLink() {
     mutationFn: async (input: UserLinkInput) => {
       const { data: userData } = await supabase.auth.getUser();
       const user = userData.user;
-      if (!user) throw new Error("Non connecté");
+      if (!user) throw new Error("notSignedIn");
       const payload = {
         user_id: user.id,
         title: input.title,

@@ -81,7 +81,7 @@ export const evaluateFlashcardAnswer = createServerFn({ method: "POST" })
   .handler(async ({ data }): Promise<EvaluationResult> => {
     const key = process.env["LOVABLE_API_KEY"];
     if (!key) {
-      throw new Error("Service IA indisponible.");
+      throw new Error("aiUnavailable");
     }
 
     const { system, prompt } = evaluationPrompt(data.locale, data);
@@ -105,10 +105,10 @@ export const evaluateFlashcardAnswer = createServerFn({ method: "POST" })
 
 
     if (response.status === 429) {
-      throw new Error("Limite de requêtes IA atteinte, réessayez dans un instant.");
+      throw new Error("aiRateLimited");
     }
     if (response.status === 402) {
-      throw new Error("Crédits IA épuisés pour cet espace de travail.");
+      throw new Error("aiCreditsExhausted");
     }
     if (!response.ok) {
       const detail = await response.text().catch(() => "");
@@ -121,7 +121,7 @@ export const evaluateFlashcardAnswer = createServerFn({ method: "POST" })
     const content = payload.choices?.[0]?.message?.content ?? "";
     const parsed = parseEvaluationJson(content);
     if (!parsed) {
-      throw new Error("L'évaluation IA n'a pas pu être lue.");
+      throw new Error("aiEvaluationUnreadable");
     }
     return parsed;
   });

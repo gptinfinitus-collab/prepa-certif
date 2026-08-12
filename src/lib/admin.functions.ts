@@ -30,7 +30,7 @@ async function assertSuperAdmin(supabase: {
     _role: "super_admin",
   });
   if (error) throw new Error(error.message);
-  if (!data) throw new Error("Accès refusé.");
+  if (!data) throw new Error("accessDenied");
 }
 
 /** Indique si l'utilisateur connecté est super administrateur. */
@@ -128,7 +128,7 @@ export const setUserDisabled = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     await assertSuperAdmin(context.supabase, context.userId);
-    if (data.userId === context.userId) throw new Error("Vous ne pouvez pas désactiver votre propre compte.");
+    if (data.userId === context.userId) throw new Error("cannotDisableSelf");
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     const { error: banError } = await supabaseAdmin.auth.admin.updateUserById(data.userId, {
@@ -150,7 +150,7 @@ export const deleteUserAccount = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => z.object({ userId: z.string().uuid() }).parse(data))
   .handler(async ({ data, context }) => {
     await assertSuperAdmin(context.supabase, context.userId);
-    if (data.userId === context.userId) throw new Error("Vous ne pouvez pas supprimer votre propre compte.");
+    if (data.userId === context.userId) throw new Error("cannotDeleteSelf");
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { error } = await supabaseAdmin.auth.admin.deleteUser(data.userId);
     if (error) throw new Error(error.message);

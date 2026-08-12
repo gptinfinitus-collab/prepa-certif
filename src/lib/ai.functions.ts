@@ -68,15 +68,15 @@ export const ingestDocument = createServerFn({ method: "POST" })
       .select("id, name, storage_path")
       .eq("id", data.documentId)
       .single();
-    if (error || !doc) throw new Error("Document introuvable.");
+    if (error || !doc) throw new Error("documentNotFound");
 
     try {
       const file = await supabase.storage.from("iso-library").download(doc.storage_path);
-      if (file.error || !file.data) throw new Error("Fichier illisible dans la bibliothèque.");
+      if (file.error || !file.data) throw new Error("fileUnreadable");
 
       const extracted = await extractDocumentText(doc.name, await file.data.arrayBuffer());
       const chunks = chunkText(extracted.text);
-      if (chunks.length === 0) throw new Error("Aucun texte exploitable trouvé dans ce document.");
+      if (chunks.length === 0) throw new Error("noExtractableText");
 
 
       await supabase.from("document_chunks").delete().eq("document_id", doc.id);
@@ -297,13 +297,13 @@ export const generateQuizQuestions = createServerFn({ method: "POST" })
       })
       .safeParse(JSON.parse(raw || "{}"));
 
-    if (!parsed.success) throw new Error("La génération IA n'a pas renvoyé de questions exploitables.");
+    if (!parsed.success) throw new Error("quizGenerationFailed");
 
     const questions = parsed.data.questions.filter((q) =>
       data.mode === "qcm" ? Array.isArray(q.choices) && q.answerIndex !== undefined : !!q.expected,
     );
     if (questions.length === 0)
-      throw new Error("La génération IA n'a pas renvoyé de questions exploitables.");
+      throw new Error("quizGenerationFailed");
 
     return { questions, sourceCount: passages.length };
   });
@@ -366,7 +366,7 @@ export const gradeOpenAnswers = createServerFn({ method: "POST" })
       })
       .safeParse(JSON.parse(raw || "{}"));
 
-    if (!parsed.success) throw new Error("La correction IA a échoué, réessayez.");
+    if (!parsed.success) throw new Error("gradingFailed");
     return { results: parsed.data.results };
   });
 
@@ -395,7 +395,7 @@ export const analyzePreparation = createServerFn({ method: "POST" })
     const { data: sessions } = await sessionQuery;
 
     if (!sessions || sessions.length === 0)
-      throw new Error("Réalisez au moins un entraînement pour obtenir une analyse.");
+      throw new Error("needTrainingFirst");
 
     const { data: answers } = await supabase
       .from("quiz_answers")
@@ -448,6 +448,6 @@ export const analyzePreparation = createServerFn({ method: "POST" })
       })
       .safeParse(JSON.parse(raw || "{}"));
 
-    if (!parsed.success) throw new Error("L'analyse IA a échoué, réessayez.");
+    if (!parsed.success) throw new Error("analysisFailed");
     return parsed.data;
   });

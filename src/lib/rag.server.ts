@@ -7,7 +7,7 @@ export const CHAT_MODEL = "google/gemini-2.5-flash";
 
 function apiKey(): string {
   const key = process.env["LOVABLE_API_KEY"];
-  if (!key) throw new Error("Service IA indisponible.");
+  if (!key) throw new Error("aiUnavailable");
   return key;
 }
 
@@ -59,8 +59,8 @@ export async function chatComplete(
       ...(options.json ? { response_format: { type: "json_object" } } : {}),
     }),
   });
-  if (response.status === 429) throw new Error("Limite de requêtes IA atteinte, réessayez dans un instant.");
-  if (response.status === 402) throw new Error("Crédits IA épuisés pour cet espace de travail.");
+  if (response.status === 429) throw new Error("aiRateLimited");
+  if (response.status === 402) throw new Error("aiCreditsExhausted");
   if (!response.ok) {
     const detail = await response.text();
     throw new Error(`Réponse IA indisponible (${response.status}): ${detail.slice(0, 200)}`);
@@ -167,7 +167,7 @@ export async function extractDocumentText(name: string, bytes: ArrayBuffer): Pro
     const decoded = new TextDecoder().decode(bytes);
     return stripWatermarks([decoded]);
   }
-  throw new Error("Format non analysable : convertissez le document en PDF, TXT ou Markdown.");
+  throw new Error("unsupportedFormat");
 }
 
 /** Découpe un texte en segments d'environ `size` caractères avec recouvrement. */

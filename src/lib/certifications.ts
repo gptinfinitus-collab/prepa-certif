@@ -100,7 +100,7 @@ export function useFollowCertification() {
     mutationFn: async (certificationId: string) => {
       const { data: userData } = await supabase.auth.getUser();
       const user = userData.user;
-      if (!user) throw new Error("Non connecté");
+      if (!user) throw new Error("notSignedIn");
       await supabase
         .from("user_certifications")
         .update({ is_active: false })
@@ -125,7 +125,7 @@ export function useSetActiveCertification() {
     mutationFn: async (certificationId: string) => {
       const { data: userData } = await supabase.auth.getUser();
       const user = userData.user;
-      if (!user) throw new Error("Non connecté");
+      if (!user) throw new Error("notSignedIn");
       await supabase
         .from("user_certifications")
         .update({ is_active: false })
@@ -149,7 +149,7 @@ export function useUnfollowCertification() {
     mutationFn: async (certificationId: string) => {
       const { data: userData } = await supabase.auth.getUser();
       const user = userData.user;
-      if (!user) throw new Error("Non connecté");
+      if (!user) throw new Error("notSignedIn");
       const { error } = await supabase
         .from("user_certifications")
         .delete()
@@ -168,7 +168,7 @@ export function useCreateCustomCertification() {
     mutationFn: async (input: { name: string; family?: string; description?: string; chapters: string[] }) => {
       const { data: userData } = await supabase.auth.getUser();
       const user = userData.user;
-      if (!user) throw new Error("Non connecté");
+      if (!user) throw new Error("notSignedIn");
       const code = `custom-${input.name
         .toLowerCase()
         .normalize("NFD")

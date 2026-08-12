@@ -12,7 +12,7 @@ import {
 
 async function requireUser() {
   const { data } = await supabase.auth.getUser();
-  if (!data.user) throw new Error("Non connecté");
+  if (!data.user) throw new Error("notSignedIn");
   return data.user;
 }
 
@@ -143,7 +143,7 @@ export function useSaveLessonProgress() {
       completed?: boolean;
     }) => {
       const user = await requireUser();
-      if (!certificationId) throw new Error("Aucune certification sélectionnée");
+      if (!certificationId) throw new Error("noCertificationSelected");
       const { error } = await supabase.from("user_lesson_progress").upsert(
         {
           user_id: user.id,
