@@ -56,6 +56,14 @@ function ResetPasswordPage() {
     };
   }, []);
 
+
+  /** Message d'erreur d'authentification dans la langue active. */
+  function authError(error: unknown): string {
+    const key = error instanceof Error ? authErrorKey(error.message) : null;
+    if (key) return t(`auth.${key}`);
+    return error instanceof Error && error.message ? error.message : t("auth.genericError");
+  }
+
   async function handleSubmit() {
     const parsed = newPasswordSchema.safeParse({ password, confirm });
     if (!parsed.success) {

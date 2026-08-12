@@ -73,6 +73,14 @@ function AuthPage() {
     };
   }, [navigate, destination]);
 
+
+  /** Message d'erreur d'authentification dans la langue active. */
+  function authError(error: unknown): string {
+    const key = error instanceof Error ? authErrorKey(error.message) : null;
+    if (key) return t(`auth.${key}`);
+    return error instanceof Error && error.message ? error.message : t("auth.genericError");
+  }
+
   function resetErrors() {
     setErrors({});
     setFormError(null);
@@ -128,9 +136,7 @@ function AuthPage() {
         if (error) throw error;
       }
     } catch (error) {
-      const message =
-        authError(error);
-      setFormError(message);
+      setFormError(authError(error));
     } finally {
       setLoading(false);
     }
