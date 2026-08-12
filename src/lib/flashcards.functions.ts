@@ -62,6 +62,7 @@ function evaluationPrompt(
       "- 'incorrect' : la réponse est fausse, hors sujet ou ne reprend pas l'essentiel.",
       "",
       "Rédige le commentaire dans la langue de la réponse de l'apprenant (en français si elle est en français, en anglais si elle est en anglais) ; si c'est ambigu, utilise le français.",
+      "Réponds UNIQUEMENT au format JSON suivant :",
       '{"status": "correct|partial|incorrect", "feedback": "..."}',
       "",
       "Question :",
