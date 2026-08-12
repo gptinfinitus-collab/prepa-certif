@@ -25,5 +25,7 @@
   "signOut": "Se déconnecter",
   "profile": "Profil",
   "theme": "Thème",
-  "darkMode": "Mode sombre"
+  "darkMode": "Mode sombre",
+  "noResults": "Aucun résultat.",
+  "open": "Ouvrir"
 }

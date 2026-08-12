@@ -25,5 +25,7 @@
   "signOut": "Sign out",
   "profile": "Profile",
   "theme": "Theme",
-  "darkMode": "Dark mode"
+  "darkMode": "Dark mode",
+  "noResults": "No results.",
+  "open": "Open"
 }
