@@ -12,12 +12,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { useT } from "@/i18n";
 
 const SHARE_URL = "https://prepa-certif.app";
 const SHARE_TITLE = "PREPA CERTIF";
-const SHARE_TEXT =
-  "Prépare ta certification ISO avec PREPA CERTIF : cours structurés, quiz et assistant IA.";
-const SHARE_MESSAGE = `${SHARE_TITLE} — ${SHARE_TEXT} ${SHARE_URL}`;
+const shareMessage = (text: string) => `${SHARE_TITLE} — ${text} ${SHARE_URL}`;
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -74,6 +73,7 @@ function ShareOption({ label, icon, onClick, colorClass }: ShareOptionProps) {
 
 /** Bouton de partage de l'application avec options natives, WhatsApp, email, SMS et copie. */
 export function ShareApp() {
+  const t = useT();
   const [open, setOpen] = useState(false);
   const [canShare, setCanShare] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -84,19 +84,19 @@ export function ShareApp() {
 
   async function copyLink() {
     try {
-      await navigator.clipboard.writeText(SHARE_MESSAGE);
+      await navigator.clipboard.writeText(shareMessage(t("common.shareText")));
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
-      toast.success("Lien copié dans le presse-papiers.");
+      toast.success(t("common.shareLinkCopied"));
     } catch {
-      toast.error("Copie impossible sur cet appareil.");
+      toast.error(t("common.shareCopyImpossible"));
     }
   }
 
   async function nativeShare() {
     if (canShare) {
       try {
-        await navigator.share({ title: SHARE_TITLE, text: SHARE_TEXT, url: SHARE_URL });
+        await navigator.share({ title: SHARE_TITLE, text: t("common.shareText"), url: SHARE_URL });
         setOpen(false);
         return;
       } catch (error) {
@@ -110,7 +110,7 @@ export function ShareApp() {
   }
 
   function shareWhatsApp() {
-    const text = encodeURIComponent(SHARE_MESSAGE);
+    const text = encodeURIComponent(shareMessage(t("common.shareText")));
     window.open(`https://wa.me/?text=${text}`, "_blank", "noopener,noreferrer");
     setOpen(false);
   }
@@ -118,7 +118,7 @@ export function ShareApp() {
   function shareFacebook() {
     const url = encodeURIComponent(SHARE_URL);
     window.open(
-      `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${encodeURIComponent(SHARE_TEXT)}`,
+      `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${encodeURIComponent(t("common.shareText"))}`,
       "_blank",
       "noopener,noreferrer",
     );
@@ -126,14 +126,14 @@ export function ShareApp() {
   }
 
   function shareEmail() {
-    const subject = encodeURIComponent(`Découvre ${SHARE_TITLE}`);
-    const body = encodeURIComponent(SHARE_MESSAGE);
+    const subject = encodeURIComponent(t("common.discoverApp", { name: SHARE_TITLE }));
+    const body = encodeURIComponent(shareMessage(t("common.shareText")));
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
     setOpen(false);
   }
 
   function shareSMS() {
-    const body = encodeURIComponent(SHARE_MESSAGE);
+    const body = encodeURIComponent(shareMessage(t("common.shareText")));
     window.location.href = `sms:?body=${body}`;
     setOpen(false);
   }
@@ -143,15 +143,13 @@ export function ShareApp() {
       <DialogTrigger asChild>
         <Button>
           <Share2 className="size-4" aria-hidden />
-          Partager
+          {t("common.share")}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[90vw] overflow-hidden rounded-2xl p-4 sm:max-w-lg sm:p-6">
         <DialogHeader>
-          <DialogTitle>Partager PREPA CERTIF</DialogTitle>
-          <DialogDescription>
-            Invite tes contacts à préparer leur certification ISO avec toi.
-          </DialogDescription>
+          <DialogTitle>{t("common.sharePrepaCertifTitle")}</DialogTitle>
+          <DialogDescription>{t("common.shareDialogDesc")}</DialogDescription>
         </DialogHeader>
 
         <div className="grid grid-cols-2 gap-2 py-4 sm:grid-cols-5 sm:gap-3">
@@ -181,7 +179,7 @@ export function ShareApp() {
           />
           {canShare && (
             <ShareOption
-              label="Natif"
+              label={t("common.shareNative")}
               icon={<Share2 className="size-6" aria-hidden />}
               onClick={nativeShare}
               colorClass="bg-primary"
@@ -190,10 +188,17 @@ export function ShareApp() {
         </div>
 
         <div className="flex min-w-0 flex-col gap-2">
-          <span className="text-xs font-medium text-muted-foreground">Aperçu du message</span>
+          <span className="text-xs font-medium text-muted-foreground">
+            {t("common.sharePreviewLabel")}
+          </span>
           <div className="flex min-w-0 items-center gap-2 rounded-lg border border-border bg-muted p-3">
-            <p className="min-w-0 flex-1 truncate text-sm text-foreground">{SHARE_MESSAGE}</p>
-            <Button variant="ghost" size="icon" onClick={() => void copyLink()} aria-label="Copier le lien">
+            <p className="min-w-0 flex-1 truncate text-sm text-foreground">{shareMessage(t("common.shareText"))}</p>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => void copyLink()}
+              aria-label={t("common.copyLink")}
+            >
               {copied ? (
                 <Check className="size-4 text-green-500" aria-hidden />
               ) : (

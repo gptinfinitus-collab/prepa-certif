@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import type { LessonSection } from "@/lib/lesson-sections";
+import { useT } from "@/i18n";
 import { Check } from "lucide-react";
 
 export function SectionNav({
@@ -15,8 +16,9 @@ export function SectionNav({
   onSelect: (id: string) => void;
   className?: string;
 }) {
+  const t = useT();
   return (
-    <nav className={cn("space-y-1", className)} aria-label="Sommaire du cours">
+    <nav className={cn("space-y-1", className)} aria-label={t("course.courseSummary")}>
       {sections.map((section, index) => {
         const isCurrent = section.id === currentId;
         const isRead = readIds.includes(section.id);
@@ -51,6 +53,7 @@ export function SectionNav({
 }
 
 export function CourseProgressBar({ value }: { value: number }) {
+  const t = useT();
   return (
     <div
       className="h-1.5 w-full overflow-hidden rounded-full bg-secondary"
@@ -58,7 +61,7 @@ export function CourseProgressBar({ value }: { value: number }) {
       aria-valuenow={Math.round(value)}
       aria-valuemin={0}
       aria-valuemax={100}
-      aria-label="Progression du cours"
+      aria-label={t("course.progressAriaLabel")}
     >
       <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${value}%` }} />
     </div>

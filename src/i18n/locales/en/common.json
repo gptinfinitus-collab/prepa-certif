@@ -247,5 +247,21 @@
     "chooseExamBody": "Choose your exam body for the Lead Auditor level.",
     "planningReady": "Your schedule is ready.",
     "actionImpossible": "This action could not be performed."
-  }
+  },
+  "linkDialogEditTitle": "Edit link",
+  "linkDialogAddTitle": "Add a link",
+  "linkDialogDesc": "Your personal links stay private: only you can see them.",
+  "linkTitleLabel": "Title",
+  "linkTitlePlaceholder": "Internal audit guide",
+  "linkUrlLabel": "Address (URL)",
+  "linkUrlPlaceholder": "https://example.org/resource",
+  "linkCategoryLabel": "Category",
+  "chooseCategoryPlaceholder": "Choose a category",
+  "linkNoteLabel": "Note (optional)",
+  "linkNotePlaceholder": "Why this link is useful for your preparation",
+  "linkTitleRequired": "The title is required.",
+  "linkUrlInvalid": "Enter a valid web address (http or https).",
+  "shareText": "Prepare your ISO certification with PREPA CERTIF: structured lessons, quizzes and an AI assistant.",
+  "trainingBodiesPlaceholder": "Training bodies",
+  "sessionExpired": "Session expired, please sign in again."
 }

@@ -94,7 +94,7 @@ export function AssistantChat({ threadId }: { threadId: string }) {
     try {
       const { data: sessionData } = await supabase.auth.getSession();
       const token = sessionData.session?.access_token;
-      if (!token) throw new Error("Session expirée, reconnectez-vous.");
+      if (!token) throw new Error(t("common.sessionExpired"));
 
       const response = await fetch("/api/chat", {
         method: "POST",

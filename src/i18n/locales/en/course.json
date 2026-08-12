@@ -90,5 +90,6 @@
     "mockExam": "Mock exam",
     "rest": "Rest",
     "wrapup": "Wrap-up"
-  }
+  },
+  "progressAriaLabel": "Course progress"
 }

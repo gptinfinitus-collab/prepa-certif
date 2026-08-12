@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AvatarCropper } from "@/components/AvatarCropper";
 import { useProfile, useUpdateProfile, useUploadAvatar } from "@/lib/queries";
+import { useT } from "@/i18n";
 import { Camera } from "lucide-react";
 
 export function initialsOf(first?: string | null, last?: string | null, email?: string | null) {
@@ -17,6 +18,7 @@ export function initialsOf(first?: string | null, last?: string | null, email?: 
 }
 
 export function ProfileEditor() {
+  const t = useT();
   const { data: profile } = useProfile();
   const updateProfile = useUpdateProfile();
   const uploadAvatar = useUploadAvatar();
@@ -36,9 +38,9 @@ export function ProfileEditor() {
   async function handleSave() {
     try {
       await updateProfile.mutateAsync({ first_name: firstName.trim(), last_name: lastName.trim() });
-      toast.success("Profil mis à jour.");
+      toast.success(t("common.profileUpdated"));
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Enregistrement impossible.");
+      toast.error(error instanceof Error ? error.message : t("common.saveImpossible"));
     }
   }
 
@@ -47,9 +49,9 @@ export function ProfileEditor() {
       await uploadAvatar.mutateAsync(blob);
       setCropOpen(false);
       setFile(null);
-      toast.success("Photo de profil mise à jour.");
+      toast.success(t("common.photoUpdated"));
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Envoi impossible.");
+      toast.error(error instanceof Error ? error.message : t("common.sendImpossible"));
     }
   }
 
@@ -58,7 +60,7 @@ export function ProfileEditor() {
       <div className="flex flex-wrap items-center gap-4">
         <div className="relative">
           <Avatar className="size-20 border border-border">
-            <AvatarImage src={profile?.avatarSignedUrl ?? undefined} alt="Photo de profil" />
+            <AvatarImage src={profile?.avatarSignedUrl ?? undefined} alt={t("common.profilePicture")} />
             <AvatarFallback className="text-lg">
               {initialsOf(profile?.first_name, profile?.last_name, profile?.email)}
             </AvatarFallback>
@@ -67,14 +69,14 @@ export function ProfileEditor() {
             type="button"
             onClick={() => inputRef.current?.click()}
             className="absolute -bottom-1 -right-1 grid size-8 place-items-center rounded-full border border-border bg-primary text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
-            aria-label="Changer la photo de profil"
+            aria-label={t("common.changePhoto")}
           >
             <Camera className="size-4" aria-hidden />
           </button>
         </div>
         <div className="min-w-0">
           <p className="font-sans text-lg font-semibold">
-            {[profile?.first_name, profile?.last_name].filter(Boolean).join(" ") || "Votre nom"}
+            {[profile?.first_name, profile?.last_name].filter(Boolean).join(" ") || t("common.yourName")}
           </p>
           <p className="truncate text-sm text-muted-foreground">{profile?.email}</p>
         </div>
@@ -96,17 +98,17 @@ export function ProfileEditor() {
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="firstName">Prénom</Label>
+          <Label htmlFor="firstName">{t("common.firstName")}</Label>
           <Input id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="lastName">Nom</Label>
+          <Label htmlFor="lastName">{t("common.lastName")}</Label>
           <Input id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
         </div>
       </div>
 
       <Button onClick={handleSave} disabled={updateProfile.isPending}>
-        {updateProfile.isPending ? "Enregistrement…" : "Enregistrer"}
+        {updateProfile.isPending ? t("common.saving") : t("common.save")}
       </Button>
 
       <AvatarCropper

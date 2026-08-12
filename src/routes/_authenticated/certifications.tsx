@@ -28,6 +28,7 @@ import {
   useUnfollowCertification,
 } from "@/lib/certifications";
 import { Check, CircleDashed, Plus, Search, Sparkles } from "lucide-react";
+import { useT } from "@/i18n";
 
 export const Route = createFileRoute("/_authenticated/certifications")({
   head: () => ({
@@ -51,6 +52,7 @@ export const Route = createFileRoute("/_authenticated/certifications")({
 });
 
 function CustomCertificationDialog() {
+  const t = useT();
   const create = useCreateCustomCertification();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
@@ -60,7 +62,7 @@ function CustomCertificationDialog() {
 
   async function submit() {
     if (!name.trim()) {
-      toast.error("Donnez un nom à votre référentiel.");
+      toast.error(t("common.giveReferentialName"));
       return;
     }
     try {
@@ -78,9 +80,9 @@ function CustomCertificationDialog() {
       setFamily("");
       setDescription("");
       setChapters("");
-      toast.success("Référentiel créé et activé.");
+      toast.success(t("common.referentialCreated"));
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Création impossible.");
+      toast.error(error instanceof Error ? error.message : t("common.creationImpossible"));
     }
   }
 
@@ -89,19 +91,19 @@ function CustomCertificationDialog() {
       <DialogTrigger asChild>
         <Button variant="outline">
           <Plus className="size-4" aria-hidden />
-          Référentiel personnalisé
+          {t("common.customReferential")}
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="font-sans">Créer un référentiel</DialogTitle>
+          <DialogTitle className="font-sans">{t("common.createReferential")}</DialogTitle>
           <DialogDescription>
-            Pour une norme ou une certification qui n'est pas au catalogue.
+            {t("common.createReferentialDesc")}
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="cert-name">Nom</Label>
+            <Label htmlFor="cert-name">{t("common.name")}</Label>
             <Input
               id="cert-name"
               value={name}
@@ -110,16 +112,16 @@ function CustomCertificationDialog() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="cert-family">Domaine</Label>
+            <Label htmlFor="cert-family">{t("common.domain")}</Label>
             <Input
               id="cert-family"
               value={family}
               onChange={(e) => setFamily(e.target.value)}
-              placeholder="Organismes de formation"
+              placeholder={t("common.trainingBodiesPlaceholder")}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="cert-desc">Description</Label>
+            <Label htmlFor="cert-desc">{t("common.description")}</Label>
             <Textarea
               id="cert-desc"
               value={description}
@@ -128,7 +130,7 @@ function CustomCertificationDialog() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="cert-chapters">Chapitres (un par ligne)</Label>
+            <Label htmlFor="cert-chapters">{t("common.chaptersOnePerLine")}</Label>
             <Textarea
               id="cert-chapters"
               value={chapters}
@@ -140,7 +142,7 @@ function CustomCertificationDialog() {
         </div>
         <DialogFooter>
           <Button onClick={() => void submit()} disabled={create.isPending}>
-            {create.isPending ? "Création…" : "Créer et activer"}
+            {create.isPending ? t("common.creating") : t("common.createAndActivate")}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -149,6 +151,7 @@ function CustomCertificationDialog() {
 }
 
 function CertificationsPage() {
+  const t = useT();
   const navigate = useNavigate();
   const { data: catalog = [], isLoading } = useCertificationCatalog();
   const { data: mine = [] } = useMyCertifications();
@@ -175,20 +178,19 @@ function CertificationsPage() {
       } else {
         await follow.mutateAsync(id);
       }
-      toast.success("Certification activée.");
+      toast.success(t("common.certificationActivated"));
       navigate({ to: "/dashboard" });
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Action impossible.");
+      toast.error(error instanceof Error ? error.message : t("common.actionImpossible"));
     }
   }
 
   return (
-    <AppShell title="Mes certifications">
+    <AppShell title={t("common.myCertifications")}>
       <div className="mx-auto max-w-5xl px-4 py-6 md:py-10">
-        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">Mes certifications</h1>
+        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">{t("common.myCertifications")}</h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-          Choisissez la certification que vous préparez. Vous pouvez en suivre plusieurs en
-          parallèle : chacune garde son propre planning, sa progression et ses documents.
+          {t("common.myCertificationsIntro")}
         </p>
 
         <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -200,16 +202,16 @@ function CertificationsPage() {
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Rechercher une norme…"
+              placeholder={t("common.searchStandardPlaceholder")}
               className="pl-9"
-              aria-label="Rechercher une norme"
+              aria-label={t("common.searchStandardPlaceholder")}
             />
           </div>
           <CustomCertificationDialog />
         </div>
 
         {isLoading ? (
-          <p className="mt-8 text-sm text-muted-foreground">Chargement du catalogue…</p>
+          <p className="mt-8 text-sm text-muted-foreground">{t("common.loadingCatalog")}</p>
         ) : (
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {results.map((cert) => {
@@ -230,7 +232,7 @@ function CertificationsPage() {
                       {active && (
                         <Badge className="shrink-0 bg-cert text-cert-foreground">
                           <Check className="size-3" aria-hidden />
-                          Active
+                          {t("common.active")}
                         </Badge>
                       )}
                     </div>
@@ -243,12 +245,12 @@ function CertificationsPage() {
                       {cert.has_curriculum ? (
                         <>
                           <Sparkles className="size-3.5 text-primary" aria-hidden />
-                          Cursus complet disponible
+                          {t("common.fullCurriculumAvailable")}
                         </>
                       ) : (
                         <>
                           <CircleDashed className="size-3.5" aria-hidden />
-                          Préparation libre — cursus en cours de rédaction
+                          {t("common.freePreparation")}
                         </>
                       )}
                     </p>
@@ -259,7 +261,7 @@ function CertificationsPage() {
                         disabled={active || follow.isPending || setActive.isPending}
                         onClick={() => void handleSelect(cert.id)}
                       >
-                        {active ? "Sélectionnée" : followed ? "Activer" : "Commencer"}
+                        {active ? t("common.selected") : followed ? t("common.activate") : t("common.start")}
                       </Button>
                       {followed && !active && (
                         <Button
@@ -267,7 +269,7 @@ function CertificationsPage() {
                           variant="ghost"
                           onClick={() => void unfollow.mutateAsync(cert.id)}
                         >
-                          Retirer
+                          {t("common.remove")}
                         </Button>
                       )}
                     </div>
@@ -276,7 +278,7 @@ function CertificationsPage() {
               );
             })}
             {results.length === 0 && (
-              <p className="text-sm text-muted-foreground">Aucune norme ne correspond.</p>
+              <p className="text-sm text-muted-foreground">{t("common.noStandardMatches")}</p>
             )}
           </div>
         )}

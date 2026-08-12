@@ -20,6 +20,7 @@ import { useActiveCertification } from "@/lib/certifications";
 import { ingestDocument } from "@/lib/ai.functions";
 import { toast } from "sonner";
 import { Download, FileText, Loader2, Sparkles, Trash2 } from "lucide-react";
+import { useT } from "@/i18n";
 
 export const Route = createFileRoute("/_authenticated/bibliotheque")({
   head: () => ({
@@ -42,13 +43,18 @@ export const Route = createFileRoute("/_authenticated/bibliotheque")({
   component: Bibliotheque,
 });
 
-const kinds = [
-  { value: "cours", label: "Support de cours" },
-  { value: "norme", label: "Exemplaire de norme" },
-  { value: "autre", label: "Autre document" },
-];
+function useKinds() {
+  const t = useT();
+  return [
+    { value: "cours", label: t("common.courseSupport") },
+    { value: "norme", label: t("common.standardCopy") },
+    { value: "autre", label: t("common.otherDocument") },
+  ];
+}
 
 function Bibliotheque() {
+  const t = useT();
+  const kinds = useKinds();
   const { data: user } = useSession();
   const { certificationId } = useActiveCertification();
   const ingest = useServerFn(ingestDocument);
@@ -73,15 +79,13 @@ function Bibliotheque() {
     onSuccess: (result) => {
       const cleaned =
         result.removedLines > 0
-          ? ` Filigrane et habillage retirés (${result.removedLines} lignes).`
+          ? t("common.watermarkRemovedNotice", { count: result.removedLines })
           : "";
       toast.success(
-        `Document indexé : ${result.chunkCount} extraits disponibles pour l'IA.${cleaned}`,
+        t("common.documentIndexedToast", { count: result.chunkCount, cleaned }),
       );
       if (result.pageCount > 3 && result.chunkCount < 5) {
-        toast.warning(
-          "Ce fichier semble n'être qu'un extrait de prévisualisation : peu de contenu exploitable a été trouvé.",
-        );
+        toast.warning(t("common.previewExtractWarning"));
       }
       void queryClient.invalidateQueries({ queryKey: ["library_documents"] });
     },
@@ -99,7 +103,7 @@ function Bibliotheque() {
     const upload = await supabase.storage.from("iso-library").upload(path, file, { upsert: true });
     if (upload.error) {
       setUploading(false);
-      toast.error("Le téléversement a échoué.");
+      toast.error(t("common.uploadFailed"));
       return;
     }
     const { data: row, error } = await supabase
@@ -121,18 +125,18 @@ function Bibliotheque() {
       .single();
     setUploading(false);
     if (error || !row) {
-      toast.error("Enregistrement du document impossible.");
+      toast.error(t("common.documentSaveImpossible"));
       return;
     }
     void queryClient.invalidateQueries({ queryKey: ["library_documents"] });
-    toast.success("Document ajouté. Analyse en cours…");
+    toast.success(t("common.documentAddedAnalyzing"));
     analyse.mutate(row.id);
   }
 
   async function handleOpen(path: string) {
     const { data, error } = await supabase.storage.from("iso-library").createSignedUrl(path, 300);
     if (error || !data) {
-      toast.error("Lien indisponible.");
+      toast.error(t("common.linkUnavailable"));
       return;
     }
     window.open(data.signedUrl, "_blank", "noopener");
@@ -142,7 +146,7 @@ function Bibliotheque() {
     await supabase.storage.from("iso-library").remove([path]);
     const { error } = await supabase.from("library_documents").delete().eq("id", id);
     if (error) {
-      toast.error("Suppression impossible.");
+      toast.error(t("common.deleteImpossible"));
       return;
     }
     void queryClient.invalidateQueries({ queryKey: ["library_documents"] });
@@ -151,25 +155,23 @@ function Bibliotheque() {
   const list = documents.data ?? [];
 
   return (
-    <AppShell title="Mes documents">
+    <AppShell title={t("common.myDocuments")}>
       <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
-        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">Mes documents</h1>
+        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">{t("common.myDocuments")}</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Supports de cours, notes de formation et exemplaires personnels de normes. Chaque document
-          est privé, puis découpé et indexé pour servir de base de connaissances à l'assistant IA et
-          aux quiz générés.
+          {t("common.myDocumentsIntro")}
         </p>
 
         <Card className="mt-6">
           <CardHeader>
-            <CardTitle className="font-sans text-lg">Ajouter un document</CardTitle>
+            <CardTitle className="font-sans text-lg">{t("common.addDocument")}</CardTitle>
             <CardDescription>
-              PDF, TXT ou Markdown pour l'indexation IA. 50 Mo maximum par fichier.
+              {t("common.addDocumentDesc")}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <Select value={kind} onValueChange={setKind}>
-              <SelectTrigger aria-label="Type de document">
+              <SelectTrigger aria-label={t("common.documentType")}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -193,16 +195,16 @@ function Bibliotheque() {
             {uploading && (
               <p className="flex items-center gap-2 text-xs text-muted-foreground">
                 <Loader2 className="size-3.5 animate-spin" aria-hidden />
-                Téléversement en cours…
+                {t("common.uploadInProgress")}
               </p>
             )}
           </CardContent>
         </Card>
 
         <section className="mt-8">
-          <h2 className="font-sans text-xl font-semibold">Base de connaissances</h2>
+          <h2 className="font-sans text-xl font-semibold">{t("common.knowledgeBase")}</h2>
           {list.length === 0 ? (
-            <p className="mt-3 text-sm text-muted-foreground">Aucun document pour l'instant.</p>
+            <p className="mt-3 text-sm text-muted-foreground">{t("common.noDocumentYet")}</p>
           ) : (
             <ul className="mt-3 divide-y divide-border rounded-lg border border-border bg-card">
               {list.map((doc) => (
@@ -217,22 +219,22 @@ function Bibliotheque() {
                     </Badge>
                     {doc.status === "ready" ? (
                       <Badge className="bg-cert/15 text-cert" variant="secondary">
-                        Indexé · {doc.chunk_count} extraits
+                        {t("common.indexed")} · {doc.chunk_count} {t("common.extractsUnit")}
                       </Badge>
                     ) : doc.status === "error" ? (
                       <Badge variant="destructive" title={doc.error ?? undefined}>
-                        Analyse échouée
+                        {t("common.analysisFailed")}
                       </Badge>
                     ) : (
-                      <Badge variant="outline">En attente d'analyse</Badge>
+                      <Badge variant="outline">{t("common.awaitingAnalysis")}</Badge>
                     )}
                     {doc.is_partial ? (
                       <Badge
                         variant="outline"
                         className="border-amber-500/50 text-amber-600 dark:text-amber-400"
-                        title="Ce fichier porte des marques d'aperçu : il ne contient qu'un extrait de la norme. L'IA ne peut pas s'appuyer dessus pour couvrir l'intégralité des exigences."
+                        title={t("common.partialExtractTitle")}
                       >
-                        Extrait partiel
+                        {t("common.partialExtract")}
                       </Badge>
                     ) : null}
                   </div>
@@ -249,11 +251,11 @@ function Bibliotheque() {
                       ) : (
                         <Sparkles className="size-4" aria-hidden />
                       )}
-                      {doc.status === "ready" ? "Réindexer" : "Analyser"}
+                      {doc.status === "ready" ? t("common.reindex") : t("common.analyze")}
                     </Button>
                     <Button variant="ghost" size="sm" onClick={() => handleOpen(doc.storage_path)}>
                       <Download className="size-4" aria-hidden />
-                      Ouvrir
+                      {t("common.open")}
                     </Button>
                     <Button
                       variant="ghost"
@@ -261,7 +263,7 @@ function Bibliotheque() {
                       onClick={() => handleDelete(doc.id, doc.storage_path)}
                     >
                       <Trash2 className="size-4 text-destructive" aria-hidden />
-                      <span className="sr-only">Supprimer {doc.name}</span>
+                      <span className="sr-only">{t("common.deleteDocument", { name: doc.name })}</span>
                     </Button>
                   </div>
                 </li>
@@ -271,8 +273,7 @@ function Bibliotheque() {
           )}
           {list.some((d) => d.status === "error") && (
             <p className="mt-3 text-xs text-muted-foreground">
-              Une analyse a échoué : vérifiez que le fichier contient bien du texte sélectionnable
-              (les PDF scannés sans OCR ne peuvent pas être indexés).
+              {t("common.analysisFailedNotice")}
             </p>
           )}
         </section>

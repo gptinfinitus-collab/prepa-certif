@@ -1,4 +1,5 @@
 import { formatHours } from "@/lib/cpd";
+import { useT } from "@/i18n";
 
 /** Jauge circulaire de progression CPD (tokens sémantiques uniquement). */
 export function CpdRing({
@@ -10,6 +11,7 @@ export function CpdRing({
   target: number;
   size?: number;
 }) {
+  const t = useT();
   const safeTarget = target > 0 ? target : 1;
   const ratio = Math.min(total / safeTarget, 1);
   const stroke = 12;
@@ -24,7 +26,7 @@ export function CpdRing({
         height={size}
         className="-rotate-90"
         role="img"
-        aria-label={`Progression CPD : ${percent}%`}
+        aria-label={t("cpd.progressAriaLabel", { percent })}
       >
         <circle
           cx={size / 2}

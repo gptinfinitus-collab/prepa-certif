@@ -17,6 +17,7 @@ import {
   type StudyPlan,
 } from "@/lib/schedule";
 import { useSaveStudyPlan, useStudyPlan } from "@/lib/queries";
+import { useT } from "@/i18n";
 
 export const Route = createFileRoute("/_authenticated/planning")({
   head: () => ({
@@ -40,7 +41,18 @@ export const Route = createFileRoute("/_authenticated/planning")({
   component: Planning,
 });
 
+const dayLabelKeys: Record<number, string> = {
+  1: "mon",
+  2: "tue",
+  3: "wed",
+  4: "thu",
+  5: "fri",
+  6: "sat",
+  0: "sun",
+};
+
 function Planning() {
+  const t = useT();
   const { data: saved } = useStudyPlan();
   const save = useSaveStudyPlan();
   const { curriculum, certificationName } = useCurriculum();
@@ -62,25 +74,26 @@ function Planning() {
   }
 
   return (
-    <AppShell title="Mon planning">
+    <AppShell title={t("common.myPlanning")}>
       <div className="mx-auto max-w-6xl px-4 py-6 md:py-10">
-        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">Mon planning</h1>
+        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">{t("common.myPlanning")}</h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-          La préparation n'a pas de durée imposée : les {curriculum.modules.length} séances de{" "}
-          {certificationName} se répartissent automatiquement sur les jours que vous choisissez,
-          jusqu'à votre date d'examen le cas échéant.
+          {t("common.planningIntro", {
+            count: curriculum.modules.length,
+            certificationName,
+          })}
         </p>
 
 
         <div className="mt-8 grid gap-6 lg:grid-cols-[380px_1fr]">
           <Card className="h-fit">
             <CardHeader>
-              <CardTitle className="font-sans text-lg">Paramètres</CardTitle>
-              <CardDescription>Ajustez le rythme, le calendrier se recalcule.</CardDescription>
+              <CardTitle className="font-sans text-lg">{t("common.parameters")}</CardTitle>
+              <CardDescription>{t("common.adjustPaceDesc")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-5">
               <div className="space-y-1.5">
-                <Label htmlFor="start">Date de début</Label>
+                <Label htmlFor="start">{t("common.startDate")}</Label>
                 <Input
                   id="start"
                   type="date"
@@ -89,7 +102,7 @@ function Planning() {
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="exam">Date d'examen (optionnelle)</Label>
+                <Label htmlFor="exam">{t("common.examDateOptional")}</Label>
                 <Input
                   id="exam"
                   type="date"
@@ -98,24 +111,27 @@ function Planning() {
                 />
               </div>
               <div className="space-y-2">
-                <Label>Jours de travail</Label>
+                <Label>{t("common.workDays")}</Label>
                 <div className="flex flex-wrap gap-1.5">
-                  {dayNames.map((d) => (
-                    <Toggle
-                      key={d.value}
-                      pressed={plan.study_days.includes(d.value)}
-                      onPressedChange={() => toggleDay(d.value)}
-                      variant="outline"
-                      size="sm"
-                      aria-label={d.label}
-                    >
-                      {d.label}
-                    </Toggle>
-                  ))}
+                  {dayNames.map((d) => {
+                    const label = t(`common.daysShort.${dayLabelKeys[d.value]}`);
+                    return (
+                      <Toggle
+                        key={d.value}
+                        pressed={plan.study_days.includes(d.value)}
+                        onPressedChange={() => toggleDay(d.value)}
+                        variant="outline"
+                        size="sm"
+                        aria-label={label}
+                      >
+                        {label}
+                      </Toggle>
+                    );
+                  })}
                 </div>
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="perday">Séances par jour travaillé</Label>
+                <Label htmlFor="perday">{t("common.sessionsPerWorkedDayLabel")}</Label>
                 <Input
                   id="perday"
                   type="number"
@@ -132,29 +148,34 @@ function Planning() {
                 disabled={save.isPending || plan.study_days.length === 0}
                 onClick={() =>
                   save.mutate(plan, {
-                    onSuccess: () => toast.success("Planning enregistré."),
-                    onError: () => toast.error("Enregistrement impossible."),
+                    onSuccess: () => toast.success(t("common.planningSaved")),
+                    onError: () => toast.error(t("common.saveImpossible")),
                   })
                 }
               >
-                Enregistrer mon planning
+                {t("common.saveMyPlanning")}
               </Button>
               {plan.study_days.length === 0 ? (
-                <p className="text-xs text-destructive">Sélectionnez au moins un jour.</p>
+                <p className="text-xs text-destructive">{t("common.selectAtLeastOneDay")}</p>
               ) : null}
             </CardContent>
           </Card>
 
           <div>
             <div className="rounded-lg border border-border bg-card p-4">
-              <p className="text-sm">
-                <strong>{schedule.days.length}</strong> jours de travail ·{" "}
-                <strong>{schedule.effectiveModulesPerDay}</strong> séance(s) par jour · fin le{" "}
-                <strong>{schedule.endDate ? formatFrenchDate(schedule.endDate) : "—"}</strong>
-              </p>
+              <p
+                className="text-sm"
+                dangerouslySetInnerHTML={{
+                  __html: t("common.workDaysSummary", {
+                    days: schedule.days.length,
+                    perDay: schedule.effectiveModulesPerDay,
+                    end: schedule.endDate ? formatFrenchDate(schedule.endDate) : "—",
+                  }),
+                }}
+              />
               {schedule.compressed ? (
                 <p className="mt-2 text-sm text-accent-foreground">
-                  Le rythme a été augmenté automatiquement pour terminer avant votre date d'examen.
+                  {t("common.compressedPaceAutoNotice")}
                 </p>
               ) : null}
             </div>

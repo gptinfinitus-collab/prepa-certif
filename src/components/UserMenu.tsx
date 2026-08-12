@@ -8,6 +8,7 @@ import { useTheme } from "@/components/theme-provider";
 import { initialsOf } from "@/components/ProfileEditor";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Switch } from "@/components/ui/switch";
+import { useT } from "@/i18n";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,6 +25,7 @@ export function UserMenu({
   variant?: "avatar" | "card";
   compact?: boolean;
 }) {
+  const t = useT();
   const { data: profile } = useProfile();
   const { data: user } = useSession();
   const { resolved, setTheme } = useTheme();
@@ -33,7 +35,7 @@ export function UserMenu({
   const fullName =
     [profile?.first_name, profile?.last_name].filter(Boolean).join(" ") ||
     profile?.display_name ||
-    "Mon profil";
+    t("common.myProfile");
   const email = profile?.email ?? user?.email ?? "";
 
   async function signOut() {
@@ -62,7 +64,7 @@ export function UserMenu({
               "flex w-full items-center gap-2 rounded-lg border border-sidebar-border bg-sidebar-accent/40 px-3 py-2 text-left transition-colors hover:bg-sidebar-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
               compact && "justify-center px-1.5 py-1.5",
             )}
-            aria-label="Ouvrir le menu du profil"
+            aria-label={t("common.openProfileMenu")}
           >
             {avatar}
             {!compact && (
@@ -79,7 +81,7 @@ export function UserMenu({
           <button
             type="button"
             className="rounded-full ring-offset-background transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            aria-label="Ouvrir le menu du profil"
+            aria-label={t("common.openProfileMenu")}
           >
             {avatar}
           </button>
@@ -103,13 +105,13 @@ export function UserMenu({
         <DropdownMenuItem asChild>
           <Link to="/profil">
             <User className="size-4" aria-hidden />
-            Profil
+            {t("common.profile")}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link to="/parametres">
             <Settings className="size-4" aria-hidden />
-            Paramètres
+            {t("common.settingsNav")}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem
@@ -121,18 +123,18 @@ export function UserMenu({
         >
           <span className="flex items-center gap-2">
             <Moon className="size-4" aria-hidden />
-            Mode sombre
+            {t("common.darkMode")}
           </span>
           <Switch
             checked={resolved === "dark"}
             onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
-            aria-label="Basculer le mode sombre"
+            aria-label={t("common.toggleDarkMode")}
           />
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={() => void signOut()}>
           <LogOut className="size-4" aria-hidden />
-          Se déconnecter
+          {t("common.signOut")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

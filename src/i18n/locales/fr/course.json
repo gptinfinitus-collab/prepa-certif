@@ -90,5 +90,6 @@
     "mockExam": "Examen blanc",
     "rest": "Repos",
     "wrapup": "Bilan"
-  }
+  },
+  "progressAriaLabel": "Progression du cours"
 }

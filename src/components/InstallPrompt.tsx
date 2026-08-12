@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Download, Share, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BrandLogo } from "@/components/BrandLogo";
+import { useT } from "@/i18n";
 
 type BeforeInstallPromptEvent = Event & {
   prompt: () => Promise<void>;
@@ -29,6 +30,7 @@ function isIos() {
  * Aucun service worker : uniquement l'installabilité via le manifeste.
  */
 export function InstallPrompt() {
+  const t = useT();
   const [deferred, setDeferred] = useState<BeforeInstallPromptEvent | null>(null);
   const [visible, setVisible] = useState(false);
   const [iosHint, setIosHint] = useState(false);
@@ -87,30 +89,28 @@ export function InstallPrompt() {
       <div className="relative flex w-full max-w-md items-start gap-3 rounded-xl border border-border bg-card p-4 shadow-lg">
         <BrandLogo className="mt-0.5 size-10 shrink-0 text-primary" />
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-semibold text-foreground">Installer PREPA CERTIF</p>
+          <p className="text-sm font-semibold text-foreground">{t("common.installApp")}</p>
           {iosHint ? (
-            <p className="mt-1 text-xs text-muted-foreground">
-              Dans Safari, touchez <Share className="inline size-3.5 align-[-2px]" /> Partager, puis
-              « Sur l'écran d'accueil » pour installer l'application.
+            <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
+              <Share className="inline size-3.5 shrink-0" />
+              {t("common.iosInstallHint")}
             </p>
           ) : (
-            <p className="mt-1 text-xs text-muted-foreground">
-              Accédez à votre préparation directement depuis votre écran d'accueil ou votre bureau.
-            </p>
+            <p className="mt-1 text-xs text-muted-foreground">{t("common.installAppDesc")}</p>
           )}
           <div className="mt-3 flex gap-2">
             {iosHint ? (
               <Button size="sm" onClick={dismiss}>
-                J'ai compris
+                {t("common.gotIt")}
               </Button>
             ) : (
               <>
                 <Button size="sm" onClick={install}>
                   <Download className="size-4" />
-                  Installer
+                  {t("common.install")}
                 </Button>
                 <Button size="sm" variant="ghost" onClick={dismiss}>
-                  Plus tard
+                  {t("common.later")}
                 </Button>
               </>
             )}
@@ -119,7 +119,7 @@ export function InstallPrompt() {
         <button
           type="button"
           onClick={dismiss}
-          aria-label="Fermer l'invite d'installation"
+          aria-label={t("common.closeInstallPrompt")}
           className="absolute right-2 top-2 text-muted-foreground transition-colors hover:text-foreground"
         >
           <X className="size-4" />

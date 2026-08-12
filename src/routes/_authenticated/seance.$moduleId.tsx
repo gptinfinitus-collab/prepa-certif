@@ -11,7 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { typeLabels } from "@/data/program";
+import { getTypeLabels } from "@/data/program";
+import { useLocale, useT } from "@/i18n";
 import { useProgress, useSetModuleProgress } from "@/lib/queries";
 import {
   useLessonNote,
@@ -24,6 +25,11 @@ import { useCurriculum } from "@/lib/curriculum";
 import { buildLessonSections, lessonReadingMinutes } from "@/lib/lesson-sections";
 import { toast } from "sonner";
 import { ArrowLeft, ArrowRight, Clock, List, MessageCircleQuestion, NotebookPen } from "lucide-react";
+
+function SeanceMessage({ messageKey }: { messageKey: string }) {
+  const t = useT();
+  return <div className="p-10 text-center text-sm text-muted-foreground">{t(messageKey)}</div>;
+}
 
 const searchSchema = z.object({
   section: z.string().optional(),
@@ -48,18 +54,14 @@ export const Route = createFileRoute("/_authenticated/seance/$moduleId")({
       { name: "twitter:card", content: "summary" },
     ],
   }),
-  errorComponent: () => (
-    <div className="p-10 text-center text-sm text-muted-foreground">
-      Cette séance n'a pas pu être chargée.
-    </div>
-  ),
-  notFoundComponent: () => (
-    <div className="p-10 text-center text-sm text-muted-foreground">Séance introuvable.</div>
-  ),
+  errorComponent: () => <SeanceMessage messageKey="course.loadError" />,
+  notFoundComponent: () => <SeanceMessage messageKey="course.notFound" />,
   component: Seance,
 });
 
 function Seance() {
+  const t = useT();
+  const { locale } = useLocale();
   const { moduleId } = Route.useParams();
   const { section: sectionParam } = Route.useSearch();
   const navigate = useNavigate();
@@ -117,13 +119,13 @@ function Seance() {
 
   if (!module) {
     return (
-      <AppShell title="Séance">
+      <AppShell title={t("course.pageTitle")}>
         <div className="mx-auto max-w-3xl px-4 py-16 text-center">
           <p className="text-sm text-muted-foreground">
-            Cette séance n'existe pas dans le cursus de la certification active.
+            {t("course.notInTrack")}
           </p>
           <Button asChild className="mt-4" size="sm">
-            <Link to="/dashboard">Revenir au programme</Link>
+            <Link to="/dashboard">{t("course.backToProgram")}</Link>
           </Button>
         </div>
       </AppShell>
@@ -156,7 +158,7 @@ function Seance() {
     setProgress.mutate(
       { moduleId: id, completed: !done },
       {
-        onSuccess: () => toast.success(done ? "Séance rouverte." : "Séance terminée."),
+        onSuccess: () => toast.success(done ? t("course.sessionReopened") : t("course.sessionCompleted")),
       },
     );
     saveLessonProgress.mutate({
@@ -173,12 +175,12 @@ function Seance() {
   );
 
   return (
-    <AppShell title="Séance">
+    <AppShell title={t("course.pageTitle")}>
       <div className="mx-auto flex w-full max-w-6xl gap-8 px-4 py-6 md:py-10">
         <aside className="hidden w-60 shrink-0 lg:block">
           <div className="sticky top-6 space-y-3">
             <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-              Sommaire
+              {t("course.summary")}
             </p>
             {nav}
           </div>
@@ -187,15 +189,15 @@ function Seance() {
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
             <Link to="/dashboard" className="hover:text-foreground">
-              Programme
+              {t("course.programLink")}
             </Link>
             <span>/</span>
             <span>{module.dayLabel}</span>
-            <Badge variant="secondary">{typeLabels[module.type]}</Badge>
+            <Badge variant="secondary">{getTypeLabels(locale)[module.type]}</Badge>
             <ReferenceBadge reference={module} />
             <span className="flex items-center gap-1">
               <Clock className="size-3" aria-hidden />
-              {lessonReadingMinutes(module)} min
+              {lessonReadingMinutes(module)} {t("course.minutes")}
             </span>
           </div>
 
@@ -206,19 +208,23 @@ function Seance() {
             <CourseProgressBar value={percent} />
             <div className="mt-2 flex items-center justify-between gap-2 text-xs text-muted-foreground">
               <span>
-                Étape {currentIndex + 1} / {sections.length} — {readRequired}/{requiredIds.length}{" "}
-                sections lues
+                {t("course.stepCounter", {
+                  current: currentIndex + 1,
+                  total: sections.length,
+                  read: readRequired,
+                  required: requiredIds.length,
+                })}
               </span>
               <Sheet>
                 <SheetTrigger asChild>
                   <Button variant="ghost" size="sm" className="lg:hidden">
                     <List className="size-4" aria-hidden />
-                    Sommaire
+                    {t("course.summary")}
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="w-72 overflow-y-auto p-4">
                   <SheetHeader className="p-0">
-                    <SheetTitle className="text-sm">Sommaire du cours</SheetTitle>
+                    <SheetTitle className="text-sm">{t("course.courseSummary")}</SheetTitle>
                   </SheetHeader>
                   <div className="mt-4">{nav}</div>
                 </SheetContent>
@@ -250,7 +256,7 @@ function Seance() {
                           correct: i < result.correct,
                         })),
                       );
-                      toast.success("Quiz enregistré.");
+                      toast.success(t("course.quizSaved"));
                     }}
                   />
                 ) : (
@@ -269,8 +275,8 @@ function Seance() {
               className="h-auto w-full flex-col gap-1 py-2 lg:h-9 lg:w-auto lg:flex-row lg:py-0"
             >
               <ArrowLeft className="size-4 shrink-0" aria-hidden />
-              <span className="text-[10px] leading-none lg:hidden">Préc.</span>
-              <span className="hidden lg:inline">Précédent</span>
+              <span className="text-[10px] leading-none lg:hidden">{t("course.previousShort")}</span>
+              <span className="hidden lg:inline">{t("course.previous")}</span>
             </Button>
             {nextSection ? (
               <Button
@@ -278,8 +284,8 @@ function Seance() {
                 onClick={() => goTo(nextSection.id)}
                 className="h-auto w-full flex-col gap-1 py-2 lg:h-9 lg:w-auto lg:flex-row lg:py-0"
               >
-                <span className="text-[10px] leading-none lg:hidden">Continuer</span>
-                <span className="hidden lg:inline">Continuer</span>
+                <span className="text-[10px] leading-none lg:hidden">{t("course.continue")}</span>
+                <span className="hidden lg:inline">{t("course.continue")}</span>
                 <ArrowRight className="size-4 shrink-0" aria-hidden />
               </Button>
             ) : (
@@ -291,10 +297,10 @@ function Seance() {
                 className="h-auto w-full flex-col gap-1 py-2 lg:h-9 lg:w-auto lg:flex-row lg:py-0"
               >
                 <span className="text-[10px] leading-none lg:hidden">
-                  {done ? "Rouvrir" : "Terminer"}
+                  {done ? t("course.reopen") : t("course.finish")}
                 </span>
                 <span className="hidden lg:inline">
-                  {done ? "Rouvrir la séance" : "Terminer la séance"}
+                  {done ? t("course.reopenSession") : t("course.finishSession")}
                 </span>
               </Button>
             )}
@@ -306,8 +312,8 @@ function Seance() {
               className="h-auto w-full flex-col gap-1 py-2 lg:h-9 lg:w-auto lg:flex-row lg:py-0"
             >
               <NotebookPen className="size-4 shrink-0" aria-hidden />
-              <span className="text-[10px] leading-none lg:hidden">Note</span>
-              <span className="hidden lg:inline">Ma note</span>
+              <span className="text-[10px] leading-none lg:hidden">{t("course.note")}</span>
+              <span className="hidden lg:inline">{t("course.myNote")}</span>
             </Button>
             <Button
               variant="ghost"
@@ -317,39 +323,38 @@ function Seance() {
             >
               <Link to="/assistant">
                 <MessageCircleQuestion className="size-4 shrink-0" aria-hidden />
-                <span className="text-[10px] leading-none lg:hidden">IA</span>
-                <span className="hidden lg:inline">Demander à l'IA</span>
+                <span className="text-[10px] leading-none lg:hidden">{t("course.askAi")}</span>
+                <span className="hidden lg:inline">{t("course.askAiFull")}</span>
               </Link>
             </Button>
           </div>
 
           {!canComplete && !done ? (
             <p className="mt-3 text-xs text-muted-foreground">
-              La séance sera marquée terminée une fois toutes les sections parcourues et le quiz
-              validé.
+              {t("course.completionHint")}
             </p>
           ) : null}
 
           {noteOpen ? (
             <div className="mt-6 space-y-2">
               <label htmlFor="lesson-note" className="text-sm font-medium">
-                Note personnelle
+                {t("course.personalNoteLabel")}
               </label>
               <Textarea
                 id="lesson-note"
                 value={noteDraft}
                 onChange={(e) => setNoteDraft(e.target.value)}
                 rows={5}
-                placeholder="Vos remarques, points à revoir, questions à poser…"
+                placeholder={t("course.notePlaceholder")}
               />
               <Button
                 size="sm"
                 disabled={saveNote.isPending}
                 onClick={() =>
-                  saveNote.mutate(noteDraft, { onSuccess: () => toast.success("Note enregistrée.") })
+                  saveNote.mutate(noteDraft, { onSuccess: () => toast.success(t("course.noteSaved")) })
                 }
               >
-                Enregistrer la note
+                {t("course.saveNote")}
               </Button>
             </div>
           ) : null}
@@ -361,7 +366,7 @@ function Seance() {
                 params={{ moduleId: String(nextModule.id) }}
                 className="text-sm text-muted-foreground hover:text-foreground"
               >
-                Séance suivante : {nextModule.title}
+                {t("course.nextSession", { title: nextModule.title })}
               </Link>
             </div>
           ) : null}

@@ -2,6 +2,7 @@ import { BookOpenCheck, Compass, ShieldCheck, Lightbulb, GraduationCap } from "l
 
 import { Badge } from "@/components/ui/badge";
 import type { NormativeRef, ReferenceType } from "@/data/program";
+import { useT } from "@/i18n";
 import { cn } from "@/lib/utils";
 
 const icons: Record<ReferenceType, typeof BookOpenCheck> = {
@@ -12,19 +13,22 @@ const icons: Record<ReferenceType, typeof BookOpenCheck> = {
   PEDAGOGICAL_EXAMPLE: GraduationCap,
 };
 
-const prefixes: Record<ReferenceType, string> = {
-  REQUIREMENT: "Exigence",
-  GUIDANCE: "Ligne directrice",
-  CERTIFICATION_RULE: "Règle de certification",
-  GOOD_PRACTICE: "Bonne pratique",
-  PEDAGOGICAL_EXAMPLE: "Exemple pédagogique",
+const prefixKeys: Record<ReferenceType, string> = {
+  REQUIREMENT: "course.reference.requirement",
+  GUIDANCE: "course.reference.guidance",
+  CERTIFICATION_RULE: "course.reference.certificationRule",
+  GOOD_PRACTICE: "course.reference.goodPractice",
+  PEDAGOGICAL_EXAMPLE: "course.reference.pedagogicalExample",
 };
 
 /** Libellé lisible du référentiel, ex. « ISO 45001:2018 + Amd 1:2024 ». */
-export function referenceLabel(ref: NormativeRef): string | null {
+export function referenceLabel(
+  ref: NormativeRef,
+  translate: (key: string) => string = (key) => key,
+): string | null {
   const type = ref.referenceType;
   if (!type) return null;
-  const parts: string[] = [prefixes[type]];
+  const parts: string[] = [translate(prefixKeys[type])];
   if (ref.standardRef) {
     parts.push(ref.standardEdition ? `${ref.standardRef}:${ref.standardEdition}` : ref.standardRef);
   }
@@ -44,7 +48,8 @@ export function ReferenceBadge({
   reference: NormativeRef;
   className?: string;
 }) {
-  const label = referenceLabel(reference);
+  const t = useT();
+  const label = referenceLabel(reference, t);
   if (!label || !reference.referenceType) return null;
   const Icon = icons[reference.referenceType];
   const isRequirement = reference.referenceType === "REQUIREMENT";
