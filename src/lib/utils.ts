@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
+import type { TFunction } from "i18next";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
