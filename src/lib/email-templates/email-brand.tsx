@@ -134,7 +134,38 @@ export function EmailLogo() {
   );
 }
 
-export function EmailFooter() {
+export type EmailLocale = "fr" | "en";
+
+export function EmailFooter({ locale = "fr" }: { locale?: EmailLocale }) {
+  if (locale === "en") {
+    return (
+      <>
+        <Hr style={{ borderColor: colors.border, margin: "32px 0 20px" }} />
+        <Text style={footer}>
+          You are receiving this email from <strong>{SITE_NAME}</strong>.
+          <br />
+          If you have any question, contact us at{" "}
+          <Link href={`mailto:${CONTACT_EMAIL}`} style={link}>
+            {CONTACT_EMAIL}
+          </Link>
+          .
+        </Text>
+        <Text style={footerLinks}>
+          <Link href={`${SITE_URL}/mentions-legales`} style={link}>
+            Legal notice
+          </Link>
+          {" · "}
+          <Link href={`${SITE_URL}/confidentialite`} style={link}>
+            Privacy policy
+          </Link>
+          {" · "}
+          <Link href={`${SITE_URL}/cgu`} style={link}>
+            Terms of use
+          </Link>
+        </Text>
+      </>
+    );
+  }
   return (
     <>
       <Hr style={{ borderColor: colors.border, margin: "32px 0 20px" }} />
