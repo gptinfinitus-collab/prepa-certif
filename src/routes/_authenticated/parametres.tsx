@@ -13,7 +13,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { legalDocuments } from "@/lib/legal";
 import { useSetOnboarded } from "@/lib/learning";
 import { LogOut, Moon, CalendarRange, Sparkles } from "lucide-react";
-import { useT } from "@/i18n";
+import { useLocale, useT } from "@/i18n";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export const Route = createFileRoute("/_authenticated/parametres")({
@@ -36,6 +36,7 @@ export const Route = createFileRoute("/_authenticated/parametres")({
 
 function Parametres() {
   const t = useT();
+  const { locale } = useLocale();
   const { theme, resolved, setTheme } = useTheme();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -189,7 +190,7 @@ function Parametres() {
             <CardContent className="flex flex-wrap gap-2">
               {legalDocuments.map((doc) => (
                 <Button key={doc.slug} asChild size="sm" variant="outline">
-                  <Link to={doc.path}>{doc.title}</Link>
+                  <Link to={doc.path}>{doc.title[locale]}</Link>
                 </Button>
               ))}
             </CardContent>
