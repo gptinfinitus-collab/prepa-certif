@@ -185,21 +185,21 @@ function ManualSectionPage() {
   return (
     <AppShell title={t("manual.title")}>
       <div className="space-y-4">
-        <div className="flex flex-wrap items-center gap-2">
-          <Badge variant="secondary" className="gap-1">
+        <div className="flex items-center gap-2">
+          <Badge variant="secondary" className="shrink-0 gap-1">
             <BookOpen className="size-3" aria-hidden />
             {toc.data?.publisher ?? "SGS"}
           </Badge>
-          <span className="text-xs text-muted-foreground">{toc.data?.reference}</span>
-          <div className="ml-auto lg:hidden">
+          <span className="min-w-0 flex-1 truncate text-xs text-muted-foreground">{toc.data?.reference}</span>
+          <div className="shrink-0 md:hidden">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="outline" size="sm">
-                  <Search className="mr-1.5 size-4" aria-hidden />
-                  {t("manual.summaryAndSearch")}
+                <Button variant="outline" size="sm" aria-label={t("manual.summaryAndSearch")}>
+                  <Search className="size-4 sm:mr-1.5" aria-hidden />
+                  <span className="hidden sm:inline">{t("manual.summaryAndSearch")}</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-[88vw] max-w-sm overflow-y-auto">
+              <SheetContent side="left" className="flex w-[88vw] max-w-sm flex-col overflow-y-auto">
                 <SheetTitle className="mb-3 text-sm">{t("manual.summaryAndSearch")}</SheetTitle>
                 {tocPanel}
               </SheetContent>
@@ -209,8 +209,9 @@ function ManualSectionPage() {
 
         <CourseProgressBar value={percent} />
 
-        <div className="grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
-          <aside className="hidden lg:block">{tocPanel}</aside>
+        <div className="grid gap-6 md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-[300px_minmax(0,1fr)]">
+          <aside className="hidden self-start md:sticky md:top-4 md:block">{tocPanel}</aside>
+
 
           <div className="min-w-0 space-y-4">
             {section.isLoading ? (
