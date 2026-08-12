@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { EXAM_BODIES, EXAM_BODY_DISCLAIMER, type ExamBodyId } from "@/lib/exam-bodies";
 import { useExamBody, useSetExamBody } from "@/lib/learning";
 import { Check } from "lucide-react";
+import { useT } from "@/i18n";
 
 /** Choix de l'organisme d'examen visé (PECB, CQI/IRCA, autre). */
 export function ExamBodyPicker({
@@ -13,16 +14,17 @@ export function ExamBodyPicker({
   onSelected?: (id: ExamBodyId) => void;
   className?: string;
 }) {
+  const t = useT();
   const { examBody } = useExamBody();
   const setExamBody = useSetExamBody();
 
   function choose(id: ExamBodyId) {
     setExamBody.mutate(id, {
       onSuccess: () => {
-        toast.success("Profil d'examen enregistré.");
+        toast.success(t("quiz.examBodyPicker.saved"));
         onSelected?.(id);
       },
-      onError: () => toast.error("Enregistrement impossible."),
+      onError: () => toast.error(t("quiz.examBodyPicker.saveError")),
     });
   }
 
@@ -62,7 +64,7 @@ export function ExamBodyPicker({
           disabled={setExamBody.isPending}
           onClick={() => setExamBody.mutate(null)}
         >
-          Réinitialiser mon profil d'examen
+          {t("quiz.examBodyPicker.reset")}
         </Button>
       ) : null}
     </div>
