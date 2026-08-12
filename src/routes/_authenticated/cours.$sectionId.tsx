@@ -184,7 +184,8 @@ function ManualSectionPage() {
 
   return (
     <AppShell title={t("manual.title")}>
-      <div className="space-y-4">
+      <div className="mx-auto max-w-6xl space-y-4 px-4 py-6 md:py-8">
+
         <div className="flex items-center gap-2">
           <Badge variant="secondary" className="shrink-0 gap-1">
             <BookOpen className="size-3" aria-hidden />
