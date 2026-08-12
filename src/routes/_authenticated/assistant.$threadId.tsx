@@ -1,6 +1,7 @@
 import { createFileRoute, useParams } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
 import { AssistantChat } from "@/components/AssistantChat";
+import { useT } from "@/i18n";
 
 export const Route = createFileRoute("/_authenticated/assistant/$threadId")({
   head: () => ({
@@ -24,9 +25,10 @@ export const Route = createFileRoute("/_authenticated/assistant/$threadId")({
 });
 
 function AssistantThreadPage() {
+  const t = useT();
   const { threadId } = useParams({ from: "/_authenticated/assistant/$threadId" });
   return (
-    <AppShell title="Assistant IA">
+    <AppShell title={t("nav.assistant")}>
       <AssistantChat key={threadId} threadId={threadId} />
     </AppShell>
   );
