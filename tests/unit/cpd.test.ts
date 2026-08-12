@@ -34,7 +34,14 @@ describe("cpd", () => {
   });
 
   it("génère un CSV avec en-têtes et guillemets échappés", () => {
-    const lines = toCsv(entries).split("\r\n");
+    const lines = toCsv(entries, {
+      date: "Date",
+      activity: "Activité",
+      type: "Type",
+      hours: "Heures",
+      reference: "Référence",
+      notes: "Notes",
+    }).split("\r\n");
     expect(lines[0]).toBe('"Date";"Activité";"Type";"Heures";"Référence";"Notes"');
     expect(lines[1]).toBe('"2026-03-04";"Audit interne";"Audit";"7.5";"RA-12";""');
     expect(lines[2]).toContain('"Lecture ""ISO 19011"""');
