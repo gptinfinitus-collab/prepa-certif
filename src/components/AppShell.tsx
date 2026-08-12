@@ -41,7 +41,6 @@ import { cn } from "@/lib/utils";
 import { certificationAccentStyle } from "@/lib/cert-theme";
 import { useIsSuperAdmin } from "@/lib/admin";
 import { useT } from "@/i18n";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 const navItems = [
   { to: "/dashboard", key: "nav.dashboard", icon: Home },
