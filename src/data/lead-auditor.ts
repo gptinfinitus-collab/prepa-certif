@@ -207,6 +207,8 @@ function specs(label: string): LeadModuleSpec[] {
   ];
 }
 
+export const leadAuditorSpecsFr = specs;
+
 export function leadAuditorModules(
   label: string,
   week: number,
