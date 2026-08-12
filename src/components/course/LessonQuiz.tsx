@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { QuizItem } from "@/data/program";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useT } from "@/i18n";
 import { cn } from "@/lib/utils";
 
 export interface LessonQuizResult {
@@ -22,6 +23,7 @@ export function LessonQuiz({
   onSubmit: (result: LessonQuizResult) => void;
   submitted: boolean;
 }) {
+  const t = useT();
   const [revealed, setRevealed] = useState<Record<number, boolean>>({});
   const [marks, setMarks] = useState<Record<number, boolean>>({});
 
@@ -32,10 +34,7 @@ export function LessonQuiz({
 
   return (
     <div className="space-y-4">
-      <p className="text-sm text-muted-foreground">
-        Répondez mentalement ou par écrit, affichez la réponse attendue, puis indiquez si votre
-        réponse était juste. Vos réponses alimentent l'analyse de vos points faibles.
-      </p>
+      <p className="text-sm text-muted-foreground">{t("course.quiz.instructions")}</p>
 
       {items.map((item, index) => (
         <Card key={index} className="gap-3 p-4">
@@ -55,14 +54,14 @@ export function LessonQuiz({
                   variant={marks[index] === true ? "default" : "outline"}
                   onClick={() => setMarks((prev) => ({ ...prev, [index]: true }))}
                 >
-                  J'avais juste
+                  {t("course.quiz.wasCorrect")}
                 </Button>
                 <Button
                   size="sm"
                   variant={marks[index] === false ? "secondary" : "outline"}
                   onClick={() => setMarks((prev) => ({ ...prev, [index]: false }))}
                 >
-                  À revoir
+                  {t("course.quiz.toReview")}
                 </Button>
               </div>
             </>
@@ -73,7 +72,7 @@ export function LessonQuiz({
                 size="sm"
                 onClick={() => setRevealed((prev) => ({ ...prev, [index]: true }))}
               >
-                Afficher la réponse attendue
+                {t("course.quiz.showExpected")}
               </Button>
             </div>
           )}
@@ -85,11 +84,13 @@ export function LessonQuiz({
           disabled={answered === 0}
           onClick={() => onSubmit({ correct, total: answered })}
         >
-          {submitted ? "Mettre à jour mon résultat" : "Valider le quiz"}
+          {submitted ? t("course.quiz.updateResult") : t("course.quiz.validate")}
         </Button>
         <span className={cn("text-xs", answered === 0 ? "text-muted-foreground" : "text-foreground")}>
-          {answered} / {items.length} question(s) auto-évaluée(s)
-          {answered > 0 ? ` — ${Math.round((correct / answered) * 100)} % de réussite` : ""}
+          {t("course.quiz.answeredCount", { answered, total: items.length })}
+          {answered > 0
+            ? t("course.quiz.successRate", { rate: Math.round((correct / answered) * 100) })
+            : ""}
         </span>
       </div>
     </div>
