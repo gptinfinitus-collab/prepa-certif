@@ -96,7 +96,7 @@ export function ShareApp() {
   async function nativeShare() {
     if (canShare) {
       try {
-        await navigator.share({ title: SHARE_TITLE, text: SHARE_TEXT, url: SHARE_URL });
+        await navigator.share({ title: SHARE_TITLE, text: t("common.shareText"), url: SHARE_URL });
         setOpen(false);
         return;
       } catch (error) {
@@ -118,7 +118,7 @@ export function ShareApp() {
   function shareFacebook() {
     const url = encodeURIComponent(SHARE_URL);
     window.open(
-      `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${encodeURIComponent(SHARE_TEXT)}`,
+      `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${encodeURIComponent(t("common.shareText"))}`,
       "_blank",
       "noopener,noreferrer",
     );
