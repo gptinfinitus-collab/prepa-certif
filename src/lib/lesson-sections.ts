@@ -37,23 +37,46 @@ export interface LessonSection {
   blocks: ContentBlock[];
 }
 
-const KIND_TITLES: Record<SectionKind, string> = {
-  intro: "Pourquoi cette notion est importante",
-  objectives: "Objectifs d'apprentissage",
-  course: "Cours",
-  examples: "Exemples concrets",
-  auditor: "Le regard de l'auditeur",
-  evidence: "Quelles preuves rechercher ?",
-  exam: "Point examen",
-  mistakes: "Erreurs fréquentes",
-  scenario: "Mise en situation",
-  takeaways: "À retenir",
-  flashcards: "Flashcards",
-  quiz: "Quiz de fin de séance",
+type Locale = "fr" | "en";
+
+const KIND_TITLES: Record<Locale, Record<SectionKind, string>> = {
+  fr: {
+    intro: "Pourquoi cette notion est importante",
+    objectives: "Objectifs d'apprentissage",
+    course: "Cours",
+    examples: "Exemples concrets",
+    auditor: "Le regard de l'auditeur",
+    evidence: "Quelles preuves rechercher ?",
+    exam: "Point examen",
+    mistakes: "Erreurs fréquentes",
+    scenario: "Mise en situation",
+    takeaways: "À retenir",
+    flashcards: "Flashcards",
+    quiz: "Quiz de fin de séance",
+  },
+  en: {
+    intro: "Why this topic matters",
+    objectives: "Learning objectives",
+    course: "Lesson",
+    examples: "Concrete examples",
+    auditor: "The auditor's view",
+    evidence: "What evidence to look for?",
+    exam: "Exam focus",
+    mistakes: "Common mistakes",
+    scenario: "Practice scenario",
+    takeaways: "Key takeaways",
+    flashcards: "Flashcards",
+    quiz: "End-of-session quiz",
+  },
 };
 
-export function sectionTitle(kind: SectionKind): string {
-  return KIND_TITLES[kind];
+const OBJECTIVE_LABEL: Record<Locale, string> = {
+  fr: "Objectif de la séance",
+  en: "Session objective",
+};
+
+export function sectionTitle(kind: SectionKind, locale: Locale = "fr"): string {
+  return KIND_TITLES[locale][kind];
 }
 
 /** Découpe un markdown en parties, une par titre de niveau 3. */
@@ -96,7 +119,8 @@ export function moduleExtras(module: ProgramModule): LessonExtras {
  * Construit le parcours séquencé d'une séance : une étape par bloc pédagogique,
  * dans l'ordre imposé par la trame de cours.
  */
-export function buildLessonSections(module: ProgramModule): LessonSection[] {
+export function buildLessonSections(module: ProgramModule, locale: Locale = "fr"): LessonSection[] {
+  const titles = KIND_TITLES[locale];
   const extras = moduleExtras(module);
   const sections: LessonSection[] = [];
   const parts = splitMarkdownSections(module.contentMarkdown);
@@ -105,10 +129,10 @@ export function buildLessonSections(module: ProgramModule): LessonSection[] {
   sections.push({
     id: "intro",
     kind: "intro",
-    title: KIND_TITLES.intro,
+    title: titles.intro,
     required: true,
     blocks: [
-      { type: "markdown", content: `**Objectif de la séance :** ${module.objective}` },
+      { type: "markdown", content: `**${OBJECTIVE_LABEL[locale]} :** ${module.objective}` },
       ...(intro
         ? [{ type: "markdown" as const, content: intro.body.split("\n\n").slice(0, 1).join("\n\n") }]
         : []),
@@ -119,7 +143,7 @@ export function buildLessonSections(module: ProgramModule): LessonSection[] {
     sections.push({
       id: "objectives",
       kind: "objectives",
-      title: KIND_TITLES.objectives,
+      title: titles.objectives,
       required: true,
       blocks: [{ type: "list", variant: "objective", items: extras.objectives }],
     });
@@ -130,7 +154,7 @@ export function buildLessonSections(module: ProgramModule): LessonSection[] {
     sections.push({
       id: `course-${index}`,
       kind: "course",
-      title: part.heading ?? KIND_TITLES.course,
+      title: part.heading ?? titles.course,
       required: true,
       blocks: [{ type: "markdown", content: part.body }],
     });
@@ -140,7 +164,7 @@ export function buildLessonSections(module: ProgramModule): LessonSection[] {
     sections.push({
       id: "examples",
       kind: "examples",
-      title: KIND_TITLES.examples,
+      title: titles.examples,
       required: true,
       blocks: [{ type: "examples", items: extras.examples }],
     });
@@ -150,7 +174,7 @@ export function buildLessonSections(module: ProgramModule): LessonSection[] {
     sections.push({
       id: "auditor",
       kind: "auditor",
-      title: KIND_TITLES.auditor,
+      title: titles.auditor,
       required: true,
       blocks: [{ type: "list", variant: "auditor", items: extras.auditorView }],
     });
@@ -160,7 +184,7 @@ export function buildLessonSections(module: ProgramModule): LessonSection[] {
     sections.push({
       id: "evidence",
       kind: "evidence",
-      title: KIND_TITLES.evidence,
+      title: titles.evidence,
       required: true,
       blocks: [{ type: "list", variant: "evidence", items: extras.evidence }],
     });
@@ -170,7 +194,7 @@ export function buildLessonSections(module: ProgramModule): LessonSection[] {
     sections.push({
       id: "exam",
       kind: "exam",
-      title: KIND_TITLES.exam,
+      title: titles.exam,
       required: true,
       blocks: [{ type: "list", variant: "exam", items: extras.examFocus }],
     });
@@ -180,7 +204,7 @@ export function buildLessonSections(module: ProgramModule): LessonSection[] {
     sections.push({
       id: "mistakes",
       kind: "mistakes",
-      title: KIND_TITLES.mistakes,
+      title: titles.mistakes,
       required: true,
       blocks: [{ type: "list", variant: "mistake", items: extras.commonMistakes }],
     });
@@ -190,7 +214,7 @@ export function buildLessonSections(module: ProgramModule): LessonSection[] {
     sections.push({
       id: "scenario",
       kind: "scenario",
-      title: KIND_TITLES.scenario,
+      title: titles.scenario,
       required: true,
       blocks: [{ type: "scenario", scenario: extras.scenario }],
     });
@@ -201,7 +225,7 @@ export function buildLessonSections(module: ProgramModule): LessonSection[] {
     sections.push({
       id: "takeaways",
       kind: "takeaways",
-      title: KIND_TITLES.takeaways,
+      title: titles.takeaways,
       required: true,
       blocks: [{ type: "list", variant: "key", items: keyPoints }],
     });
@@ -211,7 +235,7 @@ export function buildLessonSections(module: ProgramModule): LessonSection[] {
     sections.push({
       id: "flashcards",
       kind: "flashcards",
-      title: KIND_TITLES.flashcards,
+      title: titles.flashcards,
       required: false,
       blocks: [{ type: "flashcards", cards: extras.flashcards }],
     });
@@ -221,7 +245,7 @@ export function buildLessonSections(module: ProgramModule): LessonSection[] {
     sections.push({
       id: "quiz",
       kind: "quiz",
-      title: KIND_TITLES.quiz,
+      title: titles.quiz,
       required: true,
       blocks: [{ type: "quiz", items: module.quiz }],
     });

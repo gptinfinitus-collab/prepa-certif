@@ -72,7 +72,7 @@ function Seance() {
   const [noteDraft, setNoteDraft] = useState("");
   const [noteOpen, setNoteOpen] = useState(false);
 
-  const sections = useMemo(() => (module ? buildLessonSections(module) : []), [module]);
+  const sections = useMemo(() => (module ? buildLessonSections(module, locale) : []), [module, locale]);
   const currentId =
     sectionParam && sections.some((s) => s.id === sectionParam)
       ? sectionParam
