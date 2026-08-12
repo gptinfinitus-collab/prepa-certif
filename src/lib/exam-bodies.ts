@@ -10,8 +10,8 @@ export interface ExamBodyDefinition {
   name: string;
   short: string;
   description: string;
-  /** Consigne transmise à l'IA pour caler le style des questions. */
-  promptStyle: string;
+  /** Consigne transmise à l'IA pour caler le style des questions (par langue). */
+  promptStyle: { fr: string; en: string };
   /** Nombre de questions conseillé par session d'entraînement. */
   suggestedCount: number;
   /** Mode d'entraînement le plus représentatif de l'examen. */
@@ -25,8 +25,10 @@ export const EXAM_BODIES: ExamBodyDefinition[] = [
     short: "PECB",
     description:
       "Examen en domaines de compétences, questions à scénario courtes et essais argumentés, livre ouvert.",
-    promptStyle:
-      "Style PECB : questions organisées par domaine de compétence, énoncés de scénario courts, réponse argumentée renvoyant explicitement à la clause. Épreuve à livre ouvert : privilégie l'analyse plutôt que la mémorisation.",
+    promptStyle: {
+      fr: "Style PECB : questions organisées par domaine de compétence, énoncés de scénario courts, réponse argumentée renvoyant explicitement à la clause. Épreuve à livre ouvert : privilégie l'analyse plutôt que la mémorisation.",
+      en: "PECB style: questions organized by competence domain, short scenario statements, argued answers explicitly referring to the clause. Open-book exam: favour analysis over memorization.",
+    },
     suggestedCount: 6,
     suggestedMode: "qcm",
   },
@@ -36,8 +38,10 @@ export const EXAM_BODIES: ExamBodyDefinition[] = [
     short: "CQI/IRCA",
     description:
       "Examen écrit de fin de formation : mises en situation longues, rédaction de non-conformités et de constats.",
-    promptStyle:
-      "Style CQI/IRCA : mises en situation d'audit détaillées, l'apprenant doit identifier le constat, le qualifier (non-conformité majeure/mineure, opportunité d'amélioration), citer la preuve et rédiger l'énoncé de non-conformité.",
+    promptStyle: {
+      fr: "Style CQI/IRCA : mises en situation d'audit détaillées, l'apprenant doit identifier le constat, le qualifier (non-conformité majeure/mineure, opportunité d'amélioration), citer la preuve et rédiger l'énoncé de non-conformité.",
+      en: "CQI/IRCA style: detailed audit scenarios; the learner must identify the finding, classify it (major/minor nonconformity, opportunity for improvement), cite the evidence and write the nonconformity statement.",
+    },
     suggestedCount: 4,
     suggestedMode: "ouverte",
   },
@@ -47,8 +51,10 @@ export const EXAM_BODIES: ExamBodyDefinition[] = [
     short: "Autre",
     description:
       "Préparation générique Lead Auditor : compétences d'audit attendues par la majorité des organismes.",
-    promptStyle:
-      "Style générique Lead Auditor : mélange de questions de connaissance (ISO 19011, processus de certification) et de mises en situation de pilotage d'équipe d'audit.",
+    promptStyle: {
+      fr: "Style générique Lead Auditor : mélange de questions de connaissance (ISO 19011, processus de certification) et de mises en situation de pilotage d'équipe d'audit.",
+      en: "Generic Lead Auditor style: a mix of knowledge questions (ISO 19011, certification process) and scenarios about leading an audit team.",
+    },
     suggestedCount: 5,
     suggestedMode: "qcm",
   },
