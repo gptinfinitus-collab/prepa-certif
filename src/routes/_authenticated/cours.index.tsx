@@ -36,7 +36,7 @@ function ManualIndexPage() {
 
   return (
     <AppShell title={t("manual.title")}>
-      <div className="space-y-6">
+      <div className="mx-auto max-w-6xl space-y-6 px-4 py-6 md:py-8">
         <Card>
           <CardHeader className="space-y-2">
             <Badge variant="secondary" className="w-fit gap-1">
