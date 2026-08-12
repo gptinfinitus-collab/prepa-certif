@@ -2,6 +2,7 @@ import { type ReactNode, useEffect, useState } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   BookMarked,
+  BookOpen,
   Brain,
   Bot,
   CalendarRange,
@@ -47,6 +48,7 @@ const navItems = [
   { to: "/planning", key: "nav.planning", icon: CalendarRange },
   { to: "/quiz", key: "nav.quiz", icon: Brain },
   { to: "/assistant", key: "nav.assistant", icon: Bot },
+  { to: "/cours", key: "nav.course", icon: BookOpen },
   { to: "/references", key: "nav.references", icon: BookMarked },
   { to: "/glossaire", key: "nav.glossary", icon: SpellCheck },
   { to: "/annexes", key: "nav.annexes", icon: ListChecks },
