@@ -13,6 +13,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useT } from "@/i18n";
 
 export const Route = createFileRoute("/_authenticated/quiz")({
   head: () => ({
@@ -43,6 +44,7 @@ interface Flashcard extends QuizItem {
 type Verdict = "known" | "review";
 
 function QuizPage() {
+  const t = useT();
   const { curriculum, certificationName } = useCurriculum();
   const { certificationId } = useActiveCertification();
 
@@ -57,7 +59,7 @@ function QuizPage() {
     );
     const fromExam = (curriculum.annexes.finalMockExam?.mcq ?? []).map((item) => ({
       ...item,
-      source: "Examen blanc",
+      source: t("quiz.examTopicLabel"),
     }));
     return [...fromModules, ...fromExam];
   }, [curriculum]);
@@ -83,25 +85,24 @@ function QuizPage() {
   return (
     <AppShell title="Quiz">
       <div className="mx-auto max-w-3xl px-4 py-8 md:py-10">
-        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">Entraînement et niveau</h1>
+        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">{t("quiz.pageTitle")}</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Quiz générés par l'IA sur {certificationName}, corrigés avec renvoi aux clauses, et suivi
-          de votre progression par chapitre.
+          {t("quiz.pageIntro", { certificationName })}
         </p>
 
         <Tabs value={tab} onValueChange={setTab} className="mt-8">
           <TabsList className="no-scrollbar flex w-full max-w-full justify-start overflow-x-auto sm:w-auto">
             <TabsTrigger value="training" className="shrink-0 px-2.5 text-[0.8rem] sm:px-3 sm:text-sm">
-              Entraînement
+              {t("quiz.tabs.training")}
             </TabsTrigger>
             <TabsTrigger value="history" className="shrink-0 px-2.5 text-[0.8rem] sm:px-3 sm:text-sm">
-              Historique
+              {t("quiz.tabs.history")}
             </TabsTrigger>
             <TabsTrigger value="analysis" className="shrink-0 px-2.5 text-[0.8rem] sm:px-3 sm:text-sm">
-              Mon niveau
+              {t("quiz.tabs.analysis")}
             </TabsTrigger>
             <TabsTrigger value="cards" className="shrink-0 px-2.5 text-[0.8rem] sm:px-3 sm:text-sm">
-              Fiches
+              {t("quiz.tabs.cards")}
             </TabsTrigger>
           </TabsList>
 
@@ -138,11 +139,8 @@ function QuizPage() {
             {total === 0 ? (
               <Card>
                 <CardHeader>
-                  <CardTitle className="font-sans text-lg">Aucune fiche disponible</CardTitle>
-                  <CardDescription>
-                    Le cursus de cette certification ne contient pas encore de questions rédigées.
-                    Utilisez l'entraînement généré par l'IA à partir de vos documents.
-                  </CardDescription>
+                  <CardTitle className="font-sans text-lg">{t("quiz.cards.noneTitle")}</CardTitle>
+                  <CardDescription>{t("quiz.cards.noneDesc")}</CardDescription>
                 </CardHeader>
               </Card>
             ) : (
@@ -150,7 +148,7 @@ function QuizPage() {
                 <CardHeader className="gap-2">
                   <div className="flex items-center justify-between gap-3">
                     <CardDescription>
-                      Fiche {Math.min(index + 1, total)} sur {total}
+                      {t("quiz.cards.counter", { current: Math.min(index + 1, total), total })}
                     </CardDescription>
                     <Badge variant="secondary">{current?.source}</Badge>
                   </div>
@@ -164,15 +162,15 @@ function QuizPage() {
                     </p>
                   ) : (
                     <Button variant="outline" onClick={() => setRevealed(true)}>
-                      Afficher la réponse
+                      {t("quiz.cards.showAnswer")}
                     </Button>
                   )}
                   <div className="flex flex-wrap gap-2 border-t border-border pt-4">
                     <Button onClick={() => record("known")} disabled={!revealed}>
-                      Je maîtrise
+                      {t("quiz.cards.know")}
                     </Button>
                     <Button variant="outline" onClick={() => record("review")} disabled={!revealed}>
-                      À revoir
+                      {t("quiz.cards.review")}
                     </Button>
                     <Button
                       variant="ghost"
@@ -184,11 +182,11 @@ function QuizPage() {
                       }}
                     >
                       <RotateCcw className="size-4" aria-hidden />
-                      Recommencer
+                      {t("quiz.cards.restart")}
                     </Button>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    {known} maîtrisée(s) sur {answered} fiche(s) traitée(s).
+                    {t("quiz.cards.summary", { known, answered })}
                   </p>
                 </CardContent>
               </Card>
