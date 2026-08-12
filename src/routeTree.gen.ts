@@ -34,6 +34,7 @@ import { Route as AuthenticatedQuizRouteImport } from './routes/_authenticated/q
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AuthenticatedAssistantIndexRouteImport } from './routes/_authenticated/assistant.index'
 import { Route as AuthenticatedAssistantThreadIdRouteImport } from './routes/_authenticated/assistant.$threadId'
+import { Route as AuthenticatedCoursIndexRouteImport } from './routes/_authenticated/cours.index'
 import { Route as AuthenticatedCoursSectionIdRouteImport } from './routes/_authenticated/cours.$sectionId'
 import { Route as AuthenticatedSeanceModuleIdRouteImport } from './routes/_authenticated/seance.$moduleId'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
@@ -167,6 +168,11 @@ const AuthenticatedAssistantThreadIdRoute =
     path: '/assistant/$threadId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedCoursIndexRoute = AuthenticatedCoursIndexRouteImport.update({
+  id: '/cours/',
+  path: '/cours/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedCoursSectionIdRoute =
   AuthenticatedCoursSectionIdRouteImport.update({
     id: '/cours/$sectionId',
@@ -217,6 +223,7 @@ export interface FileRoutesByFullPath {
   '/cours/$sectionId': typeof AuthenticatedCoursSectionIdRoute
   '/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
   '/assistant/': typeof AuthenticatedAssistantIndexRoute
+  '/cours/': typeof AuthenticatedCoursIndexRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
 }
@@ -247,6 +254,7 @@ export interface FileRoutesByTo {
   '/cours/$sectionId': typeof AuthenticatedCoursSectionIdRoute
   '/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
   '/assistant': typeof AuthenticatedAssistantIndexRoute
+  '/cours': typeof AuthenticatedCoursIndexRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
 }
@@ -279,6 +287,7 @@ export interface FileRoutesById {
   '/_authenticated/cours/$sectionId': typeof AuthenticatedCoursSectionIdRoute
   '/_authenticated/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
   '/_authenticated/assistant/': typeof AuthenticatedAssistantIndexRoute
+  '/_authenticated/cours/': typeof AuthenticatedCoursIndexRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
 }
@@ -311,6 +320,7 @@ export interface FileRouteTypes {
     | '/cours/$sectionId'
     | '/seance/$moduleId'
     | '/assistant/'
+    | '/cours/'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
   fileRoutesByTo: FileRoutesByTo
@@ -341,6 +351,7 @@ export interface FileRouteTypes {
     | '/cours/$sectionId'
     | '/seance/$moduleId'
     | '/assistant'
+    | '/cours'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
   id:
@@ -372,6 +383,7 @@ export interface FileRouteTypes {
     | '/_authenticated/cours/$sectionId'
     | '/_authenticated/seance/$moduleId'
     | '/_authenticated/assistant/'
+    | '/_authenticated/cours/'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
   fileRoutesById: FileRoutesById
@@ -572,6 +584,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAssistantThreadIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/cours/': {
+      id: '/_authenticated/cours/'
+      path: '/cours'
+      fullPath: '/cours/'
+      preLoaderRoute: typeof AuthenticatedCoursIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/cours/$sectionId': {
       id: '/_authenticated/cours/$sectionId'
       path: '/cours/$sectionId'
@@ -617,6 +636,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedCoursSectionIdRoute: typeof AuthenticatedCoursSectionIdRoute
   AuthenticatedSeanceModuleIdRoute: typeof AuthenticatedSeanceModuleIdRoute
   AuthenticatedAssistantIndexRoute: typeof AuthenticatedAssistantIndexRoute
+  AuthenticatedCoursIndexRoute: typeof AuthenticatedCoursIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -633,6 +653,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCoursSectionIdRoute: AuthenticatedCoursSectionIdRoute,
   AuthenticatedSeanceModuleIdRoute: AuthenticatedSeanceModuleIdRoute,
   AuthenticatedAssistantIndexRoute: AuthenticatedAssistantIndexRoute,
+  AuthenticatedCoursIndexRoute: AuthenticatedCoursIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
