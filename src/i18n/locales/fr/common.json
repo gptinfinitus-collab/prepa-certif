@@ -27,5 +27,10 @@
   "theme": "Thème",
   "darkMode": "Mode sombre",
   "noResults": "Aucun résultat.",
-  "open": "Ouvrir"
+  "open": "Ouvrir",
+  "myProfile": "Mon profil",
+  "profilePhotoIdentity": "Votre photo et votre identité, affichées dans l'application.",
+  "identity": "Identité",
+  "croppablePhotoNameDesc": "Photo recadrable, prénom et nom.",
+  "openingConversation": "Ouverture de votre conversation…"
 }
