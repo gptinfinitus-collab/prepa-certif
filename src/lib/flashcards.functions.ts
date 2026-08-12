@@ -36,6 +36,7 @@ function evaluationPrompt(
         "- 'incorrect': the answer is wrong, off topic, or misses the essentials.",
         "",
         "Write the feedback in the same language as the learner's answer (English if it is in English, French if it is in French); if ambiguous, use English.",
+        "Reply ONLY in the following JSON format:",
         '{"status": "correct|partial|incorrect", "feedback": "..."}',
         "",
         "Question:",
