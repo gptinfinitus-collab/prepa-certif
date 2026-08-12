@@ -1,0 +1,37 @@
+{
+  "title": "Preparation assistant",
+  "subtitle": "Direct questions about {{certificationName}}, auditing, and your indexed documents.",
+  "defaultCertification": "your ISO certification",
+  "history": {
+    "trigger": "Conversation history",
+    "title": "Conversations",
+    "description": "Your exchanges with the assistant, by certification.",
+    "newThread": "New conversation",
+    "deleteThread": "Delete {{title}}"
+  },
+  "start": {
+    "title": "Where to start?",
+    "description": "Pick a question or write your own.",
+    "suggestions": [
+      "Explain the difference between a major and a minor nonconformity.",
+      "How do I prepare an audit plan compliant with ISO 19011?",
+      "What audit evidence should I collect to assess leadership (clause 5)?"
+    ]
+  },
+  "loading": "The assistant is reviewing your documents…",
+  "input": {
+    "placeholder": "Your question…",
+    "ariaLabel": "Your question",
+    "send": "Send"
+  },
+  "sources": {
+    "count_one": "{{count}} excerpt from your documents",
+    "count_other": "{{count}} excerpts from your documents",
+    "label": "Excerpt {{index}} — "
+  },
+  "errors": {
+    "sessionExpired": "Session expired, please sign in again.",
+    "unavailable": "Assistant unavailable.",
+    "answerUnavailable": "AI response unavailable."
+  }
+}

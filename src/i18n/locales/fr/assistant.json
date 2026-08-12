@@ -1,0 +1,37 @@
+{
+  "title": "Assistant de préparation",
+  "subtitle": "Questions directes sur {{certificationName}}, l'audit et vos documents indexés.",
+  "defaultCertification": "votre certification ISO",
+  "history": {
+    "trigger": "Historique des conversations",
+    "title": "Conversations",
+    "description": "Vos échanges avec l'assistant, par certification.",
+    "newThread": "Nouvelle conversation",
+    "deleteThread": "Supprimer {{title}}"
+  },
+  "start": {
+    "title": "Par où commencer ?",
+    "description": "Choisissez une question ou écrivez la vôtre.",
+    "suggestions": [
+      "Explique la différence entre non-conformité majeure et mineure.",
+      "Comment préparer un plan d'audit conforme à l'ISO 19011 ?",
+      "Quelles preuves collecter pour évaluer le leadership (chapitre 5) ?"
+    ]
+  },
+  "loading": "L'assistant consulte vos documents…",
+  "input": {
+    "placeholder": "Votre question…",
+    "ariaLabel": "Votre question",
+    "send": "Envoyer"
+  },
+  "sources": {
+    "count_one": "{{count}} extrait de vos documents",
+    "count_other": "{{count}} extraits de vos documents",
+    "label": "Extrait {{index}} — "
+  },
+  "errors": {
+    "sessionExpired": "Session expirée, reconnectez-vous.",
+    "unavailable": "Assistant indisponible.",
+    "answerUnavailable": "Réponse IA indisponible."
+  }
+}
