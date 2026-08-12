@@ -9,7 +9,7 @@ import { BrandLogo } from "@/components/BrandLogo";
 import { AuthBackdrop } from "@/components/AuthBackdrop";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { authErrorMessage, fieldErrors, newPasswordSchema } from "@/lib/auth-schemas";
+import { authErrorKey, fieldErrors, newPasswordSchema } from "@/lib/auth-schemas";
 import { useT } from "@/i18n";
 
 import { pageHead } from "@/lib/seo";
@@ -56,6 +56,14 @@ function ResetPasswordPage() {
     };
   }, []);
 
+
+  /** Message d'erreur d'authentification dans la langue active. */
+  function authError(error: unknown): string {
+    const key = error instanceof Error ? authErrorKey(error.message) : null;
+    if (key) return t(`auth.${key}`);
+    return error instanceof Error && error.message ? error.message : t("auth.genericError");
+  }
+
   async function handleSubmit() {
     const parsed = newPasswordSchema.safeParse({ password, confirm });
     if (!parsed.success) {
@@ -72,7 +80,7 @@ function ResetPasswordPage() {
       navigate({ to: "/dashboard", replace: true });
     } catch (error) {
       setFormError(
-        error instanceof Error ? authErrorMessage(error.message) : t("auth.genericError"),
+        authError(error),
       );
     } finally {
       setLoading(false);
@@ -126,7 +134,7 @@ function ResetPasswordPage() {
                   </button>
                 </div>
                 {errors["password"] ? (
-                  <p className="text-xs text-destructive">{errors["password"]}</p>
+                  <p className="text-xs text-destructive">{t(`auth.${errors["password"]}`)}</p>
                 ) : null}
               </div>
 
@@ -140,7 +148,7 @@ function ResetPasswordPage() {
                   onChange={(e) => setConfirm(e.target.value)}
                 />
                 {errors["confirm"] ? (
-                  <p className="text-xs text-destructive">{errors["confirm"]}</p>
+                  <p className="text-xs text-destructive">{t(`auth.${errors["confirm"]}`)}</p>
                 ) : null}
               </div>
 

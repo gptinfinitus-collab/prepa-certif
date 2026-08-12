@@ -125,7 +125,8 @@ export function formatShortDate(date: Date, bcp47 = "fr-FR"): string {
 
 export interface PaceStatus {
   expectedCompleted: number;
-  label: string;
+  /** Écart entre séances terminées et séances attendues (positif = en avance). */
+  diff: number;
   tone: "ahead" | "ontrack" | "behind";
 }
 
@@ -138,10 +139,9 @@ export function computePace(result: ScheduleResult, completedCount: number): Pac
     if (day.date <= today) expected += day.modules.length;
   }
   const diff = completedCount - expected;
-  if (diff >= 1) return { expectedCompleted: expected, label: `En avance de ${diff} séance(s)`, tone: "ahead" };
-  if (diff <= -1)
-    return { expectedCompleted: expected, label: `En retard de ${Math.abs(diff)} séance(s)`, tone: "behind" };
-  return { expectedCompleted: expected, label: "Dans les temps", tone: "ontrack" };
+  if (diff >= 1) return { expectedCompleted: expected, diff, tone: "ahead" };
+  if (diff <= -1) return { expectedCompleted: expected, diff, tone: "behind" };
+  return { expectedCompleted: expected, diff: 0, tone: "ontrack" };
 }
 
 export const dayNames = [

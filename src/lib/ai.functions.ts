@@ -249,7 +249,7 @@ export const generateQuizQuestions = createServerFn({ method: "POST" })
                 `Topic: ${topic}.`,
                 `Level: ${data.difficulty}.`,
                 trackBrief,
-                body ? `Target exam body: ${body.name}. ${body.promptStyle}` : "",
+                body ? `Target exam body: ${body.name}. ${body.promptStyle.en}` : "",
                 sourcesBlock ? `Excerpts from the learner's documents:\n${sourcesBlock}` : "",
                 data.mode === "qcm"
                   ? `Generate ${data.count} multiple-choice questions in English.`
@@ -263,7 +263,7 @@ export const generateQuizQuestions = createServerFn({ method: "POST" })
                 `Thème : ${topic}.`,
                 `Niveau : ${data.difficulty}.`,
                 trackBrief,
-                body ? `Organisme d'examen visé : ${body.name}. ${body.promptStyle}` : "",
+                body ? `Organisme d'examen visé : ${body.name}. ${body.promptStyle.fr}` : "",
                 sourcesBlock ? `Extraits des documents de l'apprenant :\n${sourcesBlock}` : "",
                 data.mode === "qcm"
                   ? `Génère ${data.count} questions à choix multiples en français.`

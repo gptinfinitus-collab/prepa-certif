@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  authErrorMessage,
+  authErrorKey,
   credentialsSchema,
   emailSchema,
   fieldErrors,
@@ -71,7 +71,7 @@ describe("newPasswordSchema", () => {
     const result = newPasswordSchema.safeParse({ password: "secret123", confirm: "autre123" });
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(fieldErrors(result.error)["confirm"]).toBe("Les mots de passe ne correspondent pas");
+      expect(fieldErrors(result.error)["confirm"]).toBe("validation.passwordsMismatch");
     }
   });
 });
@@ -89,15 +89,13 @@ describe("safePath", () => {
   });
 });
 
-describe("authErrorMessage", () => {
-  it("traduit les erreurs connues", () => {
-    expect(authErrorMessage("Invalid login credentials")).toBe("E-mail ou mot de passe incorrect.");
-    expect(authErrorMessage("User already registered")).toBe(
-      "Un compte existe déjà avec cette adresse e-mail.",
-    );
+describe("authErrorKey", () => {
+  it("mappe les erreurs connues sur une clé de traduction", () => {
+    expect(authErrorKey("Invalid login credentials")).toBe("errors.invalidCredentials");
+    expect(authErrorKey("User already registered")).toBe("errors.alreadyRegistered");
   });
 
-  it("laisse passer les messages inconnus", () => {
-    expect(authErrorMessage("Boom")).toBe("Boom");
+  it("renvoie null pour les messages inconnus", () => {
+    expect(authErrorKey("Boom")).toBeNull();
   });
 });

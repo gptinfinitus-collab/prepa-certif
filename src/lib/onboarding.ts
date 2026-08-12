@@ -104,18 +104,27 @@ export function suggestPlan(input: {
   return { ...plan, modules_per_day: Math.min(Math.max(perDay, 1), MAX_MODULES_PER_DAY) };
 }
 
-/** Message court résumant la faisabilité du rythme proposé. */
-export function paceSummary(plan: StudyPlan, moduleCount: number, today = new Date()): string {
+/**
+ * Résumé de faisabilité du rythme, sous forme de clé de traduction et de
+ * paramètres : le libellé est produit dans la langue active par l'interface.
+ */
+export interface PaceSummary {
+  key: "paceFree" | "paceSpread" | "paceTight";
+  params: { n: number; days: number; perDay: number };
+}
+
+export function paceSummary(plan: StudyPlan, moduleCount: number, today = new Date()): PaceSummary {
   if (!plan.exam_date) {
-    return `${moduleCount} séances à votre rythme, ${plan.modules_per_day} par jour de révision.`;
+    return {
+      key: "paceFree",
+      params: { n: moduleCount, days: 0, perDay: plan.modules_per_day },
+    };
   }
   const exam = parseISODate(plan.exam_date);
   const lastDay = new Date(exam);
   lastDay.setDate(lastDay.getDate() - 1);
   const available = countStudyDaysBetween(today, lastDay, plan.study_days);
   const capacity = available * plan.modules_per_day;
-  if (capacity >= moduleCount) {
-    return `${moduleCount} séances réparties sur ${available} jours de révision, ${plan.modules_per_day} par jour.`;
-  }
-  return `Rythme serré : ${moduleCount} séances pour ${available} jours de révision disponibles. Ajoutez des jours ou avancez la date de début.`;
+  const params = { n: moduleCount, days: available, perDay: plan.modules_per_day };
+  return { key: capacity >= moduleCount ? "paceSpread" : "paceTight", params };
 }

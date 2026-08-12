@@ -14,7 +14,7 @@ import { AuthBackdrop } from "@/components/AuthBackdrop";
 import { AppleIcon, GoogleIcon } from "@/components/BrandIcons";
 import { ArrowLeft, Eye, EyeOff, Loader2 } from "lucide-react";
 import {
-  authErrorMessage,
+  authErrorKey,
   credentialsSchema,
   fieldErrors,
   forgotPasswordSchema,
@@ -73,6 +73,14 @@ function AuthPage() {
     };
   }, [navigate, destination]);
 
+
+  /** Message d'erreur d'authentification dans la langue active. */
+  function authError(error: unknown): string {
+    const key = error instanceof Error ? authErrorKey(error.message) : null;
+    if (key) return t(`auth.${key}`);
+    return error instanceof Error && error.message ? error.message : t("auth.genericError");
+  }
+
   function resetErrors() {
     setErrors({});
     setFormError(null);
@@ -128,9 +136,7 @@ function AuthPage() {
         if (error) throw error;
       }
     } catch (error) {
-      const message =
-        error instanceof Error ? authErrorMessage(error.message) : t("auth.genericError");
-      setFormError(message);
+      setFormError(authError(error));
     } finally {
       setLoading(false);
     }
@@ -152,7 +158,7 @@ function AuthPage() {
       setResetSent(true);
     } catch (error) {
       setFormError(
-        error instanceof Error ? authErrorMessage(error.message) : t("auth.genericError"),
+        authError(error),
       );
     } finally {
       setLoading(false);
@@ -210,7 +216,7 @@ function AuthPage() {
                       onChange={(e) => setEmail(e.target.value)}
                     />
                     {errors["email"] ? (
-                      <p className="text-xs text-destructive">{errors["email"]}</p>
+                      <p className="text-xs text-destructive">{t(`auth.${errors["email"]}`)}</p>
                     ) : null}
                   </div>
                   {errorBlock}
@@ -296,7 +302,7 @@ function AuthPage() {
                           onChange={(e) => setEmail(e.target.value)}
                         />
                         {errors["email"] ? (
-                          <p className="text-xs text-destructive">{errors["email"]}</p>
+                          <p className="text-xs text-destructive">{t(`auth.${errors["email"]}`)}</p>
                         ) : null}
                       </div>
 
@@ -328,7 +334,7 @@ function AuthPage() {
                           </button>
                         </div>
                         {errors["password"] ? (
-                          <p className="text-xs text-destructive">{errors["password"]}</p>
+                          <p className="text-xs text-destructive">{t(`auth.${errors["password"]}`)}</p>
                         ) : null}
                       </div>
 

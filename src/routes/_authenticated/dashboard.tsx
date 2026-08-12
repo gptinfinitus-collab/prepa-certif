@@ -105,7 +105,7 @@ function Dashboard() {
           ) : null}
           <p className="mt-4 text-xs text-muted-foreground">
             {schedule?.endDate
-              ? `${t("common.estimatedEndDate", { date: formatShortDate(schedule.endDate, bcp47) })} · ${pace?.label ?? ""}`
+              ? `${t("common.estimatedEndDate", { date: formatShortDate(schedule.endDate, bcp47) })} · ${pace ? t(`common.pace_${pace.tone}`, { n: Math.abs(pace.diff) }) : ""}`
               : t("common.configurePlanningNotice")}
           </p>
         </section>
@@ -159,9 +159,10 @@ function Dashboard() {
               <CardTitle className="text-sm font-medium text-muted-foreground">{t("common.pace")}</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="font-sans text-xl font-semibold">{pace?.label ?? "—"}</p>
+              <p className="font-sans text-xl font-semibold">{pace ? t(`common.pace_${pace.tone}`, { n: Math.abs(pace.diff) }) : "—"}</p>
               <p className="mt-2 text-xs text-muted-foreground">
-                {t("common.expectedToday")} : {t("common.sessionsCount", { count: pace?.expectedCompleted ?? 0 })}
+                {t("common.expectedToday")}{locale === "fr" ? " : " : ": "}
+                {t("common.sessionsCount", { count: pace?.expectedCompleted ?? 0 })}
               </p>
               {schedule?.compressed ? (
                 <p className="mt-2 text-xs text-accent-foreground">
