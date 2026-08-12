@@ -67,7 +67,7 @@ function ManualIndexPage() {
         </Card>
 
         <div className="space-y-3">
-          <div className="relative max-w-md">
+          <div className="relative w-full sm:max-w-md lg:max-w-xl">
             <Search
               className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
               aria-hidden
@@ -116,7 +116,7 @@ function ManualIndexPage() {
               {t("common.loading")}
             </div>
           ) : (
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
               {(toc.data?.chapters ?? []).map((chapter) => (
                 <Card key={chapter.name}>
                   <CardHeader className="pb-2">
