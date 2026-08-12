@@ -111,7 +111,7 @@ function ManualSectionPage() {
                 ? t("manual.searching")
                 : t("manual.resultCount", { count: search.data?.length ?? 0 })}
             </p>
-            <ul className="max-h-[60vh] space-y-1 overflow-y-auto pr-1">
+            <ul className="max-h-[calc(100dvh-14rem)] space-y-1 overflow-y-auto pr-1 md:max-h-[calc(100dvh-16rem)]">
               {(search.data ?? []).map((hit) => (
                 <li key={hit.id}>
                   <Link
@@ -135,7 +135,10 @@ function ManualSectionPage() {
             </ul>
           </div>
         ) : (
-          <nav className="max-h-[60vh] space-y-3 overflow-y-auto pr-1" aria-label={t("manual.summary")}>
+          <nav
+            className="max-h-[calc(100dvh-14rem)] space-y-3 overflow-y-auto pr-1 md:max-h-[calc(100dvh-16rem)]"
+            aria-label={t("manual.summary")}
+          >
             {(toc.data?.chapters ?? []).map((chapter) => (
               <div key={chapter.name} className="space-y-1">
                 <p className="px-1 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
@@ -182,21 +185,21 @@ function ManualSectionPage() {
   return (
     <AppShell title={t("manual.title")}>
       <div className="space-y-4">
-        <div className="flex flex-wrap items-center gap-2">
-          <Badge variant="secondary" className="gap-1">
+        <div className="flex items-center gap-2">
+          <Badge variant="secondary" className="shrink-0 gap-1">
             <BookOpen className="size-3" aria-hidden />
             {toc.data?.publisher ?? "SGS"}
           </Badge>
-          <span className="text-xs text-muted-foreground">{toc.data?.reference}</span>
-          <div className="ml-auto lg:hidden">
+          <span className="min-w-0 flex-1 truncate text-xs text-muted-foreground">{toc.data?.reference}</span>
+          <div className="shrink-0 md:hidden">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="outline" size="sm">
-                  <Search className="mr-1.5 size-4" aria-hidden />
-                  {t("manual.summaryAndSearch")}
+                <Button variant="outline" size="sm" aria-label={t("manual.summaryAndSearch")}>
+                  <Search className="size-4 sm:mr-1.5" aria-hidden />
+                  <span className="hidden sm:inline">{t("manual.summaryAndSearch")}</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-[88vw] max-w-sm overflow-y-auto">
+              <SheetContent side="left" className="flex w-[88vw] max-w-sm flex-col overflow-y-auto">
                 <SheetTitle className="mb-3 text-sm">{t("manual.summaryAndSearch")}</SheetTitle>
                 {tocPanel}
               </SheetContent>
@@ -206,8 +209,9 @@ function ManualSectionPage() {
 
         <CourseProgressBar value={percent} />
 
-        <div className="grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
-          <aside className="hidden lg:block">{tocPanel}</aside>
+        <div className="grid gap-6 md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-[300px_minmax(0,1fr)]">
+          <aside className="hidden self-start md:sticky md:top-4 md:block">{tocPanel}</aside>
+
 
           <div className="min-w-0 space-y-4">
             {section.isLoading ? (
@@ -220,56 +224,63 @@ function ManualSectionPage() {
             ) : (
               <>
                 <Card>
-                  <CardContent className="space-y-4 p-5">
+                  <CardContent className="space-y-4 p-4 sm:p-5 lg:p-7">
                     <div className="space-y-1">
                       <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                         {section.data.chapter} · {t("manual.page", { page: section.data.page })}
                       </p>
-                      <h1 className="text-lg font-semibold leading-tight">
+                      <h1 className="text-lg font-semibold leading-tight sm:text-xl">
                         <Highlighted text={section.data.title} query={query} />
                       </h1>
                     </div>
-                    <MarkdownView>{section.data.markdown}</MarkdownView>
+                    <div className="lg:max-w-[70ch]">
+                      <MarkdownView>{section.data.markdown}</MarkdownView>
+                    </div>
                   </CardContent>
                 </Card>
 
-                <div className="grid grid-cols-3 gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    disabled={!section.data.previousId}
-                    onClick={() =>
-                      section.data?.previousId &&
-                      navigate({
-                        to: "/cours/$sectionId",
-                        params: { sectionId: section.data.previousId },
-                        search: { q: query || undefined },
-                      })
-                    }
-                  >
-                    <ArrowLeft className="mr-1.5 size-4" aria-hidden />
-                    {t("manual.previous")}
-                  </Button>
-                  <Button variant="secondary" size="sm" onClick={askAssistant}>
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <Button variant="secondary" size="sm" className="w-full sm:order-2 sm:w-auto sm:flex-1" onClick={askAssistant}>
                     <Bot className="mr-1.5 size-4" aria-hidden />
                     <span className="truncate">{t("manual.askAi")}</span>
                   </Button>
-                  <Button
-                    size="sm"
-                    disabled={!section.data.nextId}
-                    onClick={() =>
-                      section.data?.nextId &&
-                      navigate({
-                        to: "/cours/$sectionId",
-                        params: { sectionId: section.data.nextId },
-                        search: { q: query || undefined },
-                      })
-                    }
-                  >
-                    {t("manual.next")}
-                    <ArrowRight className="ml-1.5 size-4" aria-hidden />
-                  </Button>
+                  <div className="grid grid-cols-2 gap-2 sm:contents">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-10 sm:order-1 sm:h-9 sm:flex-1"
+                      disabled={!section.data.previousId}
+                      onClick={() =>
+                        section.data?.previousId &&
+                        navigate({
+                          to: "/cours/$sectionId",
+                          params: { sectionId: section.data.previousId },
+                          search: { q: query || undefined },
+                        })
+                      }
+                    >
+                      <ArrowLeft className="mr-1.5 size-4" aria-hidden />
+                      <span className="truncate">{t("manual.previous")}</span>
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="h-10 sm:order-3 sm:h-9 sm:flex-1"
+                      disabled={!section.data.nextId}
+                      onClick={() =>
+                        section.data?.nextId &&
+                        navigate({
+                          to: "/cours/$sectionId",
+                          params: { sectionId: section.data.nextId },
+                          search: { q: query || undefined },
+                        })
+                      }
+                    >
+                      <span className="truncate">{t("manual.next")}</span>
+                      <ArrowRight className="ml-1.5 size-4" aria-hidden />
+                    </Button>
+                  </div>
                 </div>
+
               </>
             )}
           </div>
