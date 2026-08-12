@@ -284,5 +284,13 @@
     "cannotDisableSelf": "Vous ne pouvez pas désactiver votre propre compte.",
     "cannotDeleteSelf": "Vous ne pouvez pas supprimer votre propre compte.",
     "unsupportedFormat": "Format non analysable : convertissez le document en PDF, TXT ou Markdown."
+  },
+  "free": "gratuit",
+  "paid": "payant",
+  "internalLinks": {
+    "references": "Textes normatifs et résumés par chapitre.",
+    "glossary": "Définitions clés attendues à l'examen.",
+    "annexes": "Trames d'audit et examen blanc.",
+    "cpd": "Suivi de votre développement professionnel."
   }
 }

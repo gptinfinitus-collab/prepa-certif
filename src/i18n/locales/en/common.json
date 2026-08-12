@@ -284,5 +284,13 @@
     "cannotDisableSelf": "You cannot deactivate your own account.",
     "cannotDeleteSelf": "You cannot delete your own account.",
     "unsupportedFormat": "Unsupported format: convert the document to PDF, TXT or Markdown."
+  },
+  "free": "free",
+  "paid": "paid",
+  "internalLinks": {
+    "references": "Normative texts and clause-by-clause summaries.",
+    "glossary": "Key definitions expected at the exam.",
+    "annexes": "Audit templates and mock exam.",
+    "cpd": "Tracking of your professional development."
   }
 }
