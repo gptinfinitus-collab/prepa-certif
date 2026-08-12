@@ -103,10 +103,23 @@ export function legalHead(slug: LegalDocument["slug"], locale: Locale = "fr") {
       { property: "og:image", content: "https://prepa-certif.app/og-image.png" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "PREPA CERTIF — Préparation aux certifications ISO" },
+      {
+        property: "og:image:alt",
+        content:
+          locale === "en"
+            ? "PREPA CERTIF — ISO certification preparation"
+            : "PREPA CERTIF — Préparation aux certifications ISO",
+      },
+      { property: "og:locale", content: locale === "en" ? "en_US" : "fr_FR" },
+      { property: "og:locale:alternate", content: locale === "en" ? "fr_FR" : "en_US" },
       { name: "twitter:image", content: "https://prepa-certif.app/og-image.png" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: url }],
+    links: [
+      { rel: "canonical", href: url },
+      { rel: "alternate", hrefLang: "fr-FR", href: url },
+      { rel: "alternate", hrefLang: "en-GB", href: url },
+      { rel: "alternate", hrefLang: "x-default", href: url },
+    ],
   };
 }
