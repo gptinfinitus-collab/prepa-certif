@@ -3,14 +3,14 @@ import { z } from "zod";
 export const emailSchema = z
   .string()
   .trim()
-  .min(1, "L'adresse e-mail est requise")
-  .max(255, "Adresse e-mail trop longue")
-  .email("Adresse e-mail invalide");
+  .min(1, "validation.emailRequired")
+  .max(255, "validation.emailTooLong")
+  .email("validation.emailInvalid");
 
 export const passwordSchema = z
   .string()
-  .min(6, "Le mot de passe doit contenir au moins 6 caractères")
-  .max(72, "Le mot de passe ne peut pas dépasser 72 caractères");
+  .min(6, "validation.passwordTooShort")
+  .max(72, "validation.passwordTooLong");
 
 export const credentialsSchema = z.object({
   email: emailSchema,
@@ -26,7 +26,7 @@ export const newPasswordSchema = z
   })
   .refine((v) => v.password === v.confirm, {
     path: ["confirm"],
-    message: "Les mots de passe ne correspondent pas",
+    message: "validation.passwordsMismatch",
   });
 
 /** Convertit une erreur Zod en dictionnaire champ -> message. */
@@ -45,12 +45,16 @@ export function safePath(value: string | undefined): string {
   return value;
 }
 
-/** Messages Supabase traduits pour l'utilisateur final. */
-export function authErrorMessage(message: string): string {
+/**
+ * Convertit un message Supabase en clé de traduction du namespace `auth`.
+ * Renvoie `null` quand le message n'est pas reconnu : l'appelant affiche alors
+ * un message générique.
+ */
+export function authErrorKey(message: string): string | null {
   const map: Record<string, string> = {
-    "Invalid login credentials": "E-mail ou mot de passe incorrect.",
-    "Email not confirmed": "Votre adresse e-mail n'est pas encore confirmée.",
-    "User already registered": "Un compte existe déjà avec cette adresse e-mail.",
+    "Invalid login credentials": "errors.invalidCredentials",
+    "Email not confirmed": "errors.emailNotConfirmed",
+    "User already registered": "errors.alreadyRegistered",
   };
-  return map[message] ?? message;
+  return map[message] ?? null;
 }
