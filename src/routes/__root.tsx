@@ -18,14 +18,6 @@ import { InstallPrompt } from "@/components/InstallPrompt";
 import { I18nProvider, useT } from "@/i18n";
 
 function NotFoundComponent() {
-  return (
-    <I18nProvider>
-      <NotFoundContent />
-    </I18nProvider>
-  );
-}
-
-function NotFoundContent() {
   const t = useT();
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">

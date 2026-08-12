@@ -40,28 +40,29 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/s
 import { cn } from "@/lib/utils";
 import { certificationAccentStyle } from "@/lib/cert-theme";
 import { useIsSuperAdmin } from "@/lib/admin";
+import { useT } from "@/i18n";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 const navItems = [
-
-  { to: "/dashboard", label: "Programme", icon: Home },
-  { to: "/planning", label: "Mon planning", icon: CalendarRange },
-  { to: "/quiz", label: "Quiz", icon: Brain },
-  { to: "/assistant", label: "Assistant IA", icon: Bot },
-  { to: "/references", label: "Références ISO", icon: BookMarked },
-  { to: "/glossaire", label: "Glossaire", icon: SpellCheck },
-  { to: "/annexes", label: "Annexes", icon: ListChecks },
-  { to: "/liens-utiles", label: "Liens utiles", icon: LinkIcon },
-  { to: "/bibliotheque", label: "Mes documents", icon: Library },
-  { to: "/cpd", label: "Journal CPD", icon: NotebookPen },
-  { to: "/certifications", label: "Mes certifications", icon: GraduationCap },
-  { to: "/parametres", label: "Paramètres", icon: Settings },
+  { to: "/dashboard", key: "nav.dashboard", icon: Home },
+  { to: "/planning", key: "nav.planning", icon: CalendarRange },
+  { to: "/quiz", key: "nav.quiz", icon: Brain },
+  { to: "/assistant", key: "nav.assistant", icon: Bot },
+  { to: "/references", key: "nav.references", icon: BookMarked },
+  { to: "/glossaire", key: "nav.glossary", icon: SpellCheck },
+  { to: "/annexes", key: "nav.annexes", icon: ListChecks },
+  { to: "/liens-utiles", key: "nav.usefulLinks", icon: LinkIcon },
+  { to: "/bibliotheque", key: "nav.library", icon: Library },
+  { to: "/cpd", key: "nav.cpd", icon: NotebookPen },
+  { to: "/certifications", key: "nav.certifications", icon: GraduationCap },
+  { to: "/parametres", key: "nav.settings", icon: Settings },
 ];
 
 const mobileItems = [
-  { to: "/dashboard", label: "Accueil", icon: Home },
-  { to: "/planning", label: "Planning", icon: CalendarRange },
-  { to: "/quiz", label: "Quiz", icon: Brain },
-  { to: "/assistant", label: "Assistant", icon: Bot },
+  { to: "/dashboard", key: "nav.home", icon: Home },
+  { to: "/planning", key: "nav.mobilePlanning", icon: CalendarRange },
+  { to: "/quiz", key: "nav.quiz", icon: Brain },
+  { to: "/assistant", key: "nav.mobileAssistant", icon: Bot },
 ];
 
 const linkClass = (active: boolean, collapsed: boolean) =>
@@ -82,9 +83,10 @@ function NavLinks({
   collapsed?: boolean;
   onNavigate?: () => void;
 }) {
+  const t = useT();
   const isSuperAdmin = useIsSuperAdmin();
   const items = isSuperAdmin
-    ? [...navItems, { to: "/admin", label: "Administration", icon: ShieldCheck }]
+    ? [...navItems, { to: "/admin", key: "nav.admin", icon: ShieldCheck }]
     : navItems;
 
   return (
@@ -93,12 +95,12 @@ function NavLinks({
         <Link
           key={item.to}
           to={item.to}
-          title={item.label}
+          title={t(item.key)}
           onClick={onNavigate}
           className={linkClass(isActive(item.to), collapsed)}
         >
           <item.icon className="size-4 shrink-0" aria-hidden />
-          {!collapsed && <span className="truncate">{item.label}</span>}
+          {!collapsed && <span className="truncate">{t(item.key)}</span>}
         </Link>
       ))}
     </>
@@ -108,6 +110,7 @@ function NavLinks({
 
 /** Sélecteur de certification active. */
 function CertificationSwitcher({ compact = false }: { compact?: boolean }) {
+  const t = useT();
   const { data: mine = [] } = useMyCertifications();
   const setActive = useSetActiveCertification();
   const active = mine.find((m) => m.is_active) ?? mine[0] ?? null;
@@ -122,15 +125,15 @@ function CertificationSwitcher({ compact = false }: { compact?: boolean }) {
             "cert-tint flex w-full items-center gap-2 rounded-lg border border-sidebar-border bg-sidebar-accent/40 px-3 py-2 text-left transition-colors hover:bg-sidebar-accent",
             compact && "border-border bg-transparent px-2 py-1.5",
           )}
-          aria-label="Changer de certification"
+          aria-label={t("nav.changeCertification")}
         >
           <span className="min-w-0 flex-1">
             <span className="block truncate text-sm font-medium">
-              {active?.certification.name ?? "Choisir une certification"}
+              {active?.certification.name ?? t("nav.chooseCertification")}
             </span>
             {!compact && (
               <span className="block truncate text-xs text-muted-foreground">
-                {active?.certification.family ?? "Aucune certification active"}
+                {active?.certification.family ?? t("nav.noActiveCertification")}
               </span>
             )}
           </span>
@@ -138,7 +141,7 @@ function CertificationSwitcher({ compact = false }: { compact?: boolean }) {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-64">
-        <DropdownMenuLabel>Mes cursus</DropdownMenuLabel>
+        <DropdownMenuLabel>{t("nav.myTracks")}</DropdownMenuLabel>
         {mine.map((item) => (
           <DropdownMenuItem
             key={item.id}
@@ -157,13 +160,13 @@ function CertificationSwitcher({ compact = false }: { compact?: boolean }) {
           </DropdownMenuItem>
         ))}
         {mine.length === 0 && (
-          <DropdownMenuItem disabled>Aucun cursus suivi</DropdownMenuItem>
+          <DropdownMenuItem disabled>{t("nav.noTrack")}</DropdownMenuItem>
         )}
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link to="/certifications">
             <Plus className="size-4" aria-hidden />
-            Ajouter une certification
+            {t("nav.addCertification")}
           </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -191,6 +194,7 @@ function useCertificationGuard() {
 
 
 export function AppShell({ children, title }: { children: ReactNode; title?: string }) {
+  const t = useT();
   const [collapsed, setCollapsed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
@@ -229,7 +233,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
             <Link to="/" className="min-w-0 flex-1">
               <span className="block truncate text-base font-semibold leading-tight">PREPA CERTIF</span>
               <span className="block truncate whitespace-nowrap text-xs text-muted-foreground">
-                Préparation à la certification
+                {t("nav.brandTagline")}
               </span>
             </Link>
           )}
@@ -255,7 +259,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
       {/* Panneau de navigation complet — mobile et tablette */}
       <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
         <SheetContent side="left" className="flex w-[17rem] flex-col gap-0 bg-sidebar p-0">
-          <SheetTitle className="sr-only">Navigation</SheetTitle>
+          <SheetTitle className="sr-only">{t("nav.navigation")}</SheetTitle>
           <div className="flex items-center gap-3 px-4 py-4">
             <BrandLogo className="size-9 shrink-0 text-sidebar-primary" />
             <span className="min-w-0 flex-1 truncate text-base font-semibold">PREPA CERTIF</span>
