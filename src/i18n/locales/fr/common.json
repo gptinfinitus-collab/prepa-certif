@@ -88,7 +88,6 @@
   "signOutDesc": "Déconnexion de cet appareil.",
   "legalDocuments": "Documents légaux",
   "legalDocumentsDesc": "Conditions, confidentialité et informations éditeur.",
-
   "welcome": "Bienvenue",
   "hello": "Bonjour",
   "continue": "Continuer",
@@ -110,7 +109,6 @@
   "curriculumInProgressNotice": "Cursus rédigé en cours de préparation : vous travaillez ici à partir des chapitres officiels du référentiel, de la méthodologie d'audit et de vos propres documents.",
   "addMyDocuments": "Ajouter mes documents",
   "progression": "Progression",
-
   "myPlanning": "Mon planning",
   "planningIntro": "La préparation n'a pas de durée imposée : les {{count}} séances de {{certificationName}} se répartissent automatiquement sur les jours que vous choisissez, jusqu'à votre date d'examen le cas échéant.",
   "parameters": "Paramètres",
@@ -125,7 +123,6 @@
   "selectAtLeastOneDay": "Sélectionnez au moins un jour.",
   "workDaysSummary": "<strong>{{days}}</strong> jours de travail · <strong>{{perDay}}</strong> séance(s) par jour · fin le <strong>{{end}}</strong>",
   "compressedPaceAutoNotice": "Le rythme a été augmenté automatiquement pour terminer avant votre date d'examen.",
-
   "myCertifications": "Mes certifications",
   "myCertificationsIntro": "Choisissez la certification que vous préparez. Vous pouvez en suivre plusieurs en parallèle : chacune garde son propre planning, sa progression et ses documents.",
   "customReferential": "Référentiel personnalisé",
@@ -152,7 +149,6 @@
   "certificationActivated": "Certification activée.",
   "actionImpossible": "Action impossible.",
   "noStandardMatches": "Aucune norme ne correspond.",
-
   "myDocuments": "Mes documents",
   "myDocumentsIntro": "Supports de cours, notes de formation et exemplaires personnels de normes. Chaque document est privé, puis découpé et indexé pour servir de base de connaissances à l'assistant IA et aux quiz générés.",
   "addDocument": "Ajouter un document",
@@ -182,7 +178,6 @@
   "documentIndexedToast": "Document indexé : {{count}} extraits disponibles pour l'IA.{{cleaned}}",
   "watermarkRemovedNotice": " Filigrane et habillage retirés ({{count}} lignes).",
   "previewExtractWarning": "Ce fichier semble n'être qu'un extrait de prévisualisation : peu de contenu exploitable a été trouvé.",
-
   "installApp": "Installer PREPA CERTIF",
   "iosInstallHint": "Dans Safari, touchez Partager, puis « Sur l'écran d'accueil » pour installer l'application.",
   "installAppDesc": "Accédez à votre préparation directement depuis votre écran d'accueil ou votre bureau.",
@@ -190,7 +185,6 @@
   "install": "Installer",
   "later": "Plus tard",
   "closeInstallPrompt": "Fermer l'invite d'installation",
-
   "sharePrepaCertifTitle": "Partager PREPA CERTIF",
   "shareDialogDesc": "Invite tes contacts à préparer leur certification ISO avec toi.",
   "share": "Partager",
@@ -200,11 +194,9 @@
   "sharePreviewLabel": "Aperçu du message",
   "copyLink": "Copier le lien",
   "discoverApp": "Découvre {{name}}",
-
   "openProfileMenu": "Ouvrir le menu du profil",
   "settingsNav": "Paramètres",
   "toggleDarkMode": "Basculer le mode sombre",
-
   "recadrerPhoto": "Recadrer la photo",
   "cropPhotoDesc": "Déplacez l'image et ajustez le zoom pour cadrer votre portrait.",
   "zoom": "Zoom",
@@ -215,5 +207,45 @@
   "lastName": "Nom",
   "profileUpdated": "Profil mis à jour.",
   "photoUpdated": "Photo de profil mise à jour.",
-  "sendImpossible": "Envoi impossible."
+  "sendImpossible": "Envoi impossible.",
+  "days": {
+    "mon": "Lundi",
+    "tue": "Mardi",
+    "wed": "Mercredi",
+    "thu": "Jeudi",
+    "fri": "Vendredi",
+    "sat": "Samedi",
+    "sun": "Dimanche"
+  },
+  "daysShort": {
+    "mon": "L",
+    "tue": "Ma",
+    "wed": "Me",
+    "thu": "J",
+    "fri": "V",
+    "sat": "S",
+    "sun": "D"
+  },
+  "onboarding": {
+    "stepOf": "Étape {{current}} sur {{total}}",
+    "certTitle": "Quelle certification préparez-vous ?",
+    "certDesc": "Elle définit votre programme, vos documents et votre progression.",
+    "trackTitle": "Quel niveau visez-vous ?",
+    "trackDesc": "Maîtrise de la norme, auditeur interne ou Lead Auditor. Vous pourrez en changer à tout moment.",
+    "planningTitle": "Quand passez-vous l'examen ?",
+    "planningDesc": "Nous répartissons vos séances sur vos jours de révision jusqu'à cette date.",
+    "examBody": "Organisme d'examen",
+    "examDateOptional": "Date d'examen (optionnelle)",
+    "reviewDays": "Jours de révision",
+    "sessionsPerDay": "séance{{plural}} / jour",
+    "maxPace": "rythme maximal",
+    "skip": "Passer",
+    "back": "Retour",
+    "continueLabel": "Continuer",
+    "finish": "Terminer",
+    "chooseCertToContinue": "Choisissez une certification pour continuer.",
+    "chooseExamBody": "Choisissez votre organisme d'examen pour le niveau Lead Auditor.",
+    "planningReady": "Votre planning est prêt.",
+    "actionImpossible": "Action impossible."
+  }
 }

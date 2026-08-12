@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { useT } from "@/i18n";
 
 interface SessionRow {
   id: string;
@@ -36,6 +37,7 @@ export function PreparationAnalysis({
   certificationName: string;
   certificationId: string | null;
 }) {
+  const t = useT();
   const analyze = useServerFn(analyzePreparation);
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
 
@@ -91,28 +93,28 @@ export function PreparationAnalysis({
         <CardHeader>
           <CardTitle className="flex items-center gap-2 font-sans text-lg">
             <Brain className="size-5 text-cert" aria-hidden />
-            Niveau de préparation — {certificationName}
+            {t("quiz.analysis.title", { certificationName })}
           </CardTitle>
           <CardDescription>
-            Calculé sur vos {rows.length} dernière(s) session(s) d'entraînement.
+            {t("quiz.analysis.description", { count: rows.length })}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-baseline gap-2">
             <span className="font-sans text-4xl font-semibold">{global}%</span>
-            <span className="text-sm text-muted-foreground">de réussite moyenne</span>
+            <span className="text-sm text-muted-foreground">{t("quiz.analysis.averageSuccess")}</span>
           </div>
           <Progress value={global} />
 
           {byScope.length > 0 && (
             <div className="space-y-3 pt-2">
-              <p className="text-sm font-medium">Score par chapitre</p>
+              <p className="text-sm font-medium">{t("quiz.analysis.byChapterTitle")}</p>
               {byScope.map((item) => (
                 <div key={item.scope} className="space-y-1">
                   <div className="flex items-center justify-between gap-3 text-sm">
                     <span className="truncate">{item.scope}</span>
                     <span className="shrink-0 text-muted-foreground">
-                      {item.average}% · {item.questions} question(s)
+                      {t("quiz.analysis.questionsCount", { average: item.average, count: item.questions })}
                     </span>
                   </div>
                   <Progress value={item.average} />
@@ -127,7 +129,7 @@ export function PreparationAnalysis({
             ) : (
               <Sparkles className="size-4" aria-hidden />
             )}
-            Analyser mes points faibles
+            {t("quiz.analysis.analyzeButton")}
           </Button>
         </CardContent>
       </Card>
@@ -137,16 +139,16 @@ export function PreparationAnalysis({
           <CardHeader>
             <CardTitle className="flex items-center gap-2 font-sans text-lg">
               <TrendingUp className="size-5 text-cert" aria-hidden />
-              Analyse IA
+              {t("quiz.analysis.aiAnalysisTitle")}
             </CardTitle>
             <CardDescription>{analysis.summary}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4 text-sm">
-            <Badge variant="secondary">Niveau estimé : {analysis.level}</Badge>
+            <Badge variant="secondary">{t("quiz.analysis.estimatedLevel", { level: analysis.level })}</Badge>
             {[
-              { title: "Points forts", items: analysis.strengths },
-              { title: "À travailler", items: analysis.weaknesses },
-              { title: "Recommandations", items: analysis.recommendations },
+              { title: t("quiz.analysis.strengths"), items: analysis.strengths },
+              { title: t("quiz.analysis.weaknesses"), items: analysis.weaknesses },
+              { title: t("quiz.analysis.recommendations"), items: analysis.recommendations },
             ]
               .filter((block) => block.items.length > 0)
               .map((block) => (
@@ -165,13 +167,13 @@ export function PreparationAnalysis({
 
       <Card>
         <CardHeader>
-          <CardTitle className="font-sans text-lg">Historique des sessions</CardTitle>
-          <CardDescription>Vos entraînements enregistrés pour ce cursus.</CardDescription>
+          <CardTitle className="font-sans text-lg">{t("quiz.analysis.sessionHistoryTitle")}</CardTitle>
+          <CardDescription>{t("quiz.analysis.sessionHistoryDesc")}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-2">
           {rows.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              Aucune session pour le moment : lancez un entraînement pour démarrer le suivi.
+              {t("quiz.analysis.noSessions")}
             </p>
           ) : (
             rows.map((row) => (
@@ -183,7 +185,7 @@ export function PreparationAnalysis({
                   <p className="truncate font-medium">{row.scope}</p>
                   <p className="text-xs text-muted-foreground">
                     {new Date(row.created_at).toLocaleString("fr-FR")} ·{" "}
-                    {row.mode === "qcm" ? "QCM" : "Questions ouvertes"} · {row.difficulty}
+                    {row.mode === "qcm" ? t("quiz.trainer.formatQcm") : t("quiz.trainer.formatOpen")} · {row.difficulty}
                   </p>
                 </div>
                 <Badge variant={row.score >= 70 ? "default" : "secondary"}>

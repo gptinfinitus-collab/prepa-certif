@@ -88,7 +88,6 @@
   "signOutDesc": "Sign out of this device.",
   "legalDocuments": "Legal documents",
   "legalDocumentsDesc": "Terms, privacy and publisher information.",
-
   "welcome": "Welcome",
   "hello": "Hello",
   "continue": "Continue",
@@ -110,7 +109,6 @@
   "curriculumInProgressNotice": "Curriculum still being written: here you work from the reference's official chapters, audit methodology, and your own documents.",
   "addMyDocuments": "Add my documents",
   "progression": "Progress",
-
   "myPlanning": "My schedule",
   "planningIntro": "The preparation has no fixed length: the {{count}} sessions of {{certificationName}} are automatically spread over the days you choose, up to your exam date if any.",
   "parameters": "Settings",
@@ -125,7 +123,6 @@
   "selectAtLeastOneDay": "Select at least one day.",
   "workDaysSummary": "<strong>{{days}}</strong> working days · <strong>{{perDay}}</strong> session(s) per day · finishing on <strong>{{end}}</strong>",
   "compressedPaceAutoNotice": "The pace was automatically increased to finish before your exam date.",
-
   "myCertifications": "My certifications",
   "myCertificationsIntro": "Choose the certification you're preparing. You can follow several in parallel: each keeps its own schedule, progress and documents.",
   "customReferential": "Custom reference",
@@ -152,7 +149,6 @@
   "certificationActivated": "Certification activated.",
   "actionImpossible": "Could not perform this action.",
   "noStandardMatches": "No standard matches.",
-
   "myDocuments": "My documents",
   "myDocumentsIntro": "Course materials, training notes and personal copies of standards. Each document is private, then split and indexed to feed the AI assistant and generated quizzes.",
   "addDocument": "Add a document",
@@ -182,7 +178,6 @@
   "documentIndexedToast": "Document indexed: {{count}} extracts available for the AI.{{cleaned}}",
   "watermarkRemovedNotice": " Watermark and layout removed ({{count}} lines).",
   "previewExtractWarning": "This file seems to be only a preview extract: little usable content was found.",
-
   "installApp": "Install PREPA CERTIF",
   "iosInstallHint": "In Safari, tap Share, then \"Add to Home Screen\" to install the app.",
   "installAppDesc": "Access your preparation directly from your home screen or desktop.",
@@ -190,7 +185,6 @@
   "install": "Install",
   "later": "Later",
   "closeInstallPrompt": "Close install prompt",
-
   "sharePrepaCertifTitle": "Share PREPA CERTIF",
   "shareDialogDesc": "Invite your contacts to prepare their ISO certification with you.",
   "share": "Share",
@@ -200,11 +194,9 @@
   "sharePreviewLabel": "Message preview",
   "copyLink": "Copy link",
   "discoverApp": "Discover {{name}}",
-
   "openProfileMenu": "Open profile menu",
   "settingsNav": "Settings",
   "toggleDarkMode": "Toggle dark mode",
-
   "recadrerPhoto": "Crop photo",
   "cropPhotoDesc": "Move the image and adjust the zoom to frame your portrait.",
   "zoom": "Zoom",
@@ -215,5 +207,45 @@
   "lastName": "Last name",
   "profileUpdated": "Profile updated.",
   "photoUpdated": "Profile picture updated.",
-  "sendImpossible": "Could not upload."
+  "sendImpossible": "Could not upload.",
+  "days": {
+    "mon": "Monday",
+    "tue": "Tuesday",
+    "wed": "Wednesday",
+    "thu": "Thursday",
+    "fri": "Friday",
+    "sat": "Saturday",
+    "sun": "Sunday"
+  },
+  "daysShort": {
+    "mon": "M",
+    "tue": "Tu",
+    "wed": "W",
+    "thu": "Th",
+    "fri": "F",
+    "sat": "Sa",
+    "sun": "Su"
+  },
+  "onboarding": {
+    "stepOf": "Step {{current}} of {{total}}",
+    "certTitle": "Which certification are you preparing?",
+    "certDesc": "It defines your program, your documents and your progress.",
+    "trackTitle": "Which level are you aiming for?",
+    "trackDesc": "Standard mastery, internal auditor or Lead Auditor. You can change it at any time.",
+    "planningTitle": "When is your exam?",
+    "planningDesc": "We spread your sessions across your review days up to this date.",
+    "examBody": "Exam body",
+    "examDateOptional": "Exam date (optional)",
+    "reviewDays": "Review days",
+    "sessionsPerDay": "session{{plural}} / day",
+    "maxPace": "maximum pace",
+    "skip": "Skip",
+    "back": "Back",
+    "continueLabel": "Continue",
+    "finish": "Finish",
+    "chooseCertToContinue": "Choose a certification to continue.",
+    "chooseExamBody": "Choose your exam body for the Lead Auditor level.",
+    "planningReady": "Your schedule is ready.",
+    "actionImpossible": "This action could not be performed."
+  }
 }

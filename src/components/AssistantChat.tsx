@@ -318,6 +318,7 @@ function Bubble({
   children: string;
   sources?: ChatMessageRow["sources"];
 }) {
+  const t = useT();
   return (
     <div className={cn("flex min-w-0 gap-2 sm:gap-3", role === "user" && "flex-row-reverse")}>
       <span
@@ -343,12 +344,14 @@ function Bubble({
         {role === "assistant" && sources.length > 0 && (
           <details className="mt-3 rounded-lg border border-border bg-secondary/40 p-2">
             <summary className="cursor-pointer text-xs font-medium text-muted-foreground">
-              {sources.length} extrait{sources.length > 1 ? "s" : ""} de vos documents
+              {t("assistant.sources.count", { count: sources.length })}
             </summary>
             <ul className="mt-2 space-y-2">
               {sources.map((source, i) => (
                 <li key={i} className="text-xs text-muted-foreground">
-                  <span className="font-medium text-foreground">Extrait {i + 1} — </span>
+                  <span className="font-medium text-foreground">
+                    {t("assistant.sources.label", { index: i + 1 })}
+                  </span>
                   <span className="break-words">{source.content}</span>
                 </li>
               ))}
