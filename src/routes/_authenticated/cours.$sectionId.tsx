@@ -224,56 +224,63 @@ function ManualSectionPage() {
             ) : (
               <>
                 <Card>
-                  <CardContent className="space-y-4 p-5">
+                  <CardContent className="space-y-4 p-4 sm:p-5 lg:p-7">
                     <div className="space-y-1">
                       <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                         {section.data.chapter} · {t("manual.page", { page: section.data.page })}
                       </p>
-                      <h1 className="text-lg font-semibold leading-tight">
+                      <h1 className="text-lg font-semibold leading-tight sm:text-xl">
                         <Highlighted text={section.data.title} query={query} />
                       </h1>
                     </div>
-                    <MarkdownView>{section.data.markdown}</MarkdownView>
+                    <div className="lg:max-w-[70ch]">
+                      <MarkdownView>{section.data.markdown}</MarkdownView>
+                    </div>
                   </CardContent>
                 </Card>
 
-                <div className="grid grid-cols-3 gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    disabled={!section.data.previousId}
-                    onClick={() =>
-                      section.data?.previousId &&
-                      navigate({
-                        to: "/cours/$sectionId",
-                        params: { sectionId: section.data.previousId },
-                        search: { q: query || undefined },
-                      })
-                    }
-                  >
-                    <ArrowLeft className="mr-1.5 size-4" aria-hidden />
-                    {t("manual.previous")}
-                  </Button>
-                  <Button variant="secondary" size="sm" onClick={askAssistant}>
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <Button variant="secondary" size="sm" className="w-full sm:order-2 sm:w-auto sm:flex-1" onClick={askAssistant}>
                     <Bot className="mr-1.5 size-4" aria-hidden />
                     <span className="truncate">{t("manual.askAi")}</span>
                   </Button>
-                  <Button
-                    size="sm"
-                    disabled={!section.data.nextId}
-                    onClick={() =>
-                      section.data?.nextId &&
-                      navigate({
-                        to: "/cours/$sectionId",
-                        params: { sectionId: section.data.nextId },
-                        search: { q: query || undefined },
-                      })
-                    }
-                  >
-                    {t("manual.next")}
-                    <ArrowRight className="ml-1.5 size-4" aria-hidden />
-                  </Button>
+                  <div className="grid grid-cols-2 gap-2 sm:contents">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-10 sm:order-1 sm:h-9 sm:flex-1"
+                      disabled={!section.data.previousId}
+                      onClick={() =>
+                        section.data?.previousId &&
+                        navigate({
+                          to: "/cours/$sectionId",
+                          params: { sectionId: section.data.previousId },
+                          search: { q: query || undefined },
+                        })
+                      }
+                    >
+                      <ArrowLeft className="mr-1.5 size-4" aria-hidden />
+                      <span className="truncate">{t("manual.previous")}</span>
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="h-10 sm:order-3 sm:h-9 sm:flex-1"
+                      disabled={!section.data.nextId}
+                      onClick={() =>
+                        section.data?.nextId &&
+                        navigate({
+                          to: "/cours/$sectionId",
+                          params: { sectionId: section.data.nextId },
+                          search: { q: query || undefined },
+                        })
+                      }
+                    >
+                      <span className="truncate">{t("manual.next")}</span>
+                      <ArrowRight className="ml-1.5 size-4" aria-hidden />
+                    </Button>
+                  </div>
                 </div>
+
               </>
             )}
           </div>
