@@ -110,14 +110,14 @@ export function suggestPlan(input: {
  */
 export interface PaceSummary {
   key: "paceFree" | "paceSpread" | "paceTight";
-  params: { count: number; days: number; perDay: number };
+  params: { n: number; days: number; perDay: number };
 }
 
 export function paceSummary(plan: StudyPlan, moduleCount: number, today = new Date()): PaceSummary {
   if (!plan.exam_date) {
     return {
       key: "paceFree",
-      params: { count: moduleCount, days: 0, perDay: plan.modules_per_day },
+      params: { n: moduleCount, days: 0, perDay: plan.modules_per_day },
     };
   }
   const exam = parseISODate(plan.exam_date);
@@ -125,6 +125,6 @@ export function paceSummary(plan: StudyPlan, moduleCount: number, today = new Da
   lastDay.setDate(lastDay.getDate() - 1);
   const available = countStudyDaysBetween(today, lastDay, plan.study_days);
   const capacity = available * plan.modules_per_day;
-  const params = { count: moduleCount, days: available, perDay: plan.modules_per_day };
+  const params = { n: moduleCount, days: available, perDay: plan.modules_per_day };
   return { key: capacity >= moduleCount ? "paceSpread" : "paceTight", params };
 }

@@ -247,9 +247,9 @@
     "chooseExamBody": "Choose your exam body for the Lead Auditor level.",
     "planningReady": "Your schedule is ready.",
     "actionImpossible": "This action could not be performed.",
-    "paceFree": "{{count}} sessions at your own pace, {{perDay}} per study day.",
-    "paceSpread": "{{count}} sessions spread over {{days}} study days, {{perDay}} per day.",
-    "paceTight": "Tight pace: {{count}} sessions for {{days}} available study days. Add days or move the start date earlier."
+    "paceFree": "{{n}} sessions at your own pace, {{perDay}} per study day.",
+    "paceSpread": "{{n}} sessions spread over {{days}} study days, {{perDay}} per day.",
+    "paceTight": "Tight pace: {{n}} sessions for {{days}} available study days. Add days or move the start date earlier."
   },
   "linkDialogEditTitle": "Edit link",
   "linkDialogAddTitle": "Add a link",
@@ -296,7 +296,7 @@
     "annexes": "Audit templates and mock exam.",
     "cpd": "Tracking of your professional development."
   },
-  "pace_ahead": "{{count}} session(s) ahead",
-  "pace_behind": "{{count}} session(s) behind",
+  "pace_ahead": "{{n}} session(s) ahead",
+  "pace_behind": "{{n}} session(s) behind",
   "pace_ontrack": "On track"
 }

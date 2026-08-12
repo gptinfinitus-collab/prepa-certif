@@ -247,9 +247,9 @@
     "chooseExamBody": "Choisissez votre organisme d'examen pour le niveau Lead Auditor.",
     "planningReady": "Votre planning est prêt.",
     "actionImpossible": "Action impossible.",
-    "paceFree": "{{count}} séances à votre rythme, {{perDay}} par jour de révision.",
-    "paceSpread": "{{count}} séances réparties sur {{days}} jours de révision, {{perDay}} par jour.",
-    "paceTight": "Rythme serré : {{count}} séances pour {{days}} jours de révision disponibles. Ajoutez des jours ou avancez la date de début."
+    "paceFree": "{{n}} séances à votre rythme, {{perDay}} par jour de révision.",
+    "paceSpread": "{{n}} séances réparties sur {{days}} jours de révision, {{perDay}} par jour.",
+    "paceTight": "Rythme serré : {{n}} séances pour {{days}} jours de révision disponibles. Ajoutez des jours ou avancez la date de début."
   },
   "linkDialogEditTitle": "Modifier le lien",
   "linkDialogAddTitle": "Ajouter un lien",
@@ -296,7 +296,7 @@
     "annexes": "Trames d'audit et examen blanc.",
     "cpd": "Suivi de votre développement professionnel."
   },
-  "pace_ahead": "En avance de {{count}} séance(s)",
-  "pace_behind": "En retard de {{count}} séance(s)",
+  "pace_ahead": "En avance de {{n}} séance(s)",
+  "pace_behind": "En retard de {{n}} séance(s)",
   "pace_ontrack": "Dans les temps"
 }
