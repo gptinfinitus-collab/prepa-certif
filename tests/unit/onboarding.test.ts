@@ -97,12 +97,12 @@ describe("paceSummary", () => {
       studyDays: [1, 2, 3, 4, 5],
       moduleCount: 20,
     });
-    expect(paceSummary(plan, 20, monday)).toContain("réparties");
+    expect(paceSummary(plan, 20, monday).key).toBe("paceSpread");
   });
 
   it("alerte quand le temps disponible est insuffisant", () => {
     const plan = { ...suggestPlan({ today: monday, examDate: "2026-01-07", studyDays: [1], moduleCount: 40 }), modules_per_day: 1 };
-    expect(paceSummary(plan, 40, monday)).toContain("Rythme serré");
+    expect(paceSummary(plan, 40, monday).key).toBe("paceTight");
   });
 });
 
