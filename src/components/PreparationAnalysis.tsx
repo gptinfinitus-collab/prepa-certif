@@ -1,3 +1,4 @@
+import { translateAppError } from "@/lib/utils";
 import { useMemo, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -85,7 +86,7 @@ export function PreparationAnalysis({
   const mutation = useMutation({
     mutationFn: async () => analyze({ data: { certificationName, certificationId, locale } }),
     onSuccess: (result) => setAnalysis(result as Analysis),
-    onError: (error: Error) => toast.error(error.message),
+    onError: (error: Error) => toast.error(translateAppError(t, error, "common.error")),
   });
 
   return (

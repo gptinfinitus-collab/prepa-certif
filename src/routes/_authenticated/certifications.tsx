@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/AppShell";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { cn, translateAppError } from "@/lib/utils";
 import { certificationAccentStyle } from "@/lib/cert-theme";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -72,7 +72,7 @@ function CustomCertificationDialog() {
       setChapters("");
       toast.success(t("common.referentialCreated"));
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : t("common.creationImpossible"));
+      toast.error(translateAppError(t, error, "common.creationImpossible"));
     }
   }
 
@@ -171,7 +171,7 @@ function CertificationsPage() {
       toast.success(t("common.certificationActivated"));
       navigate({ to: "/dashboard" });
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : t("common.actionImpossible"));
+      toast.error(translateAppError(t, error, "common.actionImpossible"));
     }
   }
 

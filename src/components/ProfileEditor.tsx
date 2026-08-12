@@ -1,3 +1,4 @@
+import { translateAppError } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -40,7 +41,7 @@ export function ProfileEditor() {
       await updateProfile.mutateAsync({ first_name: firstName.trim(), last_name: lastName.trim() });
       toast.success(t("common.profileUpdated"));
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : t("common.saveImpossible"));
+      toast.error(translateAppError(t, error, "common.saveImpossible"));
     }
   }
 
@@ -51,7 +52,7 @@ export function ProfileEditor() {
       setFile(null);
       toast.success(t("common.photoUpdated"));
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : t("common.sendImpossible"));
+      toast.error(translateAppError(t, error, "common.sendImpossible"));
     }
   }
 

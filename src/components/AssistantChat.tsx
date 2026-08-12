@@ -35,7 +35,7 @@ import {
   useThreads,
   type ChatMessageRow,
 } from "@/lib/threads";
-import { cn } from "@/lib/utils";
+import { cn, translateAppError } from "@/lib/utils";
 
 
 export function AssistantChat({ threadId }: { threadId: string }) {
@@ -134,7 +134,7 @@ export function AssistantChat({ threadId }: { threadId: string }) {
         }
       }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : t("assistant.errors.unavailable"));
+      toast.error(translateAppError(t, error, "assistant.errors.unavailable"));
     } finally {
       setBusy(false);
       setStreamed("");

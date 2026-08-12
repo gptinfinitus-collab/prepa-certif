@@ -1,3 +1,4 @@
+import { translateAppError } from "@/lib/utils";
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -81,7 +82,7 @@ function Bibliotheque() {
     },
 
     onError: (error: Error) => {
-      toast.error(error.message);
+      toast.error(translateAppError(t, error, "common.error"));
       void queryClient.invalidateQueries({ queryKey: ["library_documents"] });
     },
   });

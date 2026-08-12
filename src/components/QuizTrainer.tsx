@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
+import { cn, translateAppError } from "@/lib/utils";
 import { useActiveTrack, useExamBody } from "@/lib/learning";
 import { useLocale, useT } from "@/i18n";
 
@@ -164,7 +164,7 @@ export function QuizTrainer({
       setCorrections(null);
       setSaved(false);
     },
-    onError: (error: Error) => toast.error(error.message),
+    onError: (error: Error) => toast.error(translateAppError(t, error, "common.error")),
   });
 
   const correction = useMutation({
@@ -204,7 +204,7 @@ export function QuizTrainer({
         })),
       });
     },
-    onError: (error: Error) => toast.error(error.message),
+    onError: (error: Error) => toast.error(translateAppError(t, error, "common.error")),
   });
 
   async function finishQcm() {
