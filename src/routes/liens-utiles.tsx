@@ -16,6 +16,7 @@ import {
   useUserLinks,
   type UserLink,
 } from "@/lib/useful-links";
+import { useT } from "@/i18n";
 
 const TITLE = "Liens utiles — PREPA CERTIF";
 const DESCRIPTION =
@@ -43,6 +44,7 @@ export const Route = createFileRoute("/liens-utiles")({
 });
 
 function UsefulLinksPage() {
+  const t = useT();
   const groups = groupLinksByCategory(USEFUL_LINKS);
   const { data: signedIn = false } = useIsSignedIn();
   const { data: myLinks = [], isLoading } = useUserLinks();
@@ -54,14 +56,11 @@ function UsefulLinksPage() {
   const myGroups = groupLinksByCategory(myLinks);
 
   return (
-    <AppShell title="Liens utiles">
+    <AppShell title={t("common.usefulLinks")}>
       <div className="mx-auto max-w-4xl px-4 py-6 md:py-10">
-        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">Liens utiles</h1>
+        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">{t("common.usefulLinks")}</h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-          Les ressources externes à connaître pour votre préparation : textes officiels, schémas de
-          certification d'auditeurs, règles d'accréditation et réglementation. Les normes restent
-          protégées par le droit d'auteur : seuls les liens officiels d'achat ou de consultation
-          sont proposés.
+          {t("common.usefulLinksIntro")}
         </p>
 
         {groups.map((group) => (
@@ -94,7 +93,7 @@ function UsefulLinksPage() {
         ))}
 
         <section className="mt-10">
-          <h2 className="font-sans text-lg font-semibold">Dans l'application</h2>
+          <h2 className="font-sans text-lg font-semibold">{t("common.inTheApp")}</h2>
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
             {INTERNAL_LINKS.map((item) => (
               <Card key={item.to}>
@@ -104,7 +103,7 @@ function UsefulLinksPage() {
                 </CardHeader>
                 <CardContent>
                   <Button asChild variant="ghost" size="sm">
-                    <Link to={item.to}>Ouvrir</Link>
+                    <Link to={item.to}>{t("common.open")}</Link>
                   </Button>
                 </CardContent>
               </Card>
@@ -115,9 +114,9 @@ function UsefulLinksPage() {
         <section className="mt-10">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h2 className="font-sans text-lg font-semibold">Mes liens</h2>
+              <h2 className="font-sans text-lg font-semibold">{t("common.myLinks")}</h2>
               <p className="text-sm text-muted-foreground">
-                Vos ressources personnelles, visibles uniquement par vous.
+                {t("common.myLinksDesc")}
               </p>
             </div>
             {signedIn && (
@@ -129,7 +128,7 @@ function UsefulLinksPage() {
                 }}
               >
                 <Plus className="mr-2 size-4" aria-hidden />
-                Ajouter un lien
+                {t("common.addLink")}
               </Button>
             )}
           </div>
@@ -138,18 +137,18 @@ function UsefulLinksPage() {
             <Card className="mt-4">
               <CardContent className="flex flex-wrap items-center justify-between gap-3 py-6">
                 <p className="text-sm text-muted-foreground">
-                  Connectez-vous pour enregistrer vos propres liens utiles.
+                  {t("common.signInToSaveLinks")}
                 </p>
                 <Button asChild size="sm">
-                  <Link to="/auth">Se connecter</Link>
+                  <Link to="/auth">{t("common.signIn")}</Link>
                 </Button>
               </CardContent>
             </Card>
           ) : isLoading ? (
-            <p className="mt-4 text-sm text-muted-foreground">Chargement…</p>
+            <p className="mt-4 text-sm text-muted-foreground">{t("common.loading")}</p>
           ) : myLinks.length === 0 ? (
             <p className="mt-4 text-sm text-muted-foreground">
-              Aucun lien enregistré pour l'instant.
+              {t("common.noLinksSaved")}
             </p>
           ) : (
             myGroups.map((group) => (
@@ -178,20 +177,20 @@ function UsefulLinksPage() {
                           }}
                         >
                           <Pencil className="mr-2 size-3.5" aria-hidden />
-                          Modifier
+                          {t("common.edit")}
                         </Button>
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() =>
                             remove.mutate(link.id, {
-                              onSuccess: () => toast.success("Lien supprimé"),
-                              onError: () => toast.error("Suppression impossible"),
+                              onSuccess: () => toast.success(t("common.linkDeleted")),
+                              onError: () => toast.error(t("common.linkDeleteFailed")),
                             })
                           }
                         >
                           <Trash2 className="mr-2 size-3.5" aria-hidden />
-                          Supprimer
+                          {t("common.delete")}
                         </Button>
                       </CardContent>
                     </Card>
@@ -211,10 +210,10 @@ function UsefulLinksPage() {
         onSubmit={(input) =>
           upsert.mutate(input, {
             onSuccess: () => {
-              toast.success(input.id ? "Lien modifié" : "Lien ajouté");
+              toast.success(input.id ? t("common.linkUpdated") : t("common.linkAdded"));
               setOpen(false);
             },
-            onError: () => toast.error("Enregistrement impossible"),
+            onError: () => toast.error(t("common.linkSaveFailed")),
           })
         }
       />

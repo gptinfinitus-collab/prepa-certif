@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LegalPage } from "@/components/LegalPage";
 import { legalDocument, legalHead, legalInfo } from "@/lib/legal";
+import { useLocale } from "@/i18n";
 
 export const Route = createFileRoute("/confidentialite")({
   head: () => legalHead("confidentialite"),
@@ -8,11 +9,20 @@ export const Route = createFileRoute("/confidentialite")({
 });
 
 function ConfidentialitePage() {
+  const { locale } = useLocale();
   return (
     <LegalPage doc={legalDocument("confidentialite")}>
+      {locale === "en" ? <ConfidentialiteEn /> : <ConfidentialiteFr />}
+    </LegalPage>
+  );
+}
+
+function ConfidentialiteFr() {
+  return (
+    <>
       <h2>1. Responsable de traitement</h2>
       <p>
-        {legalInfo.publisher}, {legalInfo.publisherStatus}, est responsable du traitement des
+        {legalInfo.publisher}, {legalInfo.publisherStatus.fr}, est responsable du traitement des
         données personnelles collectées via l'application. Contact :{" "}
         <a href={`mailto:${legalInfo.privacyEmail}`}>{legalInfo.privacyEmail}</a>.
       </p>
@@ -97,6 +107,90 @@ function ConfidentialitePage() {
         Le service s'adresse à un public professionnel majeur et n'est pas destiné aux personnes de
         moins de 16 ans.
       </p>
-    </LegalPage>
+    </>
+  );
+}
+
+function ConfidentialiteEn() {
+  return (
+    <>
+      <h2>1. Data controller</h2>
+      <p>
+        {legalInfo.publisher}, {legalInfo.publisherStatus.en}, is the controller responsible for
+        processing personal data collected through the application. Contact:{" "}
+        <a href={`mailto:${legalInfo.privacyEmail}`}>{legalInfo.privacyEmail}</a>.
+      </p>
+
+      <h2>2. Data collected</h2>
+      <ul>
+        <li>
+          <strong>Account</strong>: email address, identity provider ID (Google, Apple) where
+          applicable, creation date.
+        </li>
+        <li>
+          <strong>Profile</strong>: first name, last name, profile photo, active certification.
+        </li>
+        <li>
+          <strong>Content</strong>: imported course and reference documents, as well as the indexed
+          excerpts used by the AI assistant.
+        </li>
+        <li>
+          <strong>Learning activity</strong>: schedule, progress, quiz answers and scores,
+          conversation history with the assistant.
+        </li>
+        <li>
+          <strong>Preferences</strong>: light/dark theme.
+        </li>
+      </ul>
+
+      <h2>3. Purposes and legal bases</h2>
+      <ul>
+        <li>Provision of the service and account management — performance of the contract.</li>
+        <li>Personalization of the program, quizzes, and assistant answers — performance of the contract.</li>
+        <li>Security, abuse prevention, and technical logging — legitimate interest.</li>
+        <li>Compliance with applicable legal obligations — legal obligation.</li>
+      </ul>
+      <p>No data is sold, rented, or used for advertising purposes.</p>
+
+      <h2>4. Processors</h2>
+      <ul>
+        <li>Application hosting, database, authentication, and file storage.</li>
+        <li>Artificial intelligence model provider, to generate the assistant's answers and evaluate open-ended answers.</li>
+      </ul>
+      <p>
+        These providers act on the publisher's instructions, under data processing agreements
+        compliant with the GDPR. Where a transfer outside the European Union is necessary, it is
+        governed by the European Commission's standard contractual clauses.
+      </p>
+
+      <h2>5. Retention periods</h2>
+      <ul>
+        <li>Account and profile data: until the account is deleted.</li>
+        <li>Imported documents and their associated indexes: until deleted by the user or until the account is deleted.</li>
+        <li>Quiz and conversation history: until deleted by the user.</li>
+        <li>Technical logs: 12 months maximum.</li>
+      </ul>
+
+      <h2>6. Your rights</h2>
+      <p>
+        In accordance with the GDPR, you have the right to access, rectify, erase, restrict, and
+        object to processing, as well as the right to data portability and the right to define
+        post-mortem directives. You may exercise these rights at{" "}
+        <a href={`mailto:${legalInfo.privacyEmail}`}>{legalInfo.privacyEmail}</a>. You may also
+        lodge a complaint with the CNIL, the French data protection authority (www.cnil.fr).
+      </p>
+
+      <h2>7. Security</h2>
+      <p>
+        Access is protected by authentication, encryption of exchanges (HTTPS), and database-level
+        security rules ensuring that each user can only access their own data.
+      </p>
+
+      <h2>8. Minors</h2>
+      <p>
+        The service is intended for a professional adult audience and is not intended for persons
+        under 16 years of age.
+      </p>
+    </>
   );
 }

@@ -13,6 +13,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { legalDocuments } from "@/lib/legal";
 import { useSetOnboarded } from "@/lib/learning";
 import { LogOut, Moon, CalendarRange, Sparkles } from "lucide-react";
+import { useT } from "@/i18n";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export const Route = createFileRoute("/_authenticated/parametres")({
   head: () => ({
@@ -33,6 +35,7 @@ export const Route = createFileRoute("/_authenticated/parametres")({
 });
 
 function Parametres() {
+  const t = useT();
   const { theme, resolved, setTheme } = useTheme();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -46,18 +49,18 @@ function Parametres() {
   }
 
   return (
-    <AppShell title="Paramètres">
+    <AppShell title={t("common.settings")}>
       <div className="mx-auto max-w-3xl px-4 py-8 md:py-10">
-        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">Paramètres</h1>
+        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">{t("common.settings")}</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Votre profil, l'apparence de l'application et votre compte.
+          {t("common.settingsIntro")}
         </p>
 
         <div className="mt-8 space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle className="font-sans text-lg">Profil</CardTitle>
-              <CardDescription>Photo, prénom et nom affichés dans l'application.</CardDescription>
+              <CardTitle className="font-sans text-lg">{t("common.profile")}</CardTitle>
+              <CardDescription>{t("common.profilePhotoNameDesc")}</CardDescription>
             </CardHeader>
             <CardContent>
               <ProfileEditor />
@@ -66,8 +69,8 @@ function Parametres() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="font-sans text-lg">Apparence</CardTitle>
-              <CardDescription>Thème clair ou bleu nuit.</CardDescription>
+              <CardTitle className="font-sans text-lg">{t("common.appearance")}</CardTitle>
+              <CardDescription>{t("common.themeDesc")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between gap-4 rounded-lg border border-border p-4">
@@ -75,10 +78,10 @@ function Parametres() {
                   <Moon className="size-5 shrink-0 text-primary" aria-hidden />
                   <div className="min-w-0">
                     <Label htmlFor="dark-mode" className="text-sm font-medium">
-                      Mode sombre
+                      {t("common.darkMode")}
                     </Label>
                     <p className="text-xs text-muted-foreground">
-                      Palette bleu nuit, contraste optimisé pour les longues sessions.
+                      {t("common.darkModeDesc")}
                     </p>
                   </div>
                 </div>
@@ -96,7 +99,7 @@ function Parametres() {
                     variant={theme === value ? "default" : "outline"}
                     onClick={() => setTheme(value)}
                   >
-                    {value === "light" ? "Clair" : value === "dark" ? "Sombre" : "Système"}
+                    {value === "light" ? t("common.light") : value === "dark" ? t("common.dark") : t("common.system")}
                   </Button>
                 ))}
               </div>
@@ -105,10 +108,9 @@ function Parametres() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="font-sans text-lg">Profil d'examen</CardTitle>
+              <CardTitle className="font-sans text-lg">{t("common.examProfile")}</CardTitle>
               <CardDescription>
-                Organisme visé pour le niveau Lead Auditor : il ouvre le niveau et adapte le style
-                de vos entraînements.
+                {t("common.examProfileDesc")}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -118,14 +120,14 @@ function Parametres() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="font-sans text-lg">Étude</CardTitle>
-              <CardDescription>Dates, jours travaillés et rythme de révision.</CardDescription>
+              <CardTitle className="font-sans text-lg">{t("common.study")}</CardTitle>
+              <CardDescription>{t("common.studyDesc")}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-wrap gap-2">
               <Button asChild variant="outline">
                 <Link to="/planning">
                   <CalendarRange className="size-4" aria-hidden />
-                  Modifier mon planning
+                  {t("common.editSchedule")}
                 </Link>
               </Button>
               <Button
@@ -138,7 +140,7 @@ function Parametres() {
                 }}
               >
                 <Sparkles className="size-4" aria-hidden />
-                Relancer la configuration guidée
+                {t("common.restartOnboarding")}
               </Button>
             </CardContent>
           </Card>
@@ -146,9 +148,9 @@ function Parametres() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="font-sans text-lg">Partager PREPA CERTIF</CardTitle>
+              <CardTitle className="font-sans text-lg">{t("common.sharePrepaCertif")}</CardTitle>
               <CardDescription>
-                Invitez un collègue à préparer sa certification.
+                {t("common.shareDesc")}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -158,21 +160,31 @@ function Parametres() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="font-sans text-lg">Compte</CardTitle>
-              <CardDescription>Déconnexion de cet appareil.</CardDescription>
+              <CardTitle className="font-sans text-lg">{t("common.language")}</CardTitle>
+              <CardDescription>{t("common.languageDesc")}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <LanguageSwitcher />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="font-sans text-lg">{t("common.account")}</CardTitle>
+              <CardDescription>{t("common.signOutDesc")}</CardDescription>
             </CardHeader>
             <CardContent>
               <Button variant="outline" onClick={() => void signOut()}>
                 <LogOut className="size-4" aria-hidden />
-                Se déconnecter
+                {t("common.signOut")}
               </Button>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle className="font-sans text-lg">Documents légaux</CardTitle>
-              <CardDescription>Conditions, confidentialité et informations éditeur.</CardDescription>
+              <CardTitle className="font-sans text-lg">{t("common.legalDocuments")}</CardTitle>
+              <CardDescription>{t("common.legalDocumentsDesc")}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-wrap gap-2">
               {legalDocuments.map((doc) => (

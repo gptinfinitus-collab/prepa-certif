@@ -20,6 +20,8 @@ import {
   forgotPasswordSchema,
   safePath,
 } from "@/lib/auth-schemas";
+import { useT } from "@/i18n";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 const searchSchema = z.object({
   redirect: z.string().optional(),
@@ -58,6 +60,7 @@ export const Route = createFileRoute("/auth")({
 type Mode = "signin" | "signup";
 
 function AuthPage() {
+  const t = useT();
   const navigate = useNavigate();
   const search = useSearch({ from: "/auth" });
   const destination = safePath(search.redirect);
@@ -102,12 +105,12 @@ function AuthPage() {
       });
       if (result.redirected) return;
       if (result.error) {
-        setFormError("La connexion a échoué. Merci de réessayer.");
+        setFormError(t("auth.oauthFailed"));
         return;
       }
       navigate({ to: destination, replace: true });
     } catch {
-      setFormError("La connexion a échoué. Merci de réessayer.");
+      setFormError(t("auth.oauthFailed"));
     } finally {
       setLoading(false);
     }
@@ -131,7 +134,7 @@ function AuthPage() {
         if (error) throw error;
         if (!data.session) {
           setPendingConfirm(true);
-          toast.success("Vérifiez votre boîte mail pour confirmer votre inscription.");
+          toast.success(t("auth.confirmEmailToast"));
           return;
         }
       } else {
@@ -143,7 +146,7 @@ function AuthPage() {
       }
     } catch (error) {
       const message =
-        error instanceof Error ? authErrorMessage(error.message) : "Une erreur est survenue.";
+        error instanceof Error ? authErrorMessage(error.message) : t("auth.genericError");
       setFormError(message);
     } finally {
       setLoading(false);
@@ -166,7 +169,7 @@ function AuthPage() {
       setResetSent(true);
     } catch (error) {
       setFormError(
-        error instanceof Error ? authErrorMessage(error.message) : "Une erreur est survenue.",
+        error instanceof Error ? authErrorMessage(error.message) : t("auth.genericError"),
       );
     } finally {
       setLoading(false);
@@ -181,7 +184,7 @@ function AuthPage() {
     >
       <p>{formError}</p>
       <Button type="button" size="sm" variant="outline" onClick={resetErrors}>
-        Réessayer
+        {t("auth.retry")}
       </Button>
     </div>
   ) : null;
@@ -190,16 +193,18 @@ function AuthPage() {
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-12">
       <AuthBackdrop />
 
+      <div className="absolute right-4 top-4 z-10">
+        <LanguageSwitcher />
+      </div>
+
       <Card className="relative z-10 w-full max-w-md border-border/50 shadow-lg">
         <CardHeader className="items-center text-center">
           <BrandLogo className="mx-auto size-16 text-primary" />
           <h1 className="font-sans text-2xl leading-none font-semibold tracking-tight">
-            Connexion à PREPA CERTIF
+            {t("auth.signInTitle")}
           </h1>
           <CardDescription>
-            {forgotOpen
-              ? "Réinitialisez votre mot de passe en quelques secondes."
-              : "Connectez-vous pour retrouver votre planning et votre progression."}
+            {forgotOpen ? t("auth.forgotSubtitle") : t("auth.signInSubtitle")}
           </CardDescription>
         </CardHeader>
 
@@ -208,13 +213,12 @@ function AuthPage() {
             <div className="space-y-4">
               {resetSent ? (
                 <p className="rounded-md border border-border bg-secondary/60 p-3 text-sm">
-                  Si un compte existe pour cette adresse, un lien de réinitialisation vient d'être
-                  envoyé. Pensez à vérifier vos courriers indésirables.
+                  {t("auth.resetSentText")}
                 </p>
               ) : (
                 <>
                   <div className="space-y-1.5">
-                    <Label htmlFor="forgot-email">E-mail</Label>
+                    <Label htmlFor="forgot-email">{t("auth.email")}</Label>
                     <Input
                       id="forgot-email"
                       type="email"
@@ -229,7 +233,7 @@ function AuthPage() {
                   {errorBlock}
                   <Button className="w-full" disabled={loading} onClick={handleForgotPassword}>
                     {loading ? <Loader2 className="size-4 animate-spin" /> : null}
-                    Envoyer le lien de réinitialisation
+                    {t("auth.sendResetLink")}
                   </Button>
                 </>
               )}
@@ -244,7 +248,7 @@ function AuthPage() {
                 }}
               >
                 <ArrowLeft className="size-4" />
-                Retour à la connexion
+                {t("auth.backToSignIn")}
               </Button>
             </div>
           ) : (
@@ -254,7 +258,7 @@ function AuthPage() {
                   variant="outline"
                   disabled={loading}
                   onClick={() => handleOAuth("google")}
-                  aria-label="Continuer avec Google"
+                  aria-label={t("auth.continueWithGoogle")}
                 >
                   <GoogleIcon />
                   Google
@@ -263,7 +267,7 @@ function AuthPage() {
                   variant="outline"
                   disabled={loading}
                   onClick={() => handleOAuth("apple")}
-                  aria-label="Continuer avec Apple"
+                  aria-label={t("auth.continueWithApple")}
                 >
                   <AppleIcon />
                   Apple
@@ -272,14 +276,13 @@ function AuthPage() {
 
               <div className="flex items-center gap-3 text-xs uppercase tracking-wide text-muted-foreground">
                 <span className="h-px flex-1 bg-border" />
-                ou
+                {t("auth.or")}
                 <span className="h-px flex-1 bg-border" />
               </div>
 
               {pendingConfirm ? (
                 <p className="rounded-md border border-border bg-secondary/60 p-3 text-sm">
-                  Un e-mail de confirmation vous a été envoyé. Cliquez sur le lien reçu pour activer
-                  votre compte, puis revenez ici.
+                  {t("auth.confirmPendingText")}
                 </p>
               ) : (
                 <Tabs
@@ -291,17 +294,17 @@ function AuthPage() {
                 >
                   <TabsList className="w-full">
                     <TabsTrigger value="signin" className="flex-1">
-                      Connexion
+                      {t("auth.signInTab")}
                     </TabsTrigger>
                     <TabsTrigger value="signup" className="flex-1">
-                      Créer un compte
+                      {t("auth.signUpTab")}
                     </TabsTrigger>
                   </TabsList>
 
                   {(["signin", "signup"] as const).map((tab) => (
                     <TabsContent key={tab} value={tab} className="space-y-3 pt-4">
                       <div className="space-y-1.5">
-                        <Label htmlFor={`${tab}-email`}>E-mail</Label>
+                        <Label htmlFor={`${tab}-email`}>{t("auth.email")}</Label>
                         <Input
                           id={`${tab}-email`}
                           type="email"
@@ -315,7 +318,7 @@ function AuthPage() {
                       </div>
 
                       <div className="space-y-1.5">
-                        <Label htmlFor={`${tab}-password`}>Mot de passe</Label>
+                        <Label htmlFor={`${tab}-password`}>{t("auth.password")}</Label>
                         <div className="relative">
                           <Input
                             id={`${tab}-password`}
@@ -330,7 +333,7 @@ function AuthPage() {
                             data-testid={`toggle-password-${tab}`}
                             onClick={() => setShowPassword((v) => !v)}
                             aria-label={
-                              showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"
+                              showPassword ? t("auth.hidePassword") : t("auth.showPassword")
                             }
                             className="absolute inset-y-0 right-0 flex w-10 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
                           >
@@ -355,7 +358,7 @@ function AuthPage() {
                             resetErrors();
                           }}
                         >
-                          Mot de passe oublié ?
+                          {t("auth.forgotPassword")}
                         </button>
                       ) : null}
 
@@ -363,7 +366,7 @@ function AuthPage() {
 
                       <Button className="w-full" disabled={loading} onClick={handlePassword}>
                         {loading ? <Loader2 className="size-4 animate-spin" /> : null}
-                        {tab === "signin" ? "Se connecter" : "Créer mon compte"}
+                        {tab === "signin" ? t("auth.signIn") : t("auth.signUp")}
                       </Button>
                     </TabsContent>
                   ))}
@@ -373,16 +376,16 @@ function AuthPage() {
           )}
 
           <p className="text-center text-xs text-muted-foreground">
-            En continuant, vous acceptez les{" "}
+            {t("auth.termsPrefix")}{" "}
             <Link to="/cgu" className="underline underline-offset-4 hover:text-foreground">
-              conditions générales d'utilisation
+              {t("auth.termsLink")}
             </Link>{" "}
-            et la{" "}
+            {t("auth.and")}{" "}
             <Link
               to="/confidentialite"
               className="underline underline-offset-4 hover:text-foreground"
             >
-              politique de confidentialité
+              {t("auth.privacyLink")}
             </Link>
             .
           </p>
