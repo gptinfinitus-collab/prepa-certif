@@ -3,6 +3,7 @@ import { useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { Input } from "@/components/ui/input";
 import { useCurriculum } from "@/lib/curriculum";
+import { useT } from "@/i18n";
 
 export const Route = createFileRoute("/glossaire")({
   head: () => ({
@@ -33,6 +34,7 @@ export const Route = createFileRoute("/glossaire")({
 });
 
 function Glossaire() {
+  const t = useT();
   const [query, setQuery] = useState("");
   const { curriculum, certificationName } = useCurriculum();
   const needle = query.trim().toLowerCase();
@@ -44,15 +46,15 @@ function Glossaire() {
   );
 
   return (
-    <AppShell title="Glossaire">
+    <AppShell title={t("common.glossary")}>
       <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
-        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">Glossaire</h1>
+        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">{t("common.glossary")}</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          {curriculum.glossary.length} termes essentiels pour {certificationName} et l'audit.
+          {t("common.glossaryIntro", { count: curriculum.glossary.length, certificationName })}
         </p>
         <Input
           className="mt-6"
-          placeholder="Rechercher un terme…"
+          placeholder={t("common.searchTermPlaceholder")}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
@@ -64,7 +66,7 @@ function Glossaire() {
             </div>
           ))}
           {entries.length === 0 ? (
-            <p className="px-4 py-6 text-sm text-muted-foreground">Aucun résultat.</p>
+            <p className="px-4 py-6 text-sm text-muted-foreground">{t("common.noResults")}</p>
           ) : null}
         </dl>
       </div>

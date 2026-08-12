@@ -32,5 +32,8 @@
   "profilePhotoIdentity": "Your photo and identity, shown across the application.",
   "identity": "Identity",
   "croppablePhotoNameDesc": "Croppable photo, first and last name.",
-  "openingConversation": "Opening your conversation…"
+  "openingConversation": "Opening your conversation…",
+  "glossary": "Glossary",
+  "glossaryIntro": "{{count}} essential terms for {{certificationName}} and auditing.",
+  "searchTermPlaceholder": "Search for a term…"
 }
