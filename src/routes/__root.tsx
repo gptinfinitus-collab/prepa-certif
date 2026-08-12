@@ -90,10 +90,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   beforeLoad: () => ({ locale: resolveInitialLocale() }),
   head: ({ match }) => {
     const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
-    const base = pageHead(locale, "root", "");
     const dict = locale === "en" ? enSeo : frSeo;
 
     return {
+      // Uniquement les métadonnées valables pour tout le site : titre, description
+      // et Open Graph spécifiques sont émis par chaque route feuille.
       meta: [
         { charSet: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -101,7 +102,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           name: "google-site-verification",
           content: "2xhgbbgCb_24CgRm7Lz0TZ6Zk-e4Z_FDeCp9uKcQ5yA",
         },
-        ...base.meta,
+        { property: "og:site_name", content: "PREPA CERTIF" },
         { name: "author", content: "PREPA CERTIF" },
         { name: "theme-color", content: "#0f2f4f" },
         { name: "apple-mobile-web-app-capable", content: "yes" },
@@ -109,6 +110,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
         { name: "mobile-web-app-capable", content: "yes" },
       ],
+
       links: [
         { rel: "stylesheet", href: appCss },
         { rel: "preconnect", href: "https://fonts.googleapis.com" },
