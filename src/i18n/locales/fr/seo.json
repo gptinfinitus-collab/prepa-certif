@@ -1,15 +1,15 @@
 {
   "imageAlt": "PREPA CERTIF — Préparation aux certifications ISO",
   "home": {
-    "title": "PREPA CERTIF — Préparation aux certifications d'auditeur ISO",
+    "title": "Accueil — PREPA CERTIF, préparation auditeur ISO",
     "description": "Connectez-vous à PREPA CERTIF pour préparer vos certifications ISO : planning sur mesure, quiz, examen blanc et suivi de progression.",
-    "ogTitle": "PREPA CERTIF — Préparation aux certifications ISO",
+    "ogTitle": "Accueil — PREPA CERTIF, préparation auditeur ISO",
     "ogDescription": "Accédez à votre espace de préparation aux certifications d'auditeur ISO."
   },
   "root": {
-    "title": "PREPA CERTIF — Préparation aux certifications d'auditeur ISO",
+    "title": "PREPA CERTIF — Préparation aux certifications ISO",
     "description": "Préparation aux certifications d'auditeur ISO (9001, 14001, 45001, 27001…) : planning personnalisable, cours, quiz et suivi de progression.",
-    "ogTitle": "PREPA CERTIF",
+    "ogTitle": "PREPA CERTIF — Préparation aux certifications ISO",
     "ogDescription": "Préparation structurée aux certifications d'auditeur des normes ISO."
   },
   "auth": {
