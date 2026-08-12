@@ -1,15 +1,15 @@
 {
  "meta": {
-  "title": "Préparation ISO 45001:2018 — Audit du système de management de la S&ST",
-  "subtitle": "Application de préparation à la certification, adaptable à d'autres normes",
-  "howToUse": "Chaque jour comprend un objectif, un cours détaillé, un point clé à retenir, puis un quiz avec corrigé. Faites le quiz avant de lire le corrigé.",
-  "copyrightNote": "Ce contenu explique les notions des normes ISO 45001:2018 (et son Amendement 1:2024), ISO 19011:2026 et ISO/IEC 17021-1 avec des mots originaux et des exemples ; il ne reproduit pas le texte officiel des normes, qui reste protégé par le droit d'auteur. Les utilisateurs sont invités à se procurer le texte intégral auprès de l'ISO ou de leur organisme national de normalisation.",
+  "title": "ISO 45001:2018 Preparation — Auditing the OH&S Management System",
+  "subtitle": "Certification preparation app, adaptable to other standards",
+  "howToUse": "Each day includes an objective, a detailed lesson, a key takeaway, then a quiz with an answer key. Take the quiz before reading the answer key.",
+  "copyrightNote": "This content explains concepts from ISO 45001:2018 (and its Amendment 1:2024), ISO 19011:2026 and ISO/IEC 17021-1 using original wording and examples; it does not reproduce the official text of the standards, which remains protected by copyright. Users are encouraged to obtain the full text from ISO or their national standards body.",
   "version": "1.0"
  },
  "weeks": [
   {
    "id": 1,
-   "title": "Comprendre le SMS&ST",
+   "title": "Understanding the OH&S management system",
    "dayIds": [
     1,
     2,
@@ -22,7 +22,7 @@
   },
   {
    "id": 2,
-   "title": "Exigences détaillées + bases de l'audit",
+   "title": "Detailed requirements + audit fundamentals",
    "dayIds": [
     8,
     9,
@@ -35,7 +35,7 @@
   },
   {
    "id": 3,
-   "title": "Techniques d'audit et mise en situation",
+   "title": "Audit techniques and role-play practice",
    "dayIds": [
     15,
     16,
@@ -52,27 +52,27 @@
    "id": 1,
    "week": 1,
    "type": "lesson",
-   "dayLabel": "Séance 1",
-   "title": "Introduction au management de la S&ST",
-   "objective": "Comprendre pourquoi une norme de management S&ST existe et comment elle est construite.",
-   "contentMarkdown": "### Pourquoi un système de management plutôt que de simples règles techniques ?\n\nLa sécurité au travail est traditionnellement gérée par des règles techniques : port du casque, extincteurs, garde-corps, gants, etc. C'est nécessaire, mais insuffisant — une entreprise peut respecter toutes les règles techniques et malgré tout avoir des accidents, si personne ne pilote la démarche dans la durée, si les règles ne sont jamais mises à jour, ou si les travailleurs ne sont pas réellement impliqués. ISO 45001 propose autre chose : un **système de management**, c'est-à-dire une façon organisée de piloter la S&ST comme on pilote la qualité ou les finances — avec une politique, des objectifs, des ressources allouées, une mesure des résultats, et une boucle d'amélioration continue.\n\nAutrement dit : la norme ne dit pas *quelles* règles techniques appliquer, elle dit *comment organiser* l'entreprise pour qu'elle identifie elle-même les bonnes règles, les applique, vérifie qu'elles fonctionnent, et les améliore dans le temps.\n\n### Un peu d'histoire\n\nAvant ISO 45001, la référence internationale était **OHSAS 18001**, une norme britannique (BSI) largement adoptée mais qui n'était pas une norme ISO officielle. En **mars 2018**, l'ISO publie ISO 45001:2018, avec des évolutions majeures :\n\n- Une **structure harmonisée** commune à toutes les normes de management ISO\n- Un accent plus fort sur le **leadership** de la direction\n- L'obligation explicite de **consultation et participation des travailleurs**\n- La prise en compte des **risques ET des opportunités**\n- Une vision élargie du contexte de l'organisme\n\nLes entreprises certifiées OHSAS 18001 ont eu jusqu'en mars 2021 pour migrer vers ISO 45001.\n\n### La structure harmonisée (HLS)\n\n1. Domaine d'application\n2. Références normatives\n3. Termes et définitions\n4. Contexte de l'organisme\n5. Leadership et participation des travailleurs\n6. Planification\n7. Support\n8. Réalisation des activités opérationnelles\n9. Évaluation des performances\n10. Amélioration\n\nLes chapitres 1 à 3 sont introductifs. Le cœur du système se trouve dans les chapitres **4 à 10**.\n\n### Le cycle PDCA appliqué à la S&ST\n\n| Étape | Signification en S&ST | Chapitres |\n|---|---|---|\n| Plan | Contexte, dangers, objectifs | 4, 5, 6 |\n| Do | Moyens, formation, maîtrise des opérations | 7, 8 |\n| Check | Mesure, audit, bilan | 9 |\n| Act | Corriger, améliorer | 10 |",
-   "keyTakeaway": "Le PDCA n'est pas qu'un schéma théorique — c'est la façon dont la norme est organisée. Pour chaque clause lue, demandez-vous : Plan, Do, Check ou Act ?",
+   "dayLabel": "Session 1",
+   "title": "Introduction to OH&S management",
+   "objective": "Understand why an OH&S management standard exists and how it is built.",
+   "contentMarkdown": "### Why a management system rather than mere technical rules?\n\nWorkplace safety is traditionally handled through technical rules: wearing a helmet, fire extinguishers, guardrails, gloves, and so on. This is necessary, but not sufficient — an organization can comply with every technical rule and still have injuries, if no one steers the approach over time, if the rules are never updated, or if workers are not genuinely involved. ISO 45001 proposes something different: a **management system**, that is, an organized way of steering OH&S the way an organization steers quality or finance — with a policy, objectives, allocated resources, measurement of results, and a continual improvement loop.\n\nIn other words: the standard does not say *which* technical rules to apply; it says *how to organize* the organization so that it identifies the right rules itself, applies them, checks that they work, and improves them over time.\n\n### A bit of history\n\nBefore ISO 45001, the international reference was **OHSAS 18001**, a British standard (BSI) that was widely adopted but was not an official ISO standard. In **March 2018**, ISO published ISO 45001:2018, bringing major changes:\n\n- A **harmonized structure** shared by all ISO management system standards\n- A stronger emphasis on top management **leadership**\n- An explicit requirement for **consultation and participation of workers**\n- Consideration of **both risks and opportunities**\n- A broader view of the organization's context\n\nOrganizations certified to OHSAS 18001 had until March 2021 to migrate to ISO 45001.\n\n### The harmonized structure (HLS)\n\n1. Scope\n2. Normative references\n3. Terms and definitions\n4. Context of the organization\n5. Leadership and worker participation\n6. Planning\n7. Support\n8. Operation\n9. Performance evaluation\n10. Improvement\n\nClauses 1 to 3 are introductory. The core of the system lies in clauses **4 to 10**.\n\n### The PDCA cycle applied to OH&S\n\n| Stage | Meaning in OH&S | Clauses |\n|---|---|---|\n| Plan | Context, hazards, objectives | 4, 5, 6 |\n| Do | Resources, training, operational control | 7, 8 |\n| Check | Measurement, audit, review | 9 |\n| Act | Correct, improve | 10 |",
+   "keyTakeaway": "PDCA is not just a theoretical diagram — it is how the standard is organized. For every clause you read, ask yourself: Plan, Do, Check, or Act?",
    "quiz": [
     {
-     "question": "Quelle norme britannique a précédé ISO 45001, et en quelle année ISO 45001 a-t-elle été publiée ?",
-     "answer": "OHSAS 18001 ; ISO 45001 publiée en mars 2018."
+     "question": "Which British standard preceded ISO 45001, and in what year was ISO 45001 published?",
+     "answer": "OHSAS 18001; ISO 45001 was published in March 2018."
     },
     {
-     "question": "Citez 3 évolutions majeures apportées par ISO 45001 par rapport à OHSAS 18001.",
-     "answer": "Par exemple : leadership renforcé de la direction, consultation/participation obligatoire des travailleurs, prise en compte des risques ET des opportunités."
+     "question": "Name 3 major changes brought by ISO 45001 compared to OHSAS 18001.",
+     "answer": "For example: stronger top management leadership, mandatory consultation/participation of workers, consideration of both risks AND opportunities."
     },
     {
-     "question": "Dans quel(s) chapitre(s) de la structure harmonisée se situe la phase Check du PDCA ?",
-     "answer": "Chapitre 9 (Évaluation des performances)."
+     "question": "In which clause(s) of the harmonized structure does the Check stage of PDCA sit?",
+     "answer": "Clause 9 (Performance evaluation)."
     },
     {
-     "question": "Pourquoi la structure harmonisée est-elle un avantage pour quelqu'un qui veut se certifier plus tard sur plusieurs normes ISO ?",
-     "answer": "Parce que la structure en 10 chapitres est identique d'une norme à l'autre — seul le contenu spécifique change, ce qui permet un conversion course plus court."
+     "question": "Why is the harmonized structure an advantage for someone who wants to later get certified against several ISO standards?",
+     "answer": "Because the 10-clause structure is identical from one standard to another — only the specific content changes, which allows for a shorter conversion course."
     }
    ]
   },
@@ -80,19 +80,19 @@
    "id": 2,
    "week": 1,
    "type": "lesson",
-   "dayLabel": "Séance 2",
-   "title": "Vocabulaire clé",
-   "objective": "Maîtriser le vocabulaire qui revient dans toutes les clauses.",
-   "contentMarkdown": "### Le glossaire du jour\n\n- **Danger** (art. 3.19) : source susceptible de causer **traumatisme et pathologie**. Le mot « blessure », hérité d'OHSAS 18001, n'est plus le vocabulaire normatif.\n- **Risque** (art. 3.20) : effet de l'incertitude — définition harmonisée, commune à toutes les normes de management.\n- **Risque pour la S&ST** (art. 3.21) : combinaison de la probabilité d'occurrence d'événements ou d'expositions dangereux liés au travail et de la gravité des traumatismes et pathologies pouvant en résulter. C'est cette définition-là, et non celle de « risque », qui est attendue en S&ST.\n- **Opportunité S&ST** : circonstance qui pourrait améliorer la performance S&ST.\n- **Système de management** : ensemble organisé de politiques, processus et ressources visant à atteindre des objectifs.\n- **Partie intéressée** : toute personne/organisation pouvant affecter ou être affectée par une décision S&ST.\n- **Exigence légale et autre exigence** : lois/règlements applicables, mais aussi engagements volontaires.\n- **Événement indésirable** (art. 3.35, anciennement appelé « incident ») : événement lié au travail ayant causé ou pouvant causer traumatisme et pathologie ; on parle de « presqu'accident » lorsqu'aucune conséquence ne s'est matérialisée.\n- **Non-conformité** : non-respect d'une exigence.\n- **Action corrective** : action visant à supprimer la cause d'une non-conformité.\n- **Correction** : action immédiate pour éliminer une non-conformité détectée, sans traiter la cause.\n- **Performance S&ST** : résultats mesurables liés à la maîtrise des risques S&ST.\n- **Travailleur** : toute personne exerçant un travail sous le contrôle de l'organisme.\n- **Consultation** (art. 3.5) : recherche d'avis **avant** une prise de décision.\n- **Participation** (art. 3.4) : implication **dans** la prise de décision.\n- **Amélioration continue** : activité récurrente visant à améliorer la performance.\n\n### Comparer « correction » et « action corrective » — le piège classique de l'examen\n\n*Un agent se pique avec une aiguille usagée mal placée dans le collecteur.*\n- **Correction** : jeter l'aiguille dans le bon collecteur, prendre en charge l'agent (traite le symptôme immédiat).\n- **Action corrective** : analyser pourquoi l'aiguille n'a pas été bien placée (manque de collecteurs ? formation insuffisante ? charge de travail ?) et traiter la cause durablement.",
-   "keyTakeaway": "Si la question porte sur l'action immédiate après découverte du problème → correction. Si elle porte sur éviter la récurrence → action corrective.",
+   "dayLabel": "Session 2",
+   "title": "Key vocabulary",
+   "objective": "Master the vocabulary that recurs throughout every clause.",
+   "contentMarkdown": "### Today's glossary\n\n- **Hazard** (3.19): source with a potential to cause **injury and ill health**. The word \"injury\" on its own, inherited from OHSAS 18001, is no longer normative wording.\n- **Risk** (3.20): effect of uncertainty — a harmonized definition common to all management system standards.\n- **OH&S risk** (3.21): combination of the likelihood of occurrence of work-related hazardous event(s) or exposure(s) and the severity of injury and ill health that can be caused by them. It is this definition, not the plain \"risk\" definition, that is expected in OH&S.\n- **OH&S opportunity**: circumstance that could improve OH&S performance.\n- **Management system**: organized set of policies, processes and resources aimed at achieving objectives.\n- **Interested party**: any person/organization that can affect or be affected by an OH&S decision.\n- **Legal requirement and other requirement**: applicable laws/regulations, but also voluntary commitments.\n- **Incident** (3.35, formerly also called an \"incident\"): work-related occurrence that has given rise to, or could give rise to, injury and ill health; the term \"near-miss\" is used when no such consequence has actually occurred.\n- **Nonconformity**: non-fulfilment of a requirement.\n- **Corrective action**: action to eliminate the cause of a nonconformity.\n- **Correction**: immediate action to eliminate a detected nonconformity, without addressing its cause.\n- **OH&S performance**: measurable results related to the control of OH&S risks.\n- **Worker**: person performing work under the organization's control.\n- **Consultation** (3.5): seeking views **before** making a decision.\n- **Participation** (3.4): involvement **in** decision-making.\n- **Continual improvement**: recurring activity to enhance performance.\n\n### Comparing \"correction\" and \"corrective action\" — the classic exam trap\n\n*A staff member is pricked by a used needle that was improperly placed in the sharps container.*\n- **Correction**: place the needle in the correct container, take care of the injured staff member (addresses the immediate symptom).\n- **Corrective action**: analyze why the needle was not placed correctly (not enough containers? insufficient training? workload?) and address the root cause on a lasting basis.",
+   "keyTakeaway": "If the question is about the immediate action taken after discovering the problem → correction. If it is about preventing recurrence → corrective action.",
    "quiz": [
     {
-     "question": "Quelle est la différence entre une correction et une action corrective ? Donnez un exemple.",
-     "answer": "La correction traite le symptôme immédiat, l'action corrective en traite la cause pour éviter la récurrence (ex. piqûre d'aiguille)."
+     "question": "What is the difference between a correction and a corrective action? Give an example.",
+     "answer": "A correction addresses the immediate symptom; a corrective action addresses its cause to prevent recurrence (e.g. needle-stick injury)."
     },
     {
-     "question": "Quelle est la différence entre consultation et participation des travailleurs ?",
-     "answer": "Consultation (art. 3.5) = recherche d'avis avant la prise de décision ; participation (art. 3.4) = implication dans la prise de décision elle-même.",
+     "question": "What is the difference between consultation and participation of workers?",
+     "answer": "Consultation (3.5) = seeking views before a decision is made; participation (3.4) = involvement in the decision-making itself.",
      "standardRef": "ISO 45001",
      "standardEdition": "2018 + Amd 1:2024",
      "clauseRef": "3.4 / 3.5",
@@ -101,16 +101,16 @@
      "reviewStatus": "VERIFIED"
     },
     {
-     "question": "Un fournisseur de linge stérile pour la clinique est-il une partie intéressée ? Justifiez.",
-     "answer": "Oui — il peut affecter ou être affecté par des décisions S&ST de la clinique."
+     "question": "Is a supplier of sterile linen for the clinic an interested party? Justify your answer.",
+     "answer": "Yes — it can affect or be affected by the clinic's OH&S decisions."
     },
     {
-     "question": "Donnez un exemple de presqu'accident dans un contexte de laboratoire médical.",
-     "answer": "Un tube de prélèvement tombe et se brise sans exposer personne, ou un réactif est presque mélangé avec un produit incompatible mais l'erreur est repérée à temps."
+     "question": "Give an example of a near-miss in a medical laboratory context.",
+     "answer": "A sample tube falls and breaks without exposing anyone, or a reagent is nearly mixed with an incompatible product but the error is caught in time."
     },
     {
-     "question": "Vrai ou faux : une opportunité S&ST concerne uniquement la réduction des risques.",
-     "answer": "Faux — elle peut concerner une amélioration plus large du système de management."
+     "question": "True or false: an OH&S opportunity only concerns reducing risk.",
+     "answer": "False — it can concern a broader improvement of the management system."
     }
    ]
   },
@@ -118,27 +118,27 @@
    "id": 3,
    "week": 1,
    "type": "lesson",
-   "dayLabel": "Séance 3",
-   "title": "Clause 4 : Contexte de l'organisme",
-   "objective": "Comprendre comment une entreprise détermine où elle en est avant de construire son SMS&ST.",
-   "contentMarkdown": "### Les trois questions du chapitre 4\n\n**1. Quels sont mes enjeux internes et externes ?**\n- Externes : réglementation, contexte économique, culture, climat social, exigences clients.\n- Internes : structure, culture interne, compétences, ressources, gouvernance.\n\n**2. Qui sont mes parties intéressées, et qu'attendent-elles de moi en matière de S&ST ?**\n\n| Partie intéressée | Exemple d'attente en S&ST |\n|---|---|\n| Travailleurs | Environnement de travail sûr, équipements adaptés |\n| Autorités sanitaires | Conformité réglementaire, gestion des déchets |\n| Patients (indirectement) | Personnel formé, moins d'erreurs liées à la fatigue |\n| Assureurs | Maîtrise du risque, réduction de la sinistralité |\n| Syndicats | Dialogue social sur les conditions de travail |\n\n**3. Quel est le domaine d'application (périmètre) de mon SMS&ST ?**\n\nL'organisme doit définir précisément quelles activités, quels sites, quels travailleurs sont couverts. Ce périmètre doit être documenté et **cohérent avec la réalité observée**.",
-   "keyTakeaway": "Piège classique en audit : un domaine d'application qui exclut en pratique le personnel intérimaire ou un site annexe est une non-conformité fréquente.",
+   "dayLabel": "Session 3",
+   "title": "Clause 4: Context of the organization",
+   "objective": "Understand how an organization determines where it stands before building its OH&S management system.",
+   "contentMarkdown": "### The three questions of clause 4\n\n**1. What are my internal and external issues?**\n- External: regulations, economic context, culture, social climate, customer requirements.\n- Internal: structure, internal culture, competence, resources, governance.\n\n**2. Who are my interested parties, and what do they expect from me regarding OH&S?**\n\n| Interested party | Example OH&S expectation |\n|---|---|\n| Workers | Safe working environment, suitable equipment |\n| Health authorities | Regulatory compliance, waste management |\n| Patients (indirectly) | Trained staff, fewer fatigue-related errors |\n| Insurers | Risk control, reduced claims |\n| Trade unions | Social dialogue on working conditions |\n\n**3. What is the scope of my OH&S management system?**\n\nThe organization must precisely define which activities, sites and workers are covered. This scope must be documented and **consistent with what is actually observed**.",
+   "keyTakeaway": "Classic audit trap: a scope that in practice excludes temporary staff or a secondary site is a frequent nonconformity.",
    "quiz": [
     {
-     "question": "Citez un enjeu externe et un enjeu interne pertinents pour une structure de santé.",
-     "answer": "Externe : évolution réglementaire. Interne : turnover du personnel (toute réponse cohérente acceptée)."
+     "question": "Name one external issue and one internal issue relevant to a healthcare facility.",
+     "answer": "External: regulatory change. Internal: staff turnover (any coherent answer is accepted)."
     },
     {
-     "question": "Quelle différence entre le besoin et l'attente d'une partie intéressée ?",
-     "answer": "Le besoin est objectif, l'attente est ce qui est exprimé ou souhaité — les deux ne coïncident pas toujours."
+     "question": "What is the difference between a need and an expectation of an interested party?",
+     "answer": "A need is objective, while an expectation is what is expressed or desired — the two do not always coincide."
     },
     {
-     "question": "Pourquoi le domaine d'application doit-il être documenté ?",
-     "answer": "Pour que tout le monde sache exactement ce qui est couvert ou non, et éviter les zones grises."
+     "question": "Why must the scope be documented?",
+     "answer": "So that everyone knows exactly what is or is not covered, avoiding grey areas."
     },
     {
-     "question": "Un site distant n'a jamais été inclus dans les identifications de dangers bien que le domaine d'application couvre tous les sites. Que peut en conclure l'auditeur ?",
-     "answer": "Une non-conformité : le domaine déclaré n'est pas cohérent avec la mise en œuvre réelle."
+     "question": "A remote site has never been included in hazard identification even though the scope covers all sites. What can the auditor conclude?",
+     "answer": "A nonconformity: the declared scope is not consistent with actual implementation."
     }
    ]
   },
@@ -146,15 +146,15 @@
    "id": 4,
    "week": 1,
    "type": "lesson",
-   "dayLabel": "Séance 4",
-   "title": "Clause 5 : Leadership et participation des travailleurs",
-   "objective": "Comprendre le rôle de la direction et la place centrale donnée aux travailleurs.",
-   "contentMarkdown": "### Le rôle de la direction\n\nEngagement visible et actif : allouer des ressources, intégrer la S&ST dans la stratégie, rendre compte du système, promouvoir une culture S&ST positive, **protéger les travailleurs contre les représailles** lorsqu'ils signalent un incident ou un danger.\n\n### La politique S&ST : cinq engagements, pas trois\n\nLe §5.2 impose que la politique S&ST comporte **cinq** engagements. C'est un piège d'examen classique : beaucoup de candidats n'en citent que trois.\n\n1. **Fournir des conditions de travail sûres et saines** — l'engagement est tourné vers la *prévention des traumatismes et pathologies liés au travail*, pas seulement vers l'absence d'accidents déclarés.\n2. **Satisfaire aux exigences légales et autres exigences** — disposer d'une liste de textes ne suffit pas : l'organisme s'engage à comprendre ce qui lui est réellement applicable et à en tenir compte.\n3. **Éliminer les dangers et réduire les risques pour la S&ST** — cet engagement se lit avec la *hiérarchie des mesures de prévention* : on ne « réduit » qu'après avoir cherché à éliminer.\n4. **Améliorer en continu le système de management de la S&ST (SMS&ST)** — l'amélioration continue porte sur le système lui-même (maturité des processus, qualité des données, efficacité des actions), pas uniquement sur la baisse du nombre d'accidents.\n5. **Consulter et faire participer les travailleurs** — deux notions distinctes : consulter, c'est rechercher un avis *avant* la décision ; faire participer, c'est impliquer *dans* la décision (par exemple co-construire l'analyse de risque d'un poste).\n\n### Rôles, responsabilités et autorités\n\nChaque acteur doit savoir précisément ce qu'on attend de lui — testé en audit via des entretiens terrain.\n\n### Consultation et participation des travailleurs — le point le plus distinctif de la norme\n\nLes travailleurs doivent être **consultés** et réellement **impliqués** : identification des dangers, enquêtes après incident, définition des objectifs. Un système construit uniquement « d'en haut » est un point de non-conformité quasi systématique en audit.",
-   "keyTakeaway": "Ne jamais poser la question de la participation uniquement à la direction — la réponse la plus fiable vient du travailleur de terrain.",
+   "dayLabel": "Session 4",
+   "title": "Clause 5: Leadership and worker participation",
+   "objective": "Understand the role of top management and the central place given to workers.",
+   "contentMarkdown": "### The role of top management\n\nVisible, active commitment: allocating resources, integrating OH&S into strategy, being accountable for the system, promoting a positive OH&S culture, and **protecting workers from reprisals** when they report an incident or a hazard.\n\n### The OH&S policy: five commitments, not three\n\n5.2 requires the OH&S policy to include **five** commitments. This is a classic exam trap: many candidates name only three.\n\n1. **Providing safe and healthy working conditions** — the commitment is aimed at *preventing work-related injury and ill health*, not merely at avoiding reported accidents.\n2. **Fulfilling legal requirements and other requirements** — having a list of texts is not enough: the organization commits to understanding what genuinely applies to it and taking it into account.\n3. **Eliminating hazards and reducing OH&S risks** — this commitment must be read alongside the *hierarchy of controls*: risk is only \"reduced\" after elimination has been considered.\n4. **Continually improving the OH&S management system** — continual improvement concerns the system itself (process maturity, data quality, effectiveness of actions), not merely a drop in the number of accidents.\n5. **Consulting and participating with workers** — two distinct notions: consulting means seeking views *before* a decision; participating means involving workers *in* the decision (for example, co-building a job risk assessment).\n\n### Roles, responsibilities and authorities\n\nEvery person must know precisely what is expected of them — tested during an audit through on-site interviews.\n\n### Consultation and participation of workers — the standard's most distinctive point\n\nWorkers must be genuinely **consulted** and **involved**: hazard identification, incident investigations, setting objectives. A system built purely \"top-down\" is an almost systematic nonconformity finding in audits.",
+   "keyTakeaway": "Never ask about worker participation only to management — the most reliable answer comes from frontline workers.",
    "quiz": [
     {
-     "question": "Citez les cinq engagements que doit contenir une politique S&ST.",
-     "answer": "1) Fournir des conditions de travail sûres et saines pour la prévention des traumatismes et pathologies liés au travail ; 2) satisfaire aux exigences légales et autres exigences ; 3) éliminer les dangers et réduire les risques pour la S&ST ; 4) améliorer en continu le SMS&ST ; 5) consulter et faire participer les travailleurs.",
+     "question": "Name the five commitments an OH&S policy must contain.",
+     "answer": "1) Providing safe and healthy working conditions to prevent work-related injury and ill health; 2) fulfilling legal requirements and other requirements; 3) eliminating hazards and reducing OH&S risks; 4) continually improving the OH&S management system; 5) consulting and participating with workers.",
      "standardRef": "ISO 45001",
      "standardEdition": "2018 + Amd 1:2024",
      "clauseRef": "5.2",
@@ -163,16 +163,16 @@
      "reviewStatus": "VERIFIED"
     },
     {
-     "question": "Pourquoi la protection contre les représailles est-elle importante pour la fiabilité du système ?",
-     "answer": "Sans elle, les travailleurs ne remontent plus les incidents ou dangers réels, ce qui fausse les données du système."
+     "question": "Why is protection against reprisals important for the reliability of the system?",
+     "answer": "Without it, workers stop reporting real incidents or hazards, which distorts the system's data."
     },
     {
-     "question": "Quelle est la différence pratique entre consulter et faire participer, avec un exemple ?",
-     "answer": "Consulter = demander un avis (sondage) ; participer = impliquer directement (co-construire une procédure)."
+     "question": "What is the practical difference between consulting and involving workers, with an example?",
+     "answer": "Consulting = asking for an opinion (survey); involving = engaging directly (co-building a procedure)."
     },
     {
-     "question": "À qui poser en priorité la question de l'implication dans l'identification des risques ?",
-     "answer": "Au travailleur de terrain directement concerné, pas seulement à son responsable."
+     "question": "Who should be asked first about involvement in hazard identification?",
+     "answer": "The frontline worker directly concerned, not only their supervisor."
     }
    ]
   },
@@ -180,23 +180,23 @@
    "id": 5,
    "week": 1,
    "type": "lesson",
-   "dayLabel": "Séance 5",
-   "title": "Clause 6 : Planification",
-   "objective": "Comprendre comment l'organisme identifie ses risques et fixe ses objectifs.",
-   "contentMarkdown": "### Identification des dangers\n\nCouvre : activités de routine et hors routine, situations d'urgence, comportements humains, changements, dangers liés à des tiers.\n\n### Évaluation des risques ET des opportunités — exemple chiffré\n\n| | Gravité faible | Gravité moyenne | Gravité élevée |\n|---|---|---|---|\n| Probabilité faible | Risque faible | Risque faible | Risque moyen |\n| Probabilité moyenne | Risque faible | Risque moyen | Risque élevé |\n| Probabilité élevée | Risque moyen | Risque élevé | Risque élevé |\n\n*Exemple* : une piqûre accidentelle a une probabilité moyenne et une gravité élevée → risque élevé, priorité de traitement immédiate.\n\nLes opportunités concernent aussi l'amélioration globale du système, pas seulement la réduction de risque.\n\n### Exigences légales et autres exigences (§6.1.3) — à ne pas confondre avec l'évaluation de conformité (§9.1.2)\n\n**Ce que demande le §6.1.3 :**\n\n- déterminer les exigences légales et autres exigences applicables ;\n- pouvoir y accéder ;\n- déterminer **comment** elles s'appliquent à l'organisme, et ce qui doit être communiqué ;\n- les prendre en compte dans la mise en place et le fonctionnement du SMS&ST ;\n- tenir à jour les informations documentées correspondantes.\n\n**Ce que demande le §9.1.2 — une exigence distincte, du chapitre 9 :**\n\n- définir un processus d'évaluation de la conformité ;\n- en déterminer la fréquence et les méthodes ;\n- évaluer effectivement le statut de conformité et agir si nécessaire ;\n- maintenir la connaissance et la compréhension de ce statut.\n\n> **Point examen.** Une veille réglementaire bien tenue ne démontre pas à elle seule la conformité de l'organisme : identifier un texte (chapitre 6) et évaluer qu'on le respecte (chapitre 9) sont deux exigences séparées.\n\n### Objectifs S&ST et planification des actions\n\nCohérents avec la politique, mesurables, communiqués, avec un plan d'action clair (qui, quoi, ressources, échéance).",
-   "keyTakeaway": "Un bon objectif S&ST suit la logique SMART. « Améliorer la sécurité » n'est pas exploitable en audit ; « réduire de 30% les accidents d'ici décembre 2026 » l'est.",
+   "dayLabel": "Session 5",
+   "title": "Clause 6: Planning",
+   "objective": "Understand how an organization identifies its risks and sets its objectives.",
+   "contentMarkdown": "### Hazard identification\n\nCovers: routine and non-routine activities, emergency situations, human behavior, changes, hazards caused by third parties.\n\n### Assessing risks AND opportunities — a worked example\n\n| | Low severity | Medium severity | High severity |\n|---|---|---|---|\n| Low likelihood | Low risk | Low risk | Medium risk |\n| Medium likelihood | Low risk | Medium risk | High risk |\n| High likelihood | Medium risk | High risk | High risk |\n\n*Example*: a needle-stick injury has medium likelihood and high severity → high risk, immediate treatment priority.\n\nOpportunities can also concern overall system improvement, not only risk reduction.\n\n### Legal requirements and other requirements (6.1.3) — not to be confused with compliance evaluation (9.1.2)\n\n**What 6.1.3 requires:**\n\n- determining applicable legal requirements and other requirements;\n- having access to them;\n- determining **how** they apply to the organization and what needs to be communicated;\n- taking them into account when establishing, implementing and maintaining the OH&S management system;\n- keeping the related documented information up to date.\n\n**What 9.1.2 requires — a separate requirement, from clause 9:**\n\n- establishing a process for evaluating compliance;\n- determining its frequency and methods;\n- actually evaluating compliance status and acting when needed;\n- maintaining knowledge and understanding of that status.\n\n> **Exam point.** A well-maintained regulatory watch does not by itself demonstrate the organization's compliance: identifying a text (clause 6) and evaluating whether it is being met (clause 9) are two separate requirements.\n\n### OH&S objectives and action planning\n\nConsistent with the policy, measurable, communicated, with a clear action plan (who, what, resources, timeline).",
+   "keyTakeaway": "A good OH&S objective follows SMART logic. \"Improve safety\" cannot be used in an audit; \"reduce accidents by 30% by December 2026\" can.",
    "quiz": [
     {
-     "question": "Positionnez dans la matrice : un déversement mineur de produit d'entretien dans une salle peu fréquentée.",
-     "answer": "Probabilité faible × gravité faible = risque faible."
+     "question": "Place this in the matrix: a minor cleaning-product spill in a low-traffic room.",
+     "answer": "Low likelihood × low severity = low risk."
     },
     {
-     "question": "Donnez un exemple d'opportunité S&ST distincte d'une simple réduction de risque.",
-     "answer": "Réorganiser un poste pour réduire la fatigue tout en améliorant la productivité."
+     "question": "Give an example of an OH&S opportunity distinct from simple risk reduction.",
+     "answer": "Redesigning a workstation to reduce fatigue while also improving productivity."
     },
     {
-     "question": "Le §6.1.3 exige-t-il d'évaluer la conformité de l'organisme aux textes identifiés ?",
-     "answer": "Non. Le §6.1.3 exige de déterminer les exigences applicables, d'y avoir accès, de déterminer comment elles s'appliquent, de les prendre en compte dans le système et de tenir l'information à jour. L'évaluation de la conformité est une exigence distincte du §9.1.2.",
+     "question": "Does 6.1.3 require evaluating the organization's compliance with the identified texts?",
+     "answer": "No. 6.1.3 requires determining applicable requirements, having access to them, determining how they apply, taking them into account in the system, and keeping the information up to date. Compliance evaluation is a separate requirement under 9.1.2.",
      "standardRef": "ISO 45001",
      "standardEdition": "2018 + Amd 1:2024",
      "clauseRef": "6.1.3 / 9.1.2",
@@ -205,8 +205,8 @@
      "reviewStatus": "VERIFIED"
     },
     {
-     "question": "Reformulez « Améliorer la formation du personnel » en objectif SMART.",
-     "answer": "Par exemple : former 100% du personnel soignant aux gestes d'urgence d'ici le 31 décembre 2026, avec contrôle de connaissances."
+     "question": "Rephrase \"Improve staff training\" as a SMART objective.",
+     "answer": "For example: train 100% of care staff in emergency procedures by December 31, 2026, with a knowledge check."
     }
    ]
   },
@@ -214,27 +214,27 @@
    "id": 6,
    "week": 1,
    "type": "review",
-   "dayLabel": "Séance 6",
-   "title": "Révision Semaine 1",
-   "objective": "Consolider les jours 1 à 5 avant de passer à la semaine 2.",
-   "contentMarkdown": "Reprenez vos fiches des jours 1 à 5 et répondez au quiz de révision sans les regarder. Si vous manquez plus de 3 questions sur 10, reprenez les jours correspondants avant de passer au jour 7.",
+   "dayLabel": "Session 6",
+   "title": "Week 1 review",
+   "objective": "Consolidate days 1 to 5 before moving to week 2.",
+   "contentMarkdown": "Go back over your notes from days 1 to 5 and answer the review quiz without looking at them. If you miss more than 3 out of 10 questions, review the corresponding days before moving on to day 7.",
    "keyTakeaway": null,
    "quiz": [
     {
-     "question": "Quelles sont les 4 étapes du cycle PDCA et à quels chapitres correspondent-elles ?",
-     "answer": "Plan (ch.4,5,6) → Do (ch.7,8) → Check (ch.9) → Act (ch.10)."
+     "question": "What are the 4 stages of the PDCA cycle and which clauses do they correspond to?",
+     "answer": "Plan (cl. 4,5,6) → Do (cl. 7,8) → Check (cl. 9) → Act (cl. 10)."
     },
     {
-     "question": "Quelle différence entre une correction et une action corrective ?",
-     "answer": "La correction traite le symptôme immédiat, l'action corrective en traite la cause."
+     "question": "What is the difference between a correction and a corrective action?",
+     "answer": "A correction addresses the immediate symptom; a corrective action addresses its cause."
     },
     {
-     "question": "Citez 3 parties intéressées pertinentes pour une structure de santé.",
-     "answer": "Par exemple : travailleurs, autorités sanitaires, assureurs, syndicats."
+     "question": "Name 3 interested parties relevant to a healthcare facility.",
+     "answer": "For example: workers, health authorities, insurers, trade unions."
     },
     {
-     "question": "Que doit contenir une politique S&ST selon la norme ?",
-     "answer": "Les cinq engagements du §5.2 : conditions de travail sûres et saines, satisfaction aux exigences légales et autres exigences, élimination des dangers et réduction des risques, amélioration continue du SMS&ST, consultation et participation des travailleurs.",
+     "question": "What must an OH&S policy contain according to the standard?",
+     "answer": "The five commitments of 5.2: safe and healthy working conditions, fulfilling legal requirements and other requirements, eliminating hazards and reducing risks, continually improving the OH&S management system, consulting and participating with workers.",
      "standardRef": "ISO 45001",
      "standardEdition": "2018 + Amd 1:2024",
      "clauseRef": "5.2",
@@ -243,28 +243,28 @@
      "reviewStatus": "VERIFIED"
     },
     {
-     "question": "Pourquoi la participation des travailleurs est-elle un point central d'ISO 45001 ?",
-     "answer": "Ils sont les mieux placés pour identifier les dangers réels, et c'est systématiquement vérifié en audit."
+     "question": "Why is worker participation a central point of ISO 45001?",
+     "answer": "Workers are best placed to identify real hazards, and this is systematically checked during audits."
     },
     {
-     "question": "Quelles sont les 4 grandes composantes du chapitre 6 ?",
-     "answer": "Identification des dangers ; évaluation des risques/opportunités ; exigences légales ; objectifs et planification des actions."
+     "question": "What are the 4 main components of clause 6?",
+     "answer": "Hazard identification; assessment of risks/opportunities; legal requirements; objectives and action planning."
     },
     {
-     "question": "Quelle norme britannique a précédé ISO 45001 ?",
+     "question": "Which British standard preceded ISO 45001?",
      "answer": "OHSAS 18001."
     },
     {
-     "question": "Qu'est-ce qui distingue une opportunité S&ST d'une simple réduction de risque ?",
-     "answer": "Elle peut améliorer plus largement le système, pas seulement réduire un danger identifié."
+     "question": "What distinguishes an OH&S opportunity from a simple risk reduction?",
+     "answer": "It can improve the system more broadly, not just reduce an identified hazard."
     },
     {
-     "question": "Pourquoi le domaine d'application doit-il correspondre exactement à la réalité observée ?",
-     "answer": "Un décalage constitue une non-conformité classique en audit."
+     "question": "Why must the scope exactly match what is actually observed?",
+     "answer": "A mismatch is a classic audit nonconformity."
     },
     {
-     "question": "Formulez un exemple d'objectif S&ST respectant la logique SMART.",
-     "answer": "Réduire de 30% les accidents d'exposition au sang d'ici décembre 2026."
+     "question": "Formulate an example of an OH&S objective that follows SMART logic.",
+     "answer": "Reduce blood-exposure accidents by 30% by December 2026."
     }
    ]
   },
@@ -272,10 +272,10 @@
    "id": 7,
    "week": 1,
    "type": "rest",
-   "dayLabel": "Séance 7",
-   "title": "Pause / mise en jambe pour la semaine 2",
-   "objective": "Repos.",
-   "contentMarkdown": "Journée de repos méritée. Si vous avez de l'énergie, lisez simplement l'introduction du jour 12 (les 7 principes de l'audit) pour vous familiariser avec les mots-clés avant d'attaquer la semaine 2 — sans obligation.",
+   "dayLabel": "Session 7",
+   "title": "Rest / warm-up for week 2",
+   "objective": "Rest.",
+   "contentMarkdown": "A well-deserved rest day. If you have energy to spare, simply read the introduction to day 12 (the 7 audit principles) to become familiar with the key terms before starting week 2 — no obligation.",
    "keyTakeaway": null,
    "quiz": []
   },
@@ -283,27 +283,27 @@
    "id": 8,
    "week": 2,
    "type": "lesson",
-   "dayLabel": "Séance 8",
-   "title": "Clause 7 : Support",
-   "objective": "Comprendre ce qui doit être mis en place pour que le système fonctionne concrètement au quotidien.",
-   "contentMarkdown": "### Les 5 piliers du chapitre 7\n\n- **Ressources** : humaines, financières, matérielles, techniques.\n- **Compétences** : formation, expérience, qualification — avec preuves conservées.\n- **Sensibilisation** : politique S&ST, dangers du poste, contribution à l'efficacité du système, conséquences d'un non-respect.\n- **Communication** : quoi, quand, à qui, comment — interne et externe.\n- **Information documentée** : créer, mettre à jour, maîtriser (accès, protection, conservation, versions).\n\n### Un exemple de vérification croisée typique en audit\n\nL'auditeur vérifie le registre de formation (document), interroge l'agent sur le contenu de sa formation (entretien), puis observe s'il applique réellement ce qui a été enseigné (observation). Les trois sources doivent converger.",
-   "keyTakeaway": "Un document qui existe mais que personne ne connaît, ou qu'on ne sait pas appliquer sur le terrain, ne prouve rien.",
+   "dayLabel": "Session 8",
+   "title": "Clause 7: Support",
+   "objective": "Understand what needs to be put in place for the system to function concretely on a daily basis.",
+   "contentMarkdown": "### The 5 pillars of clause 7\n\n- **Resources**: human, financial, material, technical.\n- **Competence**: training, experience, qualification — with retained evidence.\n- **Awareness**: OH&S policy, hazards of the job, contribution to the effectiveness of the system, consequences of non-compliance.\n- **Communication**: what, when, to whom, how — internal and external.\n- **Documented information**: creating, updating, controlling (access, protection, retention, versions).\n\n### A typical cross-check example in an audit\n\nThe auditor checks the training register (document), asks the staff member about the content of their training (interview), then observes whether they actually apply what was taught (observation). All three sources must converge.",
+   "keyTakeaway": "A document that exists but that nobody knows about, or that people don't know how to apply on the ground, proves nothing.",
    "quiz": [
     {
-     "question": "Citez les 5 composantes du chapitre 7.",
-     "answer": "Ressources, compétences, sensibilisation, communication, information documentée."
+     "question": "Name the 5 components of clause 7.",
+     "answer": "Resources, competence, awareness, communication, documented information."
     },
     {
-     "question": "Pourquoi l'auditeur croise-t-il toujours document, entretien et observation ?",
-     "answer": "Pour vérifier que ce qui est écrit, su et fait convergent."
+     "question": "Why does the auditor always cross-check documents, interviews and observation?",
+     "answer": "To verify that what is written, known and done all converge."
     },
     {
-     "question": "Que risque un système avec trop de documentation ?",
-     "answer": "Il devient ingérable, les documents ne sont jamais réellement suivis ou mis à jour."
+     "question": "What is the risk of a system with too much documentation?",
+     "answer": "It becomes unmanageable, and documents are never actually followed or updated."
     },
     {
-     "question": "Donnez un exemple concret de sensibilisation attendue pour un agent de laboratoire.",
-     "answer": "Connaître les risques biologiques de son poste, savoir où trouver la fiche de données de sécurité des réactifs."
+     "question": "Give a concrete example of the awareness expected of a laboratory technician.",
+     "answer": "Knowing the biological hazards of their job and where to find the safety data sheet for reagents."
     }
    ]
   },
@@ -311,27 +311,27 @@
    "id": 9,
    "week": 2,
    "type": "lesson",
-   "dayLabel": "Séance 9",
-   "title": "Clause 8 : Réalisation des activités opérationnelles",
-   "objective": "Comprendre comment l'organisme maîtrise ses opérations au quotidien.",
-   "contentMarkdown": "### La hiérarchie des mesures de prévention (§8.1.2), du plus au moins efficace\n\n1. **Élimination** du danger\n2. **Substitution** par quelque chose de moins dangereux\n3. **Mesures d'ingénierie et réorganisation du travail** (isolation, ventilation, protection collective)\n4. **Mesures administratives, dont la formation** (procédures, rotation, sensibilisation)\n5. **Équipements de protection individuelle (EPI)** — le dernier rempart\n\n*Exemple appliqué au risque de piqûre* : élimination (matériel sans aiguille) → substitution (dispositif de sécurité intégré) → ingénierie (collecteurs proches) → organisationnel (procédure, formation) → EPI (gants, insuffisant seul).\n\n### Gestion du changement\n\nTout changement doit être évalué pour ses impacts S&ST **avant** d'être mis en œuvre.\n\n### Préparation et réponse aux situations d'urgence\n\nIdentifier les urgences potentielles, préparer des plans de réponse, et les **tester périodiquement**.",
-   "keyTakeaway": "Face à plusieurs mesures possibles, choisissez toujours celle la plus haute dans la hiérarchie (élimination avant EPI), sauf si l'élimination est manifestement impossible.",
+   "dayLabel": "Session 9",
+   "title": "Clause 8: Operation",
+   "objective": "Understand how an organization controls its operations day to day.",
+   "contentMarkdown": "### The hierarchy of controls (8.1.2), from most to least effective\n\n1. **Elimination** of the hazard\n2. **Substitution** with something less hazardous\n3. **Engineering controls and reorganization of work** (isolation, ventilation, collective protection)\n4. **Administrative controls, including training** (procedures, rotation, awareness)\n5. **Personal protective equipment (PPE)** — the last line of defense\n\n*Example applied to needle-stick risk*: elimination (needle-free devices) → substitution (integrated safety device) → engineering (nearby sharps containers) → administrative (procedure, training) → PPE (gloves, insufficient on their own).\n\n### Management of change\n\nEvery change must be evaluated for its OH&S impacts **before** it is implemented.\n\n### Emergency preparedness and response\n\nIdentify potential emergencies, prepare response plans, and **test them periodically**.",
+   "keyTakeaway": "When several controls are possible, always choose the one highest in the hierarchy (elimination before PPE), unless elimination is clearly impossible.",
    "quiz": [
     {
-     "question": "Citez les 5 niveaux de la hiérarchie des mesures de prévention.",
-     "answer": "Élimination, substitution, mesures d'ingénierie, mesures organisationnelles, EPI."
+     "question": "Name the 5 levels of the hierarchy of controls.",
+     "answer": "Elimination, substitution, engineering controls, administrative controls, PPE."
     },
     {
-     "question": "Pourquoi l'EPI est-il la mesure la moins fiable ?",
-     "answer": "Parce qu'elle dépend du comportement humain et ne supprime pas le danger à la source."
+     "question": "Why is PPE the least reliable control?",
+     "answer": "Because it depends on human behavior and does not remove the hazard at its source."
     },
     {
-     "question": "Que doit faire l'organisme avant un changement d'organisation ?",
-     "answer": "Évaluer les impacts S&ST potentiels avant sa mise en œuvre."
+     "question": "What must the organization do before an organizational change?",
+     "answer": "Evaluate the potential OH&S impacts before implementation."
     },
     {
-     "question": "Pourquoi un plan d'urgence non testé est-il un point d'attention en audit ?",
-     "answer": "On ne peut garantir son efficacité réelle tant qu'il n'a pas été mis à l'épreuve."
+     "question": "Why is an untested emergency plan an audit concern?",
+     "answer": "Its real effectiveness cannot be guaranteed until it has been put to the test."
     }
    ]
   },
@@ -339,27 +339,27 @@
    "id": 10,
    "week": 2,
    "type": "lesson",
-   "dayLabel": "Séance 10",
-   "title": "Clause 9 : Évaluation des performances",
-   "objective": "Comprendre comment l'organisme vérifie que son système fonctionne réellement.",
-   "contentMarkdown": "### Surveillance, mesure, analyse et évaluation\n\nIndicateurs courants : taux de fréquence des accidents, taux de gravité, nombre de presqu'accidents remontés, taux de complétion des formations.\n\n### Évaluation de la conformité\n\nVérifier régulièrement le respect des obligations légales — la réglementation évolue.\n\n### Audit interne\n\nL'organisme audite lui-même son système à intervalles planifiés — c'est le Check du PDCA appliqué en interne.\n\n### Revue de direction\n\nExamen périodique du système par la direction (résultats d'audits, incidents, non-conformités, actions correctives, contexte, ressources), débouchant sur des décisions documentées.",
-   "keyTakeaway": "Un indicateur zéro accident sans presqu'accidents remontés n'est pas forcément bon signe — ça peut indiquer que le personnel n'ose pas signaler.",
+   "dayLabel": "Session 10",
+   "title": "Clause 9: Performance evaluation",
+   "objective": "Understand how an organization verifies that its system actually works.",
+   "contentMarkdown": "### Monitoring, measurement, analysis and evaluation\n\nCommon indicators: accident frequency rate, severity rate, number of reported near-misses, training completion rate.\n\n### Compliance evaluation\n\nRegularly check compliance with legal obligations — regulations change over time.\n\n### Internal audit\n\nThe organization audits its own system at planned intervals — this is the Check of PDCA applied internally.\n\n### Management review\n\nPeriodic review of the system by top management (audit results, incidents, nonconformities, corrective actions, context, resources), leading to documented decisions.",
+   "keyTakeaway": "A zero-accident indicator with no reported near-misses is not necessarily good news — it may indicate that staff do not dare to report.",
    "quiz": [
     {
-     "question": "Citez les 4 composantes du chapitre 9.",
-     "answer": "Surveillance/mesure/analyse/évaluation ; évaluation de conformité ; audit interne ; revue de direction."
+     "question": "Name the 4 components of clause 9.",
+     "answer": "Monitoring/measurement/analysis/evaluation; compliance evaluation; internal audit; management review."
     },
     {
-     "question": "Pourquoi un nombre élevé de presqu'accidents remontés n'est-il pas forcément mauvais signe ?",
-     "answer": "Ça peut indiquer une bonne culture de signalement plutôt qu'un problème réel."
+     "question": "Why is a high number of reported near-misses not necessarily a bad sign?",
+     "answer": "It can indicate a good reporting culture rather than an actual problem."
     },
     {
-     "question": "À quelle fréquence l'évaluation de conformité doit-elle être réalisée ? Pourquoi ?",
-     "answer": "Régulièrement, car la réglementation évolue dans le temps."
+     "question": "How often should compliance evaluation be carried out? Why?",
+     "answer": "Regularly, because regulations change over time."
     },
     {
-     "question": "Que doit produire une revue de direction au-delà d'un compte-rendu ?",
-     "answer": "Des décisions documentées (actions, ressources, ajustements)."
+     "question": "What should a management review produce beyond meeting minutes?",
+     "answer": "Documented decisions (actions, resources, adjustments)."
     }
    ]
   },
@@ -367,27 +367,27 @@
    "id": 11,
    "week": 2,
    "type": "lesson",
-   "dayLabel": "Séance 11",
-   "title": "Clause 10 : Amélioration",
-   "objective": "Comprendre comment l'organisme traite les écarts et progresse dans la durée.",
-   "contentMarkdown": "### Le traitement complet d'un incident, en 4 étapes\n\n1. **Réagir** : maîtriser et corriger la situation immédiate\n2. **Analyser les causes** (méthode des « 5 pourquoi »)\n3. **Mettre en place une action corrective**\n4. **Vérifier l'efficacité** après un délai\n\n### Illustration avec les « 5 pourquoi »\n\n*Un agent se pique avec une aiguille.* Pourquoi ? Aiguille pas dans le collecteur → collecteur plein → pas vidé selon fréquence → tâche non assignée → absence de responsabilité définie.\n→ L'action corrective : assigner clairement la responsabilité du vidage des collecteurs et vérifier son application (pas « acheter plus de gants »).\n\n### Amélioration continue\n\nChercher en permanence à améliorer le système, même sans non-conformité constatée.",
-   "keyTakeaway": "Une action corrective jamais vérifiée dans son efficacité n'a, en audit, aucune valeur probante.",
+   "dayLabel": "Session 11",
+   "title": "Clause 10: Improvement",
+   "objective": "Understand how an organization handles nonconformities and progresses over time.",
+   "contentMarkdown": "### Fully handling an incident, in 4 steps\n\n1. **React**: control and correct the immediate situation\n2. **Analyze root causes** (the \"5 whys\" method)\n3. **Implement a corrective action**\n4. **Verify effectiveness** after a set period\n\n### Illustration with the \"5 whys\"\n\n*A staff member is pricked by a needle.* Why? Needle not placed in the sharps container → container full → not emptied at the required frequency → task not assigned → no defined responsibility.\n→ The corrective action: clearly assign responsibility for emptying sharps containers and check it is applied (not \"buy more gloves\").\n\n### Continual improvement\n\nContinuously seeking to improve the system, even without an observed nonconformity.",
+   "keyTakeaway": "A corrective action whose effectiveness was never verified has, in an audit, no probative value.",
    "quiz": [
     {
-     "question": "Décrivez en 4 étapes le traitement complet d'un incident.",
-     "answer": "Réagir → analyser les causes → action corrective → vérifier l'efficacité."
+     "question": "Describe in 4 steps how an incident should be fully handled.",
+     "answer": "React → analyze root causes → corrective action → verify effectiveness."
     },
     {
-     "question": "Pourquoi une action corrective non vérifiée est-elle insuffisante en audit ?",
-     "answer": "Sans vérification, on ne sait pas si le problème a réellement été résolu."
+     "question": "Why is an unverified corrective action insufficient in an audit?",
+     "answer": "Without verification, there is no way to know whether the problem was actually resolved."
     },
     {
-     "question": "À quoi sert la méthode des 5 pourquoi ?",
-     "answer": "Remonter d'un symptôme observé vers sa cause racine."
+     "question": "What is the purpose of the 5 whys method?",
+     "answer": "To trace an observed symptom back to its root cause."
     },
     {
-     "question": "Proposez une action corrective différente pour l'exemple de la piqûre d'aiguille, basée sur l'analyse des causes.",
-     "answer": "Réponse ouverte : ex. revoir le nombre de collecteurs disponibles si la cause était un sous-dimensionnement."
+     "question": "Propose a different corrective action for the needle-stick example, based on root cause analysis.",
+     "answer": "Open answer: e.g. review the number of available sharps containers if the cause was found to be undersizing."
     }
    ]
   },
@@ -395,30 +395,30 @@
    "id": 12,
    "week": 2,
    "type": "lesson",
-   "dayLabel": "Séance 12",
-   "title": "Introduction à ISO 19011:2026",
-   "objective": "Basculer du contenu de la norme S&ST vers la méthode d'audit elle-même.",
-   "contentMarkdown": "ISO 19011:2026 (édition en vigueur) est le guide international pour auditer n'importe quel système de management. Ce sont des **lignes directrices**, pas des exigences certifiables : les règles de la certification tierce partie (étape 1 / étape 2, classification majeure ou mineure, décision de certification) relèvent d'ISO/IEC 17021-1. Elle repose sur **7 principes** :\n\n1. **Intégrité** : honnêteté, diligence, responsabilité.\n2. **Présentation impartiale** : rapporter les constats de façon exacte, même inconfortables.\n3. **Conscience professionnelle** : diligence et jugement.\n4. **Confidentialité** : protéger les informations obtenues.\n5. **Indépendance** : base de l'impartialité — ne pas auditer son propre travail.\n6. **Approche fondée sur la preuve** : conclusions basées sur des preuves vérifiables.\n7. **Approche fondée sur le risque** : concentrer l'effort d'audit sur les zones critiques.\n\n### Mises en situation\n\n- Un auditeur ne rapporte que ce qui est prouvé, même si un point positif n'est pas totalement vérifié → présentation impartiale.\n- Un auditeur a conçu lui-même la procédure qu'on lui demande d'auditer → violation de l'indépendance.\n- Un auditeur passe plus de temps sur les processus à fort risque → bonne application de l'approche fondée sur le risque.",
-   "keyTakeaway": "Les questions d'examen sur ces 7 principes sont presque toujours des mises en situation. Apprenez-les avec un exemple associé à chacun.",
+   "dayLabel": "Session 12",
+   "title": "Introduction to ISO 19011:2026",
+   "objective": "Shift from the content of the OH&S standard to the auditing method itself.",
+   "contentMarkdown": "ISO 19011:2026 (current edition) is the international guidance for auditing any management system. It provides **guidelines**, not certifiable requirements: the rules of third-party certification (stage 1 / stage 2, major or minor classification, certification decision) fall under ISO/IEC 17021-1. It is based on **7 principles**:\n\n1. **Integrity**: honesty, diligence, responsibility.\n2. **Fair presentation**: reporting findings accurately, even when uncomfortable.\n3. **Due professional care**: diligence and judgement.\n4. **Confidentiality**: protecting information obtained.\n5. **Independence**: the basis for impartiality — not auditing one's own work.\n6. **Evidence-based approach**: conclusions based on verifiable evidence.\n7. **Risk-based approach**: focusing audit effort on critical areas.\n\n### Scenarios\n\n- An auditor reports only what can be proven, even if a positive point has not been fully verified → fair presentation.\n- An auditor is asked to audit a procedure they designed themselves → breach of independence.\n- An auditor spends more time on high-risk processes → good application of the risk-based approach.",
+   "keyTakeaway": "Exam questions on these 7 principles are almost always scenario-based. Learn them together with an example for each.",
    "quiz": [
     {
-     "question": "Citez les 7 principes de l'audit selon ISO 19011.",
-     "answer": "Intégrité, présentation impartiale, conscience professionnelle, confidentialité, indépendance, approche fondée sur la preuve, approche fondée sur le risque.",
+     "question": "Name the 7 auditing principles according to ISO 19011.",
+     "answer": "Integrity, fair presentation, due professional care, confidentiality, independence, evidence-based approach, risk-based approach.",
      "standardRef": "ISO 19011",
      "standardEdition": "2026",
      "referenceType": "GUIDANCE"
     },
     {
-     "question": "Un auditeur, ancien employé d'une entreprise, l'audite 6 mois après son départ. Quel principe est en jeu ?",
-     "answer": "L'indépendance."
+     "question": "An auditor, a former employee of a company, audits it 6 months after leaving. Which principle is at stake?",
+     "answer": "Independence."
     },
     {
-     "question": "Pourquoi l'approche fondée sur la preuve exclut-elle les simples impressions ?",
-     "answer": "Une impression n'est ni vérifiable ni reproductible par un tiers."
+     "question": "Why does the evidence-based approach exclude mere impressions?",
+     "answer": "An impression is neither verifiable nor reproducible by a third party."
     },
     {
-     "question": "Donnez un exemple d'application du principe de confidentialité.",
-     "answer": "Ne pas mentionner à un client les pratiques observées chez un autre client."
+     "question": "Give an example of applying the confidentiality principle.",
+     "answer": "Not disclosing to one client the practices observed at another client."
     }
    ],
    "standardRef": "ISO 19011",
@@ -429,27 +429,27 @@
    "id": 13,
    "week": 2,
    "type": "lesson",
-   "dayLabel": "Séance 13",
-   "title": "Types et méthodes d'audit",
-   "objective": "Comprendre les différents types d'audit et le déroulement d'une certification.",
-   "contentMarkdown": "### Les 3 types d'audit\n\n- **Première partie (interne)** : l'organisme s'audite lui-même.\n- **Seconde partie** : réalisé par une partie ayant un intérêt direct (ex. un client qui audite son fournisseur).\n- **Tierce partie** : réalisé par un organisme certificateur indépendant en vue d'une certification.\n\n### Le processus de certification en 2 étapes\n\n**Étape 1 — Revue documentaire** : vérifier que le système documenté est cohérent et prêt, via check-lists et questionnaire. Conclut par un rapport d'étape 1.\n\n**Étape 2 — Audit sur site** : vérifier la mise en œuvre réelle (entretiens, observations, preuves documentaires). Conclut par une réunion de restitution et un rapport d'étape 2.\n\n### Non-conformité majeure vs mineure\n\n- **Majeure** : absence totale ou défaillance systémique, ou accumulation de mineures sur le même point.\n- **Mineure** : défaillance ponctuelle ou isolée.",
-   "keyTakeaway": "Situation isolée/ponctuelle → pensez mineure. Situation systémique/répétée touchant un processus critique → pensez majeure.",
+   "dayLabel": "Session 13",
+   "title": "Types and methods of audit",
+   "objective": "Understand the different types of audit and how a certification process unfolds.",
+   "contentMarkdown": "### The 3 types of audit\n\n- **First party (internal)**: the organization audits itself.\n- **Second party**: carried out by a party with a direct interest (e.g. a customer auditing its supplier).\n- **Third party**: carried out by an independent certification body for certification purposes.\n\n### The 2-stage certification process\n\n**Stage 1 — Documentation review**: verify that the documented system is coherent and ready, using checklists and a questionnaire. Concludes with a stage 1 report.\n\n**Stage 2 — On-site audit**: verify actual implementation (interviews, observations, documentary evidence). Concludes with a closing meeting and a stage 2 report.\n\n### Major vs minor nonconformity\n\n- **Major**: total absence, a systemic failure, or an accumulation of minors on the same point.\n- **Minor**: a one-off or isolated failure.",
+   "keyTakeaway": "An isolated/one-off situation → think minor. A systemic/recurring situation affecting a critical process → think major.",
    "quiz": [
     {
-     "question": "Quelle différence entre audit interne, de seconde partie et de tierce partie ?",
-     "answer": "Interne = auto-évaluation ; seconde partie = par une partie intéressée directe ; tierce partie = organisme certificateur indépendant."
+     "question": "What is the difference between an internal, second-party and third-party audit?",
+     "answer": "Internal = self-assessment; second party = a direct interested party; third party = independent certification body."
     },
     {
-     "question": "Que se passe-t-il pendant l'étape 1 ? Et l'étape 2 ?",
-     "answer": "Étape 1 = revue documentaire ; étape 2 = audit sur site avec entretiens/observations et rapport final."
+     "question": "What happens during stage 1? And stage 2?",
+     "answer": "Stage 1 = documentation review; stage 2 = on-site audit with interviews/observations and a final report."
     },
     {
-     "question": "Quelle est la conséquence typique d'une non-conformité majeure ?",
-     "answer": "Elle empêche généralement la certification immédiate."
+     "question": "What is the typical consequence of a major nonconformity?",
+     "answer": "It generally prevents immediate certification."
     },
     {
-     "question": "Un agent ne connaît pas la procédure d'urgence, constaté sur un seul entretien. NC majeure ou mineure ? Que vérifier avant de trancher ?",
-     "answer": "A priori mineure si isolé ; vérifier si c'est représentatif d'un problème plus large avant de conclure."
+     "question": "A staff member does not know the emergency procedure, observed in a single interview. Major or minor NC? What should be checked before deciding?",
+     "answer": "Presumed minor if isolated; check whether it is representative of a wider issue before concluding."
     }
    ]
   },
@@ -457,57 +457,57 @@
    "id": 14,
    "week": 2,
    "type": "review",
-   "dayLabel": "Séance 14",
-   "title": "Révision Semaine 2",
-   "objective": "Consolider les jours 8 à 13.",
-   "contentMarkdown": "Reprenez vos fiches des jours 8 à 13. Si vous manquez plus de 3 questions sur 10, reprenez les jours correspondants avant d'entamer la semaine 3.",
+   "dayLabel": "Session 14",
+   "title": "Week 2 review",
+   "objective": "Consolidate days 8 to 13.",
+   "contentMarkdown": "Go back over your notes from days 8 to 13. If you miss more than 3 out of 10 questions, review the corresponding days before starting week 3.",
    "keyTakeaway": null,
    "quiz": [
     {
-     "question": "Citez les 5 éléments du chapitre 7 (Support).",
-     "answer": "Ressources, compétences, sensibilisation, communication, information documentée."
+     "question": "Name the 5 elements of clause 7 (Support).",
+     "answer": "Resources, competence, awareness, communication, documented information."
     },
     {
-     "question": "Quelle est la hiérarchie des mesures de prévention du risque ?",
-     "answer": "Élimination, substitution, mesures d'ingénierie, mesures organisationnelles, EPI."
+     "question": "What is the hierarchy of controls for risk?",
+     "answer": "Elimination, substitution, engineering controls, administrative controls, PPE."
     },
     {
-     "question": "Pourquoi un audit croise-t-il toujours document, entretien et observation ?",
-     "answer": "Pour vérifier que ce qui est écrit, su et fait convergent."
+     "question": "Why does an audit always cross-check documents, interviews and observation?",
+     "answer": "To verify that what is written, known and done all converge."
     },
     {
-     "question": "Citez les 4 composantes du chapitre 9.",
-     "answer": "Surveillance/mesure/analyse, conformité, audit interne, revue de direction.",
+     "question": "Name the 4 components of clause 9.",
+     "answer": "Monitoring/measurement/analysis, compliance, internal audit, management review.",
      "revision": true
     },
     {
-     "question": "Décrivez les 4 étapes du traitement complet d'un incident.",
-     "answer": "Réagir → analyser les causes → action corrective → vérifier l'efficacité."
+     "question": "Describe the 4 steps for fully handling an incident.",
+     "answer": "React → analyze root causes → corrective action → verify effectiveness."
     },
     {
-     "question": "Citez les 7 principes de l'audit selon ISO 19011.",
-     "answer": "Intégrité, présentation impartiale, conscience professionnelle, confidentialité, indépendance, approche fondée sur la preuve, approche fondée sur le risque.",
+     "question": "Name the 7 auditing principles according to ISO 19011.",
+     "answer": "Integrity, fair presentation, due professional care, confidentiality, independence, evidence-based approach, risk-based approach.",
      "revision": true,
      "standardRef": "ISO 19011",
      "standardEdition": "2026",
      "referenceType": "GUIDANCE"
     },
     {
-     "question": "Quelle est la différence entre audit interne, de seconde partie et de tierce partie ?",
-     "answer": "Interne = auto-évaluation ; seconde partie = partie intéressée directe ; tierce partie = organisme certificateur indépendant."
+     "question": "What is the difference between an internal, second-party and third-party audit?",
+     "answer": "Internal = self-assessment; second party = direct interested party; third party = independent certification body."
     },
     {
-     "question": "Que se passe-t-il pendant l'étape 1 puis l'étape 2 d'une certification ?",
-     "answer": "Étape 1 = revue documentaire ; étape 2 = audit sur site avec rapport final."
+     "question": "What happens during stage 1 and then stage 2 of a certification?",
+     "answer": "Stage 1 = documentation review; stage 2 = on-site audit with a final report."
     },
     {
-     "question": "Quelle est la conséquence typique d'une non-conformité majeure ?",
-     "answer": "Elle empêche généralement la certification immédiate.",
+     "question": "What is the typical consequence of a major nonconformity?",
+     "answer": "It generally prevents immediate certification.",
      "revision": true
     },
     {
-     "question": "À quoi sert la méthode des 5 pourquoi ?",
-     "answer": "Remonter d'un symptôme à sa cause racine.",
+     "question": "What is the purpose of the 5 whys method?",
+     "answer": "To trace a symptom back to its root cause.",
      "revision": true
     }
    ]
@@ -516,27 +516,27 @@
    "id": 15,
    "week": 3,
    "type": "lesson",
-   "dayLabel": "Séance 15",
-   "title": "Qualités et comportement de l'auditeur",
-   "objective": "Comprendre ce qui fait un bon auditeur, au-delà de la connaissance technique.",
-   "contentMarkdown": "### Savoir-faire et savoir-être\n\n- Ouverture d'esprit et diplomatie\n- Capacité d'observation et de perception\n- Aptitude à décider sur la base de raisonnements logiques\n- Ténacité\n- Capacité à agir de façon autonome, tout en travaillant en équipe\n\n### Le management de l'équipe d'audit\n\nLe lead auditor répartit les rôles, coordonne le planning, arbitre les désaccords sur une conclusion.\n\n### Le pilotage global de l'audit\n\nRespecter le plan initial tout en restant capable de s'adapter si un constat important émerge en cours de route.",
-   "keyTakeaway": "Un auditeur compétent adapte son approche fondée sur le risque en cours d'audit face à un signal fort, sans abandonner tout cadre.",
+   "dayLabel": "Session 15",
+   "title": "Auditor qualities and behavior",
+   "objective": "Understand what makes a good auditor, beyond technical knowledge.",
+   "contentMarkdown": "### Skills and personal attributes\n\n- Open-mindedness and diplomacy\n- Powers of observation and perceptiveness\n- Ability to decide based on logical reasoning\n- Tenacity\n- Ability to act autonomously while working within a team\n\n### Managing the audit team\n\nThe audit team leader assigns roles, coordinates the schedule, and arbitrates disagreements about a conclusion.\n\n### Overall steering of the audit\n\nFollowing the initial plan while remaining able to adapt if an important finding emerges along the way.",
+   "keyTakeaway": "A competent auditor adapts their risk-based approach during the audit in response to a strong signal, without abandoning any framework altogether.",
    "quiz": [
     {
-     "question": "Citez 3 qualités de savoir-être attendues d'un auditeur.",
-     "answer": "Par exemple : ouverture d'esprit, capacité d'observation, ténacité."
+     "question": "Name 3 personal attributes expected of an auditor.",
+     "answer": "For example: open-mindedness, powers of observation, tenacity."
     },
     {
-     "question": "Quel est le rôle du lead auditor ?",
-     "answer": "Répartir les rôles, coordonner le planning, arbitrer les désaccords entre auditeurs."
+     "question": "What is the role of the audit team leader?",
+     "answer": "Assigning roles, coordinating the schedule, arbitrating disagreements between auditors."
     },
     {
-     "question": "Un signal fort émerge hors du plan initial. Que devrait faire l'auditeur ?",
-     "answer": "Adapter son plan pour investiguer, selon l'approche fondée sur le risque."
+     "question": "A strong signal emerges outside the initial plan. What should the auditor do?",
+     "answer": "Adapt the plan to investigate it, following the risk-based approach."
     },
     {
-     "question": "Pourquoi la ténacité est-elle importante en audit ?",
-     "answer": "Un interlocuteur peut minimiser ou détourner un sujet sensible ; l'auditeur doit aller au bout."
+     "question": "Why is tenacity important in auditing?",
+     "answer": "An interviewee may downplay or divert attention from a sensitive topic; the auditor must follow through."
     }
    ]
   },
@@ -544,27 +544,27 @@
    "id": 16,
    "week": 3,
    "type": "lesson",
-   "dayLabel": "Séance 16",
-   "title": "Préparation d'un audit",
-   "objective": "Apprendre à construire les outils qui structurent un audit.",
-   "contentMarkdown": "### Le plan d'audit\n\nFixe les objectifs, le périmètre, les critères, le calendrier, les personnes à rencontrer. Communiqué à l'audité avant l'audit.\n\n### La check-list d'audit\n\nGuide l'auditeur sans être suivie de façon rigide.\n\n### Le questionnaire d'étape 1\n\nVérifie en amont que la documentation existe et couvre les exigences.\n\n### Exemple de check-list — clause 6 en laboratoire médical\n\n1. Existe-t-il une information documentée décrivant l'identification des dangers spécifique au laboratoire ?\n2. Couvre-t-elle les activités hors routine ?\n3. Les résultats d'évaluation des risques sont-ils datés et mis à jour ?\n4. Les opportunités d'amélioration sont-elles tracées ?\n5. Existe-t-il une liste des exigences légales applicables au laboratoire ?\n6. Cette liste est-elle mise à jour, et par qui ?\n7. Les objectifs S&ST sont-ils mesurables et datés ?\n8. Un plan d'action est-il associé, avec responsable et échéance ?\n9. Les travailleurs ont-ils été consultés lors de l'identification des dangers ?\n10. Existe-t-il une preuve de cette consultation ?",
-   "keyTakeaway": "Une bonne check-list mélange questions documentaires (existe-t-il...) et questions de vérification terrain (est-ce daté, tracé, prouvé...).",
+   "dayLabel": "Session 16",
+   "title": "Preparing an audit",
+   "objective": "Learn to build the tools that structure an audit.",
+   "contentMarkdown": "### The audit plan\n\nSets out the objectives, scope, criteria, schedule, and people to meet. Communicated to the auditee before the audit.\n\n### The audit checklist\n\nGuides the auditor without being followed rigidly.\n\n### The stage 1 questionnaire\n\nVerifies in advance that documentation exists and covers the requirements.\n\n### Example checklist — clause 6 in a medical laboratory\n\n1. Is there documented information describing hazard identification specific to the laboratory?\n2. Does it cover non-routine activities?\n3. Are risk assessment results dated and kept up to date?\n4. Are improvement opportunities tracked?\n5. Is there a list of legal requirements applicable to the laboratory?\n6. Is this list kept up to date, and by whom?\n7. Are the OH&S objectives measurable and dated?\n8. Is an action plan associated with them, with an owner and a deadline?\n9. Were workers consulted during hazard identification?\n10. Is there evidence of this consultation?",
+   "keyTakeaway": "A good checklist mixes documentary questions (does it exist...) with on-the-ground verification questions (is it dated, tracked, evidenced...).",
    "quiz": [
     {
-     "question": "Quels sont les 4 éléments essentiels d'un plan d'audit ?",
-     "answer": "Objectifs, périmètre, critères d'audit, calendrier (et personnes à rencontrer)."
+     "question": "What are the 4 essential elements of an audit plan?",
+     "answer": "Objectives, scope, audit criteria, schedule (and people to meet)."
     },
     {
-     "question": "Pourquoi une check-list ne doit-elle pas être suivie de façon rigide ?",
-     "answer": "Elle guide l'auditeur mais ne doit pas l'empêcher d'approfondir un sujet imprévu."
+     "question": "Why should a checklist not be followed rigidly?",
+     "answer": "It guides the auditor but should not prevent them from digging deeper into an unexpected topic."
     },
     {
-     "question": "Quel est l'intérêt du questionnaire d'étape 1 avant de se rendre sur site ?",
-     "answer": "Éviter de perdre du temps sur site à découvrir des lacunes documentaires évidentes."
+     "question": "What is the benefit of the stage 1 questionnaire before going on site?",
+     "answer": "Avoiding wasted time on site discovering obvious documentation gaps."
     },
     {
-     "question": "Construisez 3 questions de check-list pour auditer la clause 8 dans un service de radiologie.",
-     "answer": "Réponse ouverte, ex. : procédure de radioprotection ? port du dosimètre contrôlé ? plan de maintenance suivi ?"
+     "question": "Build 3 checklist questions to audit clause 8 in a radiology department.",
+     "answer": "Open answer, e.g.: radiation protection procedure? dosimeter wear checked? maintenance plan followed?"
     }
    ]
   },
@@ -572,27 +572,27 @@
    "id": 17,
    "week": 3,
    "type": "lesson",
-   "dayLabel": "Séance 17",
-   "title": "Conduite de l'audit",
-   "objective": "Les techniques utilisées pendant l'audit sur le terrain.",
-   "contentMarkdown": "### La réunion d'ouverture\n\nPrésenter l'équipe, confirmer le plan, rappeler la confidentialité, expliquer le déroulement.\n\n### Techniques d'entretien\n\n- Privilégier les **questions ouvertes**\n- **Observer les pratiques réelles**, pas seulement les réponses verbales\n- **Croiser les sources** : documents, entretiens, observation\n- Reformuler pour vérifier sa compréhension\n\n### Collecte de preuves objectives\n\nUne preuve doit être **vérifiable** : document, observation directe, déclaration corroborée. Une affirmation isolée non vérifiée ne suffit pas.\n\n### La réunion de clôture\n\nPrésenter les constats de façon factuelle et impartiale, sans surprise avec le rapport écrit qui suit.",
-   "keyTakeaway": "Ne jamais introduire un nouveau constat majeur dans le rapport écrit qui n'aurait pas été mentionné à la réunion de clôture.",
+   "dayLabel": "Session 17",
+   "title": "Conducting the audit",
+   "objective": "The techniques used during the on-site audit.",
+   "contentMarkdown": "### The opening meeting\n\nIntroduce the team, confirm the plan, remind everyone of confidentiality, explain how the audit will proceed.\n\n### Interview techniques\n\n- Favor **open-ended questions**\n- **Observe actual practices**, not just verbal answers\n- **Cross-check sources**: documents, interviews, observation\n- Rephrase to confirm understanding\n\n### Collecting objective evidence\n\nEvidence must be **verifiable**: a document, direct observation, or a corroborated statement. An isolated, unverified statement is not sufficient.\n\n### The closing meeting\n\nPresent findings factually and impartially, with no surprises in the written report that follows.",
+   "keyTakeaway": "Never introduce a new major finding in the written report that was not mentioned at the closing meeting.",
    "quiz": [
     {
-     "question": "Pourquoi privilégier les questions ouvertes en entretien d'audit ?",
-     "answer": "Elles laissent l'interlocuteur révéler sa pratique réelle sans lui souffler la réponse attendue."
+     "question": "Why favor open-ended questions in audit interviews?",
+     "answer": "They let the interviewee reveal their actual practice without suggesting the expected answer."
     },
     {
-     "question": "Que signifie croiser les sources en audit ?",
-     "answer": "Vérifier la convergence entre documents, entretiens et observation terrain."
+     "question": "What does cross-checking sources mean in an audit?",
+     "answer": "Verifying convergence between documents, interviews and on-site observation."
     },
     {
-     "question": "Une déclaration verbale isolée peut-elle seule constituer une preuve suffisante ?",
-     "answer": "Non — elle doit être corroborée par un document ou une observation."
+     "question": "Can a single verbal statement alone constitute sufficient evidence?",
+     "answer": "No — it must be corroborated by a document or an observation."
     },
     {
-     "question": "Que doit-on éviter entre la réunion de clôture et le rapport écrit ?",
-     "answer": "Introduire un nouveau constat majeur non présenté à l'audité lors de la clôture."
+     "question": "What should be avoided between the closing meeting and the written report?",
+     "answer": "Introducing a new major finding that was not presented to the auditee at closing."
     }
    ]
   },
@@ -600,27 +600,27 @@
    "id": 18,
    "week": 3,
    "type": "lesson",
-   "dayLabel": "Séance 18",
-   "title": "Rédaction des constats",
-   "objective": "L'exercice le plus discriminant à l'examen — savoir écrire une non-conformité correctement.",
-   "contentMarkdown": "### Les 3 éléments obligatoires d'une non-conformité bien rédigée\n\n1. **La preuve objective** : ce qui a été observé, factuellement\n2. **L'exigence de référence** : la clause non respectée\n3. **L'écart constaté** : le lien entre la preuve et l'exigence\n\n### Erreurs fréquentes à éviter\n\n- Formuler une opinion plutôt qu'un fait\n- Oublier de citer l'exigence précise\n- Mélanger plusieurs écarts différents dans une seule NC\n- Vocabulaire vague au lieu de données précises\n\n### Trois exemples, du plus faible au plus solide\n\n**Faible** : « Le personnel ne connaît pas bien les procédures de sécurité. » (opinion vague, aucune preuve datée)\n\n**Moyen** : « Un agent interrogé ne connaissait pas la procédure d'urgence. Non-conformité à la clause 8.2. » (mieux, mais imprécis)\n\n**Solide** : « Lors de l'entretien du 05/08 avec 3 agents du service de prélèvement, 2 agents sur 3 n'ont pas su décrire la procédure d'urgence en cas d'exposition au sang, ni localiser le document affiché. Ceci constitue un écart à l'exigence de sensibilisation de la clause 7.3 et à la préparation aux situations d'urgence de la clause 8.2. »",
-   "keyTakeaway": "La version solide cite le nombre exact de personnes interrogées, la date, ce qui a été observé, et relie explicitement l'écart aux exigences.",
+   "dayLabel": "Session 18",
+   "title": "Writing up findings",
+   "objective": "The most discriminating exercise in the exam — knowing how to write a nonconformity correctly.",
+   "contentMarkdown": "### The 3 mandatory elements of a well-written nonconformity\n\n1. **Objective evidence**: what was factually observed\n2. **The reference requirement**: the clause not met\n3. **The identified nonconformity**: the link between the evidence and the requirement\n\n### Common mistakes to avoid\n\n- Stating an opinion rather than a fact\n- Forgetting to cite the precise requirement\n- Mixing several different findings into a single NC\n- Vague wording instead of precise data\n\n### Three examples, from weakest to strongest\n\n**Weak**: \"Staff do not know the safety procedures well.\" (vague opinion, no dated evidence)\n\n**Medium**: \"An interviewed staff member did not know the emergency procedure. Nonconformity to clause 8.2.\" (better, but imprecise)\n\n**Strong**: \"During the interview on 08/05 with 3 staff members from the sample collection department, 2 out of 3 could not describe the emergency procedure for blood exposure, nor locate the posted document. This is a nonconformity to the awareness requirement of clause 7.3 and to the emergency preparedness requirement of clause 8.2.\"",
+   "keyTakeaway": "The strong version cites the exact number of people interviewed, the date, what was observed, and explicitly links the finding to the requirements.",
    "quiz": [
     {
-     "question": "Quels sont les 3 éléments obligatoires d'une non-conformité bien rédigée ?",
-     "answer": "Preuve objective, exigence de référence, écart constaté."
+     "question": "What are the 3 mandatory elements of a well-written nonconformity?",
+     "answer": "Objective evidence, reference requirement, identified nonconformity."
     },
     {
-     "question": "Pourquoi le personnel n'est pas assez formé est-il un mauvais point de départ pour une NC ?",
-     "answer": "C'est une opinion non vérifiable, sans date, sans donnée chiffrée, sans référence à une exigence."
+     "question": "Why is \"staff are not sufficiently trained\" a poor starting point for an NC?",
+     "answer": "It is an unverifiable opinion, with no date, no quantified data, and no reference to a requirement."
     },
     {
-     "question": "Pourquoi ne faut-il jamais mélanger deux écarts différents dans une seule NC ?",
-     "answer": "Ça dilue la clarté et complique le suivi des actions correctives."
+     "question": "Why should two different findings never be mixed into a single NC?",
+     "answer": "It dilutes clarity and complicates the follow-up of corrective actions."
     },
     {
-     "question": "Un registre d'incidents n'a pas été mis à jour depuis 4 mois, alors que la procédure prévoit une mise à jour hebdomadaire. Rédigez la NC complète.",
-     "answer": "Exemple : preuve datée du registre non mis à jour depuis 4 mois, exigence = clause 9.1 (surveillance et mesure), écart = absence de suivi effectif et à jour des incidents S&ST."
+     "question": "An incident register has not been updated for 4 months, although the procedure requires a weekly update. Write the complete NC.",
+     "answer": "Example: dated evidence of the register not updated for 4 months; requirement = clause 9.1 (monitoring and measurement); finding = lack of effective, up-to-date tracking of OH&S incidents."
     }
    ]
   },
@@ -628,27 +628,27 @@
    "id": 19,
    "week": 3,
    "type": "practical",
-   "dayLabel": "Séance 19",
-   "title": "Cas pratique complet",
-   "objective": "Mettre en pratique l'ensemble des notions sur un scénario proche de l'environnement professionnel.",
-   "contentMarkdown": "### Scénario : audit du service de stérilisation d'une clinique\n\n- Le registre de traçabilité des cycles de stérilisation est bien tenu, daté et complet.\n- 2 agents sur 3 interrogés ne savent pas où se trouve la fiche de données de sécurité du produit désinfectant.\n- Aucune évaluation des risques n'a été formalisée pour le poste de manipulation des instruments contaminés, alors qu'elle existe pour d'autres postes du même service.\n- Un exercice d'évacuation a été réalisé il y a 2 mois, compte-rendu disponible et signé.\n- Le responsable déclare que « tout le monde est consulté sur les risques », mais aucun des 3 agents interrogés ne se souvient d'avoir été associé à une identification des dangers.\n\n### À faire\n\n1. Identifiez les points conformes et non conformes.\n2. Pour chaque non-conformité, rédigez le constat complet.\n3. Reliez chaque non-conformité à la clause concernée.\n4. Indiquez si elle est plutôt majeure ou mineure, et pourquoi.",
-   "keyTakeaway": "Faites l'exercice par écrit avant de consulter le corrigé — c'est la meilleure simulation de ce qui vous attend en formation.",
+   "dayLabel": "Session 19",
+   "title": "Full case study",
+   "objective": "Apply all the concepts to a scenario close to a real professional environment.",
+   "contentMarkdown": "### Scenario: auditing the sterilization department of a clinic\n\n- The sterilization cycle traceability register is well maintained, dated and complete.\n- 2 out of 3 staff interviewed do not know where the disinfectant's safety data sheet is located.\n- No formal risk assessment exists for the handling of contaminated instruments, whereas one exists for other jobs in the same department.\n- An evacuation drill was carried out 2 months ago, and a signed report is available.\n- The manager states that \"everyone is consulted about risks\", but none of the 3 interviewed staff members recall being involved in a hazard identification exercise.\n\n### Tasks\n\n1. Identify the conforming and nonconforming points.\n2. For each nonconformity, write the complete finding.\n3. Link each nonconformity to the relevant clause.\n4. State whether it is more likely major or minor, and why.",
+   "keyTakeaway": "Do the exercise in writing before checking the answer key — this is the best simulation of what awaits you in training.",
    "quiz": [
     {
-     "question": "Quel est le point conforme concernant la stérilisation elle-même ?",
-     "answer": "Le registre de traçabilité des cycles de stérilisation, bien tenu — preuve de bon fonctionnement de la clause 9.1."
+     "question": "What is the conforming point regarding sterilization itself?",
+     "answer": "The sterilization cycle traceability register, well maintained — evidence that clause 9.1 is working properly."
     },
     {
-     "question": "Rédigez la NC concernant la fiche de données de sécurité.",
-     "answer": "Preuve : 2 agents sur 3 ne localisent pas la fiche. Exigence : clause 7.3 (sensibilisation). Écart : personnel insuffisamment sensibilisé pour accéder rapidement à l'information de sécurité. Plutôt mineure si isolée, à vérifier sur d'autres services."
+     "question": "Write the NC regarding the safety data sheet.",
+     "answer": "Evidence: 2 out of 3 staff cannot locate the sheet. Requirement: clause 7.3 (awareness). Finding: staff insufficiently aware to quickly access safety information. Likely minor if isolated, to be checked in other departments."
     },
     {
-     "question": "Rédigez la NC concernant l'absence d'évaluation des risques au poste de manipulation d'instruments contaminés.",
-     "answer": "Preuve : aucune évaluation formalisée pour ce poste, alors qu'elle existe pour d'autres postes. Exigence : clause 6.1.2. Écart : lacune sur un poste à risque biologique élevé. Plutôt majeure : poste à risque élevé sans couverture documentaire."
+     "question": "Write the NC regarding the absence of a risk assessment for handling contaminated instruments.",
+     "answer": "Evidence: no formal assessment for this job, whereas one exists for other jobs. Requirement: clause 6.1.2. Finding: gap on a job with high biological risk. Likely major: high-risk job with no documentary coverage."
     },
     {
-     "question": "Rédigez la NC concernant le décalage entre la déclaration du responsable et le vécu des agents sur la consultation.",
-     "answer": "Preuve : aucun des 3 agents ne confirme avoir été consulté, contrairement à la déclaration du responsable. Exigence : clause 5.4. Écart : décalage entre déclaration et réalité de terrain. Gravité à évaluer selon l'ampleur — majeure si retrouvé sur plusieurs services."
+     "question": "Write the NC regarding the gap between the manager's statement and staff experience of consultation.",
+     "answer": "Evidence: none of the 3 staff members confirm having been consulted, contrary to the manager's statement. Requirement: clause 5.4. Finding: gap between the stated practice and on-the-ground reality. Severity to be assessed based on scale — major if found across several departments."
     }
    ]
   },
@@ -656,27 +656,27 @@
    "id": 20,
    "week": 3,
    "type": "mockExam",
-   "dayLabel": "Séance 20",
-   "title": "Examen blanc",
-   "objective": "Se tester dans des conditions proches de l'examen réel, sans revenir sur ses fiches.",
-   "contentMarkdown": "QCM de 15 questions couvrant l'ensemble du programme, suivi d'un exercice de rédaction. Moins de 10/15 signale un besoin de retour sur les jours correspondants avant la formation.",
+   "dayLabel": "Session 20",
+   "title": "Mock exam",
+   "objective": "Test yourself under conditions close to the real exam, without going back to your notes.",
+   "contentMarkdown": "A 15-question multiple-choice quiz covering the whole program, followed by a writing exercise. Less than 10/15 signals a need to go back over the corresponding days before training.",
    "keyTakeaway": null,
    "quiz": [
     {
-     "question": "Quelle clause de la structure harmonisée traite de la planification ?",
-     "answer": "Le chapitre 6 « Planification » : identification des dangers, appréciation des risques et opportunités, exigences légales et autres exigences, objectifs S&ST et planification des actions."
+     "question": "Which clause of the harmonized structure deals with planning?",
+     "answer": "Clause 6 \"Planning\": hazard identification, assessment of risks and opportunities, legal requirements and other requirements, OH&S objectives and action planning."
     },
     {
-     "question": "Quelle est la différence entre une correction et une action corrective ?",
-     "answer": "La correction traite le symptôme immédiat, l'action corrective en traite la cause."
+     "question": "What is the difference between a correction and a corrective action?",
+     "answer": "A correction addresses the immediate symptom; a corrective action addresses its cause."
     },
     {
-     "question": "Citez les 3 types d'audit.",
-     "answer": "Audit interne (1ère partie), de seconde partie, de tierce partie."
+     "question": "Name the 3 types of audit.",
+     "answer": "Internal audit (first party), second-party audit, third-party audit."
     },
     {
-     "question": "Quel principe de l'audit garantit qu'un auditeur ne peut pas auditer son propre travail ?",
-     "answer": "L'indépendance.",
+     "question": "Which auditing principle ensures that an auditor cannot audit their own work?",
+     "answer": "Independence.",
      "standardRef": "ISO 19011",
      "standardEdition": "2026",
      "referenceType": "GUIDANCE",
@@ -684,8 +684,8 @@
      "reviewStatus": "VERIFIED"
     },
     {
-     "question": "Que vérifie-t-on pendant l'audit d'étape 1 d'une certification, et de quel référentiel cette étape relève-t-elle ?",
-     "answer": "Les étapes 1 et 2 relèvent du processus de certification tierce partie décrit par ISO/IEC 17021-1, et non d'ISO 19011. L'étape 1 examine les informations documentées du système et évalue la préparation de l'audité : compréhension des exigences, périmètre et sites, ressources, exigences légales identifiées, état de l'audit interne et de la revue de direction — afin de planifier l'étape 2.",
+     "question": "What is verified during the stage 1 audit of a certification, and which reference document does this stage fall under?",
+     "answer": "Stages 1 and 2 fall under the third-party certification process described by ISO/IEC 17021-1, not ISO 19011. Stage 1 examines the system's documented information and assesses the auditee's readiness: understanding of requirements, scope and sites, resources, identified legal requirements, status of internal audit and management review — in order to plan stage 2.",
      "standardRef": "ISO/IEC 17021-1",
      "clauseRef": "9.3",
      "referenceType": "CERTIFICATION_RULE",
@@ -694,28 +694,28 @@
      "standardEdition": "2026"
     },
     {
-     "question": "Dans la hiérarchie des mesures, quelle est la plus efficace : élimination ou EPI ?",
-     "answer": "L'élimination du danger."
+     "question": "In the hierarchy of controls, which is more effective: elimination or PPE?",
+     "answer": "Elimination of the hazard."
     },
     {
-     "question": "Quels sont les 3 éléments obligatoires d'un constat de non-conformité ?",
-     "answer": "Preuve objective, exigence de référence, écart constaté."
+     "question": "What are the 3 mandatory elements of a nonconformity finding?",
+     "answer": "Objective evidence, reference requirement, identified nonconformity."
     },
     {
-     "question": "Qu'est-ce qu'une opportunité S&ST ?",
-     "answer": "Une circonstance qui pourrait améliorer la performance S&ST, pas seulement réduire un risque."
+     "question": "What is an OH&S opportunity?",
+     "answer": "A circumstance that could improve OH&S performance, not just reduce a risk."
     },
     {
-     "question": "Quel chapitre traite de la revue de direction ?",
-     "answer": "Le chapitre 9 « Évaluation des performances », §9.3 Revue de direction (le §9.1 traite de la surveillance et du mesurage, le §9.2 de l'audit interne)."
+     "question": "Which clause deals with management review?",
+     "answer": "Clause 9 \"Performance evaluation\", 9.3 Management review (9.1 deals with monitoring and measurement, 9.2 with internal audit)."
     },
     {
-     "question": "Citez 2 techniques de collecte de preuves objectives.",
-     "answer": "Par exemple : observation directe, entretien, analyse documentaire."
+     "question": "Name 2 techniques for collecting objective evidence.",
+     "answer": "For example: direct observation, interview, document review."
     },
     {
-     "question": "Quelle est la conséquence typique d'une NC majeure sur une certification ?",
-     "answer": "Elle empêche généralement la recommandation de certification tant qu'elle n'est pas soldée. Attention : la classification majeure / mineure est une règle du processus de certification tierce partie (ISO/IEC 17021-1), pas une classification définie par ISO 19011.",
+     "question": "What is the typical consequence of a major NC on a certification?",
+     "answer": "It generally prevents a certification recommendation until it is resolved. Note: the major/minor classification is a rule of the third-party certification process (ISO/IEC 17021-1), not a classification defined by ISO 19011.",
      "standardRef": "ISO/IEC 17021-1",
      "referenceType": "CERTIFICATION_RULE",
      "verifiedAt": "2026-08-09",
@@ -723,20 +723,20 @@
      "standardEdition": "2026"
     },
     {
-     "question": "Pourquoi une déclaration verbale isolée ne suffit-elle pas comme preuve ?",
-     "answer": "Elle n'est pas vérifiable seule ; il faut la corroborer."
+     "question": "Why is an isolated verbal statement not sufficient as evidence?",
+     "answer": "It cannot be verified on its own; it must be corroborated."
     },
     {
-     "question": "Que faire si un signal fort émerge en cours d'audit, hors du plan initial ?",
-     "answer": "L'investiguer, en adaptant le plan selon l'approche fondée sur le risque."
+     "question": "What should be done if a strong signal emerges during the audit, outside the initial plan?",
+     "answer": "Investigate it, adapting the plan according to the risk-based approach."
     },
     {
-     "question": "Citez les 4 étapes du traitement complet d'un incident.",
-     "answer": "Réagir → analyser les causes → action corrective → vérifier l'efficacité."
+     "question": "Name the 4 steps for fully handling an incident.",
+     "answer": "React → analyze root causes → corrective action → verify effectiveness."
     },
     {
-     "question": "Pourquoi le domaine d'application doit-il correspondre exactement à la réalité observée ?",
-     "answer": "Un décalage constitue une non-conformité classique en audit.",
+     "question": "Why must the scope exactly match what is actually observed?",
+     "answer": "A mismatch is a classic audit nonconformity.",
      "revision": true
     }
    ]
@@ -745,318 +745,318 @@
    "id": 21,
    "week": 3,
    "type": "wrapup",
-   "dayLabel": "Séance 21",
-   "title": "Révision légère et logistique",
-   "objective": "Se préparer sereinement pour le départ en formation.",
-   "contentMarkdown": "- Relisez uniquement vos fiches de vocabulaire (jour 2), le tableau du cycle PDCA (jour 1), et la structure d'une non-conformité (jour 18) — pas de contenu nouveau aujourd'hui.\n- Préparez vos affaires : pièce d'identité, de quoi prendre des notes, tenue adaptée pour 5 jours de formation.\n- Couchez-vous tôt : la formation démarre demain et sera intensive.",
+   "dayLabel": "Session 21",
+   "title": "Light review and logistics",
+   "objective": "Prepare calmly for departure to the training course.",
+   "contentMarkdown": "- Only review your vocabulary notes (day 2), the PDCA cycle table (day 1), and the structure of a nonconformity (day 18) — no new content today.\n- Pack your things: ID, something to take notes with, suitable clothing for 5 days of training.\n- Go to bed early: the training starts tomorrow and will be intensive.",
    "keyTakeaway": null,
    "quiz": []
   }
  ],
  "glossary": [
   {
-   "term": "Accréditation",
-   "definition": "Reconnaissance officielle de la compétence d'un organisme certificateur."
+   "term": "Accreditation",
+   "definition": "Official recognition of the competence of a certification body."
   },
   {
-   "term": "Action corrective",
-   "definition": "Action visant à supprimer la cause d'une non-conformité."
+   "term": "Corrective action",
+   "definition": "Action to eliminate the cause of a nonconformity."
   },
   {
-   "term": "Amélioration continue",
-   "definition": "Recherche récurrente d'amélioration de la performance."
+   "term": "Continual improvement",
+   "definition": "Recurring activity to enhance performance."
   },
   {
-   "term": "Autre exigence",
-   "definition": "Engagement volontaire (charte, contrat, code de conduite)."
+   "term": "Other requirement",
+   "definition": "Voluntary commitment (charter, contract, code of conduct)."
   },
   {
-   "term": "Champ d'audit",
-   "definition": "Étendue et limites d'un audit donné."
+   "term": "Audit scope",
+   "definition": "Extent and boundaries of a given audit."
   },
   {
-   "term": "Constat d'audit",
-   "definition": "Résultat de l'évaluation des preuves par rapport aux critères."
+   "term": "Audit finding",
+   "definition": "Result of the evaluation of audit evidence against audit criteria."
   },
   {
    "term": "Consultation",
-   "definition": "Recherche d'avis des travailleurs avant une prise de décision (art. 3.5)."
+   "definition": "Seeking workers' views before making a decision (3.5)."
   },
   {
    "term": "Correction",
-   "definition": "Action immédiate pour éliminer une non-conformité constatée."
+   "definition": "Immediate action to eliminate a detected nonconformity."
   },
   {
-   "term": "Critères d'audit",
-   "definition": "Référentiel auquel on compare les preuves (norme, procédure interne)."
+   "term": "Audit criteria",
+   "definition": "Reference set against which evidence is compared (standard, internal procedure)."
   },
   {
-   "term": "Danger",
-   "definition": "Source susceptible de causer traumatisme et pathologie (art. 3.19). Le terme « blessure » appartient au vocabulaire d'OHSAS 18001."
+   "term": "Hazard",
+   "definition": "Source with a potential to cause injury and ill health (3.19). The term \"injury\" alone belongs to OHSAS 18001 vocabulary."
   },
   {
-   "term": "Direction",
-   "definition": "Personne ou groupe qui oriente et dirige l'organisme au plus haut niveau (art. 3.12). Porte les exigences de leadership du chapitre 5."
+   "term": "Top management",
+   "definition": "Person or group of people who directs and controls an organization at the highest level (3.12). Bears the leadership requirements of clause 5."
   },
   {
-   "term": "Domaine d'application (scope)",
-   "definition": "Périmètre exact couvert par le système de management."
+   "term": "Scope",
+   "definition": "Exact boundaries covered by the management system."
   },
   {
-   "term": "Efficacité",
-   "definition": "Niveau de réalisation des activités planifiées et d'obtention des résultats escomptés (art. 3.13)."
+   "term": "Effectiveness",
+   "definition": "Extent to which planned activities are realized and planned results achieved (3.13)."
   },
   {
-   "term": "Exigence légale",
-   "definition": "Loi ou règlement applicable à l'organisme."
+   "term": "Legal requirement",
+   "definition": "Law or regulation applicable to the organization."
   },
   {
-   "term": "Externalisation",
-   "definition": "Accord par lequel un organisme externe réalise une partie d'une fonction ou d'un processus de l'organisme (art. 3.29). N'exonère pas l'organisme de sa responsabilité."
+   "term": "Outsourcing",
+   "definition": "Arrangement whereby an external organization performs part of an organization's function or process (3.29). Does not relieve the organization of its accountability."
   },
   {
-   "term": "Hiérarchie des mesures de prévention",
-   "definition": "Ordre imposé par le §8.1.2 : 1) élimination du danger, 2) substitution, 3) mesures techniques et protection collective, 4) mesures administratives et réorganisation du travail, dont la formation, 5) équipements de protection individuelle."
+   "term": "Hierarchy of controls",
+   "definition": "Order imposed by 8.1.2: 1) elimination of the hazard, 2) substitution, 3) engineering controls and collective protection, 4) administrative controls and reorganization of work, including training, 5) personal protective equipment."
   },
   {
-   "term": "Information documentée",
-   "definition": "Information devant être maîtrisée et tenue à jour par l'organisme, et son support (art. 3.24). Remplace les anciens termes « procédure documentée » et « enregistrement »."
+   "term": "Documented information",
+   "definition": "Information required to be controlled and maintained by the organization, together with the medium it is contained on (3.24). Replaces the former terms \"documented procedure\" and \"record\"."
   },
   {
-   "term": "Intervenant extérieur",
-   "definition": "Organisme externe qui fournit un service à l'organisme sur son lieu de travail, sous le contrôle partiel de celui-ci (art. 3.7)."
+   "term": "Contractor",
+   "definition": "External organization providing services to the organization in accordance with agreed specifications, terms and conditions (3.7)."
   },
   {
-   "term": "Lieu de travail",
-   "definition": "Lieu placé sous le contrôle de l'organisme où une personne doit se trouver ou se rendre pour son travail (art. 3.6)."
+   "term": "Workplace",
+   "definition": "Place under the control of the organization where a person needs to be or go for work purposes (3.6)."
   },
   {
-   "term": "Non-conformité",
-   "definition": "Non-respect d'une exigence."
+   "term": "Nonconformity",
+   "definition": "Non-fulfilment of a requirement."
   },
   {
-   "term": "Opportunité pour la S&ST",
-   "definition": "Circonstance pouvant améliorer la performance en S&ST, au-delà de la seule réduction d'un risque."
+   "term": "OH&S opportunity",
+   "definition": "Circumstance that could lead to improvement of OH&S performance, beyond merely reducing a risk."
   },
   {
-   "term": "Organisme certificateur",
-   "definition": "Organisme accrédité habilité à délivrer un certificat ISO."
+   "term": "Certification body",
+   "definition": "Accredited body authorized to issue an ISO certificate."
   },
   {
    "term": "Participation",
-   "definition": "Implication des travailleurs dans la prise de décision (art. 3.4)."
+   "definition": "Involvement of workers in decision-making (3.4)."
   },
   {
-   "term": "Partie intéressée",
-   "definition": "Toute personne/organisation pouvant affecter ou être affectée par les décisions S&ST."
+   "term": "Interested party",
+   "definition": "Any person/organization that can affect or be affected by OH&S decisions."
   },
   {
-   "term": "Performance en S&ST",
-   "definition": "Performance liée à l'efficacité de la prévention des traumatismes et pathologies et à la sécurité des lieux de travail (art. 3.28)."
+   "term": "OH&S performance",
+   "definition": "Performance related to the effectiveness of the prevention of injury and ill health to workers and the provision of safe and healthy workplaces (3.28)."
   },
   {
-   "term": "Plan d'audit",
-   "definition": "Description des activités et modalités d'un audit."
+   "term": "Audit plan",
+   "definition": "Description of the activities and arrangements for an audit."
   },
   {
-   "term": "Presqu'accident",
-   "definition": "Événement indésirable qui n'a pas entraîné de traumatisme ni de pathologie, mais aurait pu en causer."
+   "term": "Near-miss",
+   "definition": "Incident that did not result in injury or ill health, but had the potential to do so."
   },
   {
-   "term": "Preuve d'audit",
-   "definition": "Élément vérifiable (document, observation, déclaration corroborée)."
+   "term": "Audit evidence",
+   "definition": "Verifiable item (document, observation, corroborated statement)."
   },
   {
-   "term": "Programme d'audit",
-   "definition": "Ensemble d'audits planifiés sur une période donnée."
+   "term": "Audit program",
+   "definition": "Set of audits planned for a specific time frame."
   },
   {
-   "term": "Rapport d'audit",
-   "definition": "Document final présentant les constats et conclusions de l'audit."
+   "term": "Audit report",
+   "definition": "Final document presenting the audit findings and conclusions."
   },
   {
-   "term": "Risque",
-   "definition": "Effet de l'incertitude (art. 3.20). Définition harmonisée commune à toutes les normes de management — à ne pas confondre avec le risque pour la S&ST."
+   "term": "Risk",
+   "definition": "Effect of uncertainty (3.20). A harmonized definition common to all management system standards — not to be confused with OH&S risk."
   },
   {
-   "term": "Risque pour la S&ST",
-   "definition": "Combinaison de la probabilité d'occurrence d'événements ou d'expositions dangereux liés au travail et de la gravité des traumatismes et pathologies pouvant en résulter (art. 3.21)."
+   "term": "OH&S risk",
+   "definition": "Combination of the likelihood of occurrence of a work-related hazardous event(s) or exposure(s) and the severity of injury and ill health that can be caused by them (3.21)."
   },
   {
-   "term": "Système de management",
-   "definition": "Ensemble organisé de politiques, processus et ressources pour atteindre des objectifs."
+   "term": "Management system",
+   "definition": "Organized set of policies, processes and resources aimed at achieving objectives."
   },
   {
-   "term": "Traumatisme et pathologie",
-   "definition": "Effet négatif sur l'état physique, mental ou cognitif d'une personne, quelle qu'en soit l'origine liée au travail (art. 3.18)."
+   "term": "Injury and ill health",
+   "definition": "Adverse effect on the physical, mental or cognitive condition of a person, regardless of its work-related origin (3.18)."
   },
   {
-   "term": "Travailleur",
-   "definition": "Toute personne exerçant un travail sous le contrôle de l'organisme."
+   "term": "Worker",
+   "definition": "Person performing work under the organization's control."
   },
   {
-   "term": "Événement indésirable",
-   "definition": "Événement lié au travail ayant causé ou pouvant causer traumatisme et pathologie (art. 3.35). Anciennement appelé « incident »."
+   "term": "Incident",
+   "definition": "Work-related occurrence that has given rise to, or could give rise to, injury and ill health (3.35). Previously also referred to as an \"incident\"."
   }
  ],
  "annexes": {
   "auditPlanTemplate": [
-   "Organisme audité",
-   "Date(s) de l'audit",
-   "Objectifs de l'audit",
-   "Type d'audit (interne / 2nde partie / 3ème partie, étape 1 / étape 2)",
-   "Norme et critères d'audit",
-   "Domaine et périmètre",
-   "Équipe d'audit",
-   "Personnes à rencontrer / services concernés",
-   "Horaires prévisionnels"
+   "Auditee organization",
+   "Audit date(s)",
+   "Audit objectives",
+   "Audit type (internal / second party / third party, stage 1 / stage 2)",
+   "Standard and audit criteria",
+   "Domain and scope",
+   "Audit team",
+   "People to meet / departments concerned",
+   "Planned schedule"
   ],
   "ncTemplate": [
    {
-    "field": "Preuve objective observée",
-    "hint": "Fait daté, chiffré si possible"
+    "field": "Objective evidence observed",
+    "hint": "Dated fact, quantified if possible"
    },
    {
-    "field": "Exigence de référence",
-    "hint": "Clause norme / procédure interne"
+    "field": "Reference requirement",
+    "hint": "Standard clause / internal procedure"
    },
    {
-    "field": "Écart constaté",
-    "hint": "Lien explicite entre la preuve et l'exigence"
+    "field": "Identified nonconformity",
+    "hint": "Explicit link between the evidence and the requirement"
    },
    {
     "field": "Classification",
-    "hint": "Majeure / mineure, et justification — classification issue des règles de certification tierce partie (ISO/IEC 17021-1), non d'ISO 19011"
+    "hint": "Major / minor, with justification — classification comes from third-party certification rules (ISO/IEC 17021-1), not ISO 19011"
    }
   ],
   "genericChecklist": [
-   "L'exigence est-elle documentée ?",
-   "Le document est-il à jour et daté ?",
-   "Le personnel concerné en a-t-il connaissance ?",
-   "Le personnel applique-t-il réellement ce qui est prévu (observation directe) ?",
-   "Existe-t-il une preuve de suivi/mesure de cette exigence dans le temps ?"
+   "Is the requirement documented?",
+   "Is the document up to date and dated?",
+   "Are the relevant staff aware of it?",
+   "Do staff actually apply what is planned (direct observation)?",
+   "Is there evidence of ongoing monitoring/measurement of this requirement?"
   ],
   "revisionSheets": [
    {
-    "clause": "Ch.4 Contexte",
-    "summary": "Enjeux internes/externes + parties intéressées + domaine d'application"
+    "clause": "Cl.4 Context",
+    "summary": "Internal/external issues + interested parties + scope"
    },
    {
-    "clause": "Ch.5 Leadership",
-    "summary": "Engagement direction + politique + rôles/responsabilités + consultation/participation"
+    "clause": "Cl.5 Leadership",
+    "summary": "Top management commitment + policy + roles/responsibilities + consultation/participation"
    },
    {
-    "clause": "Ch.6 Planification",
-    "summary": "Dangers + risques/opportunités + exigences légales + objectifs"
+    "clause": "Cl.6 Planning",
+    "summary": "Hazards + risks/opportunities + legal requirements + objectives"
    },
    {
-    "clause": "Ch.7 Support",
-    "summary": "Ressources + compétences + sensibilisation + communication + information documentée"
+    "clause": "Cl.7 Support",
+    "summary": "Resources + competence + awareness + communication + documented information"
    },
    {
-    "clause": "Ch.8 Réalisation opérationnelle",
-    "summary": "Maîtrise opérationnelle + gestion du changement + urgences"
+    "clause": "Cl.8 Operation",
+    "summary": "Operational control + management of change + emergencies"
    },
    {
-    "clause": "Ch.9 Évaluation des performances",
-    "summary": "Surveillance/mesure + conformité + audit interne + revue de direction"
+    "clause": "Cl.9 Performance evaluation",
+    "summary": "Monitoring/measurement + compliance + internal audit + management review"
    },
    {
-    "clause": "Ch.10 Amélioration",
-    "summary": "Incidents/NC + actions correctives + amélioration continue"
+    "clause": "Cl.10 Improvement",
+    "summary": "Incidents/NC + corrective actions + continual improvement"
    }
   ],
   "finalMockExam": {
    "mcq": [
     {
-     "question": "En quelle année ISO 45001 a-t-elle été publiée ?",
+     "question": "In what year was ISO 45001 published?",
      "answer": "2018."
     },
     {
-     "question": "Quelle structure commune partage-t-elle avec ISO 9001 et ISO 14001 ?",
-     "answer": "La structure harmonisée (HLS)."
+     "question": "What common structure does it share with ISO 9001 and ISO 14001?",
+     "answer": "The harmonized structure (HLS)."
     },
     {
-     "question": "Quelles sont les 4 phases du cycle PDCA ?",
+     "question": "What are the 4 stages of the PDCA cycle?",
      "answer": "Plan, Do, Check, Act."
     },
     {
-     "question": "Quelle différence entre danger, risque et risque pour la S&ST ?",
-     "answer": "Le danger (art. 3.19) est la source susceptible de causer traumatisme et pathologie ; le risque (art. 3.20) est l'effet de l'incertitude ; le risque pour la S&ST (art. 3.21) est la combinaison de la probabilité d'occurrence d'un événement ou d'une exposition dangereux liés au travail et de la gravité des traumatismes et pathologies pouvant en résulter."
+     "question": "What is the difference between hazard, risk and OH&S risk?",
+     "answer": "A hazard (3.19) is a source with a potential to cause injury and ill health; risk (3.20) is the effect of uncertainty; OH&S risk (3.21) is the combination of the likelihood of occurrence of a work-related hazardous event or exposure and the severity of injury and ill health that can be caused by it."
     },
     {
-     "question": "Citez 2 parties intéressées typiques d'une structure de santé.",
-     "answer": "Par exemple : travailleurs, autorités sanitaires, assureurs, syndicats."
+     "question": "Name 2 interested parties typical of a healthcare facility.",
+     "answer": "For example: workers, health authorities, insurers, trade unions."
     },
     {
-     "question": "Que doit contenir une politique S&ST ?",
-     "answer": "Engagement à éliminer les dangers/réduire les risques, à la consultation/participation, à l'amélioration continue."
+     "question": "What must an OH&S policy contain?",
+     "answer": "Commitment to eliminate hazards/reduce risks, to consultation/participation, and to continual improvement."
     },
     {
-     "question": "Pourquoi la participation des travailleurs est-elle centrale dans ISO 45001 ?",
-     "answer": "Ils sont les mieux placés pour identifier les dangers réels, et c'est systématiquement testé en audit."
+     "question": "Why is worker participation central to ISO 45001?",
+     "answer": "Workers are best placed to identify real hazards, and this is systematically tested in audits."
     },
     {
-     "question": "Citez les 4 composantes du chapitre 6.",
-     "answer": "Identification des dangers, évaluation des risques/opportunités, exigences légales, objectifs S&ST."
+     "question": "Name the 4 components of clause 6.",
+     "answer": "Hazard identification, assessment of risks/opportunities, legal requirements, OH&S objectives."
     },
     {
-     "question": "Quels sont les 5 piliers du chapitre 7 ?",
-     "answer": "Ressources, compétences, sensibilisation, communication, information documentée."
+     "question": "What are the 5 pillars of clause 7?",
+     "answer": "Resources, competence, awareness, communication, documented information."
     },
     {
-     "question": "Citez la hiérarchie des mesures de prévention du risque.",
-     "answer": "Élimination, substitution, mesures d'ingénierie, mesures organisationnelles, EPI."
+     "question": "Name the hierarchy of controls for risk.",
+     "answer": "Elimination, substitution, engineering controls, administrative controls, PPE."
     },
     {
-     "question": "Que doit-on faire avant de mettre en œuvre un changement organisationnel ?",
-     "answer": "Évaluer ses impacts S&ST potentiels avant sa mise en œuvre."
+     "question": "What must be done before implementing an organizational change?",
+     "answer": "Evaluate its potential OH&S impacts before implementation."
     },
     {
-     "question": "Citez les 4 composantes du chapitre 9.",
-     "answer": "Surveillance/mesure/analyse, conformité, audit interne, revue de direction."
+     "question": "Name the 4 components of clause 9.",
+     "answer": "Monitoring/measurement/analysis, compliance, internal audit, management review."
     },
     {
-     "question": "Décrivez les 4 étapes du traitement d'un incident.",
-     "answer": "Réagir → analyser les causes → action corrective → vérifier l'efficacité."
+     "question": "Describe the 4 steps for handling an incident.",
+     "answer": "React → analyze root causes → corrective action → verify effectiveness."
     },
     {
-     "question": "Citez les 7 principes de l'audit selon ISO 19011.",
-     "answer": "Intégrité, présentation impartiale, conscience professionnelle, confidentialité, indépendance, approche fondée sur la preuve, approche fondée sur le risque."
+     "question": "Name the 7 auditing principles according to ISO 19011.",
+     "answer": "Integrity, fair presentation, due professional care, confidentiality, independence, evidence-based approach, risk-based approach."
     },
     {
-     "question": "Quelle différence entre audit interne, 2nde partie, 3ème partie ?",
-     "answer": "Interne = auto-évaluation ; 2nde partie = partie intéressée directe ; 3ème partie = organisme certificateur indépendant."
+     "question": "What is the difference between internal, second-party, third-party audits?",
+     "answer": "Internal = self-assessment; second party = direct interested party; third party = independent certification body."
     },
     {
-     "question": "Que vérifie l'étape 1 d'une certification ? Et l'étape 2 ?",
-     "answer": "Étape 1 = revue documentaire ; étape 2 = audit sur site avec rapport final."
+     "question": "What does stage 1 of a certification verify? And stage 2?",
+     "answer": "Stage 1 = documentation review; stage 2 = on-site audit with a final report."
     },
     {
-     "question": "Quels sont les 3 éléments obligatoires d'un constat de NC ?",
-     "answer": "Preuve objective, exigence de référence, écart constaté."
+     "question": "What are the 3 mandatory elements of an NC finding?",
+     "answer": "Objective evidence, reference requirement, identified nonconformity."
     },
     {
-     "question": "Quelle est la conséquence d'une NC majeure sur une certification ?",
-     "answer": "Elle empêche généralement la certification immédiate."
+     "question": "What is the consequence of a major NC on a certification?",
+     "answer": "It generally prevents immediate certification."
     },
     {
-     "question": "Pourquoi croiser document, entretien et observation en audit ?",
-     "answer": "Pour vérifier que ce qui est écrit, su et fait convergent."
+     "question": "Why cross-check documents, interviews and observation in an audit?",
+     "answer": "To verify that what is written, known and done all converge."
     },
     {
-     "question": "Que doit faire un auditeur si un signal fort émerge hors du plan initial ?",
-     "answer": "L'investiguer en adaptant son plan selon l'approche fondée sur le risque."
+     "question": "What should an auditor do if a strong signal emerges outside the initial plan?",
+     "answer": "Investigate it, adapting the plan according to the risk-based approach."
     }
    ],
    "caseStudies": [
     {
-     "scenario": "Lors d'un audit d'un service d'imagerie médicale, vous constatez que la procédure de radioprotection existe et est affichée, mais que le registre de port du dosimètre n'a pas été renseigné depuis 6 semaines, alors que la procédure prévoit un contrôle hebdomadaire. Rédigez la non-conformité complète et justifiez sa gravité.",
-     "modelAnswer": "Preuve : le registre de port du dosimètre n'a pas été renseigné depuis 6 semaines, alors que la procédure PR-XX prévoit un contrôle hebdomadaire. Exigence : clause 9.1 (surveillance et mesure). Écart : l'absence de suivi régulier ne permet pas de démontrer une maîtrise continue de l'exposition aux rayonnements. Gravité : plutôt majeure — poste à risque élevé sans suivi effectif sur une durée significative."
+     "scenario": "During an audit of a medical imaging department, you find that the radiation protection procedure exists and is posted, but the dosimeter wear log has not been filled in for 6 weeks, although the procedure requires a weekly check. Write the complete nonconformity and justify its severity.",
+     "modelAnswer": "Evidence: the dosimeter wear log has not been filled in for 6 weeks, although procedure PR-XX requires a weekly check. Requirement: clause 9.1 (monitoring and measurement). Finding: the lack of regular follow-up fails to demonstrate ongoing control of radiation exposure. Severity: likely major — high-risk job with no effective follow-up over a significant period."
     },
     {
-     "scenario": "Lors d'un audit d'un service de pharmacie hospitalière, 4 agents sur 5 interrogés déclarent ne jamais avoir participé à une identification des dangers de leur poste, bien que la direction affirme qu'une consultation annuelle est systématique. Rédigez la non-conformité complète et justifiez sa gravité.",
-     "modelAnswer": "Preuve : 4 agents sur 5 interrogés déclarent n'avoir jamais participé à une identification des dangers, en contradiction avec la déclaration de la direction. Exigence : clause 5.4 (consultation et participation). Écart : décalage significatif entre la pratique déclarée et la réalité vécue par la majorité du personnel interrogé. Gravité : majeure — la proportion élevée (4 sur 5) indique une défaillance systémique plutôt qu'un cas isolé."
+     "scenario": "During an audit of a hospital pharmacy department, 4 out of 5 interviewed staff state they have never taken part in a hazard identification exercise for their job, although management asserts that an annual consultation is systematic. Write the complete nonconformity and justify its severity.",
+     "modelAnswer": "Evidence: 4 out of 5 interviewed staff state they have never taken part in a hazard identification exercise, contradicting management's statement. Requirement: clause 5.4 (consultation and participation). Finding: a significant gap between the stated practice and the reality experienced by most staff interviewed. Severity: major — the high proportion (4 out of 5) indicates a systemic failure rather than an isolated case."
     }
    ]
   }
