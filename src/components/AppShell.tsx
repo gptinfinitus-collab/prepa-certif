@@ -280,7 +280,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
           <header className="sticky top-0 z-30 border-b border-border bg-card/90 px-4 py-3 backdrop-blur lg:hidden">
             <div className="flex items-center gap-3">
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="size-9 shrink-0" aria-label="Ouvrir le menu">
+                <Button variant="ghost" size="icon" className="size-9 shrink-0" aria-label={t("nav.openMenu")}>
                   <Menu className="size-5" aria-hidden />
                 </Button>
               </SheetTrigger>
@@ -301,7 +301,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
               size="icon"
               className="size-9 text-muted-foreground"
               onClick={() => setCollapsed((c) => !c)}
-              aria-label={collapsed ? "Déplier le menu" : "Replier le menu"}
+              aria-label={t(collapsed ? "nav.expandMenu" : "nav.collapseMenu")}
             >
               {collapsed ? (
                 <PanelLeft className="size-5" aria-hidden />
@@ -321,7 +321,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
           {/* Mobile bottom nav */}
           <nav
             className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-border bg-card/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden"
-            aria-label="Navigation principale"
+            aria-label={t("nav.navigation")}
           >
             {mobileItems.map((item) => {
               const active = activeMobile ? isActive(item.to) : false;
@@ -342,7 +342,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
                   >
                     <item.icon className="size-5" aria-hidden />
                   </span>
-                  {item.label}
+                  {t(item.key)}
                 </Link>
               );
             })}
@@ -362,7 +362,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
                 >
                   <MoreHorizontal className="size-5" aria-hidden />
                 </span>
-                Plus
+                {t("nav.more")}
               </button>
             </SheetTrigger>
           </nav>

@@ -24,5 +24,7 @@
   "noActiveCertification": "Aucune certification active",
   "noTrack": "Aucun cursus suivi",
   "addCertification": "Ajouter une certification",
-  "openMenu": "Ouvrir le menu"
+  "openMenu": "Ouvrir le menu",
+  "expandMenu": "Déplier le menu",
+  "collapseMenu": "Replier le menu"
 }
