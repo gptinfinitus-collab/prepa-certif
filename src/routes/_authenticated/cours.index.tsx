@@ -98,12 +98,13 @@ function ManualIndexPage() {
                       search={{ q: query }}
                       className="block rounded-lg border border-border p-3 transition-colors hover:bg-secondary/60"
                     >
-                      <span className="flex items-center justify-between gap-2 text-sm font-medium">
-                        {hit.title}
+                      <span className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 text-sm font-medium">
+                        <span className="min-w-0 flex-1 break-words">{hit.title}</span>
                         <span className="shrink-0 text-xs text-muted-foreground">
                           {hit.chapter} · p. {hit.page}
                         </span>
                       </span>
+
                       <span className="mt-1 block text-xs text-muted-foreground">{hit.snippet}</span>
                     </Link>
                   </li>
