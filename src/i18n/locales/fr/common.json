@@ -260,5 +260,8 @@
   "linkNoteLabel": "Note (facultatif)",
   "linkNotePlaceholder": "Pourquoi ce lien est utile pour votre préparation",
   "linkTitleRequired": "Le titre est requis.",
-  "linkUrlInvalid": "Indiquez une adresse web valide (http ou https)."
+  "linkUrlInvalid": "Indiquez une adresse web valide (http ou https).",
+  "shareText": "Prépare ta certification ISO avec PREPA CERTIF : cours structurés, quiz et assistant IA.",
+  "trainingBodiesPlaceholder": "Organismes de formation",
+  "sessionExpired": "Session expirée, reconnectez-vous."
 }

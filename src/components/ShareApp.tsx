@@ -16,9 +16,7 @@ import { useT } from "@/i18n";
 
 const SHARE_URL = "https://prepa-certif.app";
 const SHARE_TITLE = "PREPA CERTIF";
-const SHARE_TEXT =
-  "Prépare ta certification ISO avec PREPA CERTIF : cours structurés, quiz et assistant IA.";
-const SHARE_MESSAGE = `${SHARE_TITLE} — ${SHARE_TEXT} ${SHARE_URL}`;
+const shareMessage = (text: string) => `${SHARE_TITLE} — ${text} ${SHARE_URL}`;
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -86,7 +84,7 @@ export function ShareApp() {
 
   async function copyLink() {
     try {
-      await navigator.clipboard.writeText(SHARE_MESSAGE);
+      await navigator.clipboard.writeText(shareMessage(t("common.shareText")));
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
       toast.success(t("common.shareLinkCopied"));
@@ -112,7 +110,7 @@ export function ShareApp() {
   }
 
   function shareWhatsApp() {
-    const text = encodeURIComponent(SHARE_MESSAGE);
+    const text = encodeURIComponent(shareMessage(t("common.shareText")));
     window.open(`https://wa.me/?text=${text}`, "_blank", "noopener,noreferrer");
     setOpen(false);
   }
@@ -129,13 +127,13 @@ export function ShareApp() {
 
   function shareEmail() {
     const subject = encodeURIComponent(t("common.discoverApp", { name: SHARE_TITLE }));
-    const body = encodeURIComponent(SHARE_MESSAGE);
+    const body = encodeURIComponent(shareMessage(t("common.shareText")));
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
     setOpen(false);
   }
 
   function shareSMS() {
-    const body = encodeURIComponent(SHARE_MESSAGE);
+    const body = encodeURIComponent(shareMessage(t("common.shareText")));
     window.location.href = `sms:?body=${body}`;
     setOpen(false);
   }
@@ -194,7 +192,7 @@ export function ShareApp() {
             {t("common.sharePreviewLabel")}
           </span>
           <div className="flex min-w-0 items-center gap-2 rounded-lg border border-border bg-muted p-3">
-            <p className="min-w-0 flex-1 truncate text-sm text-foreground">{SHARE_MESSAGE}</p>
+            <p className="min-w-0 flex-1 truncate text-sm text-foreground">{shareMessage(t("common.shareText"))}</p>
             <Button
               variant="ghost"
               size="icon"

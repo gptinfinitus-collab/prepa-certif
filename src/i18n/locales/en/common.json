@@ -260,5 +260,8 @@
   "linkNoteLabel": "Note (optional)",
   "linkNotePlaceholder": "Why this link is useful for your preparation",
   "linkTitleRequired": "The title is required.",
-  "linkUrlInvalid": "Enter a valid web address (http or https)."
+  "linkUrlInvalid": "Enter a valid web address (http or https).",
+  "shareText": "Prepare your ISO certification with PREPA CERTIF: structured lessons, quizzes and an AI assistant.",
+  "trainingBodiesPlaceholder": "Training bodies",
+  "sessionExpired": "Session expired, please sign in again."
 }

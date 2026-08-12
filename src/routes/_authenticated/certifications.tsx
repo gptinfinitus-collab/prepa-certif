@@ -117,7 +117,7 @@ function CustomCertificationDialog() {
               id="cert-family"
               value={family}
               onChange={(e) => setFamily(e.target.value)}
-              placeholder="Organismes de formation"
+              placeholder={t("common.trainingBodiesPlaceholder")}
             />
           </div>
           <div className="space-y-2">
