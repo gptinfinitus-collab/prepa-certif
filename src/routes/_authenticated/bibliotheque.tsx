@@ -22,24 +22,14 @@ import { toast } from "sonner";
 import { Download, FileText, Loader2, Sparkles, Trash2 } from "lucide-react";
 import { useT } from "@/i18n";
 
+import { pageHead } from "@/lib/seo";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
+
 export const Route = createFileRoute("/_authenticated/bibliotheque")({
-  head: () => ({
-    meta: [
-      { title: "Mes documents — PREPA CERTIF" },
-      {
-        name: "description",
-        content:
-          "Déposez vos supports de cours et vos exemplaires de normes : ils sont indexés pour alimenter l'assistant IA et les quiz personnalisés.",
-      },
-      { property: "og:title", content: "Mes documents — PREPA CERTIF" },
-      {
-        property: "og:description",
-        content: "Bibliothèque privée indexée pour l'assistant IA de préparation ISO.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    return pageHead(locale, "library", "/bibliotheque");
+  },
   component: Bibliotheque,
 });
 

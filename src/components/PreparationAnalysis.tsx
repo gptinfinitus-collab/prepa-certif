@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { useT } from "@/i18n";
+import { useLocale, useT } from "@/i18n";
 
 interface SessionRow {
   id: string;
@@ -38,6 +38,7 @@ export function PreparationAnalysis({
   certificationId: string | null;
 }) {
   const t = useT();
+  const { locale, bcp47 } = useLocale();
   const analyze = useServerFn(analyzePreparation);
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
 
@@ -82,7 +83,7 @@ export function PreparationAnalysis({
     : 0;
 
   const mutation = useMutation({
-    mutationFn: async () => analyze({ data: { certificationName, certificationId } }),
+    mutationFn: async () => analyze({ data: { certificationName, certificationId, locale } }),
     onSuccess: (result) => setAnalysis(result as Analysis),
     onError: (error: Error) => toast.error(error.message),
   });
@@ -184,7 +185,7 @@ export function PreparationAnalysis({
                 <div className="min-w-0">
                   <p className="truncate font-medium">{row.scope}</p>
                   <p className="text-xs text-muted-foreground">
-                    {new Date(row.created_at).toLocaleString("fr-FR")} ·{" "}
+                    {new Date(row.created_at).toLocaleString(bcp47)} ·{" "}
                     {row.mode === "qcm" ? t("quiz.trainer.formatQcm") : t("quiz.trainer.formatOpen")} · {row.difficulty}
                   </p>
                 </div>

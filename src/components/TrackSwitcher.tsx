@@ -89,7 +89,7 @@ export function LeadAuditorNotice() {
   const { examBody } = useExamBody();
   const definition = TRACKS.find((tr) => tr.id === "lead_auditor");
   if (track !== "lead_auditor") {
-    if (!definition?.note) return null;
+    if (!definition?.hasNote) return null;
     return (
       <p className="mt-2 rounded-md border border-border bg-secondary/40 px-4 py-3 text-xs text-muted-foreground">
         {t("quiz.tracks.lead_auditor.note")}

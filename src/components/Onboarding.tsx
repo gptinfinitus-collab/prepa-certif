@@ -180,8 +180,8 @@ export function Onboarding({ open, onClose }: OnboardingProps) {
                       active ? "border-primary ring-1 ring-primary/30" : "border-border hover:bg-accent",
                     )}
                   >
-                    <span className="font-medium">{definition.name}</span>
-                    <p className="text-xs text-muted-foreground">{definition.description}</p>
+                    <span className="font-medium">{t(`quiz.tracks.${definition.id}.name`)}</span>
+                    <p className="text-xs text-muted-foreground">{t(`quiz.tracks.${definition.id}.description`)}</p>
                   </button>
                 );
               })}

@@ -6,31 +6,14 @@ import { useCurriculum } from "@/lib/curriculum";
 import { useT } from "@/i18n";
 import { ExternalLink } from "lucide-react";
 
+import { pageHead } from "@/lib/seo";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
+
 export const Route = createFileRoute("/references")({
-  head: () => ({
-    meta: [
-      { title: "Références ISO — PREPA CERTIF" },
-      {
-        name: "description",
-        content:
-          "Normes de référence de votre certification et de l'audit : liens officiels ISO, rôle de chaque texte et résumés par chapitre.",
-      },
-      { property: "og:title", content: "Références ISO — PREPA CERTIF" },
-      {
-        property: "og:description",
-        content: "Textes normatifs de référence et résumés par chapitre pour votre certification.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://prepa-certif.app/og-image.png" },
-      { property: "og:image:width", content: "1200" },
-      { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "PREPA CERTIF — Préparation aux certifications ISO" },
-      { name: "twitter:image", content: "https://prepa-certif.app/og-image.png" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:url", content: "https://prepa-certif.app/references" },
-    ],
-    links: [{ rel: "canonical", href: "https://prepa-certif.app/references" }],
-  }),
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    return pageHead(locale, "references", "/references");
+  },
   component: References,
 });
 

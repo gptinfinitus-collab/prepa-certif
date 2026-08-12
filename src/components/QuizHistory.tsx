@@ -34,7 +34,7 @@ import {
   type ResultFilter,
 } from "@/lib/quiz-history";
 import { cn } from "@/lib/utils";
-import { useT } from "@/i18n";
+import { useLocale, useT } from "@/i18n";
 
 export function QuizHistory({
   certificationId,
@@ -46,6 +46,7 @@ export function QuizHistory({
   onRetrain: (topic: string) => void;
 }) {
   const t = useT();
+  const { bcp47 } = useLocale();
   const [topic, setTopic] = useState(ALL_TOPICS);
   const [result, setResult] = useState<ResultFilter>("all");
 
@@ -84,7 +85,7 @@ export function QuizHistory({
   const allSessions = sessions.data ?? [];
   const allAnswers = useMemo(() => answers.data ?? [], [answers.data]);
 
-  const topics = useMemo(() => sessionTopics(allSessions), [allSessions]);
+  const topics = useMemo(() => sessionTopics(allSessions, bcp47), [allSessions, bcp47]);
   const visible = useMemo(
     () => filterSessions(allSessions, { topic, result }),
     [allSessions, topic, result],
@@ -210,7 +211,7 @@ export function QuizHistory({
                   <div className="flex min-w-0 flex-1 flex-col gap-1">
                     <span className="truncate font-medium">{session.topic ?? session.scope}</span>
                     <span className="text-xs text-muted-foreground">
-                      {formatSessionDate(session.created_at)} ·{" "}
+                      {formatSessionDate(session.created_at, bcp47)} ·{" "}
                       {session.mode === "qcm" ? t("quiz.trainer.formatQcm") : t("quiz.trainer.formatOpen")} · {session.difficulty}
                     </span>
                   </div>

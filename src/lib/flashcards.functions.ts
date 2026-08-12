@@ -9,6 +9,7 @@ const EvaluateInput = z.object({
   question: z.string().min(1),
   expectedAnswer: z.string().min(1),
   userAnswer: z.string().min(1),
+  locale: z.enum(["fr", "en"]).default("fr"),
 });
 
 export type EvaluationStatus = "correct" | "partial" | "incorrect";
@@ -16,6 +17,62 @@ export type EvaluationStatus = "correct" | "partial" | "incorrect";
 export interface EvaluationResult {
   status: EvaluationStatus;
   feedback: string;
+}
+
+/** Consignes d'évaluation dans la langue de l'apprenant. */
+function evaluationPrompt(
+  locale: "fr" | "en",
+  data: { question: string; expectedAnswer: string; userAnswer: string },
+): { system: string; prompt: string } {
+  if (locale === "en") {
+    return {
+      system: "You are a learning assessor. You reply with JSON only.",
+      prompt: [
+        "You assess a learner's answer against an expected answer.",
+        "Be supportive and concise (2 to 3 sentences maximum).",
+        "Assessment rules:",
+        "- 'correct': the answer captures the essential meaning of the expected answer, even with synonyms or different wording.",
+        "- 'partial': the general idea is there but an important element is missing or the wording is imprecise.",
+        "- 'incorrect': the answer is wrong, off topic, or misses the essentials.",
+        "",
+        "Reply ONLY in the following JSON format, with the feedback written in English:",
+        '{"status": "correct|partial|incorrect", "feedback": "..."}',
+        "",
+        "Question:",
+        data.question,
+        "",
+        "Expected answer:",
+        data.expectedAnswer,
+        "",
+        "Learner's answer:",
+        data.userAnswer,
+      ].join("\n"),
+    };
+  }
+
+  return {
+    system: "Tu es un évaluateur pédagogique. Tu réponds uniquement en JSON.",
+    prompt: [
+      "Tu évalues une réponse d'apprentissage par rapport à une réponse attendue.",
+      "Sois pédagogue et concis (2 à 3 phrases maximum).",
+      "Règles d'évaluation :",
+      "- 'correct' : la réponse saisie capture le sens essentiel de la réponse attendue, même avec des synonymes ou une formulation différente.",
+      "- 'partial' : l'idée générale est présente mais il manque un élément important ou la formulation est imprécise.",
+      "- 'incorrect' : la réponse est fausse, hors sujet ou ne reprend pas l'essentiel.",
+      "",
+      "Réponds UNIQUEMENT au format JSON suivant, avec un commentaire rédigé en français :",
+      '{"status": "correct|partial|incorrect", "feedback": "..."}',
+      "",
+      "Question :",
+      data.question,
+      "",
+      "Réponse attendue :",
+      data.expectedAnswer,
+      "",
+      "Réponse de l'utilisateur :",
+      data.userAnswer,
+    ].join("\n"),
+  };
 }
 
 export const evaluateFlashcardAnswer = createServerFn({ method: "POST" })
@@ -27,26 +84,7 @@ export const evaluateFlashcardAnswer = createServerFn({ method: "POST" })
       throw new Error("Service IA indisponible.");
     }
 
-    const prompt = [
-      "Tu évalues une réponse d'apprentissage par rapport à une réponse attendue.",
-      "Sois pédagogue et concis (2 à 3 phrases maximum).",
-      "Règles d'évaluation :",
-      "- 'correct' : la réponse saisie capture le sens essentiel de la réponse attendue, même avec des synonymes ou une formulation différente.",
-      "- 'partial' : l'idée générale est présente mais il manque un élément important ou la formulation est imprécise.",
-      "- 'incorrect' : la réponse est fausse, hors sujet ou ne reprend pas l'essentiel.",
-      "",
-      "Réponds UNIQUEMENT au format JSON suivant :",
-      '{"status": "correct|partial|incorrect", "feedback": "..."}',
-      "",
-      "Question :",
-      data.question,
-      "",
-      "Réponse attendue :",
-      data.expectedAnswer,
-      "",
-      "Réponse de l'utilisateur :",
-      data.userAnswer,
-    ].join("\n");
+    const { system, prompt } = evaluationPrompt(data.locale, data);
 
     const response = await fetch(`${GATEWAY}/chat/completions`, {
       method: "POST",
@@ -57,13 +95,14 @@ export const evaluateFlashcardAnswer = createServerFn({ method: "POST" })
       body: JSON.stringify({
         model: EVAL_MODEL,
         messages: [
-          { role: "system", content: "Tu es un évaluateur pédagogique. Tu réponds uniquement en JSON." },
+          { role: "system", content: system },
           { role: "user", content: prompt },
         ],
         temperature: 0.2,
         response_format: { type: "json_object" },
       }),
     });
+
 
     if (response.status === 429) {
       throw new Error("Limite de requêtes IA atteinte, réessayez dans un instant.");

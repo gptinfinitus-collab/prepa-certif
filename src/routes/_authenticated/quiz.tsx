@@ -15,25 +15,14 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useT } from "@/i18n";
 
+import { pageHead } from "@/lib/seo";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
+
 export const Route = createFileRoute("/_authenticated/quiz")({
-  head: () => ({
-    meta: [
-      { title: "Quiz IA et niveau de préparation — PREPA CERTIF" },
-      {
-        name: "description",
-        content:
-          "Générez des QCM et questions ouvertes corrigés par l'IA à partir de votre norme et de vos documents, et suivez votre niveau de préparation chapitre par chapitre.",
-      },
-      { property: "og:title", content: "Quiz IA et niveau de préparation — PREPA CERTIF" },
-      {
-        property: "og:description",
-        content:
-          "Entraînements générés par l'IA, correction commentée avec renvoi aux clauses et analyse de vos points faibles.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    return pageHead(locale, "quiz", "/quiz");
+  },
   component: QuizPage,
 });
 

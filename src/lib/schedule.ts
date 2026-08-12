@@ -108,8 +108,9 @@ export function scheduleByModuleId(result: ScheduleResult): Map<number, Date> {
   return map;
 }
 
-export function formatFrenchDate(date: Date): string {
-  return date.toLocaleDateString("fr-FR", {
+/** Date longue localisée (ex. « lundi 12 mai 2025 »). `bcp47` : étiquette de langue active (`fr-FR`, `en-GB`). */
+export function formatFrenchDate(date: Date, bcp47 = "fr-FR"): string {
+  return date.toLocaleDateString(bcp47, {
     weekday: "long",
     day: "2-digit",
     month: "long",
@@ -117,8 +118,9 @@ export function formatFrenchDate(date: Date): string {
   });
 }
 
-export function formatShortDate(date: Date): string {
-  return date.toLocaleDateString("fr-FR", { weekday: "short", day: "2-digit", month: "2-digit" });
+/** Date courte localisée (ex. « lun. 12/05 »). */
+export function formatShortDate(date: Date, bcp47 = "fr-FR"): string {
+  return date.toLocaleDateString(bcp47, { weekday: "short", day: "2-digit", month: "2-digit" });
 }
 
 export interface PaceStatus {

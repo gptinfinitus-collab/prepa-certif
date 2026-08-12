@@ -4,40 +4,19 @@ export type TrackId = "general" | "internal_auditor" | "lead_auditor";
 
 export interface TrackDefinition {
   id: TrackId;
-  name: string;
-  short: string;
-  description: string;
   status: "active" | "coming_soon";
-  note?: string;
+  /** Vrai si ce niveau a une note d'avertissement dédiée (voir `quiz.tracks.<id>.note`). */
+  hasNote?: boolean;
 }
 
+/**
+ * Niveaux de parcours. Les libellés (nom, description, note) sont traduits
+ * via les clés `quiz.tracks.<id>.*` (voir src/i18n/locales/{fr,en}/quiz.json).
+ */
 export const TRACKS: TrackDefinition[] = [
-  {
-    id: "general",
-    name: "Maîtrise de la norme",
-    short: "Maîtrise",
-    description:
-      "Comprendre les exigences, leur raison d'être et leur application dans une organisation.",
-    status: "active",
-  },
-  {
-    id: "internal_auditor",
-    name: "Auditeur interne",
-    short: "Auditeur interne",
-    description:
-      "Préparer, conduire et restituer un audit interne : preuves, constats, rapport.",
-    status: "active",
-  },
-  {
-    id: "lead_auditor",
-    name: "Lead Auditor",
-    short: "Lead Auditor",
-    description:
-      "Piloter une équipe d'audit et conduire un audit de certification : plan d'audit, réunions, non-conformités, rapport.",
-    status: "active",
-    note:
-      "Le format de l'examen Lead Auditor dépend de l'organisme (PECB, CQI/IRCA, autres). Choisissez votre organisme d'examen pour adapter vos entraînements.",
-  },
+  { id: "general", status: "active" },
+  { id: "internal_auditor", status: "active" },
+  { id: "lead_auditor", status: "active", hasNote: true },
 ];
 
 export const DEFAULT_TRACK: TrackId = "general";
@@ -49,13 +28,6 @@ export function isTrackId(value: string | null | undefined): value is TrackId {
 export function getTrack(id: TrackId): TrackDefinition {
   return TRACKS.find((t) => t.id === id) ?? TRACKS[0]!;
 }
-
-/**
- * Avertissement affiché partout où un entraînement pourrait être confondu avec
- * l'examen réel d'un organisme de certification.
- */
-export const MOCK_EXAM_DISCLAIMER =
-  "Entraînement PREPA CERTIF. Ce test ne reproduit pas l'examen d'un organisme précis : le format, la durée et les règles varient selon l'organisme (PECB, CQI/IRCA, autres).";
 
 const AUDIT_KEYWORDS = [
   "audit",

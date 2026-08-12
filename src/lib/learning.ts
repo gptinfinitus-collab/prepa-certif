@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useLocale } from "@/i18n";
 import { useActiveCertification } from "@/lib/certifications";
 import { DEFAULT_TRACK, isTrackId, type TrackId } from "@/lib/tracks";
 import { isExamBodyId, type ExamBodyId } from "@/lib/exam-bodies";
@@ -276,6 +277,7 @@ export function useEvaluateFlashcardAnswer(moduleId: number) {
   const queryClient = useQueryClient();
   const { certificationId } = useActiveCertification();
   const evaluate = evaluateFlashcardAnswer;
+  const { locale } = useLocale();
 
   return useMutation({
     mutationFn: async (input: {
@@ -290,6 +292,7 @@ export function useEvaluateFlashcardAnswer(moduleId: number) {
           question: input.question,
           expectedAnswer: input.expectedAnswer,
           userAnswer: input.userAnswer,
+          locale,
         },
       });
 

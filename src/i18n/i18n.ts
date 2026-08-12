@@ -12,6 +12,7 @@ import frCpd from "./locales/fr/cpd.json";
 import frLegal from "./locales/fr/legal.json";
 import frAdmin from "./locales/fr/admin.json";
 import frAssistant from "./locales/fr/assistant.json";
+import frSeo from "./locales/fr/seo.json";
 
 import enCommon from "./locales/en/common.json";
 import enNav from "./locales/en/nav.json";
@@ -22,6 +23,7 @@ import enCpd from "./locales/en/cpd.json";
 import enLegal from "./locales/en/legal.json";
 import enAdmin from "./locales/en/admin.json";
 import enAssistant from "./locales/en/assistant.json";
+import enSeo from "./locales/en/seo.json";
 
 /** Ressources fusionnées dans un unique espace de noms `translation`. */
 export const resources = {
@@ -36,6 +38,7 @@ export const resources = {
       legal: frLegal,
       admin: frAdmin,
       assistant: frAssistant,
+      seo: frSeo,
     },
   },
   en: {
@@ -49,6 +52,7 @@ export const resources = {
       legal: enLegal,
       admin: enAdmin,
       assistant: enAssistant,
+      seo: enSeo,
     },
   },
 } as const;

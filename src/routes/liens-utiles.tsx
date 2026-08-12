@@ -18,28 +18,15 @@ import {
 } from "@/lib/useful-links";
 import { useT } from "@/i18n";
 
-const TITLE = "Liens utiles — PREPA CERTIF";
-const DESCRIPTION =
-  "Tous les liens utiles pour préparer votre certification ISO : textes officiels, schémas de certification d'auditeurs, accréditation, réglementation S&ST et ressources gratuites.";
+
+import { pageHead } from "@/lib/seo";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 
 export const Route = createFileRoute("/liens-utiles")({
-  head: () => ({
-    meta: [
-      { title: TITLE },
-      { name: "description", content: DESCRIPTION },
-      { property: "og:title", content: TITLE },
-      { property: "og:description", content: DESCRIPTION },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://prepa-certif.app/liens-utiles" },
-      { property: "og:image", content: "https://prepa-certif.app/og-image.png" },
-      { property: "og:image:width", content: "1200" },
-      { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "PREPA CERTIF — Préparation aux certifications ISO" },
-      { name: "twitter:image", content: "https://prepa-certif.app/og-image.png" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: "https://prepa-certif.app/liens-utiles" }],
-  }),
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    return pageHead(locale, "usefulLinks", "/liens-utiles");
+  },
   component: UsefulLinksPage,
 });
 

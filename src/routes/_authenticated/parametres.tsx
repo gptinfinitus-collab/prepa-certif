@@ -16,21 +16,14 @@ import { LogOut, Moon, CalendarRange, Sparkles } from "lucide-react";
 import { useLocale, useT } from "@/i18n";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
+import { pageHead } from "@/lib/seo";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
+
 export const Route = createFileRoute("/_authenticated/parametres")({
-  head: () => ({
-    meta: [
-      { title: "Paramètres — PREPA CERTIF" },
-      {
-        name: "description",
-        content:
-          "Gérez votre profil, votre photo, votre prénom et nom, et activez le mode sombre bleu nuit de PREPA CERTIF.",
-      },
-      { property: "og:title", content: "Paramètres — PREPA CERTIF" },
-      { property: "og:description", content: "Profil, apparence et préférences d'étude." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    return pageHead(locale, "settings", "/parametres");
+  },
   component: Parametres,
 });
 

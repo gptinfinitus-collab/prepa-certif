@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { useActiveTrack, useExamBody } from "@/lib/learning";
-import { useT } from "@/i18n";
+import { useLocale, useT } from "@/i18n";
 
 interface GeneratedQuestion {
   question: string;
@@ -50,6 +50,7 @@ export function QuizTrainer({
   initialChapter?: string | null;
 }) {
   const t = useT();
+  const { locale } = useLocale();
   const generate = useServerFn(generateQuizQuestions);
   const grade = useServerFn(gradeOpenAnswers);
   const { track } = useActiveTrack();
@@ -152,6 +153,7 @@ export function QuizTrainer({
           mode,
           track,
           examBody,
+          locale,
         },
       }),
     onSuccess: (result) => {
@@ -172,7 +174,7 @@ export function QuizTrainer({
         expected: q.expected ?? "",
         answer: openAnswers[i]?.trim() || "(pas de réponse)",
       }));
-      const result = await grade({ data: { certificationName, items } });
+      const result = await grade({ data: { certificationName, items, locale } });
       return result.results;
     },
     onSuccess: async (results) => {
