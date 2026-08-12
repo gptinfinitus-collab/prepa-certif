@@ -721,6 +721,36 @@ export type Database = {
         }
         Relationships: []
       }
+      user_manual_progress: {
+        Row: {
+          created_at: string
+          id: string
+          manual_id: string
+          read_ids: string[]
+          section_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          manual_id: string
+          read_ids?: string[]
+          section_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          manual_id?: string
+          read_ids?: string[]
+          section_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_notes: {
         Row: {
           certification_id: string | null
