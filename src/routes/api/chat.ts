@@ -2,14 +2,64 @@ import { createFileRoute } from "@tanstack/react-router";
 import { supabaseFromRequest, streamChat } from "@/lib/chat.server";
 import { retrieve } from "@/lib/rag.server";
 
+type Locale = "fr" | "en";
+
 interface ChatBody {
   threadId?: string;
   question?: string;
   certificationName?: string;
+  locale?: Locale;
 }
 
 function sse(event: unknown): Uint8Array {
   return new TextEncoder().encode(`data: ${JSON.stringify(event)}\n\n`);
+}
+
+function isLocale(value: unknown): value is Locale {
+  return value === "fr" || value === "en";
+}
+
+/** Consignes système communes au chat assistant (RAG), en français ou en anglais. */
+function assistantSystemPrompt(locale: Locale, certificationName?: string): string {
+  if (locale === "en") {
+    return [
+      "You are an expert trainer in ISO management-system standards and audits.",
+      `The learner is preparing: ${certificationName ?? "an ISO certification"}.`,
+      "Reference frameworks to use: ISO 45001:2018 and its Amendment 1:2024 for OH&S (injury and ill health) requirements (never use ISO/DIS 45001 as a source of requirements), ISO 19011 for audit guidelines, ISO/IEC 17021-1 for third-party certification rules (stage 1 / stage 2 audits, major and minor nonconformity classification, certification decision).",
+      "Always explicitly distinguish a requirement of the audited standard, an audit guideline, and a certification rule: never attribute to ISO 19011 what belongs to ISO/IEC 17021-1.",
+      "Answer in English, in a structured and pedagogical way, with concrete audit examples.",
+      "When excerpts from personal documents are provided, rely on them first and cite them as (Excerpt n).",
+      "The provided documents may only be partial previews of a standard: never assume they cover all requirements.",
+      "Never reproduce literal passages of a protected standard and never try to reconstruct its official text: rephrase in your own words.",
+      "If information is missing, say so and suggest a revision path.",
+    ].join(" ");
+  }
+  return [
+    "Tu es un formateur expert des normes ISO et des audits de systèmes de management.",
+    `L'apprenant prépare : ${certificationName ?? "une certification ISO"}.`,
+    "Référentiels à utiliser : ISO 45001:2018 et son Amendement 1:2024 pour la S&ST (n'utilise jamais l'ISO/DIS 45001 comme référentiel d'exigences), ISO 19011:2026 pour les lignes directrices d'audit, ISO/IEC 17021-1 pour le processus de certification tierce partie (audits étape 1 / étape 2, classification majeure ou mineure, décision de certification).",
+    "Distingue toujours explicitement une exigence de la norme auditée, une ligne directrice d'audit et une règle de certification : n'attribue jamais à ISO 19011 ce qui relève d'ISO/IEC 17021-1.",
+    "Réponds en français, de façon structurée et pédagogique, avec des exemples d'audit concrets.",
+    "Quand des extraits de documents personnels sont fournis, appuie-toi dessus en priorité et cite-les sous la forme (Extrait n).",
+    "Les documents fournis peuvent n'être que des aperçus partiels d'une norme : ne présume jamais qu'ils couvrent toutes les exigences.",
+    "Ne recopie jamais de passages littéraux d'une norme protégée et ne tente jamais de reconstituer son texte officiel : reformule avec tes propres mots.",
+    "Si l'information manque, dis-le et propose une piste de révision.",
+  ].join(" ");
+}
+
+function userQuestionBlock(locale: Locale, sourcesBlock: string, question: string): string {
+  if (locale === "en") {
+    return sourcesBlock
+      ? `Relevant personal documents:\n\n${sourcesBlock}\n\nQuestion: ${question}`
+      : question;
+  }
+  return sourcesBlock
+    ? `Documents personnels pertinents :\n\n${sourcesBlock}\n\nQuestion : ${question}`
+    : question;
+}
+
+function sourcesLabel(locale: Locale): string {
+  return locale === "en" ? "Excerpt" : "Extrait";
 }
 
 export const Route = createFileRoute("/api/chat")({
@@ -23,6 +73,7 @@ export const Route = createFileRoute("/api/chat")({
         const body = (await request.json()) as ChatBody;
         const question = (body.question ?? "").trim();
         const threadId = body.threadId ?? "";
+        const locale: Locale = isLocale(body.locale) ? body.locale : "fr";
         if (!question || question.length > 2000) {
           return new Response("Question invalide", { status: 400 });
         }
@@ -73,22 +124,11 @@ export const Route = createFileRoute("/api/chat")({
               controller.enqueue(sse({ type: "sources", sources }));
 
               const sourcesBlock = passages
-                .map((p, i) => `[Extrait ${i + 1}]\n${p.content}`)
+                .map((p, i) => `[${sourcesLabel(locale)} ${i + 1}]\n${p.content}`)
                 .join("\n\n")
                 .slice(0, 18000);
 
-              const system = [
-                "Tu es un formateur expert des normes ISO et des audits de systèmes de management.",
-                `L'apprenant prépare : ${body.certificationName ?? "une certification ISO"}.`,
-                "Référentiels à utiliser : ISO 45001:2018 et son Amendement 1:2024 pour la S&ST (n'utilise jamais l'ISO/DIS 45001 comme référentiel d'exigences), ISO 19011:2026 pour les lignes directrices d'audit, ISO/IEC 17021-1 pour le processus de certification tierce partie (audits étape 1 / étape 2, classification majeure ou mineure, décision de certification).",
-                "Distingue toujours explicitement une exigence de la norme auditée, une ligne directrice d'audit et une règle de certification : n'attribue jamais à ISO 19011 ce qui relève d'ISO/IEC 17021-1.",
-                "Réponds en français, de façon structurée et pédagogique, avec des exemples d'audit concrets.",
-                "Quand des extraits de documents personnels sont fournis, appuie-toi dessus en priorité et cite-les sous la forme (Extrait n).",
-                "Les documents fournis peuvent n'être que des aperçus partiels d'une norme : ne présume jamais qu'ils couvrent toutes les exigences.",
-                "Ne recopie jamais de passages littéraux d'une norme protégée et ne tente jamais de reconstituer son texte officiel : reformule avec tes propres mots.",
-                "Si l'information manque, dis-le et propose une piste de révision.",
-              ].join(" ");
-
+              const system = assistantSystemPrompt(locale, body.certificationName);
 
               const messages = [
                 { role: "system" as const, content: system },
@@ -98,9 +138,7 @@ export const Route = createFileRoute("/api/chat")({
                 })),
                 {
                   role: "user" as const,
-                  content: sourcesBlock
-                    ? `Documents personnels pertinents :\n\n${sourcesBlock}\n\nQuestion : ${question}`
-                    : question,
+                  content: userQuestionBlock(locale, sourcesBlock, question),
                 },
               ];
 

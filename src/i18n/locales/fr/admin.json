@@ -1,1 +1,41 @@
-{}
+{
+  "restrictedTitle": "Espace réservé",
+  "restrictedDesc": "Cette page est réservée au super administrateur de PREPA CERTIF.",
+  "title": "Administration",
+  "subtitle": "Qui utilise PREPA CERTIF, et où en sont-ils dans leur préparation.",
+  "refresh": "Actualiser",
+  "stats": {
+    "total": "Comptes",
+    "signups7": "Inscrits (7 j)",
+    "signups30": "Inscrits (30 j)",
+    "active7": "Connectés (7 j)",
+    "disabled": "Désactivés"
+  },
+  "users": "Utilisateurs",
+  "usersDesc": "Recherchez par nom ou e-mail, puis désactivez ou supprimez un compte.",
+  "searchPlaceholder": "Rechercher un utilisateur",
+  "loading": "Chargement…",
+  "noAccountFound": "Aucun compte trouvé.",
+  "sortBy": "Trier par {{label}}",
+  "columns": {
+    "user": "Utilisateur",
+    "certification": "Certification",
+    "activity": "Activité",
+    "docs": "Docs",
+    "signupDate": "Inscription",
+    "lastSignIn": "Dernière connexion",
+    "actions": "Actions"
+  },
+  "superAdmin": "Super admin",
+  "disabled": "Désactivé",
+  "sessionsUnit": "séances",
+  "quizUnit": "quiz",
+  "reactivateAccount": "Réactiver le compte",
+  "disableAccount": "Désactiver le compte",
+  "deleteAccount": "Supprimer le compte",
+  "deleteAccountTitle": "Supprimer ce compte ?",
+  "deleteAccountDesc": "{{email}} et toutes ses données de préparation seront définitivement supprimés. Cette action est irréversible.",
+  "accountReactivated": "Compte réactivé.",
+  "accountDisabled": "Compte désactivé.",
+  "accountDeleted": "Compte supprimé."
+}

@@ -26,6 +26,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
+import { useT, useLocale } from "@/i18n";
 import { useActiveCertification } from "@/lib/certifications";
 import {
   useCreateThread,
@@ -37,17 +38,14 @@ import {
 import { cn } from "@/lib/utils";
 
 
-const suggestions = [
-  "Explique la différence entre non-conformité majeure et mineure.",
-  "Comment préparer un plan d'audit conforme à l'ISO 19011 ?",
-  "Quelles preuves collecter pour évaluer le leadership (chapitre 5) ?",
-];
-
 export function AssistantChat({ threadId }: { threadId: string }) {
+  const t = useT();
+  const { locale } = useLocale();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { certification, certificationId } = useActiveCertification();
-  const certificationName = certification?.name ?? "votre certification ISO";
+  const certificationName = certification?.name ?? t("assistant.defaultCertification");
+  const suggestions = t("assistant.start.suggestions", { returnObjects: true }) as string[];
 
   const threads = useThreads(certificationId ?? null);
   const stored = useThreadMessages(threadId);
@@ -101,10 +99,10 @@ export function AssistantChat({ threadId }: { threadId: string }) {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "content-type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ threadId, question: text, certificationName }),
+        body: JSON.stringify({ threadId, question: text, certificationName, locale }),
       });
       if (!response.ok || !response.body) {
-        throw new Error(await response.text().catch(() => "Assistant indisponible."));
+        throw new Error(await response.text().catch(() => t("assistant.errors.unavailable")));
       }
 
       const reader = response.body.getReader();
@@ -131,12 +129,12 @@ export function AssistantChat({ threadId }: { threadId: string }) {
             answer += event.text;
             setStreamed(answer);
           } else if (event.type === "error") {
-            throw new Error(event.message ?? "Réponse IA indisponible.");
+            throw new Error(event.message ?? t("assistant.errors.answerUnavailable"));
           }
         }
       }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Assistant indisponible.");
+      toast.error(error instanceof Error ? error.message : t("assistant.errors.unavailable"));
     } finally {
       setBusy(false);
       setStreamed("");
@@ -162,15 +160,15 @@ export function AssistantChat({ threadId }: { threadId: string }) {
       <div className="flex min-w-0 items-start gap-2">
         <Sheet open={historyOpen} onOpenChange={setHistoryOpen}>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" aria-label="Historique des conversations">
+            <Button variant="ghost" size="icon" aria-label={t("assistant.history.trigger")}>
               <Menu className="size-5" aria-hidden />
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-[85vw] max-w-xs p-0">
             <SheetHeader className="p-4 pb-2">
-              <SheetTitle className="font-sans text-base">Conversations</SheetTitle>
+              <SheetTitle className="font-sans text-base">{t("assistant.history.title")}</SheetTitle>
               <SheetDescription className="text-xs">
-                Vos échanges avec l'assistant, par certification.
+                {t("assistant.history.description")}
               </SheetDescription>
             </SheetHeader>
             <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto p-4 pt-0">
@@ -181,7 +179,7 @@ export function AssistantChat({ threadId }: { threadId: string }) {
                 size="sm"
               >
                 <MessageSquarePlus className="size-4" aria-hidden />
-                Nouvelle conversation
+                {t("assistant.history.newThread")}
               </Button>
               <nav className="flex flex-col gap-1">
                 {threads.isLoading &&
@@ -206,7 +204,7 @@ export function AssistantChat({ threadId }: { threadId: string }) {
                     <button
                       type="button"
                       onClick={() => removeThread(thread.id)}
-                      aria-label={`Supprimer ${thread.title}`}
+                      aria-label={t("assistant.history.deleteThread", { title: thread.title })}
                       className="rounded-md p-2 text-muted-foreground transition-colors hover:text-destructive"
                     >
                       <Trash2 className="size-4" aria-hidden />
@@ -219,9 +217,9 @@ export function AssistantChat({ threadId }: { threadId: string }) {
         </Sheet>
 
         <div className="min-w-0 flex-1">
-          <h1 className="font-sans text-xl font-semibold sm:text-2xl">Assistant de préparation</h1>
+          <h1 className="font-sans text-xl font-semibold sm:text-2xl">{t("assistant.title")}</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Questions directes sur {certificationName}, l'audit et vos documents indexés.
+            {t("assistant.subtitle", { certificationName })}
           </p>
         </div>
       </div>
@@ -239,9 +237,9 @@ export function AssistantChat({ threadId }: { threadId: string }) {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 font-sans text-lg">
                 <Sparkles className="size-5 text-cert" aria-hidden />
-                Par où commencer ?
+                {t("assistant.start.title")}
               </CardTitle>
-              <CardDescription>Choisissez une question ou écrivez la vôtre.</CardDescription>
+              <CardDescription>{t("assistant.start.description")}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-2">
               {suggestions.map((s) => (
@@ -269,7 +267,7 @@ export function AssistantChat({ threadId }: { threadId: string }) {
           {busy && !streamed && (
             <p className="flex items-center gap-2 text-sm text-muted-foreground">
               <Loader2 className="size-4 animate-spin" aria-hidden />
-              L'assistant consulte vos documents…
+              {t("assistant.loading")}
             </p>
           )}
           <div ref={bottomRef} />
@@ -287,15 +285,15 @@ export function AssistantChat({ threadId }: { threadId: string }) {
               }
             }}
             rows={1}
-            placeholder="Votre question…"
-            aria-label="Votre question"
+            placeholder={t("assistant.input.placeholder")}
+            aria-label={t("assistant.input.ariaLabel")}
             className="max-h-32 min-h-0 resize-none overflow-y-auto border-0 bg-transparent py-2 text-sm shadow-none placeholder:text-xs placeholder:text-muted-foreground/70 focus-visible:ring-0 md:text-sm"
           />
           <Button
             onClick={() => void send(input)}
             disabled={busy || !input.trim()}
             size="icon"
-            aria-label="Envoyer"
+            aria-label={t("assistant.input.send")}
             className="mb-1 size-9 shrink-0 rounded-full"
           >
             {busy ? (

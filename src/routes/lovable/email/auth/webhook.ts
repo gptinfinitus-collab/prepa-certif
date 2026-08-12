@@ -7,7 +7,8 @@ import { MagicLinkEmail } from "@/lib/email-templates/magic-link";
 import { RecoveryEmail } from "@/lib/email-templates/recovery";
 import { EmailChangeEmail } from "@/lib/email-templates/email-change";
 import { ReauthenticationEmail } from "@/lib/email-templates/reauthentication";
-import { SITE_NAME, SENDER_DOMAIN, FROM_DOMAIN, SITE_URL } from "@/lib/email-templates/email-brand";
+import { SITE_NAME, SENDER_DOMAIN, FROM_DOMAIN, SITE_URL, type EmailLocale } from "@/lib/email-templates/email-brand";
+import { isLocale } from "@/i18n/config";
 
 function rewriteConfirmationUrl(url: string): string {
   try {
@@ -18,6 +19,16 @@ function rewriteConfirmationUrl(url: string): string {
   } catch {
     return url;
   }
+}
+
+/** Resolves the recipient's locale from the webhook payload, defaulting to French. */
+function resolveLocale(data: AuthEmailHookData): EmailLocale {
+  const raw = data as unknown as {
+    user_metadata?: { locale?: unknown };
+    user?: { user_metadata?: { locale?: unknown } };
+  };
+  const candidate = raw.user_metadata?.locale ?? raw.user?.user_metadata?.locale ?? "fr";
+  return isLocale(candidate) ? candidate : "fr";
 }
 
 // The SDK handler owns verification, dispatch, and retry semantics; this file
@@ -36,6 +47,7 @@ const handler = createAuthEmailHandler({
           siteUrl: SITE_URL,
           recipient: data.email,
           confirmationUrl: rewriteConfirmationUrl(data.url),
+          locale: resolveLocale(data),
         }),
     },
     invite: {
@@ -45,6 +57,7 @@ const handler = createAuthEmailHandler({
           siteName: SITE_NAME,
           siteUrl: SITE_URL,
           confirmationUrl: rewriteConfirmationUrl(data.url),
+          locale: resolveLocale(data),
         }),
     },
     magiclink: {
@@ -53,6 +66,7 @@ const handler = createAuthEmailHandler({
         React.createElement(MagicLinkEmail, {
           siteName: SITE_NAME,
           confirmationUrl: rewriteConfirmationUrl(data.url),
+          locale: resolveLocale(data),
         }),
     },
     recovery: {
@@ -61,6 +75,7 @@ const handler = createAuthEmailHandler({
         React.createElement(RecoveryEmail, {
           siteName: SITE_NAME,
           confirmationUrl: rewriteConfirmationUrl(data.url),
+          locale: resolveLocale(data),
         }),
     },
     email_change: {
@@ -72,12 +87,16 @@ const handler = createAuthEmailHandler({
           email: data.email,
           newEmail: data.new_email ?? "",
           confirmationUrl: rewriteConfirmationUrl(data.url),
+          locale: resolveLocale(data),
         }),
     },
     reauthentication: {
       subject: `Votre code de vérification — ${SITE_NAME}`,
       render: (data: AuthEmailHookData) =>
-        React.createElement(ReauthenticationEmail, { token: data.token ?? "" }),
+        React.createElement(ReauthenticationEmail, {
+          token: data.token ?? "",
+          locale: resolveLocale(data),
+        }),
     },
   },
 });

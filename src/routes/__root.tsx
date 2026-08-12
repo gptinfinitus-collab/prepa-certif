@@ -103,6 +103,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { property: "og:type", content: "website" },
+      { property: "og:locale", content: "fr_FR" },
+      { property: "og:locale:alternate", content: "en_US" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: "https://prepa-certif.app/og-image.png" },
       { name: "theme-color", content: "#0f2f4f" },
@@ -143,7 +145,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               "@id": "https://prepa-certif.app/#website",
               name: "PREPA CERTIF",
               url: "https://prepa-certif.app",
-              inLanguage: "fr-FR",
+              inLanguage: ["fr-FR", "en-US"],
               description:
                 "Préparation aux certifications d'auditeur ISO (9001, 14001, 45001, 27001…) : planning personnalisable, cours, quiz et suivi de progression.",
               publisher: { "@id": "https://prepa-certif.app/#organization" },

@@ -7,6 +7,7 @@ import { MagicLinkEmail } from '@/lib/email-templates/magic-link'
 import { RecoveryEmail } from '@/lib/email-templates/recovery'
 import { EmailChangeEmail } from '@/lib/email-templates/email-change'
 import { ReauthenticationEmail } from '@/lib/email-templates/reauthentication'
+import { isLocale, type Locale } from '@/i18n/config'
 
 const EMAIL_TEMPLATES: Record<string, React.ComponentType<any>> = {
   signup: SignupEmail,
@@ -99,7 +100,11 @@ export const Route = createFileRoute("/lovable/email/auth/preview")({
           )
         }
 
-        const sampleData = SAMPLE_DATA[type] || {}
+        const url = new URL(request.url)
+        const localeParam = url.searchParams.get('locale')
+        const locale: Locale = isLocale(localeParam) ? localeParam : 'fr'
+
+        const sampleData = { ...(SAMPLE_DATA[type] || {}), locale }
         const html = await render(React.createElement(EmailTemplate, sampleData))
 
         return new Response(html, {
