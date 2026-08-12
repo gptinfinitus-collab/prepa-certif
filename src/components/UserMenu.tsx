@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { ChevronsUpDown, LogOut, Moon, Settings, User } from "lucide-react";
+import { ChevronsUpDown, Languages, LogOut, Moon, Settings, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { useProfile, useSession } from "@/lib/queries";
@@ -8,7 +8,8 @@ import { useTheme } from "@/components/theme-provider";
 import { initialsOf } from "@/components/ProfileEditor";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Switch } from "@/components/ui/switch";
-import { useT } from "@/i18n";
+import { useLocale, useT } from "@/i18n";
+import { LOCALES, LOCALE_LABELS } from "@/i18n/config";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,6 +30,7 @@ export function UserMenu({
   const { data: profile } = useProfile();
   const { data: user } = useSession();
   const { resolved, setTheme } = useTheme();
+  const { locale, setLocale } = useLocale();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -131,6 +133,31 @@ export function UserMenu({
             aria-label={t("common.toggleDarkMode")}
           />
         </DropdownMenuItem>
+        <div className="flex items-center justify-between gap-2 px-2 py-1.5 text-sm">
+          <span className="flex items-center gap-2">
+            <Languages className="size-4" aria-hidden />
+            {t("common.language")}
+          </span>
+          <span className="flex items-center gap-1 rounded-md border border-border p-0.5">
+            {LOCALES.map((code) => (
+              <button
+                key={code}
+                type="button"
+                onClick={() => setLocale(code)}
+                aria-pressed={code === locale}
+                title={LOCALE_LABELS[code]}
+                className={cn(
+                  "rounded px-2 py-0.5 text-xs font-medium uppercase transition-colors",
+                  code === locale
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:bg-accent",
+                )}
+              >
+                {code}
+              </button>
+            ))}
+          </span>
+        </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={() => void signOut()}>
           <LogOut className="size-4" aria-hidden />
