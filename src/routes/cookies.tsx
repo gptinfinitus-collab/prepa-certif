@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LegalPage } from "@/components/LegalPage";
 import { legalDocument, legalHead, legalInfo } from "@/lib/legal";
+import { useLocale } from "@/i18n";
 
 export const Route = createFileRoute("/cookies")({
   head: () => legalHead("cookies"),
@@ -8,8 +9,13 @@ export const Route = createFileRoute("/cookies")({
 });
 
 function CookiesPage() {
+  const { locale } = useLocale();
+  return <LegalPage doc={legalDocument("cookies")}>{locale === "en" ? <CookiesEn /> : <CookiesFr />}</LegalPage>;
+}
+
+function CookiesFr() {
   return (
-    <LegalPage doc={legalDocument("cookies")}>
+    <>
       <h2>1. Principe</h2>
       <p>
         {legalInfo.appName} n'utilise aucun cookie publicitaire, aucun traceur tiers et aucun outil
@@ -40,6 +46,43 @@ function CookiesPage() {
         Pour toute question :{" "}
         <a href={`mailto:${legalInfo.privacyEmail}`}>{legalInfo.privacyEmail}</a>.
       </p>
-    </LegalPage>
+    </>
+  );
+}
+
+function CookiesEn() {
+  return (
+    <>
+      <h2>1. Principle</h2>
+      <p>
+        {legalInfo.appName} does not use any advertising cookies, third-party trackers, or
+        behavioral audience measurement tools. Only trackers strictly necessary for the service to
+        function are set, which does not require a consent banner.
+      </p>
+
+      <h2>2. Trackers used</h2>
+      <ul>
+        <li>
+          <strong>Authentication session</strong>: keeps you signed in between visits. Duration:
+          until sign-out or token expiry.
+        </li>
+        <li>
+          <strong>Display preference</strong>: remembers your light or dark theme choice. Duration:
+          until your browser's local storage is cleared.
+        </li>
+      </ul>
+
+      <h2>3. Managing trackers</h2>
+      <p>
+        You can clear this data at any time via your browser settings. Deleting the session tracker
+        will sign you out of the service.
+      </p>
+
+      <h2>4. Contact</h2>
+      <p>
+        For any question:{" "}
+        <a href={`mailto:${legalInfo.privacyEmail}`}>{legalInfo.privacyEmail}</a>.
+      </p>
+    </>
   );
 }

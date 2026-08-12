@@ -3,6 +3,7 @@ import { AppShell } from "@/components/AppShell";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Quiz } from "@/components/Quiz";
 import { useCurriculum } from "@/lib/curriculum";
+import { useT } from "@/i18n";
 
 export const Route = createFileRoute("/annexes")({
   head: () => ({
@@ -33,21 +34,22 @@ export const Route = createFileRoute("/annexes")({
 });
 
 function Annexes() {
+  const t = useT();
   const { curriculum } = useCurriculum();
   const { annexes } = curriculum;
 
   return (
-    <AppShell title="Annexes">
+    <AppShell title={t("common.annexes")}>
       <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
-        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">Annexes</h1>
+        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">{t("common.annexes")}</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Les outils à réutiliser tels quels pendant vos mises en pratique et le jour de l'examen.
+          {t("common.annexesIntro")}
         </p>
 
         <Card className="mt-8">
           <CardHeader>
-            <CardTitle className="font-sans text-lg">Trame de plan d'audit</CardTitle>
-            <CardDescription>Les rubriques attendues par un auditeur IRCA.</CardDescription>
+            <CardTitle className="font-sans text-lg">{t("common.auditPlanTemplateTitle")}</CardTitle>
+            <CardDescription>{t("common.auditPlanTemplateDesc")}</CardDescription>
           </CardHeader>
           <CardContent>
             <ul className="list-disc space-y-1 pl-5 text-sm">
@@ -60,8 +62,8 @@ function Annexes() {
 
         <Card className="mt-6">
           <CardHeader>
-            <CardTitle className="font-sans text-lg">Fiche de non-conformité</CardTitle>
-            <CardDescription>Chaque champ doit être renseigné sans ambiguïté.</CardDescription>
+            <CardTitle className="font-sans text-lg">{t("common.ncTemplateTitle")}</CardTitle>
+            <CardDescription>{t("common.ncTemplateDesc")}</CardDescription>
           </CardHeader>
           <CardContent>
             <dl className="divide-y divide-border">
@@ -77,8 +79,8 @@ function Annexes() {
 
         <Card className="mt-6">
           <CardHeader>
-            <CardTitle className="font-sans text-lg">Checklist générique</CardTitle>
-            <CardDescription>Questions transverses à poser sur tout processus.</CardDescription>
+            <CardTitle className="font-sans text-lg">{t("common.genericChecklistTitle")}</CardTitle>
+            <CardDescription>{t("common.genericChecklistDesc")}</CardDescription>
           </CardHeader>
           <CardContent>
             <ul className="list-disc space-y-1 pl-5 text-sm">
@@ -90,11 +92,11 @@ function Annexes() {
         </Card>
 
         <section className="mt-10">
-          <h2 className="font-sans text-2xl font-semibold">Examen blanc final</h2>
+          <h2 className="font-sans text-2xl font-semibold">{t("common.finalMockExamTitle")}</h2>
           {annexes.finalMockExam.mcq.length > 0 ? (
             <>
               <p className="mt-1 text-sm text-muted-foreground">
-                Traitez les questions en conditions réelles avant d'afficher les réponses.
+                {t("common.finalMockExamIntro")}
               </p>
               <div className="mt-4">
                 <Quiz items={annexes.finalMockExam.mcq} />
@@ -102,8 +104,7 @@ function Annexes() {
             </>
           ) : (
             <p className="mt-1 text-sm text-muted-foreground">
-              Aucun examen blanc rédigé pour ce référentiel pour le moment : appuyez-vous sur les
-              résumés par chapitre et sur vos propres documents.
+              {t("common.noMockExam")}
             </p>
           )}
         </section>

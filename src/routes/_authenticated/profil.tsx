@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
+import { useT } from "@/i18n";
 import { ProfileEditor } from "@/components/ProfileEditor";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -22,17 +23,18 @@ export const Route = createFileRoute("/_authenticated/profil")({
 });
 
 function Profil() {
+  const t = useT();
   return (
-    <AppShell title="Profil">
+    <AppShell title={t("common.profile")}>
       <div className="mx-auto max-w-3xl px-4 py-8 md:py-10">
-        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">Mon profil</h1>
+        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">{t("common.myProfile")}</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Votre photo et votre identité, affichées dans l'application.
+          {t("common.profilePhotoIdentity")}
         </p>
         <Card className="mt-8">
           <CardHeader>
-            <CardTitle className="font-sans text-lg">Identité</CardTitle>
-            <CardDescription>Photo recadrable, prénom et nom.</CardDescription>
+            <CardTitle className="font-sans text-lg">{t("common.identity")}</CardTitle>
+            <CardDescription>{t("common.croppablePhotoNameDesc")}</CardDescription>
           </CardHeader>
           <CardContent>
             <ProfileEditor />

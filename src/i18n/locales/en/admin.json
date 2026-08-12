@@ -1,0 +1,41 @@
+{
+  "restrictedTitle": "Restricted area",
+  "restrictedDesc": "This page is reserved for the PREPA CERTIF super administrator.",
+  "title": "Administration",
+  "subtitle": "Who uses PREPA CERTIF, and where they stand in their preparation.",
+  "refresh": "Refresh",
+  "stats": {
+    "total": "Accounts",
+    "signups7": "Signups (7 d)",
+    "signups30": "Signups (30 d)",
+    "active7": "Active (7 d)",
+    "disabled": "Disabled"
+  },
+  "users": "Users",
+  "usersDesc": "Search by name or email, then disable or delete an account.",
+  "searchPlaceholder": "Search a user",
+  "loading": "Loading…",
+  "noAccountFound": "No account found.",
+  "sortBy": "Sort by {{label}}",
+  "columns": {
+    "user": "User",
+    "certification": "Certification",
+    "activity": "Activity",
+    "docs": "Docs",
+    "signupDate": "Sign-up date",
+    "lastSignIn": "Last sign-in",
+    "actions": "Actions"
+  },
+  "superAdmin": "Super admin",
+  "disabled": "Disabled",
+  "sessionsUnit": "sessions",
+  "quizUnit": "quizzes",
+  "reactivateAccount": "Reactivate account",
+  "disableAccount": "Disable account",
+  "deleteAccount": "Delete account",
+  "deleteAccountTitle": "Delete this account?",
+  "deleteAccountDesc": "{{email}} and all their preparation data will be permanently deleted. This action is irreversible.",
+  "accountReactivated": "Account reactivated.",
+  "accountDisabled": "Account disabled.",
+  "accountDeleted": "Account deleted."
+}

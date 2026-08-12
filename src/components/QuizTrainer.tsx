@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { useActiveTrack, useExamBody } from "@/lib/learning";
+import { useT } from "@/i18n";
 
 interface GeneratedQuestion {
   question: string;
@@ -48,6 +49,7 @@ export function QuizTrainer({
   chapters: string[];
   initialChapter?: string | null;
 }) {
+  const t = useT();
   const generate = useServerFn(generateQuizQuestions);
   const grade = useServerFn(gradeOpenAnswers);
   const { track } = useActiveTrack();
@@ -68,7 +70,7 @@ export function QuizTrainer({
   const [corrections, setCorrections] = useState<Record<number, Correction> | null>(null);
   const [saved, setSaved] = useState(false);
 
-  const scope = chapter === ALL ? "Programme complet" : chapter;
+  const scope = chapter === ALL ? t("quiz.trainer.fullProgram") : chapter;
 
   const qcmDone = mode === "qcm" && questions.length > 0 &&
     Object.keys(choiceAnswers).length === questions.length;
@@ -223,7 +225,7 @@ export function QuizTrainer({
         feedback: null,
       })),
     });
-    toast.success("Session enregistrée dans votre historique.");
+    toast.success(t("quiz.trainer.toastSaved"));
   }
 
   return (
@@ -232,23 +234,22 @@ export function QuizTrainer({
         <CardHeader>
           <CardTitle className="flex items-center gap-2 font-sans text-lg">
             <Wand2 className="size-5 text-cert" aria-hidden />
-            Nouvel entraînement
+            {t("quiz.trainer.newTraining")}
           </CardTitle>
           <CardDescription>
-            Questions générées à partir de {certificationName}, du chapitre choisi et de vos
-            documents indexés.
+            {t("quiz.trainer.newTrainingDesc", { certificationName })}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div className="space-y-1.5">
-              <Label>Chapitre</Label>
+              <Label>{t("quiz.trainer.chapterLabel")}</Label>
               <Select value={chapter} onValueChange={setChapter}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value={ALL}>Programme complet</SelectItem>
+                  <SelectItem value={ALL}>{t("quiz.trainer.fullProgram")}</SelectItem>
                   {chapters.map((c) => (
                     <SelectItem key={c} value={c}>
                       {c}
@@ -258,7 +259,7 @@ export function QuizTrainer({
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label>Questions</Label>
+              <Label>{t("quiz.trainer.questionsLabel")}</Label>
               <Select value={count} onValueChange={setCount}>
                 <SelectTrigger>
                   <SelectValue />
@@ -266,26 +267,26 @@ export function QuizTrainer({
                 <SelectContent>
                   {["3", "5", "8", "10"].map((n) => (
                     <SelectItem key={n} value={n}>
-                      {n} questions
+                      {t("quiz.trainer.questionsCount", { count: n })}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label>Format</Label>
+              <Label>{t("quiz.trainer.formatLabel")}</Label>
               <Select value={mode} onValueChange={(v) => setMode(v as "qcm" | "ouverte")}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="qcm">QCM</SelectItem>
-                  <SelectItem value="ouverte">Questions ouvertes</SelectItem>
+                  <SelectItem value="qcm">{t("quiz.trainer.formatQcm")}</SelectItem>
+                  <SelectItem value="ouverte">{t("quiz.trainer.formatOpen")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label>Niveau</Label>
+              <Label>{t("quiz.trainer.levelLabel")}</Label>
               <Select
                 value={difficulty}
                 onValueChange={(v) => setDifficulty(v as typeof difficulty)}
@@ -294,9 +295,9 @@ export function QuizTrainer({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="facile">Découverte</SelectItem>
-                  <SelectItem value="standard">Standard</SelectItem>
-                  <SelectItem value="examen">Examen</SelectItem>
+                  <SelectItem value="facile">{t("quiz.trainer.levelDiscovery")}</SelectItem>
+                  <SelectItem value="standard">{t("quiz.trainer.levelStandard")}</SelectItem>
+                  <SelectItem value="examen">{t("quiz.trainer.levelExam")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -308,14 +309,14 @@ export function QuizTrainer({
               ) : (
                 <Sparkles className="size-4" aria-hidden />
               )}
-              Générer l'entraînement
+              {t("quiz.trainer.generate")}
             </Button>
             {questions.length > 0 && (
               <>
                 <Badge variant="secondary">
                   {sourceCount > 0
-                    ? `${sourceCount} extrait(s) de vos documents`
-                    : "Sans document indexé"}
+                    ? t("quiz.trainer.sourceCount", { count: sourceCount })
+                    : t("quiz.trainer.noSource")}
                 </Badge>
                 <Button
                   variant="ghost"
@@ -327,7 +328,7 @@ export function QuizTrainer({
                   }}
                 >
                   <RotateCcw className="size-4" aria-hidden />
-                  Effacer
+                  {t("quiz.trainer.clear")}
                 </Button>
               </>
             )}
@@ -345,7 +346,7 @@ export function QuizTrainer({
                 <CardTitle className="font-sans text-base leading-snug">
                   {qi + 1}. {q.question}
                 </CardTitle>
-                {q.clause && <Badge variant="outline">Clause {q.clause}</Badge>}
+                {q.clause && <Badge variant="outline">{t("quiz.trainer.clauseBadge", { clause: q.clause })}</Badge>}
               </div>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -377,7 +378,7 @@ export function QuizTrainer({
                   onChange={(e) =>
                     setOpenAnswers((prev) => ({ ...prev, [qi]: e.target.value }))
                   }
-                  placeholder="Rédigez votre réponse d'auditeur…"
+                  placeholder={t("quiz.trainer.openAnswerPlaceholder")}
                   rows={4}
                 />
               )}
@@ -395,7 +396,7 @@ export function QuizTrainer({
                   <p>{corrections[qi].feedback}</p>
                   {q.expected && (
                     <p className="text-muted-foreground">
-                      <span className="font-medium">Réponse attendue :</span> {q.expected}
+                      <span className="font-medium">{t("quiz.trainer.expectedAnswer")}</span> {q.expected}
                     </p>
                   )}
                 </div>
@@ -405,7 +406,7 @@ export function QuizTrainer({
                 <p className="rounded-md border-l-2 border-cert bg-secondary/40 p-3 text-sm leading-relaxed">
                   {q.explanation}
                   {q.clause && (
-                    <span className="text-muted-foreground"> (voir clause {q.clause})</span>
+                    <span className="text-muted-foreground">{t("quiz.trainer.seeClause", { clause: q.clause })}</span>
                   )}
                 </p>
               )}
@@ -424,7 +425,7 @@ export function QuizTrainer({
                 ) : (
                   <Sparkles className="size-4" aria-hidden />
                 )}
-                Corriger mes réponses
+                {t("quiz.trainer.correctAnswers")}
               </Button>
             ) : (
               <>
@@ -432,14 +433,14 @@ export function QuizTrainer({
                   <span className="font-sans text-2xl font-semibold sm:text-3xl">{finalScore}%</span>
                   <span className="text-sm text-muted-foreground">
                     {mode === "qcm"
-                      ? `${correctCount} bonne(s) réponse(s) sur ${questions.length}`
-                      : "score moyen de vos réponses"}
+                      ? t("quiz.trainer.correctQcmCount", { count: correctCount, total: questions.length })
+                      : t("quiz.trainer.averageScore")}
                   </span>
                 </div>
                 <Progress value={finalScore} />
                 {mode === "qcm" && (
                   <Button onClick={finishQcm} disabled={!qcmDone || saved}>
-                    {saved ? "Session enregistrée" : "Terminer et enregistrer"}
+                    {saved ? t("quiz.trainer.sessionSaved") : t("quiz.trainer.finishAndSave")}
                   </Button>
                 )}
               </>

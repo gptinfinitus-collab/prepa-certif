@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LegalPage } from "@/components/LegalPage";
 import { legalDocument, legalHead, legalInfo } from "@/lib/legal";
+import { useLocale } from "@/i18n";
 
 export const Route = createFileRoute("/cgu")({
   head: () => legalHead("cgu"),
@@ -8,8 +9,13 @@ export const Route = createFileRoute("/cgu")({
 });
 
 function CguPage() {
+  const { locale } = useLocale();
+  return <LegalPage doc={legalDocument("cgu")}>{locale === "en" ? <CguEn /> : <CguFr />}</LegalPage>;
+}
+
+function CguFr() {
   return (
-    <LegalPage doc={legalDocument("cgu")}>
+    <>
       <h2>1. Objet</h2>
       <p>
         Les présentes conditions générales d'utilisation (CGU) encadrent l'accès et l'utilisation du
@@ -90,6 +96,86 @@ function CguPage() {
         Les présentes CGU sont soumises au droit français. À défaut de résolution amiable, les
         tribunaux compétents seront ceux du ressort du siège de l'éditeur.
       </p>
-    </LegalPage>
+    </>
+  );
+}
+
+function CguEn() {
+  return (
+    <>
+      <h2>1. Purpose</h2>
+      <p>
+        These Terms of Use govern access to and use of the {legalInfo.appName} service, an
+        application that helps users prepare for auditor certifications and qualifications related
+        to ISO standards (9001, 14001, 27001, 45001, 22000, etc.).
+      </p>
+      <p>
+        {legalInfo.appName} is an independent educational tool. It is not affiliated with,
+        approved by, or sponsored by ISO, IRCA/CQI, or any certification body.
+      </p>
+
+      <h2>2. User account</h2>
+      <p>
+        Access to the features requires creating an account via email and password or via an
+        identity provider (Google, Apple). The user undertakes to provide accurate information, to
+        protect their credentials, and to report any unauthorized use of their account.
+      </p>
+
+      <h2>3. Authorized use</h2>
+      <ul>
+        <li>Strictly personal use, for preparation and training purposes.</li>
+        <li>Prohibition on reselling, redistributing, or making public any content generated or hosted by the service.</li>
+        <li>Prohibition on attempting unauthorized access, reverse engineering, or deliberately overloading the infrastructure.</li>
+      </ul>
+
+      <h2>4. Content submitted by the user</h2>
+      <p>
+        The user may upload course and reference documents to feed the AI assistant. They warrant
+        that they hold the necessary rights over these documents and remain solely responsible for
+        their lawfulness. These documents remain their property and are used solely to provide them
+        with personalized answers.
+      </p>
+
+      <h2>5. Intellectual property</h2>
+      <p>
+        ISO normative texts remain the property of ISO and its member bodies. Consulting them
+        within the service assumes that the user holds a lawful copy. Elements specific to{" "}
+        {legalInfo.appName} (interface, educational content, code) are protected and may not be
+        reproduced without authorization.
+      </p>
+
+      <h2>6. AI assistant</h2>
+      <p>
+        The assistant's answers are generated automatically and may contain errors or
+        approximations. They do not replace reading the official standards, a certifying training
+        course, or professional advice.
+      </p>
+
+      <h2>7. Limitation of liability</h2>
+      <p>
+        {legalInfo.appName} is provided "as is", with no guarantee of results, in particular
+        regarding success in an exam or certification. The publisher's liability cannot be engaged
+        for indirect damages linked to the use of the service.
+      </p>
+
+      <h2>8. Suspension and termination</h2>
+      <p>
+        The user may delete their account at any time from the settings or by writing to{" "}
+        <a href={`mailto:${legalInfo.contactEmail}`}>{legalInfo.contactEmail}</a>. The publisher may
+        suspend an account in the event of a serious breach of these Terms of Use.
+      </p>
+
+      <h2>9. Changes to these Terms</h2>
+      <p>
+        These Terms of Use may evolve. The applicable version is the one published on this page at
+        the time the service is used.
+      </p>
+
+      <h2>10. Governing law</h2>
+      <p>
+        These Terms of Use are governed by French law. Failing an amicable resolution, the
+        competent courts shall be those of the jurisdiction of the publisher's registered office.
+      </p>
+    </>
   );
 }

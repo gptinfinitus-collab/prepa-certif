@@ -1,0 +1,141 @@
+{
+  "pageTitle": "Entraînement et niveau",
+  "pageIntro": "Quiz générés par l'IA sur {{certificationName}}, corrigés avec renvoi aux clauses, et suivi de votre progression par chapitre.",
+  "tabs": {
+    "training": "Entraînement",
+    "history": "Historique",
+    "analysis": "Mon niveau",
+    "cards": "Fiches"
+  },
+  "examTopicLabel": "Examen blanc",
+  "cards": {
+    "noneTitle": "Aucune fiche disponible",
+    "noneDesc": "Le cursus de cette certification ne contient pas encore de questions rédigées. Utilisez l'entraînement généré par l'IA à partir de vos documents.",
+    "counter": "Fiche {{current}} sur {{total}}",
+    "showAnswer": "Afficher la réponse",
+    "know": "Je maîtrise",
+    "review": "À revoir",
+    "restart": "Recommencer",
+    "summary": "{{known}} maîtrisée(s) sur {{answered}} fiche(s) traitée(s)."
+  },
+  "showAnswer": "Afficher la réponse",
+  "trainer": {
+    "newTraining": "Nouvel entraînement",
+    "newTrainingDesc": "Questions générées à partir de {{certificationName}}, du chapitre choisi et de vos documents indexés.",
+    "chapterLabel": "Chapitre",
+    "fullProgram": "Programme complet",
+    "questionsLabel": "Questions",
+    "questionsCount": "{{count}} questions",
+    "formatLabel": "Format",
+    "formatQcm": "QCM",
+    "formatOpen": "Questions ouvertes",
+    "levelLabel": "Niveau",
+    "levelDiscovery": "Découverte",
+    "levelStandard": "Standard",
+    "levelExam": "Examen",
+    "generate": "Générer l'entraînement",
+    "sourceCount": "{{count}} extrait(s) de vos documents",
+    "noSource": "Sans document indexé",
+    "clear": "Effacer",
+    "clauseBadge": "Clause {{clause}}",
+    "openAnswerPlaceholder": "Rédigez votre réponse d'auditeur…",
+    "expectedAnswer": "Réponse attendue :",
+    "seeClause": " (voir clause {{clause}})",
+    "correctAnswers": "Corriger mes réponses",
+    "correctQcmCount": "{{count}} bonne(s) réponse(s) sur {{total}}",
+    "averageScore": "score moyen de vos réponses",
+    "sessionSaved": "Session enregistrée",
+    "finishAndSave": "Terminer et enregistrer",
+    "toastSaved": "Session enregistrée dans votre historique."
+  },
+  "history": {
+    "loading": "Chargement de votre historique…",
+    "noneTitle": "Aucune session enregistrée",
+    "noneDesc": "Lancez un entraînement depuis l'onglet « Entraînement » : chaque série corrigée est archivée ici avec le détail des réponses.",
+    "summaryTitle": "Synthèse de vos entraînements",
+    "summaryDesc": "{{count}} session(s) enregistrée(s) · moyenne {{average}} / 100{{trend}}",
+    "summaryTrend": " · {{sign}}{{trend}} pts sur la période récente",
+    "retrain": "Réentraîner mes erreurs · {{topic}}",
+    "noWeakness": "Aucune erreur en attente de révision : lancez une série plus exigeante.",
+    "filterChapterLabel": "Filtrer par chapitre",
+    "allChapters": "Tous les chapitres",
+    "filterResultLabel": "Filtrer par résultat",
+    "allResults": "Tous les résultats",
+    "successfulSessions": "Sessions réussies",
+    "toReviewSessions": "Sessions à revoir",
+    "noSessionsMatch": "Aucune session ne correspond à ces filtres.",
+    "correctCount": "{{correct}} bonne(s) réponse(s) sur {{total}}",
+    "sourceCount": " · {{count}} extrait(s) de vos documents",
+    "noAnswersMatch": "Aucune réponse ne correspond au filtre sélectionné.",
+    "clauseBadge": "Clause {{clause}}",
+    "yourAnswer": "Votre réponse : ",
+    "expectedAnswer": "Réponse attendue : ",
+    "aiFeedback": "Retour de l'IA : ",
+    "retained": "Les 50 dernières sessions de cette certification sont conservées."
+  },
+  "analysis": {
+    "title": "Niveau de préparation — {{certificationName}}",
+    "description": "Calculé sur vos {{count}} dernière(s) session(s) d'entraînement.",
+    "averageSuccess": "de réussite moyenne",
+    "byChapterTitle": "Score par chapitre",
+    "questionsCount": "{{average}}% · {{count}} question(s)",
+    "analyzeButton": "Analyser mes points faibles",
+    "aiAnalysisTitle": "Analyse IA",
+    "estimatedLevel": "Niveau estimé : {{level}}",
+    "strengths": "Points forts",
+    "weaknesses": "À travailler",
+    "recommendations": "Recommandations",
+    "sessionHistoryTitle": "Historique des sessions",
+    "sessionHistoryDesc": "Vos entraînements enregistrés pour ce cursus.",
+    "noSessions": "Aucune session pour le moment : lancez un entraînement pour démarrer le suivi."
+  },
+  "examBodyPicker": {
+    "saved": "Profil d'examen enregistré.",
+    "saveError": "Enregistrement impossible.",
+    "reset": "Réinitialiser mon profil d'examen"
+  },
+  "trackSwitcher": {
+    "ariaLabel": "Niveau de parcours",
+    "examBodyRequired": "Organisme requis",
+    "dialogTitle": "Choisissez votre organisme d'examen",
+    "dialogDesc": "Le format de l'examen Lead Auditor varie selon l'organisme. Ce choix ouvre le niveau et adapte vos entraînements.",
+    "examProfile": "Profil d'examen : {{name}}. "
+  },
+  "tracks": {
+    "general": {
+      "name": "Maîtrise de la norme",
+      "short": "Maîtrise",
+      "description": "Comprendre les exigences, leur raison d'être et leur application dans une organisation."
+    },
+    "internal_auditor": {
+      "name": "Auditeur interne",
+      "short": "Auditeur interne",
+      "description": "Préparer, conduire et restituer un audit interne : preuves, constats, rapport."
+    },
+    "lead_auditor": {
+      "name": "Lead Auditor",
+      "short": "Lead Auditor",
+      "description": "Piloter une équipe d'audit et conduire un audit de certification : plan d'audit, réunions, non-conformités, rapport.",
+      "note": "Le format de l'examen Lead Auditor dépend de l'organisme (PECB, CQI/IRCA, autres). Choisissez votre organisme d'examen pour adapter vos entraînements."
+    }
+  },
+  "mockExamDisclaimer": "Entraînement PREPA CERTIF. Ce test ne reproduit pas l'examen d'un organisme précis : le format, la durée et les règles varient selon l'organisme (PECB, CQI/IRCA, autres).",
+  "examBodies": {
+    "pecb": {
+      "name": "PECB Lead Auditor",
+      "short": "PECB",
+      "description": "Examen en domaines de compétences, questions à scénario courtes et essais argumentés, livre ouvert."
+    },
+    "irca": {
+      "name": "CQI / IRCA Lead Auditor",
+      "short": "CQI/IRCA",
+      "description": "Examen écrit de fin de formation : mises en situation longues, rédaction de non-conformités et de constats."
+    },
+    "other": {
+      "name": "Autre organisme / non défini",
+      "short": "Autre",
+      "description": "Préparation générique Lead Auditor : compétences d'audit attendues par la majorité des organismes."
+    }
+  },
+  "examBodyDisclaimer": "PREPA CERTIF est un outil de préparation indépendant. Il n'est affilié à aucun organisme de certification et ne remplace pas une formation accréditée : seuls les organismes délivrent les examens et les certificats."
+}

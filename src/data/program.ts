@@ -1,4 +1,6 @@
 import raw from "./program.json";
+import rawEn from "./program.en.json";
+import type { Locale } from "@/i18n/config";
 
 export type ModuleType = "lesson" | "review" | "practical" | "mockExam" | "rest" | "wrapup";
 
@@ -114,10 +116,38 @@ export const program: Program = {
   annexes: data.annexes,
 };
 
+const dataEn = rawEn as unknown as typeof data;
+
+export const programEn: Program = {
+  meta: dataEn.meta,
+  weeks: dataEn.weeks,
+  modules: dataEn.days,
+  glossary: dataEn.glossary,
+  annexes: dataEn.annexes,
+};
+
+/** Programme ISO 45001 dans la langue demandée. */
+export function getProgram(locale: Locale = "fr"): Program {
+  return locale === "en" ? programEn : program;
+}
+
 export const modules = program.modules;
 
-export function getModule(id: number): ProgramModule | undefined {
-  return modules.find((m) => m.id === id);
+export function getModule(id: number, locale: Locale = "fr"): ProgramModule | undefined {
+  return getProgram(locale).modules.find((m) => m.id === id);
+}
+
+const typeLabelsEn: Record<ModuleType, string> = {
+  lesson: "Lesson",
+  review: "Review",
+  practical: "Practice",
+  mockExam: "Mock exam",
+  rest: "Rest",
+  wrapup: "Wrap-up",
+};
+
+export function getTypeLabels(locale: Locale = "fr"): Record<ModuleType, string> {
+  return locale === "en" ? typeLabelsEn : typeLabels;
 }
 
 export const typeLabels: Record<ModuleType, string> = {

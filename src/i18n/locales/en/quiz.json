@@ -1,0 +1,141 @@
+{
+  "pageTitle": "Practice and readiness level",
+  "pageIntro": "AI-generated quizzes on {{certificationName}}, corrected with clause references, and progress tracking chapter by chapter.",
+  "tabs": {
+    "training": "Training",
+    "history": "History",
+    "analysis": "My level",
+    "cards": "Flashcards"
+  },
+  "examTopicLabel": "Mock exam",
+  "cards": {
+    "noneTitle": "No flashcards available",
+    "noneDesc": "This certification's curriculum doesn't yet contain written questions. Use the AI-generated training built from your documents.",
+    "counter": "Card {{current}} of {{total}}",
+    "showAnswer": "Show answer",
+    "know": "I know this",
+    "review": "To review",
+    "restart": "Restart",
+    "summary": "{{known}} mastered out of {{answered}} card(s) processed."
+  },
+  "showAnswer": "Show answer",
+  "trainer": {
+    "newTraining": "New training",
+    "newTrainingDesc": "Questions generated from {{certificationName}}, the selected chapter and your indexed documents.",
+    "chapterLabel": "Chapter",
+    "fullProgram": "Full program",
+    "questionsLabel": "Questions",
+    "questionsCount": "{{count}} questions",
+    "formatLabel": "Format",
+    "formatQcm": "MCQ",
+    "formatOpen": "Open questions",
+    "levelLabel": "Level",
+    "levelDiscovery": "Discovery",
+    "levelStandard": "Standard",
+    "levelExam": "Exam",
+    "generate": "Generate training",
+    "sourceCount": "{{count}} excerpt(s) from your documents",
+    "noSource": "No indexed document",
+    "clear": "Clear",
+    "clauseBadge": "Clause {{clause}}",
+    "openAnswerPlaceholder": "Write your auditor's answer…",
+    "expectedAnswer": "Expected answer:",
+    "seeClause": " (see clause {{clause}})",
+    "correctAnswers": "Correct my answers",
+    "correctQcmCount": "{{count}} correct answer(s) out of {{total}}",
+    "averageScore": "average score of your answers",
+    "sessionSaved": "Session saved",
+    "finishAndSave": "Finish and save",
+    "toastSaved": "Session saved to your history."
+  },
+  "history": {
+    "loading": "Loading your history…",
+    "noneTitle": "No session recorded",
+    "noneDesc": "Start a training session from the \"Training\" tab: every corrected series is archived here with the full answer detail.",
+    "summaryTitle": "Summary of your training",
+    "summaryDesc": "{{count}} session(s) recorded · average {{average}} / 100{{trend}}",
+    "summaryTrend": " · {{sign}}{{trend}} pts over the recent period",
+    "retrain": "Retrain on my mistakes · {{topic}}",
+    "noWeakness": "No mistakes pending review: start a more demanding series.",
+    "filterChapterLabel": "Filter by chapter",
+    "allChapters": "All chapters",
+    "filterResultLabel": "Filter by result",
+    "allResults": "All results",
+    "successfulSessions": "Successful sessions",
+    "toReviewSessions": "Sessions to review",
+    "noSessionsMatch": "No session matches these filters.",
+    "correctCount": "{{correct}} correct answer(s) out of {{total}}",
+    "sourceCount": " · {{count}} excerpt(s) from your documents",
+    "noAnswersMatch": "No answer matches the selected filter.",
+    "clauseBadge": "Clause {{clause}}",
+    "yourAnswer": "Your answer: ",
+    "expectedAnswer": "Expected answer: ",
+    "aiFeedback": "AI feedback: ",
+    "retained": "The last 50 sessions for this certification are kept."
+  },
+  "analysis": {
+    "title": "Readiness level — {{certificationName}}",
+    "description": "Calculated from your last {{count}} training session(s).",
+    "averageSuccess": "average success rate",
+    "byChapterTitle": "Score by chapter",
+    "questionsCount": "{{average}}% · {{count}} question(s)",
+    "analyzeButton": "Analyze my weak points",
+    "aiAnalysisTitle": "AI analysis",
+    "estimatedLevel": "Estimated level: {{level}}",
+    "strengths": "Strengths",
+    "weaknesses": "To work on",
+    "recommendations": "Recommendations",
+    "sessionHistoryTitle": "Session history",
+    "sessionHistoryDesc": "Your recorded training sessions for this program.",
+    "noSessions": "No session yet: start a training session to begin tracking."
+  },
+  "examBodyPicker": {
+    "saved": "Exam profile saved.",
+    "saveError": "Could not save.",
+    "reset": "Reset my exam profile"
+  },
+  "trackSwitcher": {
+    "ariaLabel": "Track level",
+    "examBodyRequired": "Exam body required",
+    "dialogTitle": "Choose your exam body",
+    "dialogDesc": "The format of the Lead Auditor exam varies by body. This choice unlocks the level and adapts your training.",
+    "examProfile": "Exam profile: {{name}}. "
+  },
+  "tracks": {
+    "general": {
+      "name": "Standard mastery",
+      "short": "Mastery",
+      "description": "Understand the requirements, their rationale and their application within an organization."
+    },
+    "internal_auditor": {
+      "name": "Internal auditor",
+      "short": "Internal auditor",
+      "description": "Prepare, conduct and report on an internal audit: evidence, findings, report."
+    },
+    "lead_auditor": {
+      "name": "Lead auditor",
+      "short": "Lead auditor",
+      "description": "Lead an audit team and conduct a certification audit: audit plan, meetings, nonconformities, report.",
+      "note": "The format of the Lead Auditor exam depends on the body (PECB, CQI/IRCA, others). Choose your exam body to adapt your training."
+    }
+  },
+  "mockExamDisclaimer": "PREPA CERTIF training. This test does not reproduce the exam of any specific body: format, duration and rules vary by body (PECB, CQI/IRCA, others).",
+  "examBodies": {
+    "pecb": {
+      "name": "PECB Lead Auditor",
+      "short": "PECB",
+      "description": "Exam organized by competence domains, short scenario questions and argued essays, open-book."
+    },
+    "irca": {
+      "name": "CQI / IRCA Lead Auditor",
+      "short": "CQI/IRCA",
+      "description": "Written end-of-course exam: long scenarios, writing nonconformities and findings."
+    },
+    "other": {
+      "name": "Other body / not defined",
+      "short": "Other",
+      "description": "Generic Lead Auditor preparation: audit skills expected by most bodies."
+    }
+  },
+  "examBodyDisclaimer": "PREPA CERTIF is an independent preparation tool. It is not affiliated with any certification body and does not replace accredited training: only certification bodies issue exams and certificates."
+}

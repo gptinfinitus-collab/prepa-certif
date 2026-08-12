@@ -1,0 +1,1064 @@
+{
+ "meta": {
+  "title": "ISO 45001:2018 Preparation — Auditing the OH&S Management System",
+  "subtitle": "Certification preparation app, adaptable to other standards",
+  "howToUse": "Each day includes an objective, a detailed lesson, a key takeaway, then a quiz with an answer key. Take the quiz before reading the answer key.",
+  "copyrightNote": "This content explains concepts from ISO 45001:2018 (and its Amendment 1:2024), ISO 19011:2026 and ISO/IEC 17021-1 using original wording and examples; it does not reproduce the official text of the standards, which remains protected by copyright. Users are encouraged to obtain the full text from ISO or their national standards body.",
+  "version": "1.0"
+ },
+ "weeks": [
+  {
+   "id": 1,
+   "title": "Understanding the OH&S management system",
+   "dayIds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "id": 2,
+   "title": "Detailed requirements + audit fundamentals",
+   "dayIds": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "id": 3,
+   "title": "Audit techniques and role-play practice",
+   "dayIds": [
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21
+   ]
+  }
+ ],
+ "days": [
+  {
+   "id": 1,
+   "week": 1,
+   "type": "lesson",
+   "dayLabel": "Session 1",
+   "title": "Introduction to OH&S management",
+   "objective": "Understand why an OH&S management standard exists and how it is built.",
+   "contentMarkdown": "### Why a management system rather than mere technical rules?\n\nWorkplace safety is traditionally handled through technical rules: wearing a helmet, fire extinguishers, guardrails, gloves, and so on. This is necessary, but not sufficient — an organization can comply with every technical rule and still have injuries, if no one steers the approach over time, if the rules are never updated, or if workers are not genuinely involved. ISO 45001 proposes something different: a **management system**, that is, an organized way of steering OH&S the way an organization steers quality or finance — with a policy, objectives, allocated resources, measurement of results, and a continual improvement loop.\n\nIn other words: the standard does not say *which* technical rules to apply; it says *how to organize* the organization so that it identifies the right rules itself, applies them, checks that they work, and improves them over time.\n\n### A bit of history\n\nBefore ISO 45001, the international reference was **OHSAS 18001**, a British standard (BSI) that was widely adopted but was not an official ISO standard. In **March 2018**, ISO published ISO 45001:2018, bringing major changes:\n\n- A **harmonized structure** shared by all ISO management system standards\n- A stronger emphasis on top management **leadership**\n- An explicit requirement for **consultation and participation of workers**\n- Consideration of **both risks and opportunities**\n- A broader view of the organization's context\n\nOrganizations certified to OHSAS 18001 had until March 2021 to migrate to ISO 45001.\n\n### The harmonized structure (HLS)\n\n1. Scope\n2. Normative references\n3. Terms and definitions\n4. Context of the organization\n5. Leadership and worker participation\n6. Planning\n7. Support\n8. Operation\n9. Performance evaluation\n10. Improvement\n\nClauses 1 to 3 are introductory. The core of the system lies in clauses **4 to 10**.\n\n### The PDCA cycle applied to OH&S\n\n| Stage | Meaning in OH&S | Clauses |\n|---|---|---|\n| Plan | Context, hazards, objectives | 4, 5, 6 |\n| Do | Resources, training, operational control | 7, 8 |\n| Check | Measurement, audit, review | 9 |\n| Act | Correct, improve | 10 |",
+   "keyTakeaway": "PDCA is not just a theoretical diagram — it is how the standard is organized. For every clause you read, ask yourself: Plan, Do, Check, or Act?",
+   "quiz": [
+    {
+     "question": "Which British standard preceded ISO 45001, and in what year was ISO 45001 published?",
+     "answer": "OHSAS 18001; ISO 45001 was published in March 2018."
+    },
+    {
+     "question": "Name 3 major changes brought by ISO 45001 compared to OHSAS 18001.",
+     "answer": "For example: stronger top management leadership, mandatory consultation/participation of workers, consideration of both risks AND opportunities."
+    },
+    {
+     "question": "In which clause(s) of the harmonized structure does the Check stage of PDCA sit?",
+     "answer": "Clause 9 (Performance evaluation)."
+    },
+    {
+     "question": "Why is the harmonized structure an advantage for someone who wants to later get certified against several ISO standards?",
+     "answer": "Because the 10-clause structure is identical from one standard to another — only the specific content changes, which allows for a shorter conversion course."
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "week": 1,
+   "type": "lesson",
+   "dayLabel": "Session 2",
+   "title": "Key vocabulary",
+   "objective": "Master the vocabulary that recurs throughout every clause.",
+   "contentMarkdown": "### Today's glossary\n\n- **Hazard** (3.19): source with a potential to cause **injury and ill health**. The word \"injury\" on its own, inherited from OHSAS 18001, is no longer normative wording.\n- **Risk** (3.20): effect of uncertainty — a harmonized definition common to all management system standards.\n- **OH&S risk** (3.21): combination of the likelihood of occurrence of work-related hazardous event(s) or exposure(s) and the severity of injury and ill health that can be caused by them. It is this definition, not the plain \"risk\" definition, that is expected in OH&S.\n- **OH&S opportunity**: circumstance that could improve OH&S performance.\n- **Management system**: organized set of policies, processes and resources aimed at achieving objectives.\n- **Interested party**: any person/organization that can affect or be affected by an OH&S decision.\n- **Legal requirement and other requirement**: applicable laws/regulations, but also voluntary commitments.\n- **Incident** (3.35, formerly also called an \"incident\"): work-related occurrence that has given rise to, or could give rise to, injury and ill health; the term \"near-miss\" is used when no such consequence has actually occurred.\n- **Nonconformity**: non-fulfilment of a requirement.\n- **Corrective action**: action to eliminate the cause of a nonconformity.\n- **Correction**: immediate action to eliminate a detected nonconformity, without addressing its cause.\n- **OH&S performance**: measurable results related to the control of OH&S risks.\n- **Worker**: person performing work under the organization's control.\n- **Consultation** (3.5): seeking views **before** making a decision.\n- **Participation** (3.4): involvement **in** decision-making.\n- **Continual improvement**: recurring activity to enhance performance.\n\n### Comparing \"correction\" and \"corrective action\" — the classic exam trap\n\n*A staff member is pricked by a used needle that was improperly placed in the sharps container.*\n- **Correction**: place the needle in the correct container, take care of the injured staff member (addresses the immediate symptom).\n- **Corrective action**: analyze why the needle was not placed correctly (not enough containers? insufficient training? workload?) and address the root cause on a lasting basis.",
+   "keyTakeaway": "If the question is about the immediate action taken after discovering the problem → correction. If it is about preventing recurrence → corrective action.",
+   "quiz": [
+    {
+     "question": "What is the difference between a correction and a corrective action? Give an example.",
+     "answer": "A correction addresses the immediate symptom; a corrective action addresses its cause to prevent recurrence (e.g. needle-stick injury)."
+    },
+    {
+     "question": "What is the difference between consultation and participation of workers?",
+     "answer": "Consultation (3.5) = seeking views before a decision is made; participation (3.4) = involvement in the decision-making itself.",
+     "standardRef": "ISO 45001",
+     "standardEdition": "2018 + Amd 1:2024",
+     "clauseRef": "3.4 / 3.5",
+     "referenceType": "REQUIREMENT",
+     "verifiedAt": "2026-08-09",
+     "reviewStatus": "VERIFIED"
+    },
+    {
+     "question": "Is a supplier of sterile linen for the clinic an interested party? Justify your answer.",
+     "answer": "Yes — it can affect or be affected by the clinic's OH&S decisions."
+    },
+    {
+     "question": "Give an example of a near-miss in a medical laboratory context.",
+     "answer": "A sample tube falls and breaks without exposing anyone, or a reagent is nearly mixed with an incompatible product but the error is caught in time."
+    },
+    {
+     "question": "True or false: an OH&S opportunity only concerns reducing risk.",
+     "answer": "False — it can concern a broader improvement of the management system."
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "week": 1,
+   "type": "lesson",
+   "dayLabel": "Session 3",
+   "title": "Clause 4: Context of the organization",
+   "objective": "Understand how an organization determines where it stands before building its OH&S management system.",
+   "contentMarkdown": "### The three questions of clause 4\n\n**1. What are my internal and external issues?**\n- External: regulations, economic context, culture, social climate, customer requirements.\n- Internal: structure, internal culture, competence, resources, governance.\n\n**2. Who are my interested parties, and what do they expect from me regarding OH&S?**\n\n| Interested party | Example OH&S expectation |\n|---|---|\n| Workers | Safe working environment, suitable equipment |\n| Health authorities | Regulatory compliance, waste management |\n| Patients (indirectly) | Trained staff, fewer fatigue-related errors |\n| Insurers | Risk control, reduced claims |\n| Trade unions | Social dialogue on working conditions |\n\n**3. What is the scope of my OH&S management system?**\n\nThe organization must precisely define which activities, sites and workers are covered. This scope must be documented and **consistent with what is actually observed**.",
+   "keyTakeaway": "Classic audit trap: a scope that in practice excludes temporary staff or a secondary site is a frequent nonconformity.",
+   "quiz": [
+    {
+     "question": "Name one external issue and one internal issue relevant to a healthcare facility.",
+     "answer": "External: regulatory change. Internal: staff turnover (any coherent answer is accepted)."
+    },
+    {
+     "question": "What is the difference between a need and an expectation of an interested party?",
+     "answer": "A need is objective, while an expectation is what is expressed or desired — the two do not always coincide."
+    },
+    {
+     "question": "Why must the scope be documented?",
+     "answer": "So that everyone knows exactly what is or is not covered, avoiding grey areas."
+    },
+    {
+     "question": "A remote site has never been included in hazard identification even though the scope covers all sites. What can the auditor conclude?",
+     "answer": "A nonconformity: the declared scope is not consistent with actual implementation."
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "week": 1,
+   "type": "lesson",
+   "dayLabel": "Session 4",
+   "title": "Clause 5: Leadership and worker participation",
+   "objective": "Understand the role of top management and the central place given to workers.",
+   "contentMarkdown": "### The role of top management\n\nVisible, active commitment: allocating resources, integrating OH&S into strategy, being accountable for the system, promoting a positive OH&S culture, and **protecting workers from reprisals** when they report an incident or a hazard.\n\n### The OH&S policy: five commitments, not three\n\n5.2 requires the OH&S policy to include **five** commitments. This is a classic exam trap: many candidates name only three.\n\n1. **Providing safe and healthy working conditions** — the commitment is aimed at *preventing work-related injury and ill health*, not merely at avoiding reported accidents.\n2. **Fulfilling legal requirements and other requirements** — having a list of texts is not enough: the organization commits to understanding what genuinely applies to it and taking it into account.\n3. **Eliminating hazards and reducing OH&S risks** — this commitment must be read alongside the *hierarchy of controls*: risk is only \"reduced\" after elimination has been considered.\n4. **Continually improving the OH&S management system** — continual improvement concerns the system itself (process maturity, data quality, effectiveness of actions), not merely a drop in the number of accidents.\n5. **Consulting and participating with workers** — two distinct notions: consulting means seeking views *before* a decision; participating means involving workers *in* the decision (for example, co-building a job risk assessment).\n\n### Roles, responsibilities and authorities\n\nEvery person must know precisely what is expected of them — tested during an audit through on-site interviews.\n\n### Consultation and participation of workers — the standard's most distinctive point\n\nWorkers must be genuinely **consulted** and **involved**: hazard identification, incident investigations, setting objectives. A system built purely \"top-down\" is an almost systematic nonconformity finding in audits.",
+   "keyTakeaway": "Never ask about worker participation only to management — the most reliable answer comes from frontline workers.",
+   "quiz": [
+    {
+     "question": "Name the five commitments an OH&S policy must contain.",
+     "answer": "1) Providing safe and healthy working conditions to prevent work-related injury and ill health; 2) fulfilling legal requirements and other requirements; 3) eliminating hazards and reducing OH&S risks; 4) continually improving the OH&S management system; 5) consulting and participating with workers.",
+     "standardRef": "ISO 45001",
+     "standardEdition": "2018 + Amd 1:2024",
+     "clauseRef": "5.2",
+     "referenceType": "REQUIREMENT",
+     "verifiedAt": "2026-08-09",
+     "reviewStatus": "VERIFIED"
+    },
+    {
+     "question": "Why is protection against reprisals important for the reliability of the system?",
+     "answer": "Without it, workers stop reporting real incidents or hazards, which distorts the system's data."
+    },
+    {
+     "question": "What is the practical difference between consulting and involving workers, with an example?",
+     "answer": "Consulting = asking for an opinion (survey); involving = engaging directly (co-building a procedure)."
+    },
+    {
+     "question": "Who should be asked first about involvement in hazard identification?",
+     "answer": "The frontline worker directly concerned, not only their supervisor."
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "week": 1,
+   "type": "lesson",
+   "dayLabel": "Session 5",
+   "title": "Clause 6: Planning",
+   "objective": "Understand how an organization identifies its risks and sets its objectives.",
+   "contentMarkdown": "### Hazard identification\n\nCovers: routine and non-routine activities, emergency situations, human behavior, changes, hazards caused by third parties.\n\n### Assessing risks AND opportunities — a worked example\n\n| | Low severity | Medium severity | High severity |\n|---|---|---|---|\n| Low likelihood | Low risk | Low risk | Medium risk |\n| Medium likelihood | Low risk | Medium risk | High risk |\n| High likelihood | Medium risk | High risk | High risk |\n\n*Example*: a needle-stick injury has medium likelihood and high severity → high risk, immediate treatment priority.\n\nOpportunities can also concern overall system improvement, not only risk reduction.\n\n### Legal requirements and other requirements (6.1.3) — not to be confused with compliance evaluation (9.1.2)\n\n**What 6.1.3 requires:**\n\n- determining applicable legal requirements and other requirements;\n- having access to them;\n- determining **how** they apply to the organization and what needs to be communicated;\n- taking them into account when establishing, implementing and maintaining the OH&S management system;\n- keeping the related documented information up to date.\n\n**What 9.1.2 requires — a separate requirement, from clause 9:**\n\n- establishing a process for evaluating compliance;\n- determining its frequency and methods;\n- actually evaluating compliance status and acting when needed;\n- maintaining knowledge and understanding of that status.\n\n> **Exam point.** A well-maintained regulatory watch does not by itself demonstrate the organization's compliance: identifying a text (clause 6) and evaluating whether it is being met (clause 9) are two separate requirements.\n\n### OH&S objectives and action planning\n\nConsistent with the policy, measurable, communicated, with a clear action plan (who, what, resources, timeline).",
+   "keyTakeaway": "A good OH&S objective follows SMART logic. \"Improve safety\" cannot be used in an audit; \"reduce accidents by 30% by December 2026\" can.",
+   "quiz": [
+    {
+     "question": "Place this in the matrix: a minor cleaning-product spill in a low-traffic room.",
+     "answer": "Low likelihood × low severity = low risk."
+    },
+    {
+     "question": "Give an example of an OH&S opportunity distinct from simple risk reduction.",
+     "answer": "Redesigning a workstation to reduce fatigue while also improving productivity."
+    },
+    {
+     "question": "Does 6.1.3 require evaluating the organization's compliance with the identified texts?",
+     "answer": "No. 6.1.3 requires determining applicable requirements, having access to them, determining how they apply, taking them into account in the system, and keeping the information up to date. Compliance evaluation is a separate requirement under 9.1.2.",
+     "standardRef": "ISO 45001",
+     "standardEdition": "2018 + Amd 1:2024",
+     "clauseRef": "6.1.3 / 9.1.2",
+     "referenceType": "REQUIREMENT",
+     "verifiedAt": "2026-08-09",
+     "reviewStatus": "VERIFIED"
+    },
+    {
+     "question": "Rephrase \"Improve staff training\" as a SMART objective.",
+     "answer": "For example: train 100% of care staff in emergency procedures by December 31, 2026, with a knowledge check."
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "week": 1,
+   "type": "review",
+   "dayLabel": "Session 6",
+   "title": "Week 1 review",
+   "objective": "Consolidate days 1 to 5 before moving to week 2.",
+   "contentMarkdown": "Go back over your notes from days 1 to 5 and answer the review quiz without looking at them. If you miss more than 3 out of 10 questions, review the corresponding days before moving on to day 7.",
+   "keyTakeaway": null,
+   "quiz": [
+    {
+     "question": "What are the 4 stages of the PDCA cycle and which clauses do they correspond to?",
+     "answer": "Plan (cl. 4,5,6) → Do (cl. 7,8) → Check (cl. 9) → Act (cl. 10)."
+    },
+    {
+     "question": "What is the difference between a correction and a corrective action?",
+     "answer": "A correction addresses the immediate symptom; a corrective action addresses its cause."
+    },
+    {
+     "question": "Name 3 interested parties relevant to a healthcare facility.",
+     "answer": "For example: workers, health authorities, insurers, trade unions."
+    },
+    {
+     "question": "What must an OH&S policy contain according to the standard?",
+     "answer": "The five commitments of 5.2: safe and healthy working conditions, fulfilling legal requirements and other requirements, eliminating hazards and reducing risks, continually improving the OH&S management system, consulting and participating with workers.",
+     "standardRef": "ISO 45001",
+     "standardEdition": "2018 + Amd 1:2024",
+     "clauseRef": "5.2",
+     "referenceType": "REQUIREMENT",
+     "verifiedAt": "2026-08-09",
+     "reviewStatus": "VERIFIED"
+    },
+    {
+     "question": "Why is worker participation a central point of ISO 45001?",
+     "answer": "Workers are best placed to identify real hazards, and this is systematically checked during audits."
+    },
+    {
+     "question": "What are the 4 main components of clause 6?",
+     "answer": "Hazard identification; assessment of risks/opportunities; legal requirements; objectives and action planning."
+    },
+    {
+     "question": "Which British standard preceded ISO 45001?",
+     "answer": "OHSAS 18001."
+    },
+    {
+     "question": "What distinguishes an OH&S opportunity from a simple risk reduction?",
+     "answer": "It can improve the system more broadly, not just reduce an identified hazard."
+    },
+    {
+     "question": "Why must the scope exactly match what is actually observed?",
+     "answer": "A mismatch is a classic audit nonconformity."
+    },
+    {
+     "question": "Formulate an example of an OH&S objective that follows SMART logic.",
+     "answer": "Reduce blood-exposure accidents by 30% by December 2026."
+    }
+   ]
+  },
+  {
+   "id": 7,
+   "week": 1,
+   "type": "rest",
+   "dayLabel": "Session 7",
+   "title": "Rest / warm-up for week 2",
+   "objective": "Rest.",
+   "contentMarkdown": "A well-deserved rest day. If you have energy to spare, simply read the introduction to day 12 (the 7 audit principles) to become familiar with the key terms before starting week 2 — no obligation.",
+   "keyTakeaway": null,
+   "quiz": []
+  },
+  {
+   "id": 8,
+   "week": 2,
+   "type": "lesson",
+   "dayLabel": "Session 8",
+   "title": "Clause 7: Support",
+   "objective": "Understand what needs to be put in place for the system to function concretely on a daily basis.",
+   "contentMarkdown": "### The 5 pillars of clause 7\n\n- **Resources**: human, financial, material, technical.\n- **Competence**: training, experience, qualification — with retained evidence.\n- **Awareness**: OH&S policy, hazards of the job, contribution to the effectiveness of the system, consequences of non-compliance.\n- **Communication**: what, when, to whom, how — internal and external.\n- **Documented information**: creating, updating, controlling (access, protection, retention, versions).\n\n### A typical cross-check example in an audit\n\nThe auditor checks the training register (document), asks the staff member about the content of their training (interview), then observes whether they actually apply what was taught (observation). All three sources must converge.",
+   "keyTakeaway": "A document that exists but that nobody knows about, or that people don't know how to apply on the ground, proves nothing.",
+   "quiz": [
+    {
+     "question": "Name the 5 components of clause 7.",
+     "answer": "Resources, competence, awareness, communication, documented information."
+    },
+    {
+     "question": "Why does the auditor always cross-check documents, interviews and observation?",
+     "answer": "To verify that what is written, known and done all converge."
+    },
+    {
+     "question": "What is the risk of a system with too much documentation?",
+     "answer": "It becomes unmanageable, and documents are never actually followed or updated."
+    },
+    {
+     "question": "Give a concrete example of the awareness expected of a laboratory technician.",
+     "answer": "Knowing the biological hazards of their job and where to find the safety data sheet for reagents."
+    }
+   ]
+  },
+  {
+   "id": 9,
+   "week": 2,
+   "type": "lesson",
+   "dayLabel": "Session 9",
+   "title": "Clause 8: Operation",
+   "objective": "Understand how an organization controls its operations day to day.",
+   "contentMarkdown": "### The hierarchy of controls (8.1.2), from most to least effective\n\n1. **Elimination** of the hazard\n2. **Substitution** with something less hazardous\n3. **Engineering controls and reorganization of work** (isolation, ventilation, collective protection)\n4. **Administrative controls, including training** (procedures, rotation, awareness)\n5. **Personal protective equipment (PPE)** — the last line of defense\n\n*Example applied to needle-stick risk*: elimination (needle-free devices) → substitution (integrated safety device) → engineering (nearby sharps containers) → administrative (procedure, training) → PPE (gloves, insufficient on their own).\n\n### Management of change\n\nEvery change must be evaluated for its OH&S impacts **before** it is implemented.\n\n### Emergency preparedness and response\n\nIdentify potential emergencies, prepare response plans, and **test them periodically**.",
+   "keyTakeaway": "When several controls are possible, always choose the one highest in the hierarchy (elimination before PPE), unless elimination is clearly impossible.",
+   "quiz": [
+    {
+     "question": "Name the 5 levels of the hierarchy of controls.",
+     "answer": "Elimination, substitution, engineering controls, administrative controls, PPE."
+    },
+    {
+     "question": "Why is PPE the least reliable control?",
+     "answer": "Because it depends on human behavior and does not remove the hazard at its source."
+    },
+    {
+     "question": "What must the organization do before an organizational change?",
+     "answer": "Evaluate the potential OH&S impacts before implementation."
+    },
+    {
+     "question": "Why is an untested emergency plan an audit concern?",
+     "answer": "Its real effectiveness cannot be guaranteed until it has been put to the test."
+    }
+   ]
+  },
+  {
+   "id": 10,
+   "week": 2,
+   "type": "lesson",
+   "dayLabel": "Session 10",
+   "title": "Clause 9: Performance evaluation",
+   "objective": "Understand how an organization verifies that its system actually works.",
+   "contentMarkdown": "### Monitoring, measurement, analysis and evaluation\n\nCommon indicators: accident frequency rate, severity rate, number of reported near-misses, training completion rate.\n\n### Compliance evaluation\n\nRegularly check compliance with legal obligations — regulations change over time.\n\n### Internal audit\n\nThe organization audits its own system at planned intervals — this is the Check of PDCA applied internally.\n\n### Management review\n\nPeriodic review of the system by top management (audit results, incidents, nonconformities, corrective actions, context, resources), leading to documented decisions.",
+   "keyTakeaway": "A zero-accident indicator with no reported near-misses is not necessarily good news — it may indicate that staff do not dare to report.",
+   "quiz": [
+    {
+     "question": "Name the 4 components of clause 9.",
+     "answer": "Monitoring/measurement/analysis/evaluation; compliance evaluation; internal audit; management review."
+    },
+    {
+     "question": "Why is a high number of reported near-misses not necessarily a bad sign?",
+     "answer": "It can indicate a good reporting culture rather than an actual problem."
+    },
+    {
+     "question": "How often should compliance evaluation be carried out? Why?",
+     "answer": "Regularly, because regulations change over time."
+    },
+    {
+     "question": "What should a management review produce beyond meeting minutes?",
+     "answer": "Documented decisions (actions, resources, adjustments)."
+    }
+   ]
+  },
+  {
+   "id": 11,
+   "week": 2,
+   "type": "lesson",
+   "dayLabel": "Session 11",
+   "title": "Clause 10: Improvement",
+   "objective": "Understand how an organization handles nonconformities and progresses over time.",
+   "contentMarkdown": "### Fully handling an incident, in 4 steps\n\n1. **React**: control and correct the immediate situation\n2. **Analyze root causes** (the \"5 whys\" method)\n3. **Implement a corrective action**\n4. **Verify effectiveness** after a set period\n\n### Illustration with the \"5 whys\"\n\n*A staff member is pricked by a needle.* Why? Needle not placed in the sharps container → container full → not emptied at the required frequency → task not assigned → no defined responsibility.\n→ The corrective action: clearly assign responsibility for emptying sharps containers and check it is applied (not \"buy more gloves\").\n\n### Continual improvement\n\nContinuously seeking to improve the system, even without an observed nonconformity.",
+   "keyTakeaway": "A corrective action whose effectiveness was never verified has, in an audit, no probative value.",
+   "quiz": [
+    {
+     "question": "Describe in 4 steps how an incident should be fully handled.",
+     "answer": "React → analyze root causes → corrective action → verify effectiveness."
+    },
+    {
+     "question": "Why is an unverified corrective action insufficient in an audit?",
+     "answer": "Without verification, there is no way to know whether the problem was actually resolved."
+    },
+    {
+     "question": "What is the purpose of the 5 whys method?",
+     "answer": "To trace an observed symptom back to its root cause."
+    },
+    {
+     "question": "Propose a different corrective action for the needle-stick example, based on root cause analysis.",
+     "answer": "Open answer: e.g. review the number of available sharps containers if the cause was found to be undersizing."
+    }
+   ]
+  },
+  {
+   "id": 12,
+   "week": 2,
+   "type": "lesson",
+   "dayLabel": "Session 12",
+   "title": "Introduction to ISO 19011:2026",
+   "objective": "Shift from the content of the OH&S standard to the auditing method itself.",
+   "contentMarkdown": "ISO 19011:2026 (current edition) is the international guidance for auditing any management system. It provides **guidelines**, not certifiable requirements: the rules of third-party certification (stage 1 / stage 2, major or minor classification, certification decision) fall under ISO/IEC 17021-1. It is based on **7 principles**:\n\n1. **Integrity**: honesty, diligence, responsibility.\n2. **Fair presentation**: reporting findings accurately, even when uncomfortable.\n3. **Due professional care**: diligence and judgement.\n4. **Confidentiality**: protecting information obtained.\n5. **Independence**: the basis for impartiality — not auditing one's own work.\n6. **Evidence-based approach**: conclusions based on verifiable evidence.\n7. **Risk-based approach**: focusing audit effort on critical areas.\n\n### Scenarios\n\n- An auditor reports only what can be proven, even if a positive point has not been fully verified → fair presentation.\n- An auditor is asked to audit a procedure they designed themselves → breach of independence.\n- An auditor spends more time on high-risk processes → good application of the risk-based approach.",
+   "keyTakeaway": "Exam questions on these 7 principles are almost always scenario-based. Learn them together with an example for each.",
+   "quiz": [
+    {
+     "question": "Name the 7 auditing principles according to ISO 19011.",
+     "answer": "Integrity, fair presentation, due professional care, confidentiality, independence, evidence-based approach, risk-based approach.",
+     "standardRef": "ISO 19011",
+     "standardEdition": "2026",
+     "referenceType": "GUIDANCE"
+    },
+    {
+     "question": "An auditor, a former employee of a company, audits it 6 months after leaving. Which principle is at stake?",
+     "answer": "Independence."
+    },
+    {
+     "question": "Why does the evidence-based approach exclude mere impressions?",
+     "answer": "An impression is neither verifiable nor reproducible by a third party."
+    },
+    {
+     "question": "Give an example of applying the confidentiality principle.",
+     "answer": "Not disclosing to one client the practices observed at another client."
+    }
+   ],
+   "standardRef": "ISO 19011",
+   "standardEdition": "2026",
+   "referenceType": "GUIDANCE"
+  },
+  {
+   "id": 13,
+   "week": 2,
+   "type": "lesson",
+   "dayLabel": "Session 13",
+   "title": "Types and methods of audit",
+   "objective": "Understand the different types of audit and how a certification process unfolds.",
+   "contentMarkdown": "### The 3 types of audit\n\n- **First party (internal)**: the organization audits itself.\n- **Second party**: carried out by a party with a direct interest (e.g. a customer auditing its supplier).\n- **Third party**: carried out by an independent certification body for certification purposes.\n\n### The 2-stage certification process\n\n**Stage 1 — Documentation review**: verify that the documented system is coherent and ready, using checklists and a questionnaire. Concludes with a stage 1 report.\n\n**Stage 2 — On-site audit**: verify actual implementation (interviews, observations, documentary evidence). Concludes with a closing meeting and a stage 2 report.\n\n### Major vs minor nonconformity\n\n- **Major**: total absence, a systemic failure, or an accumulation of minors on the same point.\n- **Minor**: a one-off or isolated failure.",
+   "keyTakeaway": "An isolated/one-off situation → think minor. A systemic/recurring situation affecting a critical process → think major.",
+   "quiz": [
+    {
+     "question": "What is the difference between an internal, second-party and third-party audit?",
+     "answer": "Internal = self-assessment; second party = a direct interested party; third party = independent certification body."
+    },
+    {
+     "question": "What happens during stage 1? And stage 2?",
+     "answer": "Stage 1 = documentation review; stage 2 = on-site audit with interviews/observations and a final report."
+    },
+    {
+     "question": "What is the typical consequence of a major nonconformity?",
+     "answer": "It generally prevents immediate certification."
+    },
+    {
+     "question": "A staff member does not know the emergency procedure, observed in a single interview. Major or minor NC? What should be checked before deciding?",
+     "answer": "Presumed minor if isolated; check whether it is representative of a wider issue before concluding."
+    }
+   ]
+  },
+  {
+   "id": 14,
+   "week": 2,
+   "type": "review",
+   "dayLabel": "Session 14",
+   "title": "Week 2 review",
+   "objective": "Consolidate days 8 to 13.",
+   "contentMarkdown": "Go back over your notes from days 8 to 13. If you miss more than 3 out of 10 questions, review the corresponding days before starting week 3.",
+   "keyTakeaway": null,
+   "quiz": [
+    {
+     "question": "Name the 5 elements of clause 7 (Support).",
+     "answer": "Resources, competence, awareness, communication, documented information."
+    },
+    {
+     "question": "What is the hierarchy of controls for risk?",
+     "answer": "Elimination, substitution, engineering controls, administrative controls, PPE."
+    },
+    {
+     "question": "Why does an audit always cross-check documents, interviews and observation?",
+     "answer": "To verify that what is written, known and done all converge."
+    },
+    {
+     "question": "Name the 4 components of clause 9.",
+     "answer": "Monitoring/measurement/analysis, compliance, internal audit, management review.",
+     "revision": true
+    },
+    {
+     "question": "Describe the 4 steps for fully handling an incident.",
+     "answer": "React → analyze root causes → corrective action → verify effectiveness."
+    },
+    {
+     "question": "Name the 7 auditing principles according to ISO 19011.",
+     "answer": "Integrity, fair presentation, due professional care, confidentiality, independence, evidence-based approach, risk-based approach.",
+     "revision": true,
+     "standardRef": "ISO 19011",
+     "standardEdition": "2026",
+     "referenceType": "GUIDANCE"
+    },
+    {
+     "question": "What is the difference between an internal, second-party and third-party audit?",
+     "answer": "Internal = self-assessment; second party = direct interested party; third party = independent certification body."
+    },
+    {
+     "question": "What happens during stage 1 and then stage 2 of a certification?",
+     "answer": "Stage 1 = documentation review; stage 2 = on-site audit with a final report."
+    },
+    {
+     "question": "What is the typical consequence of a major nonconformity?",
+     "answer": "It generally prevents immediate certification.",
+     "revision": true
+    },
+    {
+     "question": "What is the purpose of the 5 whys method?",
+     "answer": "To trace a symptom back to its root cause.",
+     "revision": true
+    }
+   ]
+  },
+  {
+   "id": 15,
+   "week": 3,
+   "type": "lesson",
+   "dayLabel": "Session 15",
+   "title": "Auditor qualities and behavior",
+   "objective": "Understand what makes a good auditor, beyond technical knowledge.",
+   "contentMarkdown": "### Skills and personal attributes\n\n- Open-mindedness and diplomacy\n- Powers of observation and perceptiveness\n- Ability to decide based on logical reasoning\n- Tenacity\n- Ability to act autonomously while working within a team\n\n### Managing the audit team\n\nThe audit team leader assigns roles, coordinates the schedule, and arbitrates disagreements about a conclusion.\n\n### Overall steering of the audit\n\nFollowing the initial plan while remaining able to adapt if an important finding emerges along the way.",
+   "keyTakeaway": "A competent auditor adapts their risk-based approach during the audit in response to a strong signal, without abandoning any framework altogether.",
+   "quiz": [
+    {
+     "question": "Name 3 personal attributes expected of an auditor.",
+     "answer": "For example: open-mindedness, powers of observation, tenacity."
+    },
+    {
+     "question": "What is the role of the audit team leader?",
+     "answer": "Assigning roles, coordinating the schedule, arbitrating disagreements between auditors."
+    },
+    {
+     "question": "A strong signal emerges outside the initial plan. What should the auditor do?",
+     "answer": "Adapt the plan to investigate it, following the risk-based approach."
+    },
+    {
+     "question": "Why is tenacity important in auditing?",
+     "answer": "An interviewee may downplay or divert attention from a sensitive topic; the auditor must follow through."
+    }
+   ]
+  },
+  {
+   "id": 16,
+   "week": 3,
+   "type": "lesson",
+   "dayLabel": "Session 16",
+   "title": "Preparing an audit",
+   "objective": "Learn to build the tools that structure an audit.",
+   "contentMarkdown": "### The audit plan\n\nSets out the objectives, scope, criteria, schedule, and people to meet. Communicated to the auditee before the audit.\n\n### The audit checklist\n\nGuides the auditor without being followed rigidly.\n\n### The stage 1 questionnaire\n\nVerifies in advance that documentation exists and covers the requirements.\n\n### Example checklist — clause 6 in a medical laboratory\n\n1. Is there documented information describing hazard identification specific to the laboratory?\n2. Does it cover non-routine activities?\n3. Are risk assessment results dated and kept up to date?\n4. Are improvement opportunities tracked?\n5. Is there a list of legal requirements applicable to the laboratory?\n6. Is this list kept up to date, and by whom?\n7. Are the OH&S objectives measurable and dated?\n8. Is an action plan associated with them, with an owner and a deadline?\n9. Were workers consulted during hazard identification?\n10. Is there evidence of this consultation?",
+   "keyTakeaway": "A good checklist mixes documentary questions (does it exist...) with on-the-ground verification questions (is it dated, tracked, evidenced...).",
+   "quiz": [
+    {
+     "question": "What are the 4 essential elements of an audit plan?",
+     "answer": "Objectives, scope, audit criteria, schedule (and people to meet)."
+    },
+    {
+     "question": "Why should a checklist not be followed rigidly?",
+     "answer": "It guides the auditor but should not prevent them from digging deeper into an unexpected topic."
+    },
+    {
+     "question": "What is the benefit of the stage 1 questionnaire before going on site?",
+     "answer": "Avoiding wasted time on site discovering obvious documentation gaps."
+    },
+    {
+     "question": "Build 3 checklist questions to audit clause 8 in a radiology department.",
+     "answer": "Open answer, e.g.: radiation protection procedure? dosimeter wear checked? maintenance plan followed?"
+    }
+   ]
+  },
+  {
+   "id": 17,
+   "week": 3,
+   "type": "lesson",
+   "dayLabel": "Session 17",
+   "title": "Conducting the audit",
+   "objective": "The techniques used during the on-site audit.",
+   "contentMarkdown": "### The opening meeting\n\nIntroduce the team, confirm the plan, remind everyone of confidentiality, explain how the audit will proceed.\n\n### Interview techniques\n\n- Favor **open-ended questions**\n- **Observe actual practices**, not just verbal answers\n- **Cross-check sources**: documents, interviews, observation\n- Rephrase to confirm understanding\n\n### Collecting objective evidence\n\nEvidence must be **verifiable**: a document, direct observation, or a corroborated statement. An isolated, unverified statement is not sufficient.\n\n### The closing meeting\n\nPresent findings factually and impartially, with no surprises in the written report that follows.",
+   "keyTakeaway": "Never introduce a new major finding in the written report that was not mentioned at the closing meeting.",
+   "quiz": [
+    {
+     "question": "Why favor open-ended questions in audit interviews?",
+     "answer": "They let the interviewee reveal their actual practice without suggesting the expected answer."
+    },
+    {
+     "question": "What does cross-checking sources mean in an audit?",
+     "answer": "Verifying convergence between documents, interviews and on-site observation."
+    },
+    {
+     "question": "Can a single verbal statement alone constitute sufficient evidence?",
+     "answer": "No — it must be corroborated by a document or an observation."
+    },
+    {
+     "question": "What should be avoided between the closing meeting and the written report?",
+     "answer": "Introducing a new major finding that was not presented to the auditee at closing."
+    }
+   ]
+  },
+  {
+   "id": 18,
+   "week": 3,
+   "type": "lesson",
+   "dayLabel": "Session 18",
+   "title": "Writing up findings",
+   "objective": "The most discriminating exercise in the exam — knowing how to write a nonconformity correctly.",
+   "contentMarkdown": "### The 3 mandatory elements of a well-written nonconformity\n\n1. **Objective evidence**: what was factually observed\n2. **The reference requirement**: the clause not met\n3. **The identified nonconformity**: the link between the evidence and the requirement\n\n### Common mistakes to avoid\n\n- Stating an opinion rather than a fact\n- Forgetting to cite the precise requirement\n- Mixing several different findings into a single NC\n- Vague wording instead of precise data\n\n### Three examples, from weakest to strongest\n\n**Weak**: \"Staff do not know the safety procedures well.\" (vague opinion, no dated evidence)\n\n**Medium**: \"An interviewed staff member did not know the emergency procedure. Nonconformity to clause 8.2.\" (better, but imprecise)\n\n**Strong**: \"During the interview on 08/05 with 3 staff members from the sample collection department, 2 out of 3 could not describe the emergency procedure for blood exposure, nor locate the posted document. This is a nonconformity to the awareness requirement of clause 7.3 and to the emergency preparedness requirement of clause 8.2.\"",
+   "keyTakeaway": "The strong version cites the exact number of people interviewed, the date, what was observed, and explicitly links the finding to the requirements.",
+   "quiz": [
+    {
+     "question": "What are the 3 mandatory elements of a well-written nonconformity?",
+     "answer": "Objective evidence, reference requirement, identified nonconformity."
+    },
+    {
+     "question": "Why is \"staff are not sufficiently trained\" a poor starting point for an NC?",
+     "answer": "It is an unverifiable opinion, with no date, no quantified data, and no reference to a requirement."
+    },
+    {
+     "question": "Why should two different findings never be mixed into a single NC?",
+     "answer": "It dilutes clarity and complicates the follow-up of corrective actions."
+    },
+    {
+     "question": "An incident register has not been updated for 4 months, although the procedure requires a weekly update. Write the complete NC.",
+     "answer": "Example: dated evidence of the register not updated for 4 months; requirement = clause 9.1 (monitoring and measurement); finding = lack of effective, up-to-date tracking of OH&S incidents."
+    }
+   ]
+  },
+  {
+   "id": 19,
+   "week": 3,
+   "type": "practical",
+   "dayLabel": "Session 19",
+   "title": "Full case study",
+   "objective": "Apply all the concepts to a scenario close to a real professional environment.",
+   "contentMarkdown": "### Scenario: auditing the sterilization department of a clinic\n\n- The sterilization cycle traceability register is well maintained, dated and complete.\n- 2 out of 3 staff interviewed do not know where the disinfectant's safety data sheet is located.\n- No formal risk assessment exists for the handling of contaminated instruments, whereas one exists for other jobs in the same department.\n- An evacuation drill was carried out 2 months ago, and a signed report is available.\n- The manager states that \"everyone is consulted about risks\", but none of the 3 interviewed staff members recall being involved in a hazard identification exercise.\n\n### Tasks\n\n1. Identify the conforming and nonconforming points.\n2. For each nonconformity, write the complete finding.\n3. Link each nonconformity to the relevant clause.\n4. State whether it is more likely major or minor, and why.",
+   "keyTakeaway": "Do the exercise in writing before checking the answer key — this is the best simulation of what awaits you in training.",
+   "quiz": [
+    {
+     "question": "What is the conforming point regarding sterilization itself?",
+     "answer": "The sterilization cycle traceability register, well maintained — evidence that clause 9.1 is working properly."
+    },
+    {
+     "question": "Write the NC regarding the safety data sheet.",
+     "answer": "Evidence: 2 out of 3 staff cannot locate the sheet. Requirement: clause 7.3 (awareness). Finding: staff insufficiently aware to quickly access safety information. Likely minor if isolated, to be checked in other departments."
+    },
+    {
+     "question": "Write the NC regarding the absence of a risk assessment for handling contaminated instruments.",
+     "answer": "Evidence: no formal assessment for this job, whereas one exists for other jobs. Requirement: clause 6.1.2. Finding: gap on a job with high biological risk. Likely major: high-risk job with no documentary coverage."
+    },
+    {
+     "question": "Write the NC regarding the gap between the manager's statement and staff experience of consultation.",
+     "answer": "Evidence: none of the 3 staff members confirm having been consulted, contrary to the manager's statement. Requirement: clause 5.4. Finding: gap between the stated practice and on-the-ground reality. Severity to be assessed based on scale — major if found across several departments."
+    }
+   ]
+  },
+  {
+   "id": 20,
+   "week": 3,
+   "type": "mockExam",
+   "dayLabel": "Session 20",
+   "title": "Mock exam",
+   "objective": "Test yourself under conditions close to the real exam, without going back to your notes.",
+   "contentMarkdown": "A 15-question multiple-choice quiz covering the whole program, followed by a writing exercise. Less than 10/15 signals a need to go back over the corresponding days before training.",
+   "keyTakeaway": null,
+   "quiz": [
+    {
+     "question": "Which clause of the harmonized structure deals with planning?",
+     "answer": "Clause 6 \"Planning\": hazard identification, assessment of risks and opportunities, legal requirements and other requirements, OH&S objectives and action planning."
+    },
+    {
+     "question": "What is the difference between a correction and a corrective action?",
+     "answer": "A correction addresses the immediate symptom; a corrective action addresses its cause."
+    },
+    {
+     "question": "Name the 3 types of audit.",
+     "answer": "Internal audit (first party), second-party audit, third-party audit."
+    },
+    {
+     "question": "Which auditing principle ensures that an auditor cannot audit their own work?",
+     "answer": "Independence.",
+     "standardRef": "ISO 19011",
+     "standardEdition": "2026",
+     "referenceType": "GUIDANCE",
+     "verifiedAt": "2026-08-09",
+     "reviewStatus": "VERIFIED"
+    },
+    {
+     "question": "What is verified during the stage 1 audit of a certification, and which reference document does this stage fall under?",
+     "answer": "Stages 1 and 2 fall under the third-party certification process described by ISO/IEC 17021-1, not ISO 19011. Stage 1 examines the system's documented information and assesses the auditee's readiness: understanding of requirements, scope and sites, resources, identified legal requirements, status of internal audit and management review — in order to plan stage 2.",
+     "standardRef": "ISO/IEC 17021-1",
+     "clauseRef": "9.3",
+     "referenceType": "CERTIFICATION_RULE",
+     "verifiedAt": "2026-08-09",
+     "reviewStatus": "VERIFIED",
+     "standardEdition": "2026"
+    },
+    {
+     "question": "In the hierarchy of controls, which is more effective: elimination or PPE?",
+     "answer": "Elimination of the hazard."
+    },
+    {
+     "question": "What are the 3 mandatory elements of a nonconformity finding?",
+     "answer": "Objective evidence, reference requirement, identified nonconformity."
+    },
+    {
+     "question": "What is an OH&S opportunity?",
+     "answer": "A circumstance that could improve OH&S performance, not just reduce a risk."
+    },
+    {
+     "question": "Which clause deals with management review?",
+     "answer": "Clause 9 \"Performance evaluation\", 9.3 Management review (9.1 deals with monitoring and measurement, 9.2 with internal audit)."
+    },
+    {
+     "question": "Name 2 techniques for collecting objective evidence.",
+     "answer": "For example: direct observation, interview, document review."
+    },
+    {
+     "question": "What is the typical consequence of a major NC on a certification?",
+     "answer": "It generally prevents a certification recommendation until it is resolved. Note: the major/minor classification is a rule of the third-party certification process (ISO/IEC 17021-1), not a classification defined by ISO 19011.",
+     "standardRef": "ISO/IEC 17021-1",
+     "referenceType": "CERTIFICATION_RULE",
+     "verifiedAt": "2026-08-09",
+     "reviewStatus": "VERIFIED",
+     "standardEdition": "2026"
+    },
+    {
+     "question": "Why is an isolated verbal statement not sufficient as evidence?",
+     "answer": "It cannot be verified on its own; it must be corroborated."
+    },
+    {
+     "question": "What should be done if a strong signal emerges during the audit, outside the initial plan?",
+     "answer": "Investigate it, adapting the plan according to the risk-based approach."
+    },
+    {
+     "question": "Name the 4 steps for fully handling an incident.",
+     "answer": "React → analyze root causes → corrective action → verify effectiveness."
+    },
+    {
+     "question": "Why must the scope exactly match what is actually observed?",
+     "answer": "A mismatch is a classic audit nonconformity.",
+     "revision": true
+    }
+   ]
+  },
+  {
+   "id": 21,
+   "week": 3,
+   "type": "wrapup",
+   "dayLabel": "Session 21",
+   "title": "Light review and logistics",
+   "objective": "Prepare calmly for departure to the training course.",
+   "contentMarkdown": "- Only review your vocabulary notes (day 2), the PDCA cycle table (day 1), and the structure of a nonconformity (day 18) — no new content today.\n- Pack your things: ID, something to take notes with, suitable clothing for 5 days of training.\n- Go to bed early: the training starts tomorrow and will be intensive.",
+   "keyTakeaway": null,
+   "quiz": []
+  }
+ ],
+ "glossary": [
+  {
+   "term": "Accreditation",
+   "definition": "Official recognition of the competence of a certification body."
+  },
+  {
+   "term": "Corrective action",
+   "definition": "Action to eliminate the cause of a nonconformity."
+  },
+  {
+   "term": "Continual improvement",
+   "definition": "Recurring activity to enhance performance."
+  },
+  {
+   "term": "Other requirement",
+   "definition": "Voluntary commitment (charter, contract, code of conduct)."
+  },
+  {
+   "term": "Audit scope",
+   "definition": "Extent and boundaries of a given audit."
+  },
+  {
+   "term": "Audit finding",
+   "definition": "Result of the evaluation of audit evidence against audit criteria."
+  },
+  {
+   "term": "Consultation",
+   "definition": "Seeking workers' views before making a decision (3.5)."
+  },
+  {
+   "term": "Correction",
+   "definition": "Immediate action to eliminate a detected nonconformity."
+  },
+  {
+   "term": "Audit criteria",
+   "definition": "Reference set against which evidence is compared (standard, internal procedure)."
+  },
+  {
+   "term": "Hazard",
+   "definition": "Source with a potential to cause injury and ill health (3.19). The term \"injury\" alone belongs to OHSAS 18001 vocabulary."
+  },
+  {
+   "term": "Top management",
+   "definition": "Person or group of people who directs and controls an organization at the highest level (3.12). Bears the leadership requirements of clause 5."
+  },
+  {
+   "term": "Scope",
+   "definition": "Exact boundaries covered by the management system."
+  },
+  {
+   "term": "Effectiveness",
+   "definition": "Extent to which planned activities are realized and planned results achieved (3.13)."
+  },
+  {
+   "term": "Legal requirement",
+   "definition": "Law or regulation applicable to the organization."
+  },
+  {
+   "term": "Outsourcing",
+   "definition": "Arrangement whereby an external organization performs part of an organization's function or process (3.29). Does not relieve the organization of its accountability."
+  },
+  {
+   "term": "Hierarchy of controls",
+   "definition": "Order imposed by 8.1.2: 1) elimination of the hazard, 2) substitution, 3) engineering controls and collective protection, 4) administrative controls and reorganization of work, including training, 5) personal protective equipment."
+  },
+  {
+   "term": "Documented information",
+   "definition": "Information required to be controlled and maintained by the organization, together with the medium it is contained on (3.24). Replaces the former terms \"documented procedure\" and \"record\"."
+  },
+  {
+   "term": "Contractor",
+   "definition": "External organization providing services to the organization in accordance with agreed specifications, terms and conditions (3.7)."
+  },
+  {
+   "term": "Workplace",
+   "definition": "Place under the control of the organization where a person needs to be or go for work purposes (3.6)."
+  },
+  {
+   "term": "Nonconformity",
+   "definition": "Non-fulfilment of a requirement."
+  },
+  {
+   "term": "OH&S opportunity",
+   "definition": "Circumstance that could lead to improvement of OH&S performance, beyond merely reducing a risk."
+  },
+  {
+   "term": "Certification body",
+   "definition": "Accredited body authorized to issue an ISO certificate."
+  },
+  {
+   "term": "Participation",
+   "definition": "Involvement of workers in decision-making (3.4)."
+  },
+  {
+   "term": "Interested party",
+   "definition": "Any person/organization that can affect or be affected by OH&S decisions."
+  },
+  {
+   "term": "OH&S performance",
+   "definition": "Performance related to the effectiveness of the prevention of injury and ill health to workers and the provision of safe and healthy workplaces (3.28)."
+  },
+  {
+   "term": "Audit plan",
+   "definition": "Description of the activities and arrangements for an audit."
+  },
+  {
+   "term": "Near-miss",
+   "definition": "Incident that did not result in injury or ill health, but had the potential to do so."
+  },
+  {
+   "term": "Audit evidence",
+   "definition": "Verifiable item (document, observation, corroborated statement)."
+  },
+  {
+   "term": "Audit program",
+   "definition": "Set of audits planned for a specific time frame."
+  },
+  {
+   "term": "Audit report",
+   "definition": "Final document presenting the audit findings and conclusions."
+  },
+  {
+   "term": "Risk",
+   "definition": "Effect of uncertainty (3.20). A harmonized definition common to all management system standards — not to be confused with OH&S risk."
+  },
+  {
+   "term": "OH&S risk",
+   "definition": "Combination of the likelihood of occurrence of a work-related hazardous event(s) or exposure(s) and the severity of injury and ill health that can be caused by them (3.21)."
+  },
+  {
+   "term": "Management system",
+   "definition": "Organized set of policies, processes and resources aimed at achieving objectives."
+  },
+  {
+   "term": "Injury and ill health",
+   "definition": "Adverse effect on the physical, mental or cognitive condition of a person, regardless of its work-related origin (3.18)."
+  },
+  {
+   "term": "Worker",
+   "definition": "Person performing work under the organization's control."
+  },
+  {
+   "term": "Incident",
+   "definition": "Work-related occurrence that has given rise to, or could give rise to, injury and ill health (3.35). Previously also referred to as an \"incident\"."
+  }
+ ],
+ "annexes": {
+  "auditPlanTemplate": [
+   "Auditee organization",
+   "Audit date(s)",
+   "Audit objectives",
+   "Audit type (internal / second party / third party, stage 1 / stage 2)",
+   "Standard and audit criteria",
+   "Domain and scope",
+   "Audit team",
+   "People to meet / departments concerned",
+   "Planned schedule"
+  ],
+  "ncTemplate": [
+   {
+    "field": "Objective evidence observed",
+    "hint": "Dated fact, quantified if possible"
+   },
+   {
+    "field": "Reference requirement",
+    "hint": "Standard clause / internal procedure"
+   },
+   {
+    "field": "Identified nonconformity",
+    "hint": "Explicit link between the evidence and the requirement"
+   },
+   {
+    "field": "Classification",
+    "hint": "Major / minor, with justification — classification comes from third-party certification rules (ISO/IEC 17021-1), not ISO 19011"
+   }
+  ],
+  "genericChecklist": [
+   "Is the requirement documented?",
+   "Is the document up to date and dated?",
+   "Are the relevant staff aware of it?",
+   "Do staff actually apply what is planned (direct observation)?",
+   "Is there evidence of ongoing monitoring/measurement of this requirement?"
+  ],
+  "revisionSheets": [
+   {
+    "clause": "Cl.4 Context",
+    "summary": "Internal/external issues + interested parties + scope"
+   },
+   {
+    "clause": "Cl.5 Leadership",
+    "summary": "Top management commitment + policy + roles/responsibilities + consultation/participation"
+   },
+   {
+    "clause": "Cl.6 Planning",
+    "summary": "Hazards + risks/opportunities + legal requirements + objectives"
+   },
+   {
+    "clause": "Cl.7 Support",
+    "summary": "Resources + competence + awareness + communication + documented information"
+   },
+   {
+    "clause": "Cl.8 Operation",
+    "summary": "Operational control + management of change + emergencies"
+   },
+   {
+    "clause": "Cl.9 Performance evaluation",
+    "summary": "Monitoring/measurement + compliance + internal audit + management review"
+   },
+   {
+    "clause": "Cl.10 Improvement",
+    "summary": "Incidents/NC + corrective actions + continual improvement"
+   }
+  ],
+  "finalMockExam": {
+   "mcq": [
+    {
+     "question": "In what year was ISO 45001 published?",
+     "answer": "2018."
+    },
+    {
+     "question": "What common structure does it share with ISO 9001 and ISO 14001?",
+     "answer": "The harmonized structure (HLS)."
+    },
+    {
+     "question": "What are the 4 stages of the PDCA cycle?",
+     "answer": "Plan, Do, Check, Act."
+    },
+    {
+     "question": "What is the difference between hazard, risk and OH&S risk?",
+     "answer": "A hazard (3.19) is a source with a potential to cause injury and ill health; risk (3.20) is the effect of uncertainty; OH&S risk (3.21) is the combination of the likelihood of occurrence of a work-related hazardous event or exposure and the severity of injury and ill health that can be caused by it."
+    },
+    {
+     "question": "Name 2 interested parties typical of a healthcare facility.",
+     "answer": "For example: workers, health authorities, insurers, trade unions."
+    },
+    {
+     "question": "What must an OH&S policy contain?",
+     "answer": "Commitment to eliminate hazards/reduce risks, to consultation/participation, and to continual improvement."
+    },
+    {
+     "question": "Why is worker participation central to ISO 45001?",
+     "answer": "Workers are best placed to identify real hazards, and this is systematically tested in audits."
+    },
+    {
+     "question": "Name the 4 components of clause 6.",
+     "answer": "Hazard identification, assessment of risks/opportunities, legal requirements, OH&S objectives."
+    },
+    {
+     "question": "What are the 5 pillars of clause 7?",
+     "answer": "Resources, competence, awareness, communication, documented information."
+    },
+    {
+     "question": "Name the hierarchy of controls for risk.",
+     "answer": "Elimination, substitution, engineering controls, administrative controls, PPE."
+    },
+    {
+     "question": "What must be done before implementing an organizational change?",
+     "answer": "Evaluate its potential OH&S impacts before implementation."
+    },
+    {
+     "question": "Name the 4 components of clause 9.",
+     "answer": "Monitoring/measurement/analysis, compliance, internal audit, management review."
+    },
+    {
+     "question": "Describe the 4 steps for handling an incident.",
+     "answer": "React → analyze root causes → corrective action → verify effectiveness."
+    },
+    {
+     "question": "Name the 7 auditing principles according to ISO 19011.",
+     "answer": "Integrity, fair presentation, due professional care, confidentiality, independence, evidence-based approach, risk-based approach."
+    },
+    {
+     "question": "What is the difference between internal, second-party, third-party audits?",
+     "answer": "Internal = self-assessment; second party = direct interested party; third party = independent certification body."
+    },
+    {
+     "question": "What does stage 1 of a certification verify? And stage 2?",
+     "answer": "Stage 1 = documentation review; stage 2 = on-site audit with a final report."
+    },
+    {
+     "question": "What are the 3 mandatory elements of an NC finding?",
+     "answer": "Objective evidence, reference requirement, identified nonconformity."
+    },
+    {
+     "question": "What is the consequence of a major NC on a certification?",
+     "answer": "It generally prevents immediate certification."
+    },
+    {
+     "question": "Why cross-check documents, interviews and observation in an audit?",
+     "answer": "To verify that what is written, known and done all converge."
+    },
+    {
+     "question": "What should an auditor do if a strong signal emerges outside the initial plan?",
+     "answer": "Investigate it, adapting the plan according to the risk-based approach."
+    }
+   ],
+   "caseStudies": [
+    {
+     "scenario": "During an audit of a medical imaging department, you find that the radiation protection procedure exists and is posted, but the dosimeter wear log has not been filled in for 6 weeks, although the procedure requires a weekly check. Write the complete nonconformity and justify its severity.",
+     "modelAnswer": "Evidence: the dosimeter wear log has not been filled in for 6 weeks, although procedure PR-XX requires a weekly check. Requirement: clause 9.1 (monitoring and measurement). Finding: the lack of regular follow-up fails to demonstrate ongoing control of radiation exposure. Severity: likely major — high-risk job with no effective follow-up over a significant period."
+    },
+    {
+     "scenario": "During an audit of a hospital pharmacy department, 4 out of 5 interviewed staff state they have never taken part in a hazard identification exercise for their job, although management asserts that an annual consultation is systematic. Write the complete nonconformity and justify its severity.",
+     "modelAnswer": "Evidence: 4 out of 5 interviewed staff state they have never taken part in a hazard identification exercise, contradicting management's statement. Requirement: clause 5.4 (consultation and participation). Finding: a significant gap between the stated practice and the reality experienced by most staff interviewed. Severity: major — the high proportion (4 out of 5) indicates a systemic failure rather than an isolated case."
+    }
+   ]
+  }
+ }
+}

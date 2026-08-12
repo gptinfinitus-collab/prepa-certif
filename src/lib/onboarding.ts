@@ -5,37 +5,36 @@ export type OnboardingStepId = "certification" | "track" | "planning";
 
 export interface OnboardingStep {
   id: OnboardingStepId;
-  title: string;
-  description: string;
+  titleKey: string;
+  descriptionKey: string;
 }
 
 export const ONBOARDING_STEPS: OnboardingStep[] = [
   {
     id: "certification",
-    title: "Quelle certification préparez-vous ?",
-    description: "Elle définit votre programme, vos documents et votre progression.",
+    titleKey: "common.onboarding.certTitle",
+    descriptionKey: "common.onboarding.certDesc",
   },
   {
     id: "track",
-    title: "Quel niveau visez-vous ?",
-    description:
-      "Maîtrise de la norme, auditeur interne ou Lead Auditor. Vous pourrez en changer à tout moment.",
+    titleKey: "common.onboarding.trackTitle",
+    descriptionKey: "common.onboarding.trackDesc",
   },
   {
     id: "planning",
-    title: "Quand passez-vous l'examen ?",
-    description: "Nous répartissons vos séances sur vos jours de révision jusqu'à cette date.",
+    titleKey: "common.onboarding.planningTitle",
+    descriptionKey: "common.onboarding.planningDesc",
   },
 ];
 
-export const STUDY_DAY_LABELS: { value: number; label: string; short: string }[] = [
-  { value: 1, label: "Lundi", short: "L" },
-  { value: 2, label: "Mardi", short: "Ma" },
-  { value: 3, label: "Mercredi", short: "Me" },
-  { value: 4, label: "Jeudi", short: "J" },
-  { value: 5, label: "Vendredi", short: "V" },
-  { value: 6, label: "Samedi", short: "S" },
-  { value: 0, label: "Dimanche", short: "D" },
+export const STUDY_DAY_LABELS: { value: number; labelKey: string; shortKey: string }[] = [
+  { value: 1, labelKey: "common.days.mon", shortKey: "common.daysShort.mon" },
+  { value: 2, labelKey: "common.days.tue", shortKey: "common.daysShort.tue" },
+  { value: 3, labelKey: "common.days.wed", shortKey: "common.daysShort.wed" },
+  { value: 4, labelKey: "common.days.thu", shortKey: "common.daysShort.thu" },
+  { value: 5, labelKey: "common.days.fri", shortKey: "common.daysShort.fri" },
+  { value: 6, labelKey: "common.days.sat", shortKey: "common.daysShort.sat" },
+  { value: 0, labelKey: "common.days.sun", shortKey: "common.daysShort.sun" },
 ];
 
 export const MAX_MODULES_PER_DAY = 4;

@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { getCurriculum, type Curriculum } from "@/data/curriculum";
 import { useActiveCertification } from "@/lib/certifications";
+import { useLocale } from "@/i18n";
 
 const DEFAULT_SOURCE = {
   code: "iso-45001",
@@ -16,6 +17,7 @@ const DEFAULT_SOURCE = {
  */
 export function useCurriculum(): { curriculum: Curriculum; certificationName: string } {
   const { certification } = useActiveCertification();
+  const { locale } = useLocale();
   const curriculum = useMemo(
     () =>
       getCurriculum(
@@ -28,8 +30,9 @@ export function useCurriculum(): { curriculum: Curriculum; certificationName: st
               has_curriculum: certification.has_curriculum,
             }
           : DEFAULT_SOURCE,
+        locale,
       ) as Curriculum,
-    [certification],
+    [certification, locale],
   );
 
   return { curriculum, certificationName: certification?.name ?? "ISO 45001:2018" };

@@ -2,8 +2,10 @@ import { useState } from "react";
 import type { QuizItem } from "@/data/program";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useT } from "@/i18n";
 
 export function Quiz({ items }: { items: QuizItem[] }) {
+  const t = useT();
   const [revealed, setRevealed] = useState<Record<number, boolean>>({});
 
   if (items.length === 0) return null;
@@ -27,7 +29,7 @@ export function Quiz({ items }: { items: QuizItem[] }) {
                 size="sm"
                 onClick={() => setRevealed((prev) => ({ ...prev, [index]: true }))}
               >
-                Afficher la réponse
+                {t("quiz.showAnswer")}
               </Button>
             </div>
           )}

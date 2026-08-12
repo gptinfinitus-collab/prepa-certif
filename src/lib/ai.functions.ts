@@ -10,6 +10,52 @@ import {
 } from "@/lib/rag.server";
 import { getExamBody } from "@/lib/exam-bodies";
 
+const localeSchema = z.enum(["fr", "en"]).default("fr");
+type Locale = z.infer<typeof localeSchema>;
+
+/** Consignes système communes au chat assistant (RAG), en français ou en anglais. */
+function assistantSystemPrompt(locale: Locale, certificationName?: string): string {
+  if (locale === "en") {
+    return [
+      "You are an expert trainer in ISO management-system standards and audits.",
+      `The learner is preparing: ${certificationName ?? "an ISO certification"}.`,
+      "Reference frameworks to use: ISO 45001:2018 and its Amendment 1:2024 for OH&S (injury and ill health) requirements (never use ISO/DIS 45001 as a source of requirements), ISO 19011 for audit guidelines, ISO/IEC 17021-1 for third-party certification rules (stage 1 / stage 2 audits, major and minor nonconformity classification, certification decision).",
+      "Always explicitly distinguish a requirement of the audited standard, an audit guideline, and a certification rule: never attribute to ISO 19011 what belongs to ISO/IEC 17021-1.",
+      "Answer in English, in a structured and pedagogical way, with concrete audit examples.",
+      "When excerpts from personal documents are provided, rely on them first and cite them as (Excerpt n).",
+      "The provided documents may only be partial previews of a standard: never assume they cover all requirements.",
+      "Never reproduce literal passages of a protected standard and never try to reconstruct its official text: rephrase in your own words.",
+      "If information is missing, say so and suggest a revision path.",
+    ].join(" ");
+  }
+  return [
+    "Tu es un formateur expert des normes ISO et des audits de systèmes de management.",
+    `L'apprenant prépare : ${certificationName ?? "une certification ISO"}.`,
+    "Référentiels à utiliser : ISO 45001:2018 et son Amendement 1:2024 pour la S&ST (n'utilise jamais l'ISO/DIS 45001 comme référentiel d'exigences), ISO 19011:2026 pour les lignes directrices d'audit, ISO/IEC 17021-1 pour le processus de certification tierce partie (audits étape 1 / étape 2, classification majeure ou mineure, décision de certification).",
+    "Distingue toujours explicitement une exigence de la norme auditée, une ligne directrice d'audit et une règle de certification : n'attribue jamais à ISO 19011 ce qui relève d'ISO/IEC 17021-1.",
+    "Réponds en français, de façon structurée et pédagogique, avec des exemples d'audit concrets.",
+    "Quand des extraits de documents personnels sont fournis, appuie-toi dessus en priorité et cite-les sous la forme (Extrait n).",
+    "Les documents fournis peuvent n'être que des aperçus partiels d'une norme : ne présume jamais qu'ils couvrent toutes les exigences.",
+    "Ne recopie jamais de passages littéraux d'une norme protégée et ne tente jamais de reconstituer son texte officiel : reformule avec tes propres mots.",
+    "Si l'information manque, dis-le et propose une piste de révision.",
+  ].join(" ");
+}
+
+function userQuestionBlock(locale: Locale, sourcesBlock: string, question: string): string {
+  if (locale === "en") {
+    return sourcesBlock
+      ? `Relevant personal documents:\n\n${sourcesBlock}\n\nQuestion: ${question}`
+      : question;
+  }
+  return sourcesBlock
+    ? `Documents personnels pertinents :\n\n${sourcesBlock}\n\nQuestion : ${question}`
+    : question;
+}
+
+function sourcesLabel(locale: Locale): string {
+  return locale === "en" ? "Excerpt" : "Extrait";
+}
+
 /** Analyse un document de la bibliothèque et l'indexe pour l'IA. */
 export const ingestDocument = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -93,6 +139,7 @@ export const askAssistant = createServerFn({ method: "POST" })
           .array(z.object({ role: z.enum(["user", "assistant"]), content: z.string().max(4000) }))
           .max(10)
           .optional(),
+        locale: localeSchema,
       })
       .parse(data),
   )
@@ -101,31 +148,18 @@ export const askAssistant = createServerFn({ method: "POST" })
     const passages = await retrieve(supabase as never, data.question);
 
     const sourcesBlock = passages
-      .map((p, i) => `[Extrait ${i + 1}]\n${p.content}`)
+      .map((p, i) => `[${sourcesLabel(data.locale)} ${i + 1}]\n${p.content}`)
       .join("\n\n")
       .slice(0, 18000);
 
-    const system = [
-      "Tu es un formateur expert des normes ISO et des audits de systèmes de management.",
-      `L'apprenant prépare : ${data.certificationName ?? "une certification ISO"}.`,
-      "Référentiels à utiliser : ISO 45001:2018 et son Amendement 1:2024 pour la S&ST (n'utilise jamais l'ISO/DIS 45001 comme référentiel d'exigences), ISO 19011:2026 pour les lignes directrices d'audit, ISO/IEC 17021-1 pour le processus de certification tierce partie (audits étape 1 / étape 2, classification majeure ou mineure, décision de certification).",
-      "Distingue toujours explicitement une exigence de la norme auditée, une ligne directrice d'audit et une règle de certification : n'attribue jamais à ISO 19011 ce qui relève d'ISO/IEC 17021-1.",
-      "Réponds en français, de façon structurée et pédagogique, avec des exemples d'audit concrets.",
-      "Quand des extraits de documents personnels sont fournis, appuie-toi dessus en priorité et cite-les sous la forme (Extrait n).",
-      "Les documents fournis peuvent n'être que des aperçus partiels d'une norme : ne présume jamais qu'ils couvrent toutes les exigences.",
-      "Ne recopie jamais de passages littéraux d'une norme protégée et ne tente jamais de reconstituer son texte officiel : reformule avec tes propres mots.",
-      "Si l'information manque, dis-le et propose une piste de révision.",
-    ].join(" ");
-
+    const system = assistantSystemPrompt(data.locale, data.certificationName);
 
     const messages = [
       { role: "system" as const, content: system },
       ...(data.history ?? []).map((m) => ({ role: m.role, content: m.content })),
       {
         role: "user" as const,
-        content: sourcesBlock
-          ? `Documents personnels pertinents :\n\n${sourcesBlock}\n\nQuestion : ${data.question}`
-          : data.question,
+        content: userQuestionBlock(data.locale, sourcesBlock, data.question),
       },
     ];
 
@@ -163,52 +197,82 @@ export const generateQuizQuestions = createServerFn({ method: "POST" })
         mode: z.enum(["qcm", "ouverte"]).default("qcm"),
         track: z.enum(["general", "internal_auditor", "lead_auditor"]).default("general"),
         examBody: z.enum(["pecb", "irca", "other"]).nullish(),
+        locale: localeSchema,
       })
       .parse(data),
   )
   .handler(async ({ data, context }) => {
     const { supabase } = context;
     const focus = [data.chapter, data.topic].filter(Boolean).join(" — ").trim();
-    const topic = focus || `points clés de ${data.certificationName}`;
+    const topic =
+      focus || (data.locale === "en" ? `key points of ${data.certificationName}` : `points clés de ${data.certificationName}`);
     const passages = await retrieve(supabase as never, topic, 6);
     const sourcesBlock = passages.map((p) => p.content).join("\n\n").slice(0, 12000);
 
     const format =
       data.mode === "qcm"
-        ? '{"questions":[{"question":"...","choices":["a","b","c","d"],"answerIndex":0,"explanation":"correction commentée","clause":"6.1.2"}]}'
-        : '{"questions":[{"question":"...","expected":"réponse attendue détaillée","explanation":"points clés attendus","clause":"6.1.2"}]}';
+        ? data.locale === "en"
+          ? '{"questions":[{"question":"...","choices":["a","b","c","d"],"answerIndex":0,"explanation":"annotated correction","clause":"6.1.2"}]}'
+          : '{"questions":[{"question":"...","choices":["a","b","c","d"],"answerIndex":0,"explanation":"correction commentée","clause":"6.1.2"}]}'
+        : data.locale === "en"
+          ? '{"questions":[{"question":"...","expected":"detailed expected answer","explanation":"expected key points","clause":"6.1.2"}]}'
+          : '{"questions":[{"question":"...","expected":"réponse attendue détaillée","explanation":"points clés attendus","clause":"6.1.2"}]}';
 
     const body = getExamBody(data.examBody ?? null);
     const trackBrief =
-      data.track === "lead_auditor"
-        ? "Niveau visé : Lead Auditor (responsable d'équipe d'audit). Les questions portent sur le pilotage de l'audit : plan d'audit, conduite d'équipe, qualification et rédaction des non-conformités, réunion de clôture, rapport, éthique et impartialité."
-        : data.track === "internal_auditor"
-          ? "Niveau visé : auditeur interne. Les questions portent sur la préparation, la conduite et la restitution d'un audit interne."
-          : "Niveau visé : maîtrise de la norme. Les questions portent sur la compréhension et l'application des exigences.";
+      data.locale === "en"
+        ? data.track === "lead_auditor"
+          ? "Target level: Lead Auditor (audit team leader). Questions cover audit management: audit plan, team leadership, qualifying and writing nonconformities, closing meeting, report, ethics and impartiality."
+          : data.track === "internal_auditor"
+            ? "Target level: internal auditor. Questions cover the preparation, conduct and reporting of an internal audit."
+            : "Target level: mastery of the standard. Questions cover understanding and applying the requirements."
+        : data.track === "lead_auditor"
+          ? "Niveau visé : Lead Auditor (responsable d'équipe d'audit). Les questions portent sur le pilotage de l'audit : plan d'audit, conduite d'équipe, qualification et rédaction des non-conformités, réunion de clôture, rapport, éthique et impartialité."
+          : data.track === "internal_auditor"
+            ? "Niveau visé : auditeur interne. Les questions portent sur la préparation, la conduite et la restitution d'un audit interne."
+            : "Niveau visé : maîtrise de la norme. Les questions portent sur la compréhension et l'application des exigences.";
 
     const raw = await chatComplete(
       [
         {
           role: "system",
           content:
-            "Tu conçois des questions d'entraînement pour de futurs auditeurs ISO. Réponds uniquement en JSON valide.",
+            data.locale === "en"
+              ? "You design training questions for future ISO auditors. Answer only in valid JSON."
+              : "Tu conçois des questions d'entraînement pour de futurs auditeurs ISO. Réponds uniquement en JSON valide.",
         },
         {
           role: "user",
-          content: [
-            `Certification : ${data.certificationName}.`,
-            `Thème : ${topic}.`,
-            `Niveau : ${data.difficulty}.`,
-            trackBrief,
-            body ? `Organisme d'examen visé : ${body.name}. ${body.promptStyle}` : "",
-            sourcesBlock ? `Extraits des documents de l'apprenant :\n${sourcesBlock}` : "",
-            data.mode === "qcm"
-              ? `Génère ${data.count} questions à choix multiples en français.`
-              : `Génère ${data.count} questions ouvertes en français, avec la réponse attendue.`,
-            "Pour chaque question, indique dans \"clause\" le numéro de chapitre/clause de la norme concerné (ex. 6.1.2, 9.2). Si aucune clause précise, mets une chaîne vide.",
-            "La correction (\"explanation\") doit expliquer pourquoi la réponse est attendue et renvoyer à la clause.",
-            `Format attendu : ${format}`,
-          ]
+          content: (data.locale === "en"
+            ? [
+                `Certification: ${data.certificationName}.`,
+                `Topic: ${topic}.`,
+                `Level: ${data.difficulty}.`,
+                trackBrief,
+                body ? `Target exam body: ${body.name}. ${body.promptStyle}` : "",
+                sourcesBlock ? `Excerpts from the learner's documents:\n${sourcesBlock}` : "",
+                data.mode === "qcm"
+                  ? `Generate ${data.count} multiple-choice questions in English.`
+                  : `Generate ${data.count} open questions in English, with the expected answer.`,
+                'For each question, indicate in "clause" the standard chapter/clause number concerned (e.g. 6.1.2, 9.2). If no precise clause, use an empty string.',
+                'The correction ("explanation") must explain why the answer is expected and refer to the clause.',
+                `Expected format: ${format}`,
+              ]
+            : [
+                `Certification : ${data.certificationName}.`,
+                `Thème : ${topic}.`,
+                `Niveau : ${data.difficulty}.`,
+                trackBrief,
+                body ? `Organisme d'examen visé : ${body.name}. ${body.promptStyle}` : "",
+                sourcesBlock ? `Extraits des documents de l'apprenant :\n${sourcesBlock}` : "",
+                data.mode === "qcm"
+                  ? `Génère ${data.count} questions à choix multiples en français.`
+                  : `Génère ${data.count} questions ouvertes en français, avec la réponse attendue.`,
+                "Pour chaque question, indique dans \"clause\" le numéro de chapitre/clause de la norme concerné (ex. 6.1.2, 9.2). Si aucune clause précise, mets une chaîne vide.",
+                "La correction (\"explanation\") doit expliquer pourquoi la réponse est attendue et renvoyer à la clause.",
+                `Format attendu : ${format}`,
+              ]
+          )
             .filter(Boolean)
             .join("\n\n"),
         },
@@ -261,6 +325,7 @@ export const gradeOpenAnswers = createServerFn({ method: "POST" })
           )
           .min(1)
           .max(12),
+        locale: localeSchema,
       })
       .parse(data),
   )
@@ -270,16 +335,26 @@ export const gradeOpenAnswers = createServerFn({ method: "POST" })
         {
           role: "system",
           content:
-            "Tu es examinateur d'auditeurs ISO. Tu corriges des réponses ouvertes avec bienveillance et exigence. Réponds uniquement en JSON valide.",
+            data.locale === "en"
+              ? "You are an examiner of ISO auditors. You grade open answers with fairness and rigor. Answer only in valid JSON."
+              : "Tu es examinateur d'auditeurs ISO. Tu corriges des réponses ouvertes avec bienveillance et exigence. Réponds uniquement en JSON valide.",
         },
         {
           role: "user",
-          content: [
-            `Certification : ${data.certificationName}.`,
-            "Pour chaque item, attribue un score sur 100 et un commentaire de correction en français (ce qui est juste, ce qui manque, la clause à revoir).",
-            'Format : {"results":[{"score":80,"feedback":"..."}]} dans le même ordre que les items.',
-            JSON.stringify(data.items),
-          ].join("\n\n"),
+          content: (data.locale === "en"
+            ? [
+                `Certification: ${data.certificationName}.`,
+                "For each item, give a score out of 100 and a grading comment in English (what is correct, what is missing, the clause to review).",
+                'Format: {"results":[{"score":80,"feedback":"..."}]} in the same order as the items.',
+                JSON.stringify(data.items),
+              ]
+            : [
+                `Certification : ${data.certificationName}.`,
+                "Pour chaque item, attribue un score sur 100 et un commentaire de correction en français (ce qui est juste, ce qui manque, la clause à revoir).",
+                'Format : {"results":[{"score":80,"feedback":"..."}]} dans le même ordre que les items.',
+                JSON.stringify(data.items),
+              ]
+          ).join("\n\n"),
         },
       ],
       { temperature: 0.2, json: true },
@@ -303,6 +378,7 @@ export const analyzePreparation = createServerFn({ method: "POST" })
       .object({
         certificationName: z.string().max(200),
         certificationId: z.string().uuid().nullable().optional(),
+        locale: localeSchema,
       })
       .parse(data),
   )
@@ -335,17 +411,28 @@ export const analyzePreparation = createServerFn({ method: "POST" })
         {
           role: "system",
           content:
-            "Tu es coach de préparation à la certification d'auditeur ISO. Réponds uniquement en JSON valide, en français.",
+            data.locale === "en"
+              ? "You are a coach preparing ISO auditor certification candidates. Answer only in valid JSON, in English."
+              : "Tu es coach de préparation à la certification d'auditeur ISO. Réponds uniquement en JSON valide, en français.",
         },
         {
           role: "user",
-          content: [
-            `Certification : ${data.certificationName}.`,
-            `Sessions récentes : ${JSON.stringify(sessions)}`,
-            `Réponses : ${JSON.stringify((answers ?? []).slice(0, 200))}`,
-            "Analyse le niveau de préparation.",
-            'Format : {"level":"débutant|en progression|prêt","summary":"2-3 phrases","strengths":["..."],"weaknesses":["chapitre/clause + difficulté"],"recommendations":["action concrète de révision"]}',
-          ].join("\n\n"),
+          content: (data.locale === "en"
+            ? [
+                `Certification: ${data.certificationName}.`,
+                `Recent sessions: ${JSON.stringify(sessions)}`,
+                `Answers: ${JSON.stringify((answers ?? []).slice(0, 200))}`,
+                "Analyze the preparation level.",
+                'Format: {"level":"beginner|improving|ready","summary":"2-3 sentences","strengths":["..."],"weaknesses":["chapter/clause + difficulty"],"recommendations":["concrete revision action"]}',
+              ]
+            : [
+                `Certification : ${data.certificationName}.`,
+                `Sessions récentes : ${JSON.stringify(sessions)}`,
+                `Réponses : ${JSON.stringify((answers ?? []).slice(0, 200))}`,
+                "Analyse le niveau de préparation.",
+                'Format : {"level":"débutant|en progression|prêt","summary":"2-3 phrases","strengths":["..."],"weaknesses":["chapitre/clause + difficulté"],"recommendations":["action concrète de révision"]}',
+              ]
+          ).join("\n\n"),
         },
       ],
       { temperature: 0.3, json: true },

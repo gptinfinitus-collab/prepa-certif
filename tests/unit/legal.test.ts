@@ -23,6 +23,16 @@ describe("legal documents", () => {
     expect(() => legalDocument("inconnu")).toThrow();
   });
 
+  it("expose un titre et une description en français et en anglais pour chaque document", () => {
+    for (const doc of legalDocuments) {
+      expect(doc.title.fr).toBeTruthy();
+      expect(doc.title.en).toBeTruthy();
+      expect(doc.title.fr).not.toBe(doc.title.en);
+      expect(doc.description.fr).toBeTruthy();
+      expect(doc.description.en).toBeTruthy();
+    }
+  });
+
   it("génère des métadonnées SEO complètes et uniques", () => {
     const titles = new Set<string>();
     for (const doc of legalDocuments) {

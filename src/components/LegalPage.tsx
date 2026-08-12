@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { legalDocuments, legalInfo, type LegalDocument } from "@/lib/legal";
+import { useLocale, useT } from "@/i18n";
 import { ArrowLeft } from "lucide-react";
 
 type LegalPageProps = {
@@ -11,6 +12,9 @@ type LegalPageProps = {
 
 /** Mise en page commune aux pages légales (publique, lisible, indexable). */
 export function LegalPage({ doc, children }: LegalPageProps) {
+  const { locale } = useLocale();
+  const t = useT();
+
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border">
@@ -24,15 +28,16 @@ export function LegalPage({ doc, children }: LegalPageProps) {
             className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="size-4" />
-            Connexion
+            {t("auth.signIn")}
           </Link>
         </div>
       </header>
 
       <main className="mx-auto max-w-3xl px-4 py-10">
-        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">{doc.title}</h1>
+        <h1 className="font-sans text-2xl font-semibold sm:text-3xl">{doc.title[locale]}</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Dernière mise à jour : {legalInfo.updatedAt}
+          {locale === "en" ? "Last updated: " : "Dernière mise à jour : "}
+          {legalInfo.updatedAt[locale]}
         </p>
         <div className="prose mt-8 max-w-none">{children}</div>
       </main>
@@ -41,7 +46,7 @@ export function LegalPage({ doc, children }: LegalPageProps) {
         <nav className="mx-auto flex max-w-3xl flex-wrap gap-x-6 gap-y-2 px-4 py-6 text-sm text-muted-foreground">
           {legalDocuments.map((item) => (
             <Link key={item.slug} to={item.path} className="hover:text-foreground">
-              {item.title}
+              {item.title[locale]}
             </Link>
           ))}
         </nav>

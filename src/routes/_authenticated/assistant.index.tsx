@@ -4,6 +4,7 @@ import { Loader2 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { useActiveCertification } from "@/lib/certifications";
 import { useCreateThread, useThreads } from "@/lib/threads";
+import { useT } from "@/i18n";
 
 export const Route = createFileRoute("/_authenticated/assistant/")({
   head: () => ({
@@ -27,6 +28,7 @@ export const Route = createFileRoute("/_authenticated/assistant/")({
 });
 
 function AssistantIndexPage() {
+  const t = useT();
   const navigate = useNavigate();
   const { certificationId } = useActiveCertification();
   const threads = useThreads(certificationId ?? null);
@@ -46,10 +48,10 @@ function AssistantIndexPage() {
   }, [threads.isSuccess, threads.data, certificationId]);
 
   return (
-    <AppShell title="Assistant IA">
+    <AppShell title={t("nav.assistant")}>
       <div className="flex items-center justify-center gap-2 px-4 py-16 text-sm text-muted-foreground">
         <Loader2 className="size-4 animate-spin" aria-hidden />
-        Ouverture de votre conversation…
+        {t("common.openingConversation")}
       </div>
     </AppShell>
   );

@@ -10,6 +10,7 @@ import { AuthBackdrop } from "@/components/AuthBackdrop";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { authErrorMessage, fieldErrors, newPasswordSchema } from "@/lib/auth-schemas";
+import { useT } from "@/i18n";
 
 export const Route = createFileRoute("/reset-password")({
   ssr: false,
@@ -34,6 +35,7 @@ export const Route = createFileRoute("/reset-password")({
 });
 
 function ResetPasswordPage() {
+  const t = useT();
   const navigate = useNavigate();
   const [ready, setReady] = useState(false);
   const [hasSession, setHasSession] = useState(false);
@@ -72,11 +74,11 @@ function ResetPasswordPage() {
     try {
       const { error } = await supabase.auth.updateUser({ password: parsed.data.password });
       if (error) throw error;
-      toast.success("Votre mot de passe a été mis à jour.");
+      toast.success(t("auth.passwordUpdated"));
       navigate({ to: "/dashboard", replace: true });
     } catch (error) {
       setFormError(
-        error instanceof Error ? authErrorMessage(error.message) : "Une erreur est survenue.",
+        error instanceof Error ? authErrorMessage(error.message) : t("auth.genericError"),
       );
     } finally {
       setLoading(false);
@@ -90,9 +92,9 @@ function ResetPasswordPage() {
       <Card className="relative z-10 w-full max-w-md border-border/50 shadow-lg">
         <CardHeader className="items-center text-center">
           <BrandLogo className="mx-auto size-16 text-primary" />
-          <CardTitle className="font-sans text-2xl">Nouveau mot de passe</CardTitle>
+          <CardTitle className="font-sans text-2xl">{t("auth.resetPasswordTitle")}</CardTitle>
           <CardDescription>
-            Choisissez un mot de passe d'au moins 6 caractères pour votre compte.
+            {t("auth.resetPasswordSubtitle")}
           </CardDescription>
         </CardHeader>
 
@@ -100,17 +102,16 @@ function ResetPasswordPage() {
           {ready && !hasSession ? (
             <div className="space-y-3 text-sm">
               <p className="rounded-md border border-border bg-secondary/60 p-3">
-                Ce lien de réinitialisation est invalide ou a expiré. Demandez-en un nouveau depuis
-                la page de connexion.
+                {t("auth.resetLinkInvalid")}
               </p>
               <Button asChild className="w-full">
-                <Link to="/auth">Retour à la connexion</Link>
+                <Link to="/auth">{t("auth.backToSignInLink")}</Link>
               </Button>
             </div>
           ) : (
             <>
               <div className="space-y-1.5">
-                <Label htmlFor="new-password">Nouveau mot de passe</Label>
+                <Label htmlFor="new-password">{t("auth.newPassword")}</Label>
                 <div className="relative">
                   <Input
                     id="new-password"
@@ -124,7 +125,7 @@ function ResetPasswordPage() {
                     type="button"
                     data-testid="toggle-new-password"
                     onClick={() => setShow((v) => !v)}
-                    aria-label={show ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+                    aria-label={show ? t("auth.hidePassword") : t("auth.showPassword")}
                     className="absolute inset-y-0 right-0 flex w-10 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {show ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
@@ -136,7 +137,7 @@ function ResetPasswordPage() {
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="confirm-password">Confirmation</Label>
+                <Label htmlFor="confirm-password">{t("auth.confirmPassword")}</Label>
                 <Input
                   id="confirm-password"
                   type={show ? "text" : "password"}
@@ -156,14 +157,14 @@ function ResetPasswordPage() {
                 >
                   <p>{formError}</p>
                   <Button size="sm" variant="outline" onClick={() => setFormError(null)}>
-                    Réessayer
+                    {t("auth.retry")}
                   </Button>
                 </div>
               ) : null}
 
               <Button className="w-full" disabled={loading} onClick={handleSubmit}>
                 {loading ? <Loader2 className="size-4 animate-spin" /> : null}
-                Mettre à jour mon mot de passe
+                {t("auth.updatePassword")}
               </Button>
             </>
           )}

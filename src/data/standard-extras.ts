@@ -12,6 +12,8 @@
  */
 
 import type { Flashcard, LessonExtras } from "./lesson-extras";
+import type { Locale } from "@/i18n/config";
+import { enGenericClauseExtras, enMethodologyExtras } from "./standard-extras.en";
 
 /** Contexte transmis aux générateurs de contenu. */
 export interface StandardContext {
@@ -731,11 +733,21 @@ function merge(base: LessonExtras, extra: LessonExtras | undefined): LessonExtra
  * Contenu pédagogique d'un chapitre d'une norme : trame générique de la
  * structure harmonisée enrichie des spécificités du référentiel.
  */
-export function getClauseExtras(ctx: StandardContext, clause: string): LessonExtras {
+export function getClauseExtras(
+  ctx: StandardContext,
+  clause: string,
+  locale: Locale = "fr",
+): LessonExtras {
   const key = clauseKeyOf(clause);
   if (!key) return {};
+  if (locale === "en") return enGenericClauseExtras(ctx, key);
   const base = generic[key](ctx);
   return merge(base, overrides[ctx.code]?.[key]);
+}
+
+/** Contenu des séances de méthodologie dans la langue demandée. */
+export function getMethodologyExtras(locale: Locale = "fr"): LessonExtras[] {
+  return locale === "en" ? enMethodologyExtras : methodologyExtras;
 }
 
 /** Contenu pédagogique des séances de méthodologie d'audit, commun à toutes les normes. */

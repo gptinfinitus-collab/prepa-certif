@@ -34,6 +34,7 @@ import {
   type ResultFilter,
 } from "@/lib/quiz-history";
 import { cn } from "@/lib/utils";
+import { useT } from "@/i18n";
 
 export function QuizHistory({
   certificationId,
@@ -44,6 +45,7 @@ export function QuizHistory({
   chapters: string[];
   onRetrain: (topic: string) => void;
 }) {
+  const t = useT();
   const [topic, setTopic] = useState(ALL_TOPICS);
   const [result, setResult] = useState<ResultFilter>("all");
 
@@ -106,7 +108,7 @@ export function QuizHistory({
     return (
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
         <Loader2 className="size-4 animate-spin" aria-hidden />
-        Chargement de votre historique…
+        {t("quiz.history.loading")}
       </div>
     );
   }
@@ -115,11 +117,8 @@ export function QuizHistory({
     return (
       <Card>
         <CardHeader>
-          <CardTitle className="font-sans text-lg">Aucune session enregistrée</CardTitle>
-          <CardDescription>
-            Lancez un entraînement depuis l'onglet « Entraînement » : chaque série corrigée est
-            archivée ici avec le détail des réponses.
-          </CardDescription>
+          <CardTitle className="font-sans text-lg">{t("quiz.history.noneTitle")}</CardTitle>
+          <CardDescription>{t("quiz.history.noneDesc")}</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -129,10 +128,13 @@ export function QuizHistory({
     <div className="space-y-6">
       <Card>
         <CardHeader className="gap-2">
-          <CardTitle className="font-sans text-lg">Synthèse de vos entraînements</CardTitle>
+          <CardTitle className="font-sans text-lg">{t("quiz.history.summaryTitle")}</CardTitle>
           <CardDescription>
-            {allSessions.length} session(s) enregistrée(s) · moyenne {average} / 100
-            {trend !== 0 ? ` · ${trend > 0 ? "+" : ""}${trend} pts sur la période récente` : ""}
+            {t("quiz.history.summaryDesc", {
+              count: allSessions.length,
+              average,
+              trend: trend !== 0 ? t("quiz.history.summaryTrend", { sign: trend > 0 ? "+" : "", trend }) : "",
+            })}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -152,11 +154,11 @@ export function QuizHistory({
           {weakest ? (
             <Button onClick={() => onRetrain(weakest)} className="w-full sm:w-auto">
               <Target className="size-4" aria-hidden />
-              Réentraîner mes erreurs · {weakest}
+              {t("quiz.history.retrain", { topic: weakest })}
             </Button>
           ) : (
             <p className="text-sm text-muted-foreground">
-              Aucune erreur en attente de révision : lancez une série plus exigeante.
+              {t("quiz.history.noWeakness")}
             </p>
           )}
         </CardContent>
@@ -165,11 +167,11 @@ export function QuizHistory({
       <div className="flex flex-col gap-3 sm:flex-row">
         <div className="flex-1">
           <Select value={topic} onValueChange={setTopic}>
-            <SelectTrigger aria-label="Filtrer par chapitre">
+            <SelectTrigger aria-label={t("quiz.history.filterChapterLabel")}>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value={ALL_TOPICS}>Tous les chapitres</SelectItem>
+              <SelectItem value={ALL_TOPICS}>{t("quiz.history.allChapters")}</SelectItem>
               {topics.map((t) => (
                 <SelectItem key={t} value={t}>
                   {t}
@@ -180,20 +182,20 @@ export function QuizHistory({
         </div>
         <div className="flex-1">
           <Select value={result} onValueChange={(v) => setResult(v as ResultFilter)}>
-            <SelectTrigger aria-label="Filtrer par résultat">
+            <SelectTrigger aria-label={t("quiz.history.filterResultLabel")}>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Tous les résultats</SelectItem>
-              <SelectItem value="correct">Sessions réussies</SelectItem>
-              <SelectItem value="incorrect">Sessions à revoir</SelectItem>
+              <SelectItem value="all">{t("quiz.history.allResults")}</SelectItem>
+              <SelectItem value="correct">{t("quiz.history.successfulSessions")}</SelectItem>
+              <SelectItem value="incorrect">{t("quiz.history.toReviewSessions")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
       </div>
 
       {visible.length === 0 ? (
-        <p className="text-sm text-muted-foreground">Aucune session ne correspond à ces filtres.</p>
+        <p className="text-sm text-muted-foreground">{t("quiz.history.noSessionsMatch")}</p>
       ) : (
         <Accordion type="single" collapsible className="space-y-3">
           {visible.map((session) => {
@@ -209,7 +211,7 @@ export function QuizHistory({
                     <span className="truncate font-medium">{session.topic ?? session.scope}</span>
                     <span className="text-xs text-muted-foreground">
                       {formatSessionDate(session.created_at)} ·{" "}
-                      {session.mode === "qcm" ? "QCM" : "Questions ouvertes"} · {session.difficulty}
+                      {session.mode === "qcm" ? t("quiz.trainer.formatQcm") : t("quiz.trainer.formatOpen")} · {session.difficulty}
                     </span>
                   </div>
                   <Badge variant={session.score >= 60 ? "secondary" : "destructive"}>
@@ -218,14 +220,14 @@ export function QuizHistory({
                 </AccordionTrigger>
                 <AccordionContent className="space-y-4 pb-4">
                   <p className="text-xs text-muted-foreground">
-                    {session.correct} bonne(s) réponse(s) sur {session.total}
+                    {t("quiz.history.correctCount", { correct: session.correct, total: session.total })}
                     {session.source_count > 0
-                      ? ` · ${session.source_count} extrait(s) de vos documents`
+                      ? t("quiz.history.sourceCount", { count: session.source_count })
                       : ""}
                   </p>
                   {rows.length === 0 ? (
                     <p className="text-sm text-muted-foreground">
-                      Aucune réponse ne correspond au filtre sélectionné.
+                      {t("quiz.history.noAnswersMatch")}
                     </p>
                   ) : (
                     rows.map((row) => (
@@ -245,15 +247,15 @@ export function QuizHistory({
                           <p className="font-medium leading-snug">{row.question}</p>
                         </div>
                         {row.clause ? (
-                          <Badge variant="outline">Clause {row.clause}</Badge>
+                          <Badge variant="outline">{t("quiz.history.clauseBadge", { clause: row.clause })}</Badge>
                         ) : null}
                         <p>
-                          <span className="text-muted-foreground">Votre réponse : </span>
+                          <span className="text-muted-foreground">{t("quiz.history.yourAnswer")}</span>
                           {row.user_answer?.trim() || "—"}
                         </p>
                         {row.expected ? (
                           <p>
-                            <span className="text-muted-foreground">Réponse attendue : </span>
+                            <span className="text-muted-foreground">{t("quiz.history.expectedAnswer")}</span>
                             {row.expected}
                           </p>
                         ) : null}
@@ -262,7 +264,7 @@ export function QuizHistory({
                         ) : null}
                         {row.feedback ? (
                           <p className="rounded-md bg-background/60 p-3">
-                            <span className="text-muted-foreground">Retour de l'IA : </span>
+                            <span className="text-muted-foreground">{t("quiz.history.aiFeedback")}</span>
                             {row.feedback}
                           </p>
                         ) : null}
@@ -278,7 +280,7 @@ export function QuizHistory({
 
       <p className="flex items-center gap-2 text-xs text-muted-foreground">
         <History className="size-3.5" aria-hidden />
-        Les 50 dernières sessions de cette certification sont conservées.
+        {t("quiz.history.retained")}
       </p>
     </div>
   );

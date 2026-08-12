@@ -1,4 +1,6 @@
 import type { ProgramModule } from "./program";
+import type { Locale } from "@/i18n/config";
+import { enLeadAuditorSpecs } from "./lead-auditor.en";
 
 /**
  * Séances du niveau Lead Auditor : pilotage d'une équipe d'audit et audit de
@@ -7,7 +9,7 @@ import type { ProgramModule } from "./program";
  */
 export const LEAD_AUDITOR_START_ID = 9001;
 
-interface LeadModuleSpec {
+export interface LeadModuleSpec {
   title: string;
   objective: string;
   sections: { heading: string; body: string[] }[];
@@ -205,8 +207,14 @@ function specs(label: string): LeadModuleSpec[] {
   ];
 }
 
-export function leadAuditorModules(label: string, week: number): ProgramModule[] {
-  return specs(label).map((spec, index) => ({
+export const leadAuditorSpecsFr = specs;
+
+export function leadAuditorModules(
+  label: string,
+  week: number,
+  locale: Locale = "fr",
+): ProgramModule[] {
+  return (locale === "en" ? enLeadAuditorSpecs(label) : specs(label)).map((spec, index) => ({
     id: LEAD_AUDITOR_START_ID + index,
     week,
     track: "lead_auditor" as const,
