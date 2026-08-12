@@ -1,10 +1,10 @@
 import { formatHours, hoursByType, type CpdEntry } from "@/lib/cpd";
-import { useLocale } from "@/i18n";
-import { useT } from "@/i18n";
+import { useLocale, useT } from "@/i18n";
 
 /** Répartition des heures CPD par type d'activité. */
 export function CpdTypeBreakdown({ entries }: { entries: CpdEntry[] }) {
   const t = useT();
+  const { bcp47 } = useLocale();
   const rows = hoursByType(entries);
   const max = rows.length > 0 ? Math.max(...rows.map((r) => r.hours)) : 0;
 
