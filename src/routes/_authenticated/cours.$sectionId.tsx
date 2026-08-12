@@ -111,7 +111,7 @@ function ManualSectionPage() {
                 ? t("manual.searching")
                 : t("manual.resultCount", { count: search.data?.length ?? 0 })}
             </p>
-            <ul className="max-h-[60vh] space-y-1 overflow-y-auto pr-1">
+            <ul className="max-h-[calc(100dvh-14rem)] space-y-1 overflow-y-auto pr-1 md:max-h-[calc(100dvh-16rem)]">
               {(search.data ?? []).map((hit) => (
                 <li key={hit.id}>
                   <Link
@@ -135,7 +135,10 @@ function ManualSectionPage() {
             </ul>
           </div>
         ) : (
-          <nav className="max-h-[60vh] space-y-3 overflow-y-auto pr-1" aria-label={t("manual.summary")}>
+          <nav
+            className="max-h-[calc(100dvh-14rem)] space-y-3 overflow-y-auto pr-1 md:max-h-[calc(100dvh-16rem)]"
+            aria-label={t("manual.summary")}
+          >
             {(toc.data?.chapters ?? []).map((chapter) => (
               <div key={chapter.name} className="space-y-1">
                 <p className="px-1 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
