@@ -149,6 +149,7 @@ function ManualSectionPage() {
                       key={entry.id}
                       to="/cours/$sectionId"
                       params={{ sectionId: entry.id }}
+                      search={{ q: undefined }}
                       className={cn(
                         "flex w-full items-start gap-2 rounded-md px-2 py-1.5 text-left text-xs leading-snug transition-colors",
                         isCurrent
@@ -242,6 +243,7 @@ function ManualSectionPage() {
                       navigate({
                         to: "/cours/$sectionId",
                         params: { sectionId: section.data.previousId },
+                        search: { q: query || undefined },
                       })
                     }
                   >
@@ -260,6 +262,7 @@ function ManualSectionPage() {
                       navigate({
                         to: "/cours/$sectionId",
                         params: { sectionId: section.data.nextId },
+                        search: { q: query || undefined },
                       })
                     }
                   >

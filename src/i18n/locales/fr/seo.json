@@ -119,5 +119,11 @@
     "description": "Cours, exemples d'audit, points d'examen, flashcards et quiz de fin de séance.",
     "ogTitle": "Séance de préparation — PREPA CERTIF",
     "ogDescription": "Une séance structurée de préparation à la certification ISO."
+  },
+  "manual": {
+    "title": "Cours SGS ISO 45001 — PREPA CERTIF",
+    "description": "Naviguez et recherchez dans le cours auditeur / auditeur principal ISO 45001.",
+    "ogTitle": "Cours SGS ISO 45001",
+    "ogDescription": "Lecture page par page et recherche par mots-clés dans le cours."
   }
 }
