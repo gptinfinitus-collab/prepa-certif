@@ -60,6 +60,8 @@ export const Route = createFileRoute("/_authenticated/seance/$moduleId")({
 });
 
 function Seance() {
+  const t = useT();
+  const locale = useLocale();
   const { moduleId } = Route.useParams();
   const { section: sectionParam } = Route.useSearch();
   const navigate = useNavigate();
