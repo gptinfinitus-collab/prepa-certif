@@ -1,0 +1,23 @@
+{
+  "title": "Cours SGS",
+  "subtitle": "Guide stagiaire officiel, page par page",
+  "summary": "Sommaire du cours",
+  "summaryAndSearch": "Sommaire et recherche",
+  "searchPlaceholder": "Rechercher un mot-clé…",
+  "searchLabel": "Rechercher dans le cours",
+  "searching": "Recherche en cours…",
+  "resultCount_one": "{{count}} page trouvée",
+  "resultCount_other": "{{count}} pages trouvées",
+  "resultCount_zero": "Aucune page trouvée",
+  "page": "Page {{page}}",
+  "previous": "Précédent",
+  "next": "Suivant",
+  "askAi": "Assistant IA",
+  "askPrompt": "Explique-moi cette page du cours SGS : « {{title}} » (page {{page}}).",
+  "notFound": "Page introuvable dans le cours.",
+  "start": "Commencer le cours",
+  "resume": "Reprendre où j'en étais",
+  "pagesRead": "{{read}} / {{total}} pages lues",
+  "searchTip": "Astuce : mettez une expression entre guillemets pour une recherche exacte.",
+  "chapters": "Chapitres"
+}
