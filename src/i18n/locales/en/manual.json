@@ -1,0 +1,23 @@
+{
+  "title": "SGS course",
+  "subtitle": "Official learner guide, page by page",
+  "summary": "Course summary",
+  "summaryAndSearch": "Summary and search",
+  "searchPlaceholder": "Search a keyword…",
+  "searchLabel": "Search the course",
+  "searching": "Searching…",
+  "resultCount_one": "{{count}} page found",
+  "resultCount_other": "{{count}} pages found",
+  "resultCount_zero": "No page found",
+  "page": "Page {{page}}",
+  "previous": "Previous",
+  "next": "Next",
+  "askAi": "AI assistant",
+  "askPrompt": "Explain this page of the SGS course to me: \"{{title}}\" (page {{page}}).",
+  "notFound": "Page not found in the course.",
+  "start": "Start the course",
+  "resume": "Resume where I left off",
+  "pagesRead": "{{read}} / {{total}} pages read",
+  "searchTip": "Tip: wrap a phrase in quotes for an exact search.",
+  "chapters": "Chapters"
+}
