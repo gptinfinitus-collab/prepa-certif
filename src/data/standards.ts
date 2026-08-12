@@ -1,4 +1,6 @@
 import type { GlossaryEntry, QuizItem } from "./program";
+import type { Locale } from "@/i18n/config";
+import { enStandardSpecs, enAuditReferences, enCommonGlossary } from "./standards.en";
 
 /** Description d'un chapitre (ou d'une annexe) d'une norme. */
 export interface ClauseSpec {
@@ -653,7 +655,21 @@ export const standardSpecs: Record<string, StandardSpec> = {
   ),
 };
 
-export function getStandardSpec(code: string | null | undefined): StandardSpec | null {
+export function getStandardSpec(
+  code: string | null | undefined,
+  locale: Locale = "fr",
+): StandardSpec | null {
   if (!code) return null;
-  return standardSpecs[code] ?? null;
+  const specs = locale === "en" ? enStandardSpecs : standardSpecs;
+  return specs[code] ?? standardSpecs[code] ?? null;
+}
+
+/** Références d'audit transverses dans la langue demandée. */
+export function getAuditReferences(locale: Locale = "fr"): StandardReference[] {
+  return locale === "en" ? enAuditReferences : auditReferences;
+}
+
+/** Glossaire commun dans la langue demandée. */
+export function getCommonGlossary(locale: Locale = "fr"): GlossaryEntry[] {
+  return locale === "en" ? enCommonGlossary : commonGlossary;
 }

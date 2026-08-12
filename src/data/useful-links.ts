@@ -1,3 +1,5 @@
+import type { Locale } from "@/i18n/config";
+import { enUsefulLinks, enCategoryLabels } from "./useful-links.en";
 export const LINK_CATEGORIES = [
   "Normes et textes officiels",
   "Certification et registres d'auditeurs",
@@ -226,4 +228,14 @@ export function groupLinksByCategory<T extends { category: string }>(
     category,
     links: links.filter((l) => l.category === category),
   }));
+}
+
+/** Catalogue de liens dans la langue demandée. */
+export function getUsefulLinks(locale: Locale = "fr"): UsefulLink[] {
+  return locale === "en" ? enUsefulLinks : USEFUL_LINKS;
+}
+
+/** Libellé affiché d'une catégorie de liens. */
+export function getCategoryLabel(category: LinkCategory, locale: Locale = "fr"): string {
+  return locale === "en" ? enCategoryLabels[category] : category;
 }

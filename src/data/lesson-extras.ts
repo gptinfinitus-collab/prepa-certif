@@ -1,3 +1,5 @@
+import type { Locale } from "@/i18n/config";
+import { enLessonExtras } from "./lesson-extras.en";
 /**
  * Contenu pédagogique complémentaire du cursus ISO 45001, structuré par séance.
  *
@@ -825,6 +827,7 @@ export const lessonExtras: Record<number, LessonExtras> = {
   },
 };
 
-export function getLessonExtras(moduleId: number): LessonExtras {
-  return lessonExtras[moduleId] ?? {};
+export function getLessonExtras(moduleId: number, locale: Locale = "fr"): LessonExtras {
+  const source = locale === "en" ? enLessonExtras : lessonExtras;
+  return source[moduleId] ?? lessonExtras[moduleId] ?? {};
 }
