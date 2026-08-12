@@ -56,6 +56,19 @@ export function AssistantChat({ threadId }: { threadId: string }) {
   const [streamed, setStreamed] = useState("");
   const [busy, setBusy] = useState(false);
   const [input, setInput] = useState("");
+
+  // Question préremplie depuis une page du cours SGS.
+  useEffect(() => {
+    try {
+      const prefill = sessionStorage.getItem("assistant:prefill");
+      if (prefill) {
+        sessionStorage.removeItem("assistant:prefill");
+        setInput(prefill);
+      }
+    } catch {
+      /* stockage indisponible */
+    }
+  }, []);
   const [historyOpen, setHistoryOpen] = useState(false);
 
   const bottomRef = useRef<HTMLDivElement>(null);

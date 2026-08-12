@@ -2,6 +2,7 @@ import { type ReactNode, useEffect, useState } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   BookMarked,
+  BookOpen,
   Brain,
   Bot,
   CalendarRange,
