@@ -19,7 +19,6 @@ import { I18nProvider, useT } from "@/i18n";
 import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import i18n, { applyI18nLocale } from "@/i18n/i18n";
 import { resolveInitialLocale } from "@/i18n/locale.isomorphic";
-import { pageHead } from "@/lib/seo";
 import frSeo from "@/i18n/locales/fr/seo.json";
 import enSeo from "@/i18n/locales/en/seo.json";
 
