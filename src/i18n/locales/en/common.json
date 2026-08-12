@@ -246,7 +246,10 @@
     "chooseCertToContinue": "Choose a certification to continue.",
     "chooseExamBody": "Choose your exam body for the Lead Auditor level.",
     "planningReady": "Your schedule is ready.",
-    "actionImpossible": "This action could not be performed."
+    "actionImpossible": "This action could not be performed.",
+    "paceFree": "{{count}} sessions at your own pace, {{perDay}} per study day.",
+    "paceSpread": "{{count}} sessions spread over {{days}} study days, {{perDay}} per day.",
+    "paceTight": "Tight pace: {{count}} sessions for {{days}} available study days. Add days or move the start date earlier."
   },
   "linkDialogEditTitle": "Edit link",
   "linkDialogAddTitle": "Add a link",
@@ -292,5 +295,8 @@
     "glossary": "Key definitions expected at the exam.",
     "annexes": "Audit templates and mock exam.",
     "cpd": "Tracking of your professional development."
-  }
+  },
+  "pace_ahead": "{{count}} session(s) ahead",
+  "pace_behind": "{{count}} session(s) behind",
+  "pace_ontrack": "On track"
 }

@@ -105,7 +105,7 @@ function Dashboard() {
           ) : null}
           <p className="mt-4 text-xs text-muted-foreground">
             {schedule?.endDate
-              ? `${t("common.estimatedEndDate", { date: formatShortDate(schedule.endDate, bcp47) })} · ${pace?.label ?? ""}`
+              ? `${t("common.estimatedEndDate", { date: formatShortDate(schedule.endDate, bcp47) })} · ${pace ? t(`common.pace_${pace.tone}`, { count: Math.abs(pace.diff) }) : ""}`
               : t("common.configurePlanningNotice")}
           </p>
         </section>
