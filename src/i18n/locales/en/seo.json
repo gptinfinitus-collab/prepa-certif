@@ -1,15 +1,15 @@
 {
   "imageAlt": "PREPA CERTIF — ISO certification preparation",
   "home": {
-    "title": "PREPA CERTIF — ISO auditor certification preparation",
+    "title": "Home — PREPA CERTIF, ISO auditor prep",
     "description": "Sign in to PREPA CERTIF to prepare your ISO certifications: tailored schedule, quizzes, mock exam and progress tracking.",
-    "ogTitle": "PREPA CERTIF — ISO certification preparation",
+    "ogTitle": "Home — PREPA CERTIF, ISO auditor prep",
     "ogDescription": "Access your ISO auditor certification preparation workspace."
   },
   "root": {
-    "title": "PREPA CERTIF — ISO auditor certification preparation",
+    "title": "PREPA CERTIF — ISO auditor certification prep",
     "description": "Preparation for ISO auditor certifications (9001, 14001, 45001, 27001…): configurable schedule, lessons, quizzes and progress tracking.",
-    "ogTitle": "PREPA CERTIF",
+    "ogTitle": "PREPA CERTIF — ISO Certification Prep",
     "ogDescription": "Structured preparation for ISO management system auditor certifications."
   },
   "auth": {

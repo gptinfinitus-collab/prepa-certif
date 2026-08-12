@@ -15,7 +15,8 @@ describe("organismes d'examen", () => {
 
   it("fournit une consigne de style à l'IA pour chaque organisme", () => {
     for (const body of EXAM_BODIES) {
-      expect(body.promptStyle.length).toBeGreaterThan(40);
+      expect(body.promptStyle.fr.length).toBeGreaterThan(40);
+      expect(body.promptStyle.en.length).toBeGreaterThan(40);
     }
   });
 });

@@ -95,6 +95,7 @@ function NavLinks({
           key={item.to}
           to={item.to}
           title={t(item.key)}
+          aria-label={t(item.key)}
           onClick={onNavigate}
           className={linkClass(isActive(item.to), collapsed)}
         >
