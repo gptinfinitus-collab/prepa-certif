@@ -14,6 +14,7 @@ import {
   Users,
 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
+import { useLocale, useT } from "@/i18n";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -66,9 +67,9 @@ export const Route = createFileRoute("/_authenticated/admin")({
   component: AdminPage,
 });
 
-function formatDate(value: string | null) {
+function formatDate(value: string | null, locale: string) {
   if (!value) return "—";
-  return new Date(value).toLocaleDateString("fr-FR", {
+  return new Date(value).toLocaleDateString(locale === "en" ? "en-GB" : "fr-FR", {
     day: "2-digit",
     month: "short",
     year: "numeric",
@@ -81,8 +82,10 @@ function SortButton({
   active,
   direction,
   onSort,
+  ariaLabel,
 }: {
   label: string;
+  ariaLabel: string;
   sortKey: AdminSortKey;
   active: AdminSortKey;
   direction: "asc" | "desc";
@@ -94,7 +97,7 @@ function SortButton({
       type="button"
       onClick={() => onSort(sortKey)}
       className="inline-flex items-center gap-1 font-medium hover:text-foreground"
-      aria-label={`Trier par ${label}`}
+      aria-label={ariaLabel}
     >
       {label}
       {isActive ? (
@@ -109,6 +112,8 @@ function SortButton({
 }
 
 function AdminPage() {
+  const t = useT();
+  const { locale } = useLocale();
   const isSuperAdmin = useIsSuperAdmin();
   const { data: users = [], isLoading, refetch, isFetching } = useAdminUsers(isSuperAdmin);
   const toggle = useToggleUserDisabled();
@@ -139,10 +144,8 @@ function AdminPage() {
       <AppShell>
         <div className="mx-auto max-w-2xl px-4 py-16 text-center">
           <ShieldCheck className="mx-auto size-10 text-muted-foreground" aria-hidden />
-          <h1 className="mt-4 text-xl font-semibold">Espace réservé</h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Cette page est réservée au super administrateur de PREPA CERTIF.
-          </p>
+          <h1 className="mt-4 text-xl font-semibold">{t("admin.restrictedTitle")}</h1>
+          <p className="mt-2 text-sm text-muted-foreground">{t("admin.restrictedDesc")}</p>
         </div>
       </AppShell>
     );
@@ -153,24 +156,22 @@ function AdminPage() {
       <div className="mx-auto max-w-6xl space-y-6 px-4 py-6 sm:px-6">
         <header className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight">Administration</h1>
-            <p className="text-sm text-muted-foreground">
-              Qui utilise PREPA CERTIF, et où en sont-ils dans leur préparation.
-            </p>
+            <h1 className="text-2xl font-semibold tracking-tight">{t("admin.title")}</h1>
+            <p className="text-sm text-muted-foreground">{t("admin.subtitle")}</p>
           </div>
           <Button variant="outline" size="sm" onClick={() => refetch()} disabled={isFetching}>
             <RefreshCw className={isFetching ? "size-4 animate-spin" : "size-4"} aria-hidden />
-            Actualiser
+            {t("admin.refresh")}
           </Button>
         </header>
 
         <div className="grid gap-3 grid-cols-2 lg:grid-cols-5">
           {[
-            { label: "Comptes", value: stats.total, icon: Users },
-            { label: "Inscrits (7 j)", value: stats.signupsLast7, icon: UserPlus },
-            { label: "Inscrits (30 j)", value: stats.signupsLast30, icon: UserPlus },
-            { label: "Connectés (7 j)", value: stats.activeLast7, icon: CheckCircle2 },
-            { label: "Désactivés", value: stats.disabled, icon: Ban },
+            { label: t("admin.stats.total"), value: stats.total, icon: Users },
+            { label: t("admin.stats.signups7"), value: stats.signupsLast7, icon: UserPlus },
+            { label: t("admin.stats.signups30"), value: stats.signupsLast30, icon: UserPlus },
+            { label: t("admin.stats.active7"), value: stats.activeLast7, icon: CheckCircle2 },
+            { label: t("admin.stats.disabled"), value: stats.disabled, icon: Ban },
           ].map((s) => (
             <Card key={s.label}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -188,10 +189,8 @@ function AdminPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Utilisateurs</CardTitle>
-            <CardDescription>
-              Recherchez par nom ou e-mail, puis désactivez ou supprimez un compte.
-            </CardDescription>
+            <CardTitle className="text-base">{t("admin.users")}</CardTitle>
+            <CardDescription>{t("admin.usersDesc")}</CardDescription>
             <div className="relative pt-2">
               <Search
                 className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
@@ -200,17 +199,17 @@ function AdminPage() {
               <Input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Rechercher un utilisateur"
+                placeholder={t("admin.searchPlaceholder")}
                 className="pl-9"
-                aria-label="Rechercher un utilisateur"
+                aria-label={t("admin.searchPlaceholder")}
               />
             </div>
           </CardHeader>
           <CardContent>
             {isLoading ? (
-              <p className="py-8 text-center text-sm text-muted-foreground">Chargement…</p>
+              <p className="py-8 text-center text-sm text-muted-foreground">{t("admin.loading")}</p>
             ) : filtered.length === 0 ? (
-              <p className="py-8 text-center text-sm text-muted-foreground">Aucun compte trouvé.</p>
+              <p className="py-8 text-center text-sm text-muted-foreground">{t("admin.noAccountFound")}</p>
             ) : (
               <div className="-mx-2 overflow-x-auto px-2">
                 <Table>
@@ -218,27 +217,30 @@ function AdminPage() {
                     <TableRow>
                       <TableHead>
                         <SortButton
-                          label="Utilisateur"
+                          label={t("admin.columns.user")}
+                          ariaLabel={t("admin.sortBy", { label: t("admin.columns.user") })}
                           sortKey="name"
                           active={sortKey}
                           direction={direction}
                           onSort={toggleSort}
                         />
                       </TableHead>
-                      <TableHead>Certification</TableHead>
+                      <TableHead>{t("admin.columns.certification")}</TableHead>
                       <TableHead className="text-right">
                         <SortButton
-                          label="Activité"
+                          label={t("admin.columns.activity")}
+                          ariaLabel={t("admin.sortBy", { label: t("admin.columns.activity") })}
                           sortKey="activity"
                           active={sortKey}
                           direction={direction}
                           onSort={toggleSort}
                         />
                       </TableHead>
-                      <TableHead className="text-right">Docs</TableHead>
+                      <TableHead className="text-right">{t("admin.columns.docs")}</TableHead>
                       <TableHead>
                         <SortButton
-                          label="Inscription"
+                          label={t("admin.columns.signupDate")}
+                          ariaLabel={t("admin.sortBy", { label: t("admin.columns.signupDate") })}
                           sortKey="createdAt"
                           active={sortKey}
                           direction={direction}
@@ -247,14 +249,15 @@ function AdminPage() {
                       </TableHead>
                       <TableHead>
                         <SortButton
-                          label="Dernière connexion"
+                          label={t("admin.columns.lastSignIn")}
+                          ariaLabel={t("admin.sortBy", { label: t("admin.columns.lastSignIn") })}
                           sortKey="lastSignInAt"
                           active={sortKey}
                           direction={direction}
                           onSort={toggleSort}
                         />
                       </TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
+                      <TableHead className="text-right">{t("admin.columns.actions")}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -263,8 +266,8 @@ function AdminPage() {
                         <TableCell className="min-w-56">
                           <div className="flex flex-wrap items-center gap-2">
                             <span className="font-medium">{u.displayName ?? "—"}</span>
-                            {u.isSuperAdmin && <Badge variant="secondary">Super admin</Badge>}
-                            {u.disabled && <Badge variant="destructive">Désactivé</Badge>}
+                            {u.isSuperAdmin && <Badge variant="secondary">{t("admin.superAdmin")}</Badge>}
+                            {u.disabled && <Badge variant="destructive">{t("admin.disabled")}</Badge>}
                           </div>
                           <span className="block truncate text-xs text-muted-foreground">
                             {u.email}
@@ -280,19 +283,19 @@ function AdminPage() {
                           ) : null}
                         </TableCell>
                         <TableCell className="whitespace-nowrap text-right text-sm tabular-nums">
-                          {u.modulesCompleted} séances
+                          {u.modulesCompleted} {t("admin.sessionsUnit")}
                           <span className="block text-xs text-muted-foreground">
-                            {u.quizSessions} quiz
+                            {u.quizSessions} {t("admin.quizUnit")}
                           </span>
                         </TableCell>
                         <TableCell className="text-right tabular-nums">
                           {u.documentsCount}
                         </TableCell>
                         <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
-                          {formatDate(u.createdAt)}
+                          {formatDate(u.createdAt, locale)}
                         </TableCell>
                         <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
-                          {formatDate(u.lastSignInAt)}
+                          {formatDate(u.lastSignInAt, locale)}
                         </TableCell>
                         <TableCell className="text-right">
                           <div className="flex justify-end gap-1">
@@ -301,14 +304,16 @@ function AdminPage() {
                               size="icon"
                               className="size-8"
                               disabled={u.isSuperAdmin || toggle.isPending}
-                              aria-label={u.disabled ? "Réactiver le compte" : "Désactiver le compte"}
+                              aria-label={u.disabled ? t("admin.reactivateAccount") : t("admin.disableAccount")}
                               onClick={() =>
                                 toggle.mutate(
                                   { userId: u.id, disabled: !u.disabled },
                                   {
                                     onSuccess: () =>
                                       toast.success(
-                                        u.disabled ? "Compte réactivé." : "Compte désactivé.",
+                                        u.disabled
+                                          ? t("admin.accountReactivated")
+                                          : t("admin.accountDisabled"),
                                       ),
                                     onError: (e: Error) => toast.error(e.message),
                                   },
@@ -328,30 +333,29 @@ function AdminPage() {
                                   size="icon"
                                   className="size-8 text-destructive"
                                   disabled={u.isSuperAdmin}
-                                  aria-label="Supprimer le compte"
+                                  aria-label={t("admin.deleteAccount")}
                                 >
                                   <Trash2 className="size-4" aria-hidden />
                                 </Button>
                               </AlertDialogTrigger>
                               <AlertDialogContent>
                                 <AlertDialogHeader>
-                                  <AlertDialogTitle>Supprimer ce compte ?</AlertDialogTitle>
+                                  <AlertDialogTitle>{t("admin.deleteAccountTitle")}</AlertDialogTitle>
                                   <AlertDialogDescription>
-                                    {u.email} et toutes ses données de préparation seront
-                                    définitivement supprimés. Cette action est irréversible.
+                                    {t("admin.deleteAccountDesc", { email: u.email })}
                                   </AlertDialogDescription>
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
-                                  <AlertDialogCancel>Annuler</AlertDialogCancel>
+                                  <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
                                   <AlertDialogAction
                                     onClick={() =>
                                       remove.mutate(u.id, {
-                                        onSuccess: () => toast.success("Compte supprimé."),
+                                        onSuccess: () => toast.success(t("admin.accountDeleted")),
                                         onError: (e: Error) => toast.error(e.message),
                                       })
                                     }
                                   >
-                                    Supprimer
+                                    {t("common.delete")}
                                   </AlertDialogAction>
                                 </AlertDialogFooter>
                               </AlertDialogContent>
