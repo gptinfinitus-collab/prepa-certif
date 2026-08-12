@@ -26,6 +26,7 @@ import {
   toggleStudyDay,
 } from "@/lib/onboarding";
 import { Check, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { useT } from "@/i18n";
 
 interface OnboardingProps {
   open: boolean;
@@ -37,6 +38,7 @@ interface OnboardingProps {
  * planning. Les réponses pré-remplissent le planning de révision.
  */
 export function Onboarding({ open, onClose }: OnboardingProps) {
+  const t = useT();
   const [stepIndex, setStepIndex] = useState(0);
   const step = ONBOARDING_STEPS[stepIndex]!;
 
@@ -85,7 +87,7 @@ export function Onboarding({ open, onClose }: OnboardingProps) {
     try {
       if (step.id === "certification") {
         if (!certId) {
-          toast.error("Choisissez une certification pour continuer.");
+          toast.error(t("common.onboarding.chooseCertToContinue"));
           return;
         }
         if (certId !== certification?.id) await follow.mutateAsync(certId);
@@ -94,7 +96,7 @@ export function Onboarding({ open, onClose }: OnboardingProps) {
       }
       if (step.id === "track") {
         if (currentTrack === "lead_auditor" && !currentBody) {
-          toast.error("Choisissez votre organisme d'examen pour le niveau Lead Auditor.");
+          toast.error(t("common.onboarding.chooseExamBody"));
           return;
         }
         if (selectedBody) await setExamBody.mutateAsync(selectedBody);
@@ -104,10 +106,10 @@ export function Onboarding({ open, onClose }: OnboardingProps) {
       }
       await savePlan.mutateAsync(plan);
       await setOnboarded.mutateAsync(true);
-      toast.success("Votre planning est prêt.");
+      toast.success(t("common.onboarding.planningReady"));
       onClose();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Action impossible.");
+      toast.error(error instanceof Error ? error.message : t("common.onboarding.actionImpossible"));
     }
   }
 
@@ -117,10 +119,10 @@ export function Onboarding({ open, onClose }: OnboardingProps) {
         <DialogHeader>
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <Sparkles className="size-3.5 text-primary" aria-hidden />
-            Étape {stepIndex + 1} sur {ONBOARDING_STEPS.length}
+            {t("common.onboarding.stepOf", { current: stepIndex + 1, total: ONBOARDING_STEPS.length })}
           </div>
-          <DialogTitle className="font-sans text-xl">{step.title}</DialogTitle>
-          <DialogDescription>{step.description}</DialogDescription>
+          <DialogTitle className="font-sans text-xl">{t(step.titleKey)}</DialogTitle>
+          <DialogDescription>{t(step.descriptionKey)}</DialogDescription>
         </DialogHeader>
 
         <div className="flex gap-1.5" aria-hidden>
@@ -187,7 +189,7 @@ export function Onboarding({ open, onClose }: OnboardingProps) {
 
             {currentTrack === "lead_auditor" && (
               <div className="space-y-2 rounded-lg border border-border p-3">
-                <p className="text-sm font-medium">Organisme d'examen</p>
+                <p className="text-sm font-medium">{t("common.onboarding.examBody")}</p>
                 <div className="flex flex-wrap gap-2">
                   {EXAM_BODIES.map((body) => (
                     <Button
@@ -209,7 +211,7 @@ export function Onboarding({ open, onClose }: OnboardingProps) {
         {step.id === "planning" && (
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="onboarding-exam-date">Date d'examen (optionnelle)</Label>
+              <Label htmlFor="onboarding-exam-date">{t("common.onboarding.examDateOptional")}</Label>
               <Input
                 id="onboarding-exam-date"
                 type="date"
@@ -218,7 +220,7 @@ export function Onboarding({ open, onClose }: OnboardingProps) {
               />
             </div>
             <div className="space-y-2">
-              <Label>Jours de révision</Label>
+              <Label>{t("common.onboarding.reviewDays")}</Label>
               <div className="flex flex-wrap gap-2">
                 {STUDY_DAY_LABELS.map((day) => (
                   <Button
@@ -229,7 +231,7 @@ export function Onboarding({ open, onClose }: OnboardingProps) {
                     aria-pressed={studyDays.includes(day.value)}
                     onClick={() => setStudyDays((d) => toggleStudyDay(d, day.value))}
                   >
-                    {day.label}
+                    {t(day.labelKey)}
                   </Button>
                 ))}
               </div>
@@ -237,10 +239,10 @@ export function Onboarding({ open, onClose }: OnboardingProps) {
             <div className="rounded-lg border border-border bg-muted/40 p-3">
               <div className="flex items-center gap-2">
                 <Badge variant="secondary">
-                  {plan.modules_per_day} séance{plan.modules_per_day > 1 ? "s" : ""} / jour
+                  {t("common.onboarding.sessionsPerDay", { plural: plan.modules_per_day > 1 ? "s" : "" })}
                 </Badge>
                 {plan.modules_per_day === MAX_MODULES_PER_DAY && (
-                  <span className="text-xs text-muted-foreground">rythme maximal</span>
+                  <span className="text-xs text-muted-foreground">{t("common.onboarding.maxPace")}</span>
                 )}
               </div>
               <p className="mt-2 text-sm text-muted-foreground">{paceSummary(plan, moduleCount)}</p>
@@ -250,17 +252,17 @@ export function Onboarding({ open, onClose }: OnboardingProps) {
 
         <div className="flex items-center justify-between gap-2 pt-2">
           <Button variant="ghost" onClick={() => void skip()} disabled={busy}>
-            Passer
+            {t("common.onboarding.skip")}
           </Button>
           <div className="flex gap-2">
             {stepIndex > 0 && (
               <Button variant="outline" onClick={() => setStepIndex((i) => i - 1)} disabled={busy}>
                 <ChevronLeft className="size-4" aria-hidden />
-                Retour
+                {t("common.onboarding.back")}
               </Button>
             )}
             <Button onClick={() => void next()} disabled={busy}>
-              {step.id === "planning" ? "Terminer" : "Continuer"}
+              {step.id === "planning" ? t("common.onboarding.finish") : t("common.onboarding.continueLabel")}
               {step.id !== "planning" && <ChevronRight className="size-4" aria-hidden />}
             </Button>
           </div>
