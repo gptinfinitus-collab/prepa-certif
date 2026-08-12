@@ -1,0 +1,277 @@
+import { useEffect, useMemo, useState } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { ArrowLeft, ArrowRight, BookOpen, Bot, Check, Loader2, Search } from "lucide-react";
+
+import { AppShell } from "@/components/AppShell";
+import { MarkdownView } from "@/components/MarkdownView";
+import { CourseProgressBar } from "@/components/course/SectionNav";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
+import { useT } from "@/i18n";
+import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
+import { pageHead } from "@/lib/seo";
+import {
+  highlightParts,
+  useManualProgress,
+  useManualSearch,
+  useManualSection,
+  useManualToc,
+  useMarkManualSectionRead,
+} from "@/lib/manual";
+
+export const Route = createFileRoute("/_authenticated/cours/$sectionId")({
+  head: ({ match }) => {
+    const locale = (match.context as { locale?: Locale }).locale ?? DEFAULT_LOCALE;
+    return pageHead(locale, "manual", "/cours");
+  },
+  validateSearch: (search: Record<string, unknown>) => ({
+    q: typeof search["q"] === "string" ? (search["q"] as string) : undefined,
+  }),
+  component: ManualSectionPage,
+});
+
+/** Texte avec surlignage des termes recherchés. */
+function Highlighted({ text, query }: { text: string; query: string }) {
+  if (!query) return <>{text}</>;
+  return (
+    <>
+      {highlightParts(text, query).map((part, i) =>
+        part.hit ? (
+          <mark key={i} className="rounded bg-primary/25 px-0.5 text-foreground">
+            {part.text}
+          </mark>
+        ) : (
+          <span key={i}>{part.text}</span>
+        ),
+      )}
+    </>
+  );
+}
+
+function ManualSectionPage() {
+  const t = useT();
+  const navigate = useNavigate();
+  const { sectionId } = Route.useParams();
+  const { q } = Route.useSearch();
+
+  const toc = useManualToc();
+  const section = useManualSection(sectionId);
+  const progress = useManualProgress();
+  const markRead = useMarkManualSectionRead();
+
+  const [query, setQuery] = useState(q ?? "");
+  const search = useManualSearch(query);
+  const readIds = progress.data?.readIds ?? [];
+
+  useEffect(() => {
+    if (section.data) markRead.mutate(sectionId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sectionId, section.data?.id]);
+
+  const percent = useMemo(() => {
+    const total = toc.data?.sectionCount ?? 0;
+    return total > 0 ? (readIds.length / total) * 100 : 0;
+  }, [toc.data?.sectionCount, readIds.length]);
+
+  function askAssistant() {
+    if (!section.data) return;
+    const question = t("manual.askPrompt", {
+      title: section.data.title,
+      page: section.data.page,
+    });
+    try {
+      sessionStorage.setItem("assistant:prefill", `${question}\n\n${section.data.markdown.slice(0, 1200)}`);
+    } catch {
+      /* stockage indisponible */
+    }
+    navigate({ to: "/assistant" });
+  }
+
+  const tocPanel = (
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <div className="relative">
+          <Search className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
+          <Input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={t("manual.searchPlaceholder")}
+            aria-label={t("manual.searchLabel")}
+            className="h-9 pl-8 text-sm"
+          />
+        </div>
+        {query.trim().length >= 2 ? (
+          <div className="space-y-1">
+            <p className="px-1 text-xs text-muted-foreground">
+              {search.isFetching
+                ? t("manual.searching")
+                : t("manual.resultCount", { count: search.data?.length ?? 0 })}
+            </p>
+            <ul className="max-h-[60vh] space-y-1 overflow-y-auto pr-1">
+              {(search.data ?? []).map((hit) => (
+                <li key={hit.id}>
+                  <Link
+                    to="/cours/$sectionId"
+                    params={{ sectionId: hit.id }}
+                    search={{ q: query }}
+                    className="block rounded-md px-2 py-1.5 text-left text-xs hover:bg-secondary"
+                  >
+                    <span className="flex items-center justify-between gap-2">
+                      <span className="font-medium text-foreground">
+                        <Highlighted text={hit.title} query={query} />
+                      </span>
+                      <span className="shrink-0 text-[10px] text-muted-foreground">p. {hit.page}</span>
+                    </span>
+                    <span className="mt-0.5 block text-muted-foreground">
+                      <Highlighted text={hit.snippet} query={query} />
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <nav className="max-h-[60vh] space-y-3 overflow-y-auto pr-1" aria-label={t("manual.summary")}>
+            {(toc.data?.chapters ?? []).map((chapter) => (
+              <div key={chapter.name} className="space-y-1">
+                <p className="px-1 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                  {chapter.name}
+                </p>
+                {chapter.entries.map((entry) => {
+                  const isCurrent = entry.id === sectionId;
+                  const isRead = readIds.includes(entry.id);
+                  return (
+                    <Link
+                      key={entry.id}
+                      to="/cours/$sectionId"
+                      params={{ sectionId: entry.id }}
+                      className={cn(
+                        "flex w-full items-start gap-2 rounded-md px-2 py-1.5 text-left text-xs leading-snug transition-colors",
+                        isCurrent
+                          ? "bg-secondary font-medium text-foreground"
+                          : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground",
+                      )}
+                      aria-current={isCurrent ? "page" : undefined}
+                    >
+                      <span
+                        className={cn(
+                          "mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border text-[9px]",
+                          isRead ? "border-primary bg-primary text-primary-foreground" : "border-border",
+                        )}
+                        aria-hidden
+                      >
+                        {isRead ? <Check className="size-2.5" /> : entry.page}
+                      </span>
+                      <span className="min-w-0 flex-1 break-words">{entry.title}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            ))}
+          </nav>
+        )}
+      </div>
+    </div>
+  );
+
+  return (
+    <AppShell title={t("manual.title")}>
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center gap-2">
+          <Badge variant="secondary" className="gap-1">
+            <BookOpen className="size-3" aria-hidden />
+            {toc.data?.publisher ?? "SGS"}
+          </Badge>
+          <span className="text-xs text-muted-foreground">{toc.data?.reference}</span>
+          <div className="ml-auto lg:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <Search className="mr-1.5 size-4" aria-hidden />
+                  {t("manual.summaryAndSearch")}
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[88vw] max-w-sm overflow-y-auto">
+                <SheetTitle className="mb-3 text-sm">{t("manual.summaryAndSearch")}</SheetTitle>
+                {tocPanel}
+              </SheetContent>
+            </Sheet>
+          </div>
+        </div>
+
+        <CourseProgressBar value={percent} />
+
+        <div className="grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
+          <aside className="hidden lg:block">{tocPanel}</aside>
+
+          <div className="min-w-0 space-y-4">
+            {section.isLoading ? (
+              <div className="flex items-center gap-2 py-16 text-sm text-muted-foreground">
+                <Loader2 className="size-4 animate-spin" aria-hidden />
+                {t("common.loading")}
+              </div>
+            ) : !section.data ? (
+              <p className="py-16 text-sm text-muted-foreground">{t("manual.notFound")}</p>
+            ) : (
+              <>
+                <Card>
+                  <CardContent className="space-y-4 p-5">
+                    <div className="space-y-1">
+                      <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                        {section.data.chapter} · {t("manual.page", { page: section.data.page })}
+                      </p>
+                      <h1 className="text-lg font-semibold leading-tight">
+                        <Highlighted text={section.data.title} query={query} />
+                      </h1>
+                    </div>
+                    <MarkdownView>{section.data.markdown}</MarkdownView>
+                  </CardContent>
+                </Card>
+
+                <div className="grid grid-cols-3 gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={!section.data.previousId}
+                    onClick={() =>
+                      section.data?.previousId &&
+                      navigate({
+                        to: "/cours/$sectionId",
+                        params: { sectionId: section.data.previousId },
+                      })
+                    }
+                  >
+                    <ArrowLeft className="mr-1.5 size-4" aria-hidden />
+                    {t("manual.previous")}
+                  </Button>
+                  <Button variant="secondary" size="sm" onClick={askAssistant}>
+                    <Bot className="mr-1.5 size-4" aria-hidden />
+                    <span className="truncate">{t("manual.askAi")}</span>
+                  </Button>
+                  <Button
+                    size="sm"
+                    disabled={!section.data.nextId}
+                    onClick={() =>
+                      section.data?.nextId &&
+                      navigate({
+                        to: "/cours/$sectionId",
+                        params: { sectionId: section.data.nextId },
+                      })
+                    }
+                  >
+                    {t("manual.next")}
+                    <ArrowRight className="ml-1.5 size-4" aria-hidden />
+                  </Button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </AppShell>
+  );
+}
