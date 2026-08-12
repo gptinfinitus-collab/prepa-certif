@@ -6,18 +6,20 @@ import {
   type ProgramWeek,
 } from "./program";
 import {
-  auditReferences,
-  commonGlossary,
+  getAuditReferences,
+  getCommonGlossary,
   getStandardSpec,
   type ClauseSpec,
   type StandardReference,
 } from "./standards";
 import {
   getClauseExtras,
-  methodologyExtras,
+  getMethodologyExtras,
   type StandardContext,
 } from "./standard-extras";
 import { leadAuditorModules } from "./lead-auditor";
+import { getProgram } from "./program";
+import type { Locale } from "@/i18n/config";
 
 export interface Curriculum {
   /** Vrai lorsque le cursus est entièrement rédigé (séances, quiz, examen blanc). */
@@ -42,20 +44,21 @@ const genericAnnexes = {
 };
 
 /** Cursus complet ISO 45001 (contenu rédigé). */
-function iso45001Curriculum(): Curriculum {
-  const leadWeekId = Math.max(...iso45001Program.weeks.map((w) => w.id)) + 1;
-  const leadModules = leadAuditorModules("ISO 45001:2018", leadWeekId);
+function iso45001Curriculum(locale: Locale): Curriculum {
+  const prog = getProgram(locale);
+  const leadWeekId = Math.max(...prog.weeks.map((w) => w.id)) + 1;
+  const leadModules = leadAuditorModules("ISO 45001:2018", leadWeekId, locale);
   return {
     complete: true,
-    title: iso45001Program.meta.title,
-    subtitle: iso45001Program.meta.subtitle,
+    title: prog.meta.title,
+    subtitle: prog.meta.subtitle,
     weeks: [
-      ...iso45001Program.weeks,
+      ...prog.weeks,
       { id: leadWeekId, title: "Lead Auditor", dayIds: leadModules.map((m) => m.id) },
     ],
-    modules: [...iso45001Program.modules, ...leadModules],
-    glossary: iso45001Program.glossary,
-    annexes: iso45001Program.annexes,
+    modules: [...prog.modules, ...leadModules],
+    glossary: prog.glossary,
+    annexes: prog.annexes,
     references: [
       {
         code: "ISO 45001:2018",
@@ -69,7 +72,7 @@ function iso45001Curriculum(): Curriculum {
         role: "Lignes directrices sur les risques psychosociaux, complément utile.",
         url: "https://www.iso.org/fr/standard/64283.html",
       },
-      ...auditReferences,
+      ...getAuditReferences(locale),
     ],
     copyrightNote: COPYRIGHT_NOTE,
   };
@@ -80,6 +83,7 @@ function clauseModule(
   week: number,
   clause: ClauseSpec,
   ctx: StandardContext,
+  locale: Locale,
 ): ProgramModule {
   const label = ctx.label;
   const isGuidance = clause.guidance === true;
@@ -121,12 +125,18 @@ function clauseModule(
         answer: clause.requirements.slice(0, 2).join(" / "),
       },
     ],
-    extras: getClauseExtras(ctx, clause.clause),
+    extras: getClauseExtras(ctx, clause.clause, locale),
   };
 }
 
 /** Séances de méthodologie d'audit, communes à toutes les normes. */
-function methodologyModules(startId: number, week: number, label: string): ProgramModule[] {
+function methodologyModules(
+  startId: number,
+  week: number,
+  label: string,
+  locale: Locale,
+): ProgramModule[] {
+  const extras = getMethodologyExtras(locale);
   const items = [
     {
       title: "Principes et vocabulaire de l'audit (ISO 19011:2026)",
@@ -153,7 +163,7 @@ function methodologyModules(startId: number, week: number, label: string): Progr
   ];
 
   return items.map((item, index) => ({
-    ...(methodologyExtras[index] ? { extras: methodologyExtras[index] } : {}),
+    ...(extras[index] ? { extras: extras[index] } : {}),
     id: startId + index,
     week,
     type: "practical" as const,
@@ -173,10 +183,11 @@ function skeletonCurriculum(
   clauses: ClauseSpec[],
   glossary: GlossaryEntry[],
   references: StandardReference[],
+  locale: Locale,
 ): Curriculum {
   const label = ctx.label;
-  const clauseModules = clauses.map((clause, index) => clauseModule(index + 1, 1, clause, ctx));
-  const methodology = methodologyModules(clauseModules.length + 1, 2, label);
+  const clauseModules = clauses.map((clause, index) => clauseModule(index + 1, 1, clause, ctx, locale));
+  const methodology = methodologyModules(clauseModules.length + 1, 2, label, locale);
   const reviewId = clauseModules.length + methodology.length + 1;
   const review: ProgramModule = {
     id: reviewId,
@@ -190,7 +201,7 @@ function skeletonCurriculum(
     keyTakeaway: "Réviser, c'est vérifier ce que l'on sait restituer, pas relire.",
     quiz: [],
   };
-  const leadModules = leadAuditorModules(label, 4);
+  const leadModules = leadAuditorModules(label, 4, locale);
 
 
 
@@ -205,7 +216,7 @@ function skeletonCurriculum(
       { id: 4, title: "Lead Auditor", dayIds: leadModules.map((m) => m.id) },
     ],
     modules: [...clauseModules, ...methodology, review, ...leadModules],
-    glossary: [...glossary, ...commonGlossary].sort((a, b) => a.term.localeCompare(b.term, "fr")),
+    glossary: [...glossary, ...getCommonGlossary(locale)].sort((a, b) => a.term.localeCompare(b.term, locale)),
     annexes: {
       ...genericAnnexes,
       revisionSheets: clauses.map((c) => ({ clause: c.clause, summary: c.summary })),
@@ -228,11 +239,14 @@ export interface CurriculumSource {
  * Renvoie le cursus d'une certification : contenu rédigé lorsqu'il existe,
  * sinon squelette officiel (chapitres, méthodologie, glossaire, références).
  */
-export function getCurriculum(cert: CurriculumSource | null): Curriculum | null {
+export function getCurriculum(
+  cert: CurriculumSource | null,
+  locale: Locale = "fr",
+): Curriculum | null {
   if (!cert) return null;
-  if (cert.code === "iso-45001") return iso45001Curriculum();
+  if (cert.code === "iso-45001") return iso45001Curriculum(locale);
 
-  const spec = getStandardSpec(cert.code);
+  const spec = getStandardSpec(cert.code, locale);
   if (spec) {
     return skeletonCurriculum(
       { code: spec.code, label: spec.label, subject: spec.subject, systemName: spec.systemName },
@@ -240,6 +254,7 @@ export function getCurriculum(cert: CurriculumSource | null): Curriculum | null 
       spec.clauses,
       spec.glossary,
       spec.references,
+      locale,
     );
   }
 
@@ -247,14 +262,22 @@ export function getCurriculum(cert: CurriculumSource | null): Curriculum | null 
   const clauses: ClauseSpec[] = cert.chapters.map((chapter) => ({
     clause: chapter,
     title: chapter,
-    summary: `Chapitre du référentiel ${cert.name}.`,
-    requirements: ["À compléter avec vos propres notes et documents de cours."],
+    summary:
+      locale === "en"
+        ? `Clause of the ${cert.name} framework.`
+        : `Chapitre du référentiel ${cert.name}.`,
+    requirements: [
+      locale === "en"
+        ? "To be completed with your own notes and course documents."
+        : "À compléter avec vos propres notes et documents de cours.",
+    ],
   }));
   return skeletonCurriculum(
     { code: cert.code, label: cert.name, subject: "la performance", systemName: "système de management" },
     cert.description,
     clauses,
     [],
-    auditReferences,
+    getAuditReferences(locale),
+    locale,
   );
 }
