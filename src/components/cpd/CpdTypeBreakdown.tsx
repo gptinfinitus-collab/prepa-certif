@@ -1,15 +1,15 @@
 import { formatHours, hoursByType, type CpdEntry } from "@/lib/cpd";
+import { useT } from "@/i18n";
 
 /** Répartition des heures CPD par type d'activité. */
 export function CpdTypeBreakdown({ entries }: { entries: CpdEntry[] }) {
+  const t = useT();
   const rows = hoursByType(entries);
   const max = rows.length > 0 ? Math.max(...rows.map((r) => r.hours)) : 0;
 
   if (rows.length === 0) {
     return (
-      <p className="text-sm text-muted-foreground">
-        Aucune heure enregistrée pour cette année.
-      </p>
+      <p className="text-sm text-muted-foreground">{t("cpd.noHoursThisYear")}</p>
     );
   }
 
@@ -18,7 +18,7 @@ export function CpdTypeBreakdown({ entries }: { entries: CpdEntry[] }) {
       {rows.map((row) => (
         <li key={row.type} className="space-y-1.5">
           <div className="flex items-baseline justify-between gap-3 text-sm">
-            <span className="truncate">{row.type}</span>
+            <span className="truncate">{t(`cpd.types.${row.type}`, { defaultValue: row.type })}</span>
             <span className="shrink-0 tabular-nums text-muted-foreground">
               {formatHours(row.hours)}
             </span>

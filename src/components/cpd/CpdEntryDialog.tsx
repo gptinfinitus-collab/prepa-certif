@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { CPD_TYPES, type CpdEntry, type CpdEntryInput } from "@/lib/cpd";
+import { useT } from "@/i18n";
 
 function todayIso() {
   return new Date().toISOString().slice(0, 10);
@@ -38,6 +39,7 @@ export function CpdEntryDialog({
   onSubmit: (input: CpdEntryInput) => void;
   saving: boolean;
 }) {
+  const t = useT();
   const [date, setDate] = useState(todayIso());
   const [title, setTitle] = useState("");
   const [type, setType] = useState<string>("Formation");
@@ -60,10 +62,10 @@ export function CpdEntryDialog({
   const submit = (event: React.FormEvent) => {
     event.preventDefault();
     const parsedHours = Number(hours.replace(",", "."));
-    if (!date) return setError("La date est requise.");
-    if (!title.trim()) return setError("L'intitulé de l'activité est requis.");
+    if (!date) return setError(t("cpd.dateRequired"));
+    if (!title.trim()) return setError(t("cpd.titleRequired"));
     if (!Number.isFinite(parsedHours) || parsedHours <= 0) {
-      return setError("Indiquez un nombre d'heures supérieur à 0.");
+      return setError(t("cpd.hoursMustBePositive"));
     }
     setError(null);
     onSubmit({
@@ -81,16 +83,14 @@ export function CpdEntryDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] max-w-[92vw] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>{entry ? "Modifier l'entrée" : "Nouvelle entrée CPD"}</DialogTitle>
-          <DialogDescription>
-            Consignez une activité de développement professionnel continu.
-          </DialogDescription>
+          <DialogTitle>{entry ? t("cpd.editEntryDialogTitle") : t("cpd.newEntryDialogTitle")}</DialogTitle>
+          <DialogDescription>{t("cpd.entryDialogDesc")}</DialogDescription>
         </DialogHeader>
 
         <form onSubmit={submit} className="space-y-4">
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-1.5">
-              <Label htmlFor="cpd-date">Date</Label>
+              <Label htmlFor="cpd-date">{t("cpd.date")}</Label>
               <Input
                 id="cpd-date"
                 type="date"
@@ -100,7 +100,7 @@ export function CpdEntryDialog({
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="cpd-hours">Heures</Label>
+              <Label htmlFor="cpd-hours">{t("cpd.hoursLabel")}</Label>
               <Input
                 id="cpd-hours"
                 type="number"
@@ -115,26 +115,26 @@ export function CpdEntryDialog({
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="cpd-title">Intitulé de l'activité</Label>
+            <Label htmlFor="cpd-title">{t("cpd.activityTitleLabel")}</Label>
             <Input
               id="cpd-title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Ex. Audit interne ISO 45001 — site de Lyon"
+              placeholder={t("cpd.activityTitlePlaceholder")}
               required
             />
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="cpd-type">Type d'activité</Label>
+            <Label htmlFor="cpd-type">{t("cpd.activityTypeLabel")}</Label>
             <Select value={type} onValueChange={setType}>
               <SelectTrigger id="cpd-type">
-                <SelectValue placeholder="Choisir un type" />
+                <SelectValue placeholder={t("cpd.chooseType")} />
               </SelectTrigger>
               <SelectContent>
                 {CPD_TYPES.map((value) => (
                   <SelectItem key={value} value={value}>
-                    {value}
+                    {t(`cpd.types.${value}`)}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -142,23 +142,23 @@ export function CpdEntryDialog({
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="cpd-reference">Référence ou preuve (optionnel)</Label>
+            <Label htmlFor="cpd-reference">{t("cpd.referenceLabel")}</Label>
             <Input
               id="cpd-reference"
               value={reference}
               onChange={(e) => setReference(e.target.value)}
-              placeholder="Certificat, rapport d'audit, lien…"
+              placeholder={t("cpd.referencePlaceholder")}
             />
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="cpd-notes">Notes (optionnel)</Label>
+            <Label htmlFor="cpd-notes">{t("cpd.notesLabel")}</Label>
             <Textarea
               id="cpd-notes"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               rows={3}
-              placeholder="Enseignements tirés, compétences développées…"
+              placeholder={t("cpd.notesPlaceholder")}
             />
           </div>
 
@@ -166,10 +166,10 @@ export function CpdEntryDialog({
 
           <DialogFooter className="gap-2 sm:gap-2">
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-              Annuler
+              {t("common.cancel")}
             </Button>
             <Button type="submit" disabled={saving}>
-              {saving ? "Enregistrement…" : entry ? "Enregistrer" : "Ajouter"}
+              {saving ? t("common.saving") : entry ? t("common.save") : t("common.add")}
             </Button>
           </DialogFooter>
         </form>

@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useT } from "@/i18n";
 
 const BOX = 256;
 const OUTPUT = 512;
@@ -22,6 +23,7 @@ interface Props {
 }
 
 export function AvatarCropper({ open, file, onOpenChange, onCropped, saving }: Props) {
+  const t = useT();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
   const stateRef = useRef({ zoom: 1, x: 0, y: 0, baseScale: 1 });
@@ -141,10 +143,8 @@ export function AvatarCropper({ open, file, onOpenChange, onCropped, saving }: P
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
-          <DialogTitle className="font-sans">Recadrer la photo</DialogTitle>
-          <DialogDescription>
-            Déplacez l'image et ajustez le zoom pour cadrer votre portrait.
-          </DialogDescription>
+          <DialogTitle className="font-sans">{t("common.recadrerPhoto")}</DialogTitle>
+          <DialogDescription>{t("common.cropPhotoDesc")}</DialogDescription>
         </DialogHeader>
         <div className="flex flex-col items-center gap-4">
           <div className="relative size-64 overflow-hidden rounded-full border border-border">
@@ -166,15 +166,15 @@ export function AvatarCropper({ open, file, onOpenChange, onCropped, saving }: P
             step={0.01}
             onValueChange={(v) => handleZoom(v[0] ?? 1)}
             className="w-56"
-            aria-label="Zoom"
+            aria-label={t("common.zoom")}
           />
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Annuler
+            {t("common.cancel")}
           </Button>
           <Button onClick={handleValidate} disabled={!ready || saving}>
-            {saving ? "Enregistrement…" : "Enregistrer"}
+            {saving ? t("common.saving") : t("common.save")}
           </Button>
         </DialogFooter>
       </DialogContent>

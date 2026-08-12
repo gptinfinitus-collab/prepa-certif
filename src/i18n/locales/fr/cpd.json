@@ -67,5 +67,6 @@
   "notesPlaceholder": "Enseignements tirés, compétences développées…",
   "dateRequired": "La date est requise.",
   "titleRequired": "L'intitulé de l'activité est requis.",
-  "hoursMustBePositive": "Indiquez un nombre d'heures supérieur à 0."
+  "hoursMustBePositive": "Indiquez un nombre d'heures supérieur à 0.",
+  "progressAriaLabel": "Progression CPD : {{percent}}%"
 }

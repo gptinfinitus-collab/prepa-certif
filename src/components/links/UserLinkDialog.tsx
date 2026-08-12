@@ -20,6 +20,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { LINK_CATEGORIES } from "@/data/useful-links";
 import { isValidUrl, type UserLink, type UserLinkInput } from "@/lib/useful-links";
+import { useT } from "@/i18n";
 
 /** Formulaire de création / modification d'un lien personnel. */
 export function UserLinkDialog({
@@ -35,6 +36,7 @@ export function UserLinkDialog({
   onSubmit: (input: UserLinkInput) => void;
   saving: boolean;
 }) {
+  const t = useT();
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
   const [category, setCategory] = useState<string>("Autre");
@@ -52,8 +54,8 @@ export function UserLinkDialog({
 
   const submit = (event: React.FormEvent) => {
     event.preventDefault();
-    if (!title.trim()) return setError("Le titre est requis.");
-    if (!isValidUrl(url)) return setError("Indiquez une adresse web valide (http ou https).");
+    if (!title.trim()) return setError(t("common.linkTitleRequired"));
+    if (!isValidUrl(url)) return setError(t("common.linkUrlInvalid"));
     setError(null);
     onSubmit({
       ...(link ? { id: link.id } : {}),
@@ -69,40 +71,38 @@ export function UserLinkDialog({
       <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
           <DialogTitle className="font-sans">
-            {link ? "Modifier le lien" : "Ajouter un lien"}
+            {link ? t("common.linkDialogEditTitle") : t("common.linkDialogAddTitle")}
           </DialogTitle>
-          <DialogDescription>
-            Vos liens personnels restent privés : vous seul pouvez les consulter.
-          </DialogDescription>
+          <DialogDescription>{t("common.linkDialogDesc")}</DialogDescription>
         </DialogHeader>
 
         <form onSubmit={submit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="link-title">Titre</Label>
+            <Label htmlFor="link-title">{t("common.linkTitleLabel")}</Label>
             <Input
               id="link-title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Guide d'audit interne"
+              placeholder={t("common.linkTitlePlaceholder")}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="link-url">Adresse (URL)</Label>
+            <Label htmlFor="link-url">{t("common.linkUrlLabel")}</Label>
             <Input
               id="link-url"
               inputMode="url"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
-              placeholder="https://exemple.org/ressource"
+              placeholder={t("common.linkUrlPlaceholder")}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="link-category">Catégorie</Label>
+            <Label htmlFor="link-category">{t("common.linkCategoryLabel")}</Label>
             <Select value={category} onValueChange={setCategory}>
               <SelectTrigger id="link-category">
-                <SelectValue placeholder="Choisir une catégorie" />
+                <SelectValue placeholder={t("common.chooseCategoryPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
                 {LINK_CATEGORIES.map((c) => (
@@ -115,13 +115,13 @@ export function UserLinkDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="link-note">Note (facultatif)</Label>
+            <Label htmlFor="link-note">{t("common.linkNoteLabel")}</Label>
             <Textarea
               id="link-note"
               rows={3}
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              placeholder="Pourquoi ce lien est utile pour votre préparation"
+              placeholder={t("common.linkNotePlaceholder")}
             />
           </div>
 
@@ -129,10 +129,10 @@ export function UserLinkDialog({
 
           <DialogFooter className="gap-2 sm:gap-2">
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-              Annuler
+              {t("common.cancel")}
             </Button>
             <Button type="submit" disabled={saving}>
-              {saving ? "Enregistrement…" : link ? "Enregistrer" : "Ajouter"}
+              {saving ? t("common.saving") : link ? t("common.save") : t("common.add")}
             </Button>
           </DialogFooter>
         </form>

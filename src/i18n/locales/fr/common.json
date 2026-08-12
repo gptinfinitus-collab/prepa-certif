@@ -247,5 +247,18 @@
     "chooseExamBody": "Choisissez votre organisme d'examen pour le niveau Lead Auditor.",
     "planningReady": "Votre planning est prêt.",
     "actionImpossible": "Action impossible."
-  }
+  },
+  "linkDialogEditTitle": "Modifier le lien",
+  "linkDialogAddTitle": "Ajouter un lien",
+  "linkDialogDesc": "Vos liens personnels restent privés : vous seul pouvez les consulter.",
+  "linkTitleLabel": "Titre",
+  "linkTitlePlaceholder": "Guide d'audit interne",
+  "linkUrlLabel": "Adresse (URL)",
+  "linkUrlPlaceholder": "https://exemple.org/ressource",
+  "linkCategoryLabel": "Catégorie",
+  "chooseCategoryPlaceholder": "Choisir une catégorie",
+  "linkNoteLabel": "Note (facultatif)",
+  "linkNotePlaceholder": "Pourquoi ce lien est utile pour votre préparation",
+  "linkTitleRequired": "Le titre est requis.",
+  "linkUrlInvalid": "Indiquez une adresse web valide (http ou https)."
 }

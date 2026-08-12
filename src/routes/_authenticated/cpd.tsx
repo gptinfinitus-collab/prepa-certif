@@ -4,6 +4,7 @@ import { Download, NotebookPen, Pencil, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { AppShell } from "@/components/AppShell";
+import { useLocale, useT } from "@/i18n";
 import { CpdEntryDialog } from "@/components/cpd/CpdEntryDialog";
 import { CpdRing } from "@/components/cpd/CpdRing";
 import { CpdTypeBreakdown } from "@/components/cpd/CpdTypeBreakdown";
@@ -74,12 +75,14 @@ export const Route = createFileRoute("/_authenticated/cpd")({
   component: CpdPage,
 });
 
-function formatDate(iso: string) {
+function formatDate(iso: string, locale: string) {
   const date = new Date(`${iso}T00:00:00`);
-  return date.toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" });
+  return date.toLocaleDateString(locale === "en" ? "en-US" : "fr-FR", { day: "2-digit", month: "short", year: "numeric" });
 }
 
 function CpdPage() {
+  const t = useT();
+  const { locale } = useLocale();
   const currentYear = new Date().getFullYear();
   const { data: entries = [], isLoading } = useCpdEntries();
   const { data: target = 20 } = useCpdTarget();
@@ -110,9 +113,9 @@ function CpdPage() {
       await upsert.mutateAsync(input);
       setDialogOpen(false);
       setEditing(null);
-      toast.success(input.id ? "Entrée mise à jour" : "Entrée ajoutée");
+      toast.success(input.id ? t("cpd.entryUpdated") : t("cpd.entryAdded"));
     } catch {
-      toast.error("Enregistrement impossible");
+      toast.error(t("cpd.entrySaveFailed"));
     }
   };
 
@@ -120,9 +123,9 @@ function CpdPage() {
     if (!pendingDelete) return;
     try {
       await remove.mutateAsync(pendingDelete.id);
-      toast.success("Entrée supprimée");
+      toast.success(t("cpd.entryDeleted"));
     } catch {
-      toast.error("Suppression impossible");
+      toast.error(t("cpd.entryDeleteFailed"));
     } finally {
       setPendingDelete(null);
     }
@@ -135,15 +138,15 @@ function CpdPage() {
     if (!Number.isFinite(value) || value <= 0 || value === target) return;
     try {
       await saveTarget.mutateAsync(value);
-      toast.success("Objectif annuel mis à jour");
+      toast.success(t("cpd.targetUpdated"));
     } catch {
-      toast.error("Mise à jour impossible");
+      toast.error(t("cpd.targetUpdateFailed"));
     }
   };
 
   const exportCsv = () => {
     if (entries.length === 0) {
-      toast.error("Aucune entrée à exporter");
+      toast.error(t("cpd.noEntryToExport"));
       return;
     }
     const blob = new Blob([`\uFEFF${toCsv(entries)}`], { type: "text/csv;charset=utf-8;" });
@@ -161,23 +164,23 @@ function CpdPage() {
   };
 
   return (
-    <AppShell title="Journal CPD">
+    <AppShell title={t("cpd.title")}>
       <div className="mx-auto w-full max-w-5xl space-y-6 px-4 py-6 sm:px-6 lg:py-8">
         <header className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
-            <h1 className="text-2xl font-semibold tracking-tight">Journal CPD</h1>
+            <h1 className="text-2xl font-semibold tracking-tight">{t("cpd.title")}</h1>
             <p className="mt-1 text-sm text-muted-foreground">
-              Développement professionnel continu — maintien de la certification Lead Auditor.
+              {t("cpd.subtitle")}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" onClick={exportCsv}>
               <Download className="size-4" aria-hidden />
-              Export CSV
+              {t("cpd.exportCsv")}
             </Button>
             <Button onClick={openNew}>
               <Plus className="size-4" aria-hidden />
-              Nouvelle entrée
+              {t("cpd.newEntry")}
             </Button>
           </div>
         </header>
@@ -185,14 +188,14 @@ function CpdPage() {
         <div className="grid gap-4 lg:grid-cols-2">
           <Card>
             <CardHeader>
-              <CardTitle>Progression {year}</CardTitle>
-              <CardDescription>Heures cumulées par rapport à votre objectif annuel.</CardDescription>
+              <CardTitle>{t("cpd.progressOf", { year })}</CardTitle>
+              <CardDescription>{t("cpd.progressDesc")}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-wrap items-center gap-6">
               <CpdRing total={yearTotal} target={target} />
               <div className="min-w-[10rem] flex-1 space-y-3">
                 <div className="space-y-1.5">
-                  <Label htmlFor="cpd-target">Objectif annuel (heures)</Label>
+                  <Label htmlFor="cpd-target">{t("cpd.annualTarget")}</Label>
                   <Input
                     id="cpd-target"
                     type="number"
@@ -209,8 +212,8 @@ function CpdPage() {
                 </div>
                 <p className="text-sm text-muted-foreground">
                   {yearTotal >= target
-                    ? "Objectif atteint. Continuez à consigner vos activités."
-                    : `Il reste ${formatHours(Math.round((target - yearTotal) * 100) / 100)} à réaliser.`}
+                    ? t("cpd.targetReached")
+                    : t("cpd.remainingToComplete", { hours: formatHours(Math.round((target - yearTotal) * 100) / 100) })}
                 </p>
               </div>
             </CardContent>
@@ -218,8 +221,8 @@ function CpdPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Répartition par type</CardTitle>
-              <CardDescription>Heures par type d'activité en {year}.</CardDescription>
+              <CardTitle>{t("cpd.breakdownByType")}</CardTitle>
+              <CardDescription>{t("cpd.breakdownByTypeDesc", { year })}</CardDescription>
             </CardHeader>
             <CardContent>
               <CpdTypeBreakdown entries={yearEntries} />
@@ -230,10 +233,10 @@ function CpdPage() {
         <Card>
           <CardHeader className="gap-3">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <CardTitle>Mes activités</CardTitle>
+              <CardTitle>{t("cpd.myActivities")}</CardTitle>
               <div className="flex flex-wrap gap-2">
                 <Select value={String(year)} onValueChange={(v) => setYear(Number(v))}>
-                  <SelectTrigger className="w-[7.5rem]" aria-label="Filtrer par année">
+                  <SelectTrigger className="w-[7.5rem]" aria-label={t("cpd.filterByYear")}>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -245,14 +248,14 @@ function CpdPage() {
                   </SelectContent>
                 </Select>
                 <Select value={typeFilter} onValueChange={setTypeFilter}>
-                  <SelectTrigger className="w-[10rem]" aria-label="Filtrer par type">
+                  <SelectTrigger className="w-[10rem]" aria-label={t("cpd.filterByType")}>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">Tous les types</SelectItem>
-                    {CPD_TYPES.map((t) => (
-                      <SelectItem key={t} value={t}>
-                        {t}
+                    <SelectItem value="all">{t("cpd.allTypes")}</SelectItem>
+                    {CPD_TYPES.map((cpdType) => (
+                      <SelectItem key={cpdType} value={cpdType}>
+                        {t(`cpd.types.${cpdType}`)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -262,24 +265,24 @@ function CpdPage() {
           </CardHeader>
           <CardContent>
             {isLoading ? (
-              <p className="text-sm text-muted-foreground">Chargement…</p>
+              <p className="text-sm text-muted-foreground">{t("common.loading")}</p>
             ) : entries.length === 0 ? (
               <div className="flex flex-col items-center gap-3 rounded-lg border border-dashed border-border px-6 py-12 text-center">
                 <NotebookPen className="size-8 text-muted-foreground" aria-hidden />
                 <div>
-                  <p className="font-medium">Aucune activité enregistrée</p>
+                  <p className="font-medium">{t("cpd.noActivityRecorded")}</p>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    Commencez à consigner vos formations, audits et lectures professionnelles.
+                    {t("cpd.noActivityRecordedDesc")}
                   </p>
                 </div>
                 <Button onClick={openNew}>
                   <Plus className="size-4" aria-hidden />
-                  Ajouter une entrée
+                  {t("cpd.addEntry")}
                 </Button>
               </div>
             ) : filtered.length === 0 ? (
               <p className="py-6 text-center text-sm text-muted-foreground">
-                Aucune entrée pour ces filtres.
+                {t("cpd.noEntryForFilters")}
               </p>
             ) : (
               <>
@@ -288,18 +291,18 @@ function CpdPage() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="w-[8.5rem]">Date</TableHead>
-                        <TableHead>Activité</TableHead>
-                        <TableHead className="w-[9rem]">Type</TableHead>
-                        <TableHead className="w-[6rem] text-right">Heures</TableHead>
-                        <TableHead className="w-[6rem] text-right">Actions</TableHead>
+                        <TableHead className="w-[8.5rem]">{t("cpd.date")}</TableHead>
+                        <TableHead>{t("cpd.activity")}</TableHead>
+                        <TableHead className="w-[9rem]">{t("cpd.type")}</TableHead>
+                        <TableHead className="w-[6rem] text-right">{t("cpd.hours")}</TableHead>
+                        <TableHead className="w-[6rem] text-right">{t("cpd.actions")}</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {filtered.map((entry) => (
                         <TableRow key={entry.id}>
                           <TableCell className="whitespace-nowrap text-muted-foreground">
-                            {formatDate(entry.date)}
+                            {formatDate(entry.date, locale)}
                           </TableCell>
                           <TableCell>
                             <span className="font-medium">{entry.title}</span>
@@ -310,7 +313,7 @@ function CpdPage() {
                             )}
                           </TableCell>
                           <TableCell>
-                            <Badge variant="secondary">{entry.type}</Badge>
+                            <Badge variant="secondary">{t(`cpd.types.${entry.type}`)}</Badge>
                           </TableCell>
                           <TableCell className="text-right tabular-nums">
                             {formatHours(entry.hours)}
@@ -320,7 +323,7 @@ function CpdPage() {
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                aria-label={`Modifier ${entry.title}`}
+                                aria-label={t("cpd.editEntry", { title: entry.title })}
                                 onClick={() => {
                                   setEditing(entry);
                                   setDialogOpen(true);
@@ -331,7 +334,7 @@ function CpdPage() {
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                aria-label={`Supprimer ${entry.title}`}
+                                aria-label={t("cpd.deleteEntry", { title: entry.title })}
                                 onClick={() => setPendingDelete(entry)}
                               >
                                 <Trash2 className="size-4 text-destructive" aria-hidden />
@@ -352,11 +355,11 @@ function CpdPage() {
                         <div className="min-w-0">
                           <p className="truncate font-medium">{entry.title}</p>
                           <p className="mt-0.5 text-xs text-muted-foreground">
-                            {formatDate(entry.date)} · {formatHours(entry.hours)}
+                            {formatDate(entry.date, locale)} · {formatHours(entry.hours)}
                           </p>
                         </div>
                         <Badge variant="secondary" className="shrink-0">
-                          {entry.type}
+                          {t(`cpd.types.${entry.type}`)}
                         </Badge>
                       </div>
                       {entry.reference && (
@@ -368,7 +371,7 @@ function CpdPage() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          aria-label={`Modifier ${entry.title}`}
+                          aria-label={t("cpd.editEntry", { title: entry.title })}
                           onClick={() => {
                             setEditing(entry);
                             setDialogOpen(true);
@@ -379,7 +382,7 @@ function CpdPage() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          aria-label={`Supprimer ${entry.title}`}
+                          aria-label={t("cpd.deleteEntry", { title: entry.title })}
                           onClick={() => setPendingDelete(entry)}
                         >
                           <Trash2 className="size-4 text-destructive" aria-hidden />
@@ -411,14 +414,14 @@ function CpdPage() {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Supprimer cette entrée ?</AlertDialogTitle>
+            <AlertDialogTitle>{t("cpd.deleteEntryTitle")}</AlertDialogTitle>
             <AlertDialogDescription>
-              « {pendingDelete?.title} » sera définitivement retirée de votre journal CPD.
+              {t("cpd.deleteEntryDesc", { title: pendingDelete?.title })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Annuler</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete}>Supprimer</AlertDialogAction>
+            <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete}>{t("common.delete")}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

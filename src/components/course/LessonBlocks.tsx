@@ -13,6 +13,7 @@ import {
   useEvaluateFlashcardAnswer,
 } from "@/lib/learning";
 import type { EvaluationStatus } from "@/lib/flashcards.functions";
+import { useT } from "@/i18n";
 import {
   AlertTriangle,
   Briefcase,
@@ -25,12 +26,12 @@ import {
 } from "lucide-react";
 
 const LIST_META = {
-  objective: { icon: Target, label: "Compétence visée", tone: "border-primary/40 bg-primary/5" },
-  auditor: { icon: Search, label: "Regard de l'auditeur", tone: "border-primary/40 bg-primary/5" },
-  evidence: { icon: FileSearch, label: "Preuve possible", tone: "border-accent/50 bg-accent/10" },
-  exam: { icon: GraduationCap, label: "Point examen", tone: "border-accent/50 bg-accent/10" },
-  mistake: { icon: AlertTriangle, label: "Erreur fréquente", tone: "border-destructive/40 bg-destructive/5" },
-  key: { icon: CheckCircle2, label: "À retenir", tone: "border-accent/50 bg-accent/10" },
+  objective: { icon: Target, labelKey: "course.blocks.objectiveLabel", tone: "border-primary/40 bg-primary/5" },
+  auditor: { icon: Search, labelKey: "course.blocks.auditorLabel", tone: "border-primary/40 bg-primary/5" },
+  evidence: { icon: FileSearch, labelKey: "course.blocks.evidenceLabel", tone: "border-accent/50 bg-accent/10" },
+  exam: { icon: GraduationCap, labelKey: "course.blocks.examLabel", tone: "border-accent/50 bg-accent/10" },
+  mistake: { icon: AlertTriangle, labelKey: "course.blocks.mistakeLabel", tone: "border-destructive/40 bg-destructive/5" },
+  key: { icon: CheckCircle2, labelKey: "course.blocks.keyLabel", tone: "border-accent/50 bg-accent/10" },
 } as const;
 
 function BlockList({
@@ -74,22 +75,23 @@ function ExampleCards({ items }: { items: { sector: string; text: string }[] }) 
 }
 
 function ScenarioBlock({ scenario }: { scenario: LessonScenario }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   return (
     <Card className="border-primary/40">
       <CardHeader>
-        <CardTitle className="text-base">Cas pratique</CardTitle>
+        <CardTitle className="text-base">{t("course.blocks.scenarioTitle")}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 text-sm leading-relaxed">
         <p>{scenario.prompt}</p>
         {open ? (
           <div className="rounded-md border-l-2 border-accent bg-secondary/60 p-3">
-            <p className="mb-1 font-medium">Correction</p>
+            <p className="mb-1 font-medium">{t("course.blocks.correction")}</p>
             <p>{scenario.correction}</p>
           </div>
         ) : (
           <Button variant="outline" size="sm" onClick={() => setOpen(true)}>
-            Réfléchissez, puis affichez la correction
+            {t("course.blocks.revealCorrection")}
           </Button>
         )}
       </CardContent>
@@ -98,6 +100,7 @@ function ScenarioBlock({ scenario }: { scenario: LessonScenario }) {
 }
 
 function FlashcardDeck({ moduleId, cards }: { moduleId: number; cards: Flashcard[] }) {
+  const t = useT();
   const [index, setIndex] = useState(0);
   const [userAnswer, setUserAnswer] = useState("");
   const [evaluated, setEvaluated] = useState(false);
@@ -131,7 +134,7 @@ function FlashcardDeck({ moduleId, cards }: { moduleId: number; cards: Flashcard
       });
       setEvaluated(true);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Erreur lors de l'évaluation.");
+      setError(e instanceof Error ? e.message : t("course.blocks.evaluationError"));
     }
   };
 
@@ -147,9 +150,9 @@ function FlashcardDeck({ moduleId, cards }: { moduleId: number; cards: Flashcard
   };
 
   const statusLabel: Record<EvaluationStatus, string> = {
-    correct: "Correct",
-    partial: "Partiel",
-    incorrect: "À retravailler",
+    correct: t("course.blocks.statusCorrect"),
+    partial: t("course.blocks.statusPartial"),
+    incorrect: t("course.blocks.statusIncorrect"),
   };
 
   const showBack = evaluated || item?.evaluationStatus;
@@ -157,10 +160,8 @@ function FlashcardDeck({ moduleId, cards }: { moduleId: number; cards: Flashcard
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between text-xs text-muted-foreground">
-        <span>
-          Carte {index + 1} / {cards.length}
-        </span>
-        <span>{mastered} acquise(s)</span>
+        <span>{t("course.blocks.cardCounter", { current: index + 1, total: cards.length })}</span>
+        <span>{t("course.blocks.masteredCount", { count: mastered })}</span>
       </div>
 
       <Card className="min-h-40 justify-center p-5 text-center">
@@ -177,7 +178,7 @@ function FlashcardDeck({ moduleId, cards }: { moduleId: number; cards: Flashcard
           <Textarea
             value={userAnswer}
             onChange={(e) => setUserAnswer(e.target.value)}
-            placeholder="Écrivez votre réponse ici..."
+            placeholder={t("course.blocks.answerPlaceholder")}
             className="min-h-20 resize-none text-sm"
           />
           {error ? <p className="text-xs text-destructive">{error}</p> : null}
@@ -190,14 +191,14 @@ function FlashcardDeck({ moduleId, cards }: { moduleId: number; cards: Flashcard
               {evaluate.isPending ? (
                 <>
                   <Loader2 className="mr-1 h-3.5 w-3.5 animate-spin" />
-                  Vérification...
+                  {t("course.blocks.verifying")}
                 </>
               ) : (
-                "Vérifier ma réponse"
+                t("course.blocks.verifyAnswer")
               )}
             </Button>
             <Button variant="outline" size="sm" onClick={handleManualFlip}>
-              Voir la réponse
+              {t("course.blocks.seeAnswer")}
             </Button>
           </div>
         </div>
@@ -226,7 +227,7 @@ function FlashcardDeck({ moduleId, cards }: { moduleId: number; cards: Flashcard
                 go(index + 1);
               }}
             >
-              À revoir
+              {t("course.blocks.toReview")}
             </Button>
             <Button
               size="sm"
@@ -235,7 +236,7 @@ function FlashcardDeck({ moduleId, cards }: { moduleId: number; cards: Flashcard
                 go(index + 1);
               }}
             >
-              Acquise
+              {t("course.blocks.mastered")}
             </Button>
           </div>
         </div>

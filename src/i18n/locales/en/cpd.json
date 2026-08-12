@@ -67,5 +67,6 @@
   "notesPlaceholder": "Lessons learned, skills developed…",
   "dateRequired": "Date is required.",
   "titleRequired": "The activity title is required.",
-  "hoursMustBePositive": "Enter a number of hours greater than 0."
+  "hoursMustBePositive": "Enter a number of hours greater than 0.",
+  "progressAriaLabel": "CPD progress: {{percent}}%"
 }

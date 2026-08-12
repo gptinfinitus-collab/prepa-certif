@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { typeLabels } from "@/data/program";
+import { getTypeLabels } from "@/data/program";
 import { buildSchedule, scheduleByModuleId, computePace, formatShortDate } from "@/lib/schedule";
 import { useProgress, useStudyPlan } from "@/lib/queries";
 import { useCurriculum } from "@/lib/curriculum";
@@ -18,6 +18,7 @@ import { needsOnboarding } from "@/lib/onboarding";
 import { filterModulesByTrack, getTrack } from "@/lib/tracks";
 import { LeadAuditorNotice, TrackSwitcher } from "@/components/TrackSwitcher";
 import { CheckCircle2, Circle, CalendarClock, PenLine } from "lucide-react";
+import { useLocale, useT } from "@/i18n";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
@@ -41,6 +42,9 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
 });
 
 function Dashboard() {
+  const t = useT();
+  const { locale } = useLocale();
+  const typeLabels = getTypeLabels(locale);
   const { data: plan } = useStudyPlan();
   const { data: progress = [] } = useProgress();
   const { data: profile } = useProfile();
@@ -68,7 +72,7 @@ function Dashboard() {
   const firstName = profile?.first_name?.trim() || profile?.display_name?.split(" ")[0] || "";
 
   return (
-    <AppShell title="Mon programme">
+    <AppShell title={t("common.myProgram")}>
       <OnboardingGate show={showOnboarding} />
       <div className="mx-auto max-w-6xl px-4 py-6 md:py-10">
         {/* Accueil mobile */}
@@ -81,9 +85,9 @@ function Dashboard() {
               </AvatarFallback>
             </Avatar>
             <div className="min-w-0">
-              <p className="text-xs uppercase tracking-wide text-muted-foreground">Bonjour</p>
+              <p className="text-xs uppercase tracking-wide text-muted-foreground">{t("common.hello")}</p>
               <p className="truncate font-sans text-lg font-semibold">
-                {firstName || "Bienvenue"}
+                {firstName || t("common.welcome")}
               </p>
             </div>
           </div>
@@ -91,7 +95,7 @@ function Dashboard() {
             <div className="flex items-end justify-between">
               <p className="font-sans text-4xl font-semibold leading-none">{percent}%</p>
               <p className="text-xs text-muted-foreground">
-                {completedIds.size} / {modules.length} séances
+                {completedIds.size} / {modules.length} {t("common.sessionsUnit")}
               </p>
             </div>
             <Progress value={percent} className="mt-3" />
@@ -99,20 +103,20 @@ function Dashboard() {
           {next ? (
             <div className="mt-5 rounded-xl border border-border bg-background/70 p-4">
               <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                Prochaine séance
+                {t("common.nextSession")}
               </p>
               <p className="mt-1 font-sans text-base font-semibold leading-snug">{next.title}</p>
               <Button asChild size="sm" className="mt-3 w-full">
                 <Link to="/seance/$moduleId" params={{ moduleId: String(next.id) }}>
-                  Continuer
+                  {t("common.continue")}
                 </Link>
               </Button>
             </div>
           ) : null}
           <p className="mt-4 text-xs text-muted-foreground">
             {schedule?.endDate
-              ? `Fin estimée le ${formatShortDate(schedule.endDate)} · ${pace?.label ?? ""}`
-              : "Configurez votre planning pour dater vos séances."}
+              ? `${t("common.estimatedEndDate", { date: formatShortDate(schedule.endDate) })} · ${pace?.label ?? ""}`
+              : t("common.configurePlanningNotice")}
           </p>
         </section>
 
@@ -123,13 +127,13 @@ function Dashboard() {
 
         <p className="mt-2 hidden text-sm text-muted-foreground md:block">
           {schedule?.endDate
-            ? `Fin estimée le ${formatShortDate(schedule.endDate)} · ${schedule.effectiveModulesPerDay} séance(s) par jour travaillé`
-            : "Configurez votre planning pour dater vos séances."}
+            ? `${t("common.estimatedEndDate", { date: formatShortDate(schedule.endDate) })} · ${t("common.sessionsPerWorkedDay", { count: schedule.effectiveModulesPerDay })}`
+            : t("common.configurePlanningNotice")}
         </p>
 
         <div className="mt-5 rounded-xl border border-border bg-card p-4">
           <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-            Niveau de parcours — {trackDefinition.name}
+            {t("common.trackLevel", { trackName: trackDefinition.name })}
           </p>
           <TrackSwitcher className="mt-3" />
           <LeadAuditorNotice />
@@ -139,11 +143,10 @@ function Dashboard() {
           <div className="mt-6 flex flex-wrap items-center gap-3 rounded-lg border border-border bg-secondary/40 px-4 py-3">
             <PenLine className="size-4 shrink-0 text-primary" aria-hidden />
             <p className="flex-1 text-sm text-muted-foreground">
-              Cursus rédigé en cours de préparation : vous travaillez ici à partir des chapitres
-              officiels du référentiel, de la méthodologie d'audit et de vos propres documents.
+              {t("common.curriculumInProgressNotice")}
             </p>
             <Button asChild size="sm" variant="outline">
-              <Link to="/bibliotheque">Ajouter mes documents</Link>
+              <Link to="/bibliotheque">{t("common.addMyDocuments")}</Link>
             </Button>
           </div>
         ) : null}
@@ -151,28 +154,28 @@ function Dashboard() {
         <div className="mt-6 hidden gap-4 sm:grid-cols-3 md:grid">
           <Card>
             <CardHeader>
-              <CardTitle className="text-sm font-medium text-muted-foreground">Progression</CardTitle>
+              <CardTitle className="text-sm font-medium text-muted-foreground">{t("common.progression")}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="font-sans text-2xl font-semibold sm:text-3xl">{percent}%</p>
               <Progress value={percent} className="mt-3" />
               <p className="mt-2 text-xs text-muted-foreground">
-                {completedIds.size} / {modules.length} séances terminées
+                {completedIds.size} / {modules.length} {t("common.sessionsCompleted")}
               </p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle className="text-sm font-medium text-muted-foreground">Rythme</CardTitle>
+              <CardTitle className="text-sm font-medium text-muted-foreground">{t("common.pace")}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="font-sans text-xl font-semibold">{pace?.label ?? "—"}</p>
               <p className="mt-2 text-xs text-muted-foreground">
-                Attendu à ce jour : {pace?.expectedCompleted ?? 0} séance(s)
+                {t("common.expectedToday")} : {t("common.sessionsCount", { count: pace?.expectedCompleted ?? 0 })}
               </p>
               {schedule?.compressed ? (
                 <p className="mt-2 text-xs text-accent-foreground">
-                  Rythme compressé pour tenir la date d'examen.
+                  {t("common.compressedPaceNotice")}
                 </p>
               ) : null}
             </CardContent>
@@ -180,7 +183,7 @@ function Dashboard() {
           <Card>
             <CardHeader>
               <CardTitle className="text-sm font-medium text-muted-foreground">
-                Prochaine séance
+                {t("common.nextSession")}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -189,12 +192,12 @@ function Dashboard() {
                   <p className="font-sans text-base font-semibold leading-snug">{next.title}</p>
                   <Button asChild size="sm" className="mt-3">
                     <Link to="/seance/$moduleId" params={{ moduleId: String(next.id) }}>
-                      Ouvrir la séance
+                      {t("common.openSession")}
                     </Link>
                   </Button>
                 </>
               ) : (
-                <p className="text-sm">Programme terminé. Place à l'examen blanc !</p>
+                <p className="text-sm">{t("common.programCompleteNotice")}</p>
               )}
             </CardContent>
           </Card>
