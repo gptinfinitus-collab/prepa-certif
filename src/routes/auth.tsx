@@ -14,7 +14,7 @@ import { AuthBackdrop } from "@/components/AuthBackdrop";
 import { AppleIcon, GoogleIcon } from "@/components/BrandIcons";
 import { ArrowLeft, Eye, EyeOff, Loader2 } from "lucide-react";
 import {
-  authErrorMessage,
+  authErrorKey,
   credentialsSchema,
   fieldErrors,
   forgotPasswordSchema,
@@ -129,7 +129,7 @@ function AuthPage() {
       }
     } catch (error) {
       const message =
-        error instanceof Error ? authErrorMessage(error.message) : t("auth.genericError");
+        authError(error);
       setFormError(message);
     } finally {
       setLoading(false);
@@ -152,7 +152,7 @@ function AuthPage() {
       setResetSent(true);
     } catch (error) {
       setFormError(
-        error instanceof Error ? authErrorMessage(error.message) : t("auth.genericError"),
+        authError(error),
       );
     } finally {
       setLoading(false);
@@ -210,7 +210,7 @@ function AuthPage() {
                       onChange={(e) => setEmail(e.target.value)}
                     />
                     {errors["email"] ? (
-                      <p className="text-xs text-destructive">{errors["email"]}</p>
+                      <p className="text-xs text-destructive">{t(`auth.${errors["email"]}`)}</p>
                     ) : null}
                   </div>
                   {errorBlock}
@@ -296,7 +296,7 @@ function AuthPage() {
                           onChange={(e) => setEmail(e.target.value)}
                         />
                         {errors["email"] ? (
-                          <p className="text-xs text-destructive">{errors["email"]}</p>
+                          <p className="text-xs text-destructive">{t(`auth.${errors["email"]}`)}</p>
                         ) : null}
                       </div>
 
@@ -328,7 +328,7 @@ function AuthPage() {
                           </button>
                         </div>
                         {errors["password"] ? (
-                          <p className="text-xs text-destructive">{errors["password"]}</p>
+                          <p className="text-xs text-destructive">{t(`auth.${errors["password"]}`)}</p>
                         ) : null}
                       </div>
 
