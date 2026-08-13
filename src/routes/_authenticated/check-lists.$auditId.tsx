@@ -479,12 +479,12 @@ function ChecklistDetailPage() {
 
                           <div className="flex flex-wrap items-center gap-2 print:hidden">
                             <Input
-                              className="h-8 w-full sm:max-w-[220px]"
+                              className="h-9 w-full sm:h-8 sm:max-w-[220px]"
                               placeholder={t("audit.fields.auditee")}
                               defaultValue={item.auditee ?? ""}
                               onBlur={(event) => patchItem(item.id, { auditee: event.target.value })}
                             />
-                            <Button size="sm" variant="ghost" onClick={() => askAi(item)}>
+                            <Button size="sm" variant="ghost" className="shrink-0" onClick={() => askAi(item)}>
                               <Sparkles className="mr-1 h-4 w-4" />
                               {t("audit.askAi")}
                             </Button>
