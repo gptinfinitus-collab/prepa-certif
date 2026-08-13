@@ -19,6 +19,13 @@
   "treated": "{{treated}} / {{total}} requirements covered",
   "nonConformities": "Nonconformities",
   "saved": "Saved",
+  "sync": {
+    "action": "Update from template",
+    "hint": "The template has {{count}} requirements, this audit has {{current}}.",
+    "added": "{{count}} requirements added from the template.",
+    "upToDate": "This audit is already up to date.",
+    "error": "Could not update from the template."
+  },
   "header": {
     "title": "Audit title",
     "auditedEntity": "Audited entity",

@@ -1,6 +1,15 @@
 import { useMemo, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, Download, Plus, Printer, Sparkles, Trash2 } from "lucide-react";
+import {
+  ArrowLeft,
+  ChevronDown,
+  Download,
+  Plus,
+  Printer,
+  RefreshCw,
+  Sparkles,
+  Trash2,
+} from "lucide-react";
 import { toast } from "sonner";
 
 import { AppShell } from "@/components/AppShell";
@@ -26,12 +35,15 @@ import {
   buildChecklistCsv,
   complianceSummary,
   downloadTextFile,
+  findTemplate,
   slugifyTitle,
   summarize,
+  templateItemCount,
   useAddChecklistItem,
   useAuditChecklist,
   useAuditChecklistItems,
   useDeleteChecklistItem,
+  useSyncChecklistFromTemplate,
   useUpdateAuditChecklist,
   useUpdateChecklistItem,
   CHECKLIST_STATUSES,
@@ -68,12 +80,28 @@ function ChecklistDetailPage() {
   const updateItem = useUpdateChecklistItem(auditId);
   const addItem = useAddChecklistItem(auditId);
   const deleteItem = useDeleteChecklistItem(auditId);
+  const syncFromTemplate = useSyncChecklistFromTemplate(auditId);
+
+  // Modèle d'origine : sert à proposer les exigences ajoutées depuis la création.
+  const template = checklist?.template_id ? findTemplate(locale, checklist.template_id) : null;
+  const templateTotal = template ? templateItemCount(template) : 0;
+  const canSync = template !== null && templateTotal > items.length;
+
 
   const [filter, setFilter] = useState<"all" | "pending" | "nc">("all");
   const [chapterFilter, setChapterFilter] = useState<string>("all");
   const [search, setSearch] = useState("");
   const [adding, setAdding] = useState(false);
   const [draft, setDraft] = useState({ chapter: "", clause: "", requirement: "" });
+
+  // Sur les modèles longs, les chapitres sont repliés par défaut (vue « tous les chapitres »).
+  const [openChapters, setOpenChapters] = useState<Record<string, boolean>>({});
+  const collapseByDefault = items.length > 60 && chapterFilter === "all" && search.trim() === "";
+  const isChapterCollapsed = (chapter: string) =>
+    openChapters[chapter] === undefined ? collapseByDefault : !openChapters[chapter];
+  const toggleChapter = (chapter: string) =>
+    setOpenChapters((prev) => ({ ...prev, [chapter]: isChapterCollapsed(chapter) }));
+
 
   const stats = useMemo(() => summarize(items), [items]);
   const compliance = useMemo(() => complianceSummary(items), [items]);
@@ -117,7 +145,14 @@ function ChecklistDetailPage() {
   );
 
   function jumpToClause(id: string) {
-    document.getElementById(`item-${id}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    // Déplie le chapitre concerné avant de faire défiler jusqu'à l'exigence.
+    const chapter = items.find((item) => item.id === id)?.chapter;
+    if (chapter) setOpenChapters((prev) => ({ ...prev, [chapter]: true }));
+    requestAnimationFrame(() => {
+      document
+        .getElementById(`item-${id}`)
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
   }
 
   function patchItem(id: string, patch: Partial<AuditChecklistItem>) {
@@ -198,8 +233,37 @@ function ChecklistDetailPage() {
         </div>
 
         <Card>
-          <CardHeader className="pb-3">
+          <CardHeader className="gap-3 pb-3">
             <CardTitle className="text-xl">{checklist.title}</CardTitle>
+            {canSync && template && (
+              <div className="flex flex-col gap-2 rounded-lg border border-border bg-muted/40 p-3 sm:flex-row sm:items-center sm:justify-between print:hidden">
+                <p className="text-xs text-muted-foreground">
+                  {t("audit.sync.hint", { count: templateTotal, current: items.length })}
+                </p>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="shrink-0"
+                  disabled={syncFromTemplate.isPending}
+                  onClick={() =>
+                    syncFromTemplate.mutate(template, {
+                      onSuccess: ({ added }) =>
+                        toast.success(
+                          added > 0
+                            ? t("audit.sync.added", { count: added })
+                            : t("audit.sync.upToDate"),
+                        ),
+                      onError: () => toast.error(t("audit.sync.error")),
+                    })
+                  }
+                >
+                  <RefreshCw
+                    className={`mr-1 h-4 w-4 ${syncFromTemplate.isPending ? "animate-spin" : ""}`}
+                  />
+                  {t("audit.sync.action")}
+                </Button>
+              </div>
+            )}
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -414,14 +478,23 @@ function ChecklistDetailPage() {
           </p>
         ) : (
           <div className="space-y-6">
-            {grouped.map(([chapter, chapterItems]) => (
+            {grouped.map(([chapter, chapterItems]) => {
+              const collapsed = isChapterCollapsed(chapter);
+              return (
               <section key={chapter} className="space-y-4">
-                <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                <button
+                  type="button"
+                  onClick={() => toggleChapter(chapter)}
+                  className="flex w-full items-center gap-2 text-left text-sm font-semibold uppercase tracking-wide text-muted-foreground transition-colors hover:text-foreground"
+                >
                   <span className="h-4 w-1 rounded-full bg-primary/60" />
                   {chapter}
                   <span className="text-xs font-normal normal-case">({chapterItems.length})</span>
-                </h2>
-                <ul className="space-y-4">
+                  <ChevronDown
+                    className={`ml-auto h-4 w-4 shrink-0 transition-transform ${collapsed ? "" : "rotate-180"}`}
+                  />
+                </button>
+                <ul className={`space-y-4 ${collapsed ? "hidden print:block" : ""}`}>
                   {chapterItems.map((item) => (
                     <li key={item.id} id={`item-${item.id}`} className="scroll-mt-48 lg:scroll-mt-40">
                       <Card>
@@ -509,7 +582,8 @@ function ChecklistDetailPage() {
                   ))}
                 </ul>
               </section>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

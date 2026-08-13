@@ -280,6 +280,99 @@ export function useCreateAuditChecklist() {
   });
 }
 
+/**
+ * Ajoute à un audit existant les lignes du modèle qui lui manquent.
+ *
+ * L'appariement se fait sur (clause, rang d'occurrence de cette clause), ce qui
+ * reste stable même si l'audit a été créé dans l'autre langue. Aucun statut,
+ * aucune preuve et aucun constat déjà saisi n'est modifié : on insère les
+ * lignes absentes et on réaligne seulement les positions d'affichage.
+ */
+export function useSyncChecklistFromTemplate(checklistId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (template: ChecklistTemplate): Promise<{ added: number }> => {
+      const { data: userData } = await getAuthUser();
+      const user = userData.user;
+      if (!user) throw new Error("notAuthenticated");
+
+      const { data: existing, error: readError } = await supabase
+        .from("audit_checklist_items")
+        .select("id, clause, position, is_custom")
+        .eq("checklist_id", checklistId)
+        .order("position", { ascending: true });
+      if (readError) throw readError;
+
+      // Clé = clause + rang d'occurrence de cette clause dans la liste.
+      const seen = new Map<string, number>();
+      const existingByKey = new Map<string, string>();
+      for (const row of existing ?? []) {
+        if (row.is_custom) continue;
+        const clause = row.clause ?? "";
+        const rank = (seen.get(clause) ?? 0) + 1;
+        seen.set(clause, rank);
+        existingByKey.set(`${clause}#${rank}`, row.id);
+      }
+
+      const templateSeen = new Map<string, number>();
+      const toInsert: {
+        checklist_id: string;
+        user_id: string;
+        chapter: string;
+        clause: string;
+        requirement: string;
+        guidance: string;
+        position: number;
+        status: string;
+      }[] = [];
+      const toReposition: { id: string; position: number }[] = [];
+      let position = 0;
+
+      for (const section of template.sections) {
+        for (const item of section.items) {
+          position += 10;
+          const rank = (templateSeen.get(item.clause) ?? 0) + 1;
+          templateSeen.set(item.clause, rank);
+          const matchId = existingByKey.get(`${item.clause}#${rank}`);
+          if (matchId) {
+            toReposition.push({ id: matchId, position });
+          } else {
+            toInsert.push({
+              checklist_id: checklistId,
+              user_id: user.id,
+              chapter: section.chapter,
+              clause: item.clause,
+              requirement: item.requirement,
+              guidance: item.guidance,
+              position,
+              status: "pending",
+            });
+          }
+        }
+      }
+
+      if (toInsert.length > 0) {
+        const { error } = await supabase.from("audit_checklist_items").insert(toInsert);
+        if (error) throw error;
+      }
+      for (const row of toReposition) {
+        await supabase
+          .from("audit_checklist_items")
+          .update({ position: row.position })
+          .eq("id", row.id);
+      }
+
+      return { added: toInsert.length };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["audit_checklist_items", checklistId] });
+      queryClient.invalidateQueries({ queryKey: ["audit_checklists"] });
+    },
+  });
+}
+
+
+
 export function useUpdateAuditChecklist(checklistId: string) {
   const queryClient = useQueryClient();
   return useMutation({

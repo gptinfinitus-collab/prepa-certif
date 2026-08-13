@@ -19,6 +19,13 @@
   "treated": "{{treated}} / {{total}} exigences traitées",
   "nonConformities": "Non-conformités",
   "saved": "Enregistré",
+  "sync": {
+    "action": "Mettre à jour depuis le modèle",
+    "hint": "Le modèle contient {{count}} exigences, cet audit en a {{current}}.",
+    "added": "{{count}} exigences ajoutées depuis le modèle.",
+    "upToDate": "Cet audit est déjà à jour.",
+    "error": "Impossible de mettre à jour depuis le modèle."
+  },
   "header": {
     "title": "Intitulé de l'audit",
     "auditedEntity": "Entité auditée",
