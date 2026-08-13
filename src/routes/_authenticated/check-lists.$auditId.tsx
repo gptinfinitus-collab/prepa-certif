@@ -296,24 +296,70 @@ function ChecklistDetailPage() {
           </CardContent>
         </Card>
 
-        <div className="flex flex-wrap items-center gap-2 print:hidden">
-          {(["all", "pending", "nc"] as const).map((value) => (
-            <Button
-              key={value}
-              size="sm"
-              variant={filter === value ? "default" : "outline"}
-              onClick={() => setFilter(value)}
-            >
-              {t(`audit.filters.${value}`)}
-            </Button>
-          ))}
-          <Input
-            className="w-full sm:max-w-xs"
-            placeholder={t("audit.filters.search")}
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-          />
+        <div className="sticky top-2 z-20 space-y-3 rounded-xl border border-border bg-card/95 p-3 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-card/80 sm:p-4 print:hidden">
+          <div className="flex flex-wrap items-center gap-2">
+            {(["all", "pending", "nc"] as const).map((value) => (
+              <Button
+                key={value}
+                size="sm"
+                variant={filter === value ? "default" : "outline"}
+                onClick={() => setFilter(value)}
+              >
+                {t(`audit.filters.${value}`)}
+              </Button>
+            ))}
+            <Input
+              className="h-9 w-full sm:ml-auto sm:max-w-xs"
+              placeholder={t("audit.filters.search")}
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+            />
+          </div>
+
+          {chapters.length > 0 && (
+            <div className="flex flex-col gap-2 border-t border-border/60 pt-3 sm:flex-row sm:items-center">
+              <span className="shrink-0 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                {t("audit.filters.chapters")}
+              </span>
+              <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1">
+                <Button
+                  size="sm"
+                  variant={chapterFilter === "all" ? "secondary" : "ghost"}
+                  className="h-7 shrink-0 rounded-full px-3 text-xs"
+                  onClick={() => setChapterFilter("all")}
+                >
+                  {t("audit.filters.allChapters")}
+                </Button>
+                {chapters.map((chapter) => (
+                  <Button
+                    key={chapter}
+                    size="sm"
+                    variant={chapterFilter === chapter ? "secondary" : "ghost"}
+                    className="h-7 shrink-0 rounded-full px-3 text-xs"
+                    onClick={() => setChapterFilter(chapter)}
+                  >
+                    {chapter}
+                  </Button>
+                ))}
+              </div>
+              {clauseOptions.length > 0 && (
+                <Select value="" onValueChange={jumpToClause}>
+                  <SelectTrigger className="h-8 w-full text-xs sm:ml-auto sm:w-[190px]">
+                    <SelectValue placeholder={t("audit.filters.jumpTo")} />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-72">
+                    {clauseOptions.map((option) => (
+                      <SelectItem key={option.id} value={option.id} className="text-xs">
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            </div>
+          )}
         </div>
+
 
         {grouped.length === 0 ? (
           <p className="rounded-lg border border-dashed border-border p-6 text-sm text-muted-foreground">
