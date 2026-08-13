@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import {
+  ArrowDown,
   Bot,
   Loader2,
   Menu,
@@ -75,9 +76,12 @@ export function AssistantChat({ threadId }: { threadId: string }) {
     }
   }, []);
   const [historyOpen, setHistoryOpen] = useState(false);
+  const [showScrollDown, setShowScrollDown] = useState(false);
 
   const bottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const exchangeRef = useRef<HTMLDivElement>(null);
+  const anchoredRef = useRef(false);
 
   const messages = [...(stored.data ?? []), ...pending];
 
@@ -88,12 +92,55 @@ export function AssistantChat({ threadId }: { threadId: string }) {
     setStreamed("");
     setBusy(false);
     setFailed(false);
+    anchoredRef.current = false;
     textareaRef.current?.focus();
+    bottomRef.current?.scrollIntoView({ block: "end" });
   }, [threadId]);
 
+  // Une seule fois par échange : on cale le début de la question/réponse en haut
+  // de l'écran, puis on laisse l'utilisateur libre de scroller pendant l'écriture.
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages.length, streamed]);
+    if (!busy) {
+      anchoredRef.current = false;
+      return;
+    }
+    if (anchoredRef.current) return;
+    anchoredRef.current = true;
+    requestAnimationFrame(() => {
+      exchangeRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }, [busy]);
+
+  // Bouton « aller en bas » quand on n'est pas déjà en bas de la conversation.
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const distance =
+        document.documentElement.scrollHeight -
+        window.scrollY -
+        window.innerHeight;
+      setShowScrollDown(distance > 200);
+    };
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    // Le contenu grandit pendant l'écriture sans déclencher de scroll.
+    const observer = new ResizeObserver(onScroll);
+    observer.observe(document.body);
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+
+  }, []);
+
 
   // Champ auto-extensible : 1 ligne au repos, jusqu'à ~5 lignes puis scroll interne.
   useEffect(() => {
@@ -295,11 +342,20 @@ export function AssistantChat({ threadId }: { threadId: string }) {
         )}
 
         <div className="mt-6 space-y-4">
-          {messages.map((message) => (
-            <Bubble key={message.id} role={message.role} sources={message.sources}>
-              {message.content}
-            </Bubble>
-          ))}
+          {messages.map((message, index) => {
+            const isCurrentExchange = pending.length > 0 && index === messages.length - pending.length;
+            return (
+              <div
+                key={message.id}
+                ref={isCurrentExchange ? exchangeRef : undefined}
+                className={isCurrentExchange ? "scroll-mt-20" : undefined}
+              >
+                <Bubble role={message.role} sources={message.sources}>
+                  {message.content}
+                </Bubble>
+              </div>
+            );
+          })}
 
           {busy && streamed && <Bubble role="assistant">{streamed}</Bubble>}
           {busy && !streamed && (
@@ -319,6 +375,18 @@ export function AssistantChat({ threadId }: { threadId: string }) {
           )}
           <div ref={bottomRef} />
         </div>
+
+        {showScrollDown && (
+          <button
+            type="button"
+            onClick={() => bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" })}
+            aria-label={t("assistant.scrollToBottom")}
+            className="fixed bottom-36 right-4 z-30 rounded-full border border-border bg-card/95 p-2 text-muted-foreground shadow-lg backdrop-blur transition-colors hover:text-foreground md:bottom-20 md:right-8"
+          >
+            <ArrowDown className="size-4" aria-hidden />
+          </button>
+        )}
+
 
         <div className="sticky bottom-20 mt-4 flex items-end gap-2 rounded-full border border-border bg-card/95 py-1 pl-4 pr-1 backdrop-blur md:bottom-4">
           <Textarea

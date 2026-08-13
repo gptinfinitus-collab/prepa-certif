@@ -16,7 +16,12 @@ export type SeoKey = Exclude<keyof typeof frSeo, "imageAlt">;
  */
 export function pageHead(locale: Locale, key: SeoKey, path: string) {
   const dict = SEO[locale] ?? SEO.fr;
-  const entry = dict[key];
+  const entry = dict[key] as {
+    title: string;
+    description: string;
+    ogTitle?: string;
+    ogDescription?: string;
+  };
   const url = `${SITE_URL}${path}`;
   const alternate: Locale = locale === "fr" ? "en" : "fr";
 
@@ -24,8 +29,9 @@ export function pageHead(locale: Locale, key: SeoKey, path: string) {
     meta: [
       { title: entry.title },
       { name: "description", content: entry.description },
-      { property: "og:title", content: entry.ogTitle },
-      { property: "og:description", content: entry.ogDescription },
+      { property: "og:title", content: entry.ogTitle ?? entry.title },
+      { property: "og:description", content: entry.ogDescription ?? entry.description },
+
       { property: "og:type", content: "website" },
       { property: "og:url", content: url },
       { property: "og:image", content: OG_IMAGE },

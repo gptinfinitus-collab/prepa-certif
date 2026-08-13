@@ -19,6 +19,7 @@
     ]
   },
   "loading": "L'assistant consulte vos documents…",
+  "scrollToBottom": "Aller en bas",
   "input": {
     "placeholder": "Votre question…",
     "ariaLabel": "Votre question",
