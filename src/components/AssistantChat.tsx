@@ -512,4 +512,4 @@ const Bubble = memo(function Bubble({
       </div>
     </div>
   );
-}
+});
