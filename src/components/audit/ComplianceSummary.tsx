@@ -27,7 +27,7 @@ export const ComplianceSummary = memo(function ComplianceSummary({ summary }: Pr
   if (byChapter.length === 0) return null;
 
   return (
-    <section className="rounded-xl border border-border bg-card/60 print:break-inside-avoid">
+    <section className="rounded-xl border border-border bg-card print:break-inside-avoid">
       <button
         type="button"
         onClick={() => setOpen((value) => !value)}
