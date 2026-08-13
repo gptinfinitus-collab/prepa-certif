@@ -15,7 +15,7 @@ export function Quiz({ items }: { items: QuizItem[] }) {
       {items.map((item, index) => (
         <Card key={index} className="gap-3 p-4">
           <p className="text-sm font-medium">
-            <span className="mr-2 text-accent-foreground/70">Q{index + 1}.</span>
+            <span className="mr-2 text-accent-strong">Q{index + 1}.</span>
             {item.question}
           </p>
           {revealed[index] ? (

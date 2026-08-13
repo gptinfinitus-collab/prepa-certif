@@ -165,7 +165,7 @@ function Dashboard() {
                 {t("common.sessionsCount", { count: pace?.expectedCompleted ?? 0 })}
               </p>
               {schedule?.compressed ? (
-                <p className="mt-2 text-xs text-accent-foreground">
+                <p className="mt-2 text-xs text-accent-strong">
                   {t("common.compressedPaceNotice")}
                 </p>
               ) : null}

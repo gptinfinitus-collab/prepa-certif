@@ -441,7 +441,7 @@ const ChatComposer = memo(function ChatComposer({
         rows={1}
         placeholder={t("assistant.input.placeholder")}
         aria-label={t("assistant.input.ariaLabel")}
-        className="max-h-32 min-h-0 resize-none overflow-y-auto border-0 bg-transparent py-2 text-sm shadow-none placeholder:text-xs placeholder:text-muted-foreground/70 focus-visible:ring-0 md:text-sm"
+        className="max-h-32 min-h-0 resize-none overflow-y-auto border-0 bg-transparent py-2 text-sm shadow-none placeholder:text-xs placeholder:text-muted-foreground focus-visible:ring-0 md:text-sm"
       />
       <Button
         onClick={() => (busy ? onStop() : submit())}
