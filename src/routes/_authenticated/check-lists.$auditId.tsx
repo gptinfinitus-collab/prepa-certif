@@ -423,10 +423,10 @@ function ChecklistDetailPage() {
                 </h2>
                 <ul className="space-y-4">
                   {chapterItems.map((item) => (
-                    <li key={item.id} id={`item-${item.id}`} className="scroll-mt-40">
+                    <li key={item.id} id={`item-${item.id}`} className="scroll-mt-48 lg:scroll-mt-40">
                       <Card>
                         <CardContent className="space-y-4 p-4 sm:p-5">
-                          <div className="flex flex-wrap items-start justify-between gap-2">
+                          <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between">
                             <div className="min-w-0 space-y-1">
                               <p className="text-sm font-medium leading-snug">
                                 {item.clause ? (
@@ -442,7 +442,7 @@ function ChecklistDetailPage() {
                               value={item.status}
                               onValueChange={(value) => patchItem(item.id, { status: value })}
                             >
-                              <SelectTrigger className="w-[170px] print:hidden">
+                              <SelectTrigger className="h-9 w-full sm:w-[170px] print:hidden">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
