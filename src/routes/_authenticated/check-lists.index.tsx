@@ -80,7 +80,7 @@ function ChecklistsPage() {
 
   return (
     <AppShell>
-      <div className="space-y-8">
+      <div className="mx-auto w-full max-w-6xl space-y-8 px-4 py-6 sm:px-6 lg:py-8">
         <header className="space-y-1">
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t("audit.title")}</h1>
           <p className="text-sm text-muted-foreground">{t("audit.subtitle")}</p>
