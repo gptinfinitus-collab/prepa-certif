@@ -323,6 +323,12 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
     if (typeof window !== "undefined" && window.innerWidth < 1280) setCollapsed(true);
   }, []);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  // Clé basée sur la route réellement résolue : l'animation ne se joue qu'au
+  // moment où le nouveau contenu est affiché (pas au clic, sur l'ancienne page).
+  const resolvedKey = useRouterState({
+    select: (s) =>
+      s.matches[s.matches.length - 1]?.id ?? s.resolvedLocation?.pathname ?? s.location.pathname,
+  });
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
