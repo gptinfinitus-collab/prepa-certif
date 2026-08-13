@@ -69,6 +69,9 @@ export function AssistantChat({ threadId }: { threadId: string }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const exchangeRef = useRef<HTMLDivElement>(null);
   const anchoredRef = useRef(false);
+  // Référence stable : le composeur ne se re-rend pas quand la conversation change.
+  const sendHandlerRef = useRef<(text: string) => void>(() => {});
+  const sendRef = useCallback((text: string) => sendHandlerRef.current(text), []);
 
   const messages = [...(stored.data ?? []), ...pending];
 
