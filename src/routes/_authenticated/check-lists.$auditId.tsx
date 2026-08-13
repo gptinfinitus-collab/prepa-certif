@@ -29,6 +29,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { useLocale, useT } from "@/i18n";
 import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { pageHead } from "@/lib/seo";
@@ -77,6 +78,7 @@ function ChecklistDetailPage() {
   const { auditId } = Route.useParams();
   const t = useT();
   const { locale } = useLocale();
+  const isMobile = useIsMobile();
   const navigate = useNavigate();
 
   const { data: checklist, isLoading } = useAuditChecklist(auditId);
@@ -428,6 +430,28 @@ function ChecklistDetailPage() {
                 </Button>
               ))}
             </div>
+            {!isMobile && (
+              <div className="flex shrink-0 gap-1 rounded-md border border-border p-0.5 print:hidden">
+                <Button
+                  size="sm"
+                  variant={view === "cards" ? "secondary" : "ghost"}
+                  className="h-8 px-2 text-xs"
+                  onClick={() => setView("cards")}
+                >
+                  <LayoutGrid className="mr-1 h-4 w-4" />
+                  {t("audit.view.cards")}
+                </Button>
+                <Button
+                  size="sm"
+                  variant={view === "table" ? "secondary" : "ghost"}
+                  className="h-8 px-2 text-xs"
+                  onClick={() => setView("table")}
+                >
+                  <Table2 className="mr-1 h-4 w-4" />
+                  {t("audit.view.table")}
+                </Button>
+              </div>
+            )}
             <Input
               className="h-9 w-full sm:ml-auto sm:max-w-xs"
               placeholder={t("audit.filters.search")}
@@ -485,6 +509,8 @@ function ChecklistDetailPage() {
           <p className="rounded-lg border border-dashed border-border p-6 text-sm text-muted-foreground">
             {t("audit.filters.noResult")}
           </p>
+        ) : !isMobile && view === "table" ? (
+          <ChecklistTable items={visible} onPatch={patchItem} />
         ) : (
           <div className="space-y-6">
             {grouped.map(([chapter, chapterItems]) => {
