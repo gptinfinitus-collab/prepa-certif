@@ -8,6 +8,8 @@ import {
   MessageSquarePlus,
   Send,
   Sparkles,
+  Square,
+  RotateCcw,
   Trash2,
   User,
 } from "lucide-react";
