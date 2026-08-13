@@ -373,6 +373,13 @@ function ChecklistDetailPage() {
                     {t(`audit.itemStatus.${status}`)} · {stats.counts[status]}
                   </Badge>
                 ))}
+                {attachmentTotal > 0 && (
+                  <Badge variant="secondary">
+                    <Paperclip className="mr-1 h-3 w-3" />
+                    {t("audit.attachments.count", { count: attachmentTotal })}
+                  </Badge>
+                )}
+
               </div>
             </div>
 
