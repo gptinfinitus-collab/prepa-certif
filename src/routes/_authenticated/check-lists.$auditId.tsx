@@ -103,6 +103,20 @@ function ChecklistDetailPage() {
     return [...map.entries()];
   }, [visible]);
 
+  /** Options du menu « aller à » : une entrée par exigence affichée. */
+  const clauseOptions = useMemo(
+    () =>
+      visible.map((item) => ({
+        id: item.id,
+        label: `${item.clause ?? item.chapter} — ${item.requirement.slice(0, 48)}`,
+      })),
+    [visible],
+  );
+
+  function jumpToClause(id: string) {
+    document.getElementById(`item-${id}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
   function patchItem(id: string, patch: Partial<AuditChecklistItem>) {
     updateItem.mutate({ id, patch });
   }
