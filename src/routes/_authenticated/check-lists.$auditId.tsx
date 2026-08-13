@@ -100,6 +100,8 @@ function ChecklistDetailPage() {
   const [filter, setFilter] = useState<"all" | "pending" | "nc">("all");
   const [chapterFilter, setChapterFilter] = useState<string>("all");
   const [search, setSearch] = useState("");
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const filtersActive = filter !== "all" || chapterFilter !== "all" || search.trim() !== "";
   const [adding, setAdding] = useState(false);
   const [draft, setDraft] = useState({ chapter: "", clause: "", requirement: "" });
 
