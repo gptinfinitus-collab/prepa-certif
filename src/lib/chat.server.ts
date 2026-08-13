@@ -40,15 +40,28 @@ export async function supabaseFromRequest(request: Request) {
   return { supabase, userId: data.claims.sub as string };
 }
 
+/** Nombre maximal de jetons produits par réponse (bornage des générations trop longues). */
+export const MAX_ANSWER_TOKENS = 1600;
+
 /** Appelle le modèle en streaming et renvoie chaque fragment de texte produit. */
-export async function* streamChat(messages: ChatMessage[]): AsyncGenerator<string> {
+export async function* streamChat(
+  messages: ChatMessage[],
+  options: { signal?: AbortSignal } = {},
+): AsyncGenerator<string> {
   const key = process.env["LOVABLE_API_KEY"];
   if (!key) throw new Error("aiUnavailable");
 
   const response = await fetch(`${GATEWAY}/chat/completions`, {
     method: "POST",
     headers: { Authorization: `Bearer ${key}`, "content-type": "application/json" },
-    body: JSON.stringify({ model: CHAT_MODEL, messages, temperature: 0.3, stream: true }),
+    body: JSON.stringify({
+      model: CHAT_MODEL,
+      messages,
+      temperature: 0.3,
+      stream: true,
+      max_tokens: MAX_ANSWER_TOKENS,
+    }),
+    ...(options.signal ? { signal: options.signal } : {}),
   });
 
   if (response.status === 429) throw new Error("aiRateLimited");
