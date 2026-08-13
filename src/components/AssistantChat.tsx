@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import {
@@ -58,23 +58,10 @@ export function AssistantChat({ threadId }: { threadId: string }) {
   const [pending, setPending] = useState<ChatMessageRow[]>([]);
   const [streamed, setStreamed] = useState("");
   const [busy, setBusy] = useState(false);
-  const [input, setInput] = useState("");
   const [lastQuestion, setLastQuestion] = useState("");
   const [failed, setFailed] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
 
-  // Question préremplie depuis une page du cours SGS.
-  useEffect(() => {
-    try {
-      const prefill = sessionStorage.getItem("assistant:prefill");
-      if (prefill) {
-        sessionStorage.removeItem("assistant:prefill");
-        setInput(prefill);
-      }
-    } catch {
-      /* stockage indisponible */
-    }
-  }, []);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [showScrollDown, setShowScrollDown] = useState(false);
 
