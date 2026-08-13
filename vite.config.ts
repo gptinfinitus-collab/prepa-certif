@@ -25,6 +25,9 @@ export default defineConfig({
     server: { entry: "server" },
   },
   vite: {
+    // Les JSON de contenu (programme, cours SGS) sont volumineux : `stringify`
+    // les charge via JSON.parse, nettement plus rapide que du littéral JS.
+    json: { stringify: true },
     resolve: {
       alias: {
         // Pin entities to the hoisted v4.5.0 copy so React Email's htmlparser2 path works.
