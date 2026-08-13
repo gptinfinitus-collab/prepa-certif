@@ -365,36 +365,7 @@ export function AssistantChat({ threadId }: { threadId: string }) {
         )}
 
 
-        <div className="sticky bottom-20 mt-4 flex items-end gap-2 rounded-full border border-border bg-card/95 py-1 pl-4 pr-1 backdrop-blur md:bottom-4">
-          <Textarea
-            ref={textareaRef}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                void send(input);
-              }
-            }}
-            rows={1}
-            placeholder={t("assistant.input.placeholder")}
-            aria-label={t("assistant.input.ariaLabel")}
-            className="max-h-32 min-h-0 resize-none overflow-y-auto border-0 bg-transparent py-2 text-sm shadow-none placeholder:text-xs placeholder:text-muted-foreground/70 focus-visible:ring-0 md:text-sm"
-          />
-          <Button
-            onClick={() => (busy ? stop() : void send(input))}
-            disabled={!busy && !input.trim()}
-            size="icon"
-            aria-label={busy ? t("assistant.input.stop") : t("assistant.input.send")}
-            className="mb-1 size-9 shrink-0 rounded-full"
-          >
-            {busy ? (
-              <Square className="size-3.5 fill-current" aria-hidden />
-            ) : (
-              <Send className="size-4" aria-hidden />
-            )}
-          </Button>
-        </div>
+        <ChatComposer busy={busy} onSend={sendRef} onStop={stop} />
       </section>
 
     </div>
