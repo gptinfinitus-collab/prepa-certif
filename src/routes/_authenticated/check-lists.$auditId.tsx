@@ -454,14 +454,23 @@ function ChecklistDetailPage() {
           </p>
         ) : (
           <div className="space-y-6">
-            {grouped.map(([chapter, chapterItems]) => (
+            {grouped.map(([chapter, chapterItems]) => {
+              const collapsed = isChapterCollapsed(chapter);
+              return (
               <section key={chapter} className="space-y-4">
-                <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                <button
+                  type="button"
+                  onClick={() => toggleChapter(chapter)}
+                  className="flex w-full items-center gap-2 text-left text-sm font-semibold uppercase tracking-wide text-muted-foreground transition-colors hover:text-foreground"
+                >
                   <span className="h-4 w-1 rounded-full bg-primary/60" />
                   {chapter}
                   <span className="text-xs font-normal normal-case">({chapterItems.length})</span>
-                </h2>
-                <ul className="space-y-4">
+                  <ChevronDown
+                    className={`ml-auto h-4 w-4 shrink-0 transition-transform ${collapsed ? "" : "rotate-180"}`}
+                  />
+                </button>
+                <ul className={`space-y-4 ${collapsed ? "hidden print:block" : ""}`}>
                   {chapterItems.map((item) => (
                     <li key={item.id} id={`item-${item.id}`} className="scroll-mt-48 lg:scroll-mt-40">
                       <Card>
