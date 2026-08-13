@@ -95,5 +95,21 @@
   "errors": {
     "save": "Enregistrement impossible.",
     "load": "Chargement impossible."
+  },
+  "compliance": {
+    "title": "Synthèse de conformité",
+    "chapter": "Chapitre",
+    "evaluated": "Évalués",
+    "breakdown": "Détail",
+    "rate": "Taux de conformité",
+    "overall": "Conformité globale",
+    "coverage": "Couverture : {{coverage}} % des exigences applicables",
+    "note": "Score : Conforme = 1, Observation = 0,75, NC mineure = 0,5, NC majeure = 0. « Non applicable » et « Non traité » sont exclus de la moyenne.",
+    "csvHeaders": [
+      "Synthèse de conformité",
+      "Évalués",
+      "Total",
+      "Taux de conformité"
+    ]
   }
 }

@@ -95,5 +95,21 @@
   "errors": {
     "save": "Could not save.",
     "load": "Could not load."
+  },
+  "compliance": {
+    "title": "Compliance summary",
+    "chapter": "Clause",
+    "evaluated": "Scored",
+    "breakdown": "Breakdown",
+    "rate": "Compliance rate",
+    "overall": "Overall compliance",
+    "coverage": "Coverage: {{coverage}}% of applicable requirements",
+    "note": "Score: Conform = 1, Observation = 0.75, Minor NC = 0.5, Major NC = 0. \"Not applicable\" and \"Not assessed\" are excluded from the average.",
+    "csvHeaders": [
+      "Compliance summary",
+      "Scored",
+      "Total",
+      "Compliance rate"
+    ]
   }
 }
