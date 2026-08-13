@@ -147,9 +147,9 @@ function normalizeStatus(status: string): ItemStatus {
  * alphabétiquement.
  */
 export function compareChapters(a: string, b: string): number {
-  const numberOf = (value: string) => {
+  const numberOf = (value: string): number[] | null => {
     const match = /^\s*(\d+(?:\.\d+)*)/.exec(value);
-    return match ? match[1].split(".").map(Number) : null;
+    return match?.[1] ? match[1].split(".").map(Number) : null;
   };
   const na = numberOf(a);
   const nb = numberOf(b);
