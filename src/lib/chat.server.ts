@@ -100,3 +100,12 @@ export async function* streamChat(
     }
   }
 }
+
+/**
+ * Remet en ordre chronologique les messages lus du plus récent au plus ancien.
+ * On conserve ainsi les DERNIERS échanges du fil (et non les premiers), sans
+ * quoi le modèle perd le contexte récent et se répète.
+ */
+export function orderHistory<T>(rows: T[] | null | undefined): T[] {
+  return (rows ?? []).slice().reverse();
+}
