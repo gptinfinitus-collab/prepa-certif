@@ -145,14 +145,16 @@ function ChecklistDetailPage() {
     return [...map.entries()].sort((a, b) => compareChapters(a[0], b[0]));
   }, [visible]);
 
-  /** Options du menu « aller à » : une entrée par exigence affichée. */
+  /** Options du menu « aller à » : une entrée par exigence affichée, dans l'ordre des chapitres. */
   const clauseOptions = useMemo(
     () =>
-      visible.map((item) => ({
-        id: item.id,
-        label: `${item.clause ?? item.chapter} — ${item.requirement.slice(0, 48)}`,
-      })),
-    [visible],
+      grouped.flatMap(([, chapterItems]) =>
+        chapterItems.map((item) => ({
+          id: item.id,
+          label: `${item.clause ?? item.chapter} — ${item.requirement.slice(0, 48)}`,
+        })),
+      ),
+    [grouped],
   );
 
   function jumpToClause(id: string) {
