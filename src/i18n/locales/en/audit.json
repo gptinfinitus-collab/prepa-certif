@@ -56,7 +56,10 @@
     "pending": "Not covered",
     "nc": "NC only",
     "search": "Search a requirement…",
-    "noResult": "No requirement matches this filter."
+    "noResult": "No requirement matches this filter.",
+    "chapters": "Chapters",
+    "allChapters": "All",
+    "jumpTo": "Jump to…"
   },
   "addItem": {
     "action": "Add a line",
@@ -74,7 +77,15 @@
     "csv": "Export as CSV",
     "pdf": "Export as PDF",
     "print": "Print / PDF",
-    "headers": ["Chapter", "Clause", "Requirement", "Status", "Evidence", "Finding", "Person met"]
+    "headers": [
+      "Chapter",
+      "Clause",
+      "Requirement",
+      "Status",
+      "Evidence",
+      "Finding",
+      "Person met"
+    ]
   },
   "report": {
     "title": "Audit report",

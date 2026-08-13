@@ -68,21 +68,30 @@ function ChecklistDetailPage() {
   const deleteItem = useDeleteChecklistItem(auditId);
 
   const [filter, setFilter] = useState<"all" | "pending" | "nc">("all");
+  const [chapterFilter, setChapterFilter] = useState<string>("all");
   const [search, setSearch] = useState("");
   const [adding, setAdding] = useState(false);
   const [draft, setDraft] = useState({ chapter: "", clause: "", requirement: "" });
 
   const stats = useMemo(() => summarize(items), [items]);
 
+  /** Chapitres présents dans la check-list, dans l'ordre des exigences. */
+  const chapters = useMemo(() => {
+    const seen: string[] = [];
+    for (const item of items) if (!seen.includes(item.chapter)) seen.push(item.chapter);
+    return seen;
+  }, [items]);
+
   const visible = useMemo(() => {
     const needle = search.trim().toLowerCase();
     return items.filter((item) => {
+      if (chapterFilter !== "all" && item.chapter !== chapterFilter) return false;
       if (filter === "pending" && item.status !== "pending") return false;
       if (filter === "nc" && item.status !== "major" && item.status !== "minor") return false;
       if (!needle) return true;
       return `${item.chapter} ${item.clause ?? ""} ${item.requirement}`.toLowerCase().includes(needle);
     });
-  }, [items, filter, search]);
+  }, [items, filter, chapterFilter, search]);
 
   const grouped = useMemo(() => {
     const map = new Map<string, AuditChecklistItem[]>();
@@ -93,6 +102,20 @@ function ChecklistDetailPage() {
     }
     return [...map.entries()];
   }, [visible]);
+
+  /** Options du menu « aller à » : une entrée par exigence affichée. */
+  const clauseOptions = useMemo(
+    () =>
+      visible.map((item) => ({
+        id: item.id,
+        label: `${item.clause ?? item.chapter} — ${item.requirement.slice(0, 48)}`,
+      })),
+    [visible],
+  );
+
+  function jumpToClause(id: string) {
+    document.getElementById(`item-${id}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
 
   function patchItem(id: string, patch: Partial<AuditChecklistItem>) {
     updateItem.mutate({ id, patch });
@@ -287,24 +310,70 @@ function ChecklistDetailPage() {
           </CardContent>
         </Card>
 
-        <div className="flex flex-wrap items-center gap-2 print:hidden">
-          {(["all", "pending", "nc"] as const).map((value) => (
-            <Button
-              key={value}
-              size="sm"
-              variant={filter === value ? "default" : "outline"}
-              onClick={() => setFilter(value)}
-            >
-              {t(`audit.filters.${value}`)}
-            </Button>
-          ))}
-          <Input
-            className="w-full sm:max-w-xs"
-            placeholder={t("audit.filters.search")}
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-          />
+        <div className="sticky top-2 z-20 space-y-3 rounded-xl border border-border bg-card/95 p-3 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-card/80 sm:p-4 print:hidden">
+          <div className="flex flex-wrap items-center gap-2">
+            {(["all", "pending", "nc"] as const).map((value) => (
+              <Button
+                key={value}
+                size="sm"
+                variant={filter === value ? "default" : "outline"}
+                onClick={() => setFilter(value)}
+              >
+                {t(`audit.filters.${value}`)}
+              </Button>
+            ))}
+            <Input
+              className="h-9 w-full sm:ml-auto sm:max-w-xs"
+              placeholder={t("audit.filters.search")}
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+            />
+          </div>
+
+          {chapters.length > 0 && (
+            <div className="flex flex-col gap-2 border-t border-border/60 pt-3 sm:flex-row sm:items-center">
+              <span className="shrink-0 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                {t("audit.filters.chapters")}
+              </span>
+              <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1">
+                <Button
+                  size="sm"
+                  variant={chapterFilter === "all" ? "secondary" : "ghost"}
+                  className="h-7 shrink-0 rounded-full px-3 text-xs"
+                  onClick={() => setChapterFilter("all")}
+                >
+                  {t("audit.filters.allChapters")}
+                </Button>
+                {chapters.map((chapter) => (
+                  <Button
+                    key={chapter}
+                    size="sm"
+                    variant={chapterFilter === chapter ? "secondary" : "ghost"}
+                    className="h-7 shrink-0 rounded-full px-3 text-xs"
+                    onClick={() => setChapterFilter(chapter)}
+                  >
+                    {chapter}
+                  </Button>
+                ))}
+              </div>
+              {clauseOptions.length > 0 && (
+                <Select value="" onValueChange={jumpToClause}>
+                  <SelectTrigger className="h-8 w-full text-xs sm:ml-auto sm:w-[190px]">
+                    <SelectValue placeholder={t("audit.filters.jumpTo")} />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-72">
+                    {clauseOptions.map((option) => (
+                      <SelectItem key={option.id} value={option.id} className="text-xs">
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            </div>
+          )}
         </div>
+
 
         {grouped.length === 0 ? (
           <p className="rounded-lg border border-dashed border-border p-6 text-sm text-muted-foreground">
@@ -313,15 +382,17 @@ function ChecklistDetailPage() {
         ) : (
           <div className="space-y-6">
             {grouped.map(([chapter, chapterItems]) => (
-              <section key={chapter} className="space-y-3">
-                <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+              <section key={chapter} className="space-y-4">
+                <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                  <span className="h-4 w-1 rounded-full bg-primary/60" />
                   {chapter}
+                  <span className="text-xs font-normal normal-case">({chapterItems.length})</span>
                 </h2>
-                <ul className="space-y-3">
+                <ul className="space-y-4">
                   {chapterItems.map((item) => (
-                    <li key={item.id}>
+                    <li key={item.id} id={`item-${item.id}`} className="scroll-mt-40">
                       <Card>
-                        <CardContent className="space-y-3 p-4">
+                        <CardContent className="space-y-4 p-4 sm:p-5">
                           <div className="flex flex-wrap items-start justify-between gap-2">
                             <div className="min-w-0 space-y-1">
                               <p className="text-sm font-medium leading-snug">
