@@ -193,13 +193,15 @@ export function complianceSummary(items: AuditChecklistItem[]): ComplianceSummar
     map.set(item.chapter, entry);
   }
 
-  const byChapter: ChapterCompliance[] = [...map.entries()].map(([chapter, entry]) => ({
-    chapter,
-    evaluated: entry.evaluated,
-    total: entry.total,
-    counts: entry.counts,
-    rate: entry.evaluated === 0 ? null : Math.round((entry.score / entry.evaluated) * 100),
-  }));
+  const byChapter: ChapterCompliance[] = [...map.entries()]
+    .sort((a, b) => compareChapters(a[0], b[0]))
+    .map(([chapter, entry]) => ({
+      chapter,
+      evaluated: entry.evaluated,
+      total: entry.total,
+      counts: entry.counts,
+      rate: entry.evaluated === 0 ? null : Math.round((entry.score / entry.evaluated) * 100),
+    }));
 
   return {
     byChapter,
