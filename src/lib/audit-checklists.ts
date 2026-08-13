@@ -142,6 +142,31 @@ function normalizeStatus(status: string): ItemStatus {
 }
 
 /**
+ * Ordre naturel des chapitres : « 4. Contexte » avant « 6. Planification » avant
+ * « 10. Amélioration ». Les chapitres sans préfixe numérique passent après, triés
+ * alphabétiquement.
+ */
+export function compareChapters(a: string, b: string): number {
+  const numberOf = (value: string) => {
+    const match = /^\s*(\d+(?:\.\d+)*)/.exec(value);
+    return match ? match[1].split(".").map(Number) : null;
+  };
+  const na = numberOf(a);
+  const nb = numberOf(b);
+  if (na && nb) {
+    for (let i = 0; i < Math.max(na.length, nb.length); i += 1) {
+      const diff = (na[i] ?? 0) - (nb[i] ?? 0);
+      if (diff !== 0) return diff;
+    }
+    return a.localeCompare(b, "fr");
+  }
+  if (na) return -1;
+  if (nb) return 1;
+  return a.localeCompare(b, "fr");
+}
+
+
+/**
  * Synthèse de conformité par chapitre et globale.
  * Le taux global est calculé sur l'ensemble des lignes notées (et non comme une
  * moyenne des chapitres) afin de ne pas surpondérer les chapitres courts.
