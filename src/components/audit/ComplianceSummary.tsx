@@ -46,7 +46,41 @@ export const ComplianceSummary = memo(function ComplianceSummary({ summary }: Pr
       </button>
 
       <div className={open ? "block" : "hidden print:block"}>
-        <div className="overflow-x-auto px-4 pb-4">
+        {/* Mobile : liste empilée, pas de tableau à faire défiler */}
+        <ul className="space-y-2 px-3 pb-4 sm:hidden print:hidden">
+          {byChapter.map((row) => (
+            <li key={row.chapter} className="rounded-lg border border-border/60 p-3">
+              <div className="flex items-center justify-between gap-2">
+                <span className="min-w-0 truncate text-sm font-medium">{row.chapter}</span>
+                <span className={`shrink-0 text-sm font-bold tabular-nums ${rateTone(row.rate)}`}>
+                  {row.rate === null ? "—" : `${row.rate}%`}
+                </span>
+              </div>
+              <p className="mt-0.5 text-xs tabular-nums text-muted-foreground">
+                {row.evaluated} / {row.total}
+              </p>
+              <Progress value={row.rate ?? 0} className="mt-2 h-1.5" />
+              <div className="mt-2 flex flex-wrap gap-1">
+                <CountBadges counts={row.counts} t={t} />
+              </div>
+            </li>
+          ))}
+          <li className="rounded-lg border border-border bg-muted/40 p-3">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-sm font-semibold">{t("audit.compliance.overall")}</span>
+              <span className={`text-base font-bold tabular-nums ${rateTone(overall.rate)}`}>
+                {overall.rate === null ? "—" : `${overall.rate}%`}
+              </span>
+            </div>
+            <p className="mt-0.5 text-xs text-muted-foreground">
+              {overall.evaluated} / {overall.applicable} ·{" "}
+              {t("audit.compliance.coverage", { coverage: overall.coverage })}
+            </p>
+          </li>
+          <li className="px-1 text-xs italic text-muted-foreground">{t("audit.compliance.note")}</li>
+        </ul>
+
+        <div className="hidden overflow-x-auto px-4 pb-4 sm:block print:block">
           <table className="w-full min-w-[560px] border-collapse text-sm">
             <thead>
               <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-muted-foreground">
