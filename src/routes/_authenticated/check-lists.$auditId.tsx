@@ -145,7 +145,14 @@ function ChecklistDetailPage() {
   );
 
   function jumpToClause(id: string) {
-    document.getElementById(`item-${id}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    // Déplie le chapitre concerné avant de faire défiler jusqu'à l'exigence.
+    const chapter = items.find((item) => item.id === id)?.chapter;
+    if (chapter) setOpenChapters((prev) => ({ ...prev, [chapter]: true }));
+    requestAnimationFrame(() => {
+      document
+        .getElementById(`item-${id}`)
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
   }
 
   function patchItem(id: string, patch: Partial<AuditChecklistItem>) {
