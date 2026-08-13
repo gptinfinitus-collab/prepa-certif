@@ -80,9 +80,12 @@ export function AssistantChat({ threadId }: { threadId: string }) {
   const messages = [...(stored.data ?? []), ...pending];
 
   useEffect(() => {
+    abortRef.current?.abort();
+    abortRef.current = null;
     setPending([]);
     setStreamed("");
     setBusy(false);
+    setFailed(false);
     textareaRef.current?.focus();
   }, [threadId]);
 
