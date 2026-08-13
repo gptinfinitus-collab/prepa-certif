@@ -87,12 +87,16 @@ export const Route = createFileRoute("/api/chat")({
           .maybeSingle();
         if (!thread) return new Response("Conversation introuvable", { status: 404 });
 
-        const { data: previous } = await supabase
+        // Les 12 messages LES PLUS RÉCENTS (lus en ordre décroissant puis remis
+        // en ordre chronologique) : sinon le modèle ne voit que le début du fil
+        // et se répète indéfiniment.
+        const { data: recent } = await supabase
           .from("ai_messages")
-          .select("role, content")
+          .select("role, content, created_at")
           .eq("thread_id", thread.id)
-          .order("created_at", { ascending: true })
+          .order("created_at", { ascending: false })
           .limit(12);
+        const previous = (recent ?? []).slice().reverse();
 
         const { error: userInsertError } = await supabase.from("ai_messages").insert({
           user_id: userId,
