@@ -4,6 +4,8 @@ import {
   ArrowLeft,
   ChevronDown,
   HelpCircle,
+  Paperclip,
+
   LayoutGrid,
 
   Table2,
