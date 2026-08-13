@@ -569,7 +569,7 @@ function ChecklistDetailPage() {
             {t("audit.filters.noResult")}
           </p>
         ) : !isMobile && view === "table" ? (
-          <ChecklistTable items={visible} onPatch={patchItem} />
+          <ChecklistTable items={visible} onPatch={patchItem} attachmentCounts={attachmentCounts} />
         ) : (
           <div className="space-y-6">
             {grouped.map(([chapter, chapterItems]) => {
