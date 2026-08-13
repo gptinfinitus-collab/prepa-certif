@@ -9,6 +9,7 @@ import {
   Plus,
   Printer,
   RefreshCw,
+  SlidersHorizontal,
   Sparkles,
   Trash2,
 } from "lucide-react";
@@ -38,6 +39,7 @@ import { ActionPlan } from "@/components/audit/ActionPlan";
 import { ChecklistTable } from "@/components/audit/ChecklistTable";
 import {
   buildChecklistCsv,
+  compareChapters,
   complianceSummary,
   downloadTextFile,
   findTemplate,
