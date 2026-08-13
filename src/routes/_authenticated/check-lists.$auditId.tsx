@@ -340,18 +340,21 @@ function ChecklistDetailPage() {
           </CardContent>
         </Card>
 
-        <div className="sticky top-2 z-20 space-y-3 rounded-xl border border-border bg-card/95 p-3 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-card/80 sm:p-4 print:hidden">
+        <div className="sticky top-[6.5rem] z-20 space-y-3 rounded-xl border border-border bg-card/95 p-3 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-card/80 sm:p-4 lg:top-2 print:hidden">
           <div className="flex flex-wrap items-center gap-2">
-            {(["all", "pending", "nc"] as const).map((value) => (
-              <Button
-                key={value}
-                size="sm"
-                variant={filter === value ? "default" : "outline"}
-                onClick={() => setFilter(value)}
-              >
-                {t(`audit.filters.${value}`)}
-              </Button>
-            ))}
+            <div className="-mx-1 flex w-full gap-2 overflow-x-auto px-1 pb-0.5 sm:mx-0 sm:w-auto sm:overflow-visible sm:px-0">
+              {(["all", "pending", "nc"] as const).map((value) => (
+                <Button
+                  key={value}
+                  size="sm"
+                  variant={filter === value ? "default" : "outline"}
+                  className="shrink-0"
+                  onClick={() => setFilter(value)}
+                >
+                  {t(`audit.filters.${value}`)}
+                </Button>
+              ))}
+            </div>
             <Input
               className="h-9 w-full sm:ml-auto sm:max-w-xs"
               placeholder={t("audit.filters.search")}
