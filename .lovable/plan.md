@@ -30,3 +30,25 @@ Chaque chapitre : 4 à 6 questions, formulées ouvertes (« Comment… », « Mo
 - `src/routes/_authenticated/check-lists.$auditId.tsx` : dans l'en-tête de chapitre existant, insérer le bloc repliable alimenté par le template déjà résolu via `findTemplate(locale, checklist.template_id)`. Classe `print:hidden`.
 - `src/i18n/locales/fr/audit.json` et `en/audit.json` : clés `chapterQuestions.title` (« Questions à poser » / « Questions to ask ») et `chapterQuestions.hint`.
 - Aucun changement de base de données, aucune modification des exports CSV.
+
+# Pièces jointes : documents de preuve
+
+Permettre de joindre des fichiers (photos, PDF, procédures) à chaque ligne de check-list, en complément du champ « Preuve constatée » qui reste textuel.
+
+## Ce que verra l'utilisateur
+
+Sur chaque ligne (vue cartes) : un bouton « Joindre un fichier » et la liste des pièces déjà jointes (nom, taille, date), chacune ouvrable dans un nouvel onglet et supprimable. Sur mobile, le sélecteur de fichier permet aussi de prendre une photo.
+
+Dans l'en-tête de l'audit : le nombre total de pièces jointes. Dans la vue tableau : une petite icône trombone avec le compteur par ligne.
+
+Limites : 10 Mo par fichier, formats images (JPG, PNG, HEIC converti côté navigateur non géré : refus explicite), PDF, Word, Excel. Message d'erreur clair si dépassement ou type refusé.
+
+## Détails techniques
+
+- Bucket de stockage privé `audit-evidence`, chemin `{user_id}/{checklist_id}/{item_id}/{uuid}-{nom}`, avec politiques sur `storage.objects` limitant lecture/écriture/suppression au propriétaire (préfixe = `auth.uid()`).
+- Nouvelle table `audit_item_attachments` : `item_id` (→ `audit_checklist_items`, suppression en cascade), `checklist_id`, `user_id`, `storage_path`, `file_name`, `mime_type`, `size_bytes`. GRANT pour `authenticated` et `service_role`, RLS restreinte au propriétaire.
+- `src/lib/audit-attachments.ts` : hooks `useItemAttachments(checklistId)` (chargement groupé par audit), `useUploadAttachment`, `useDeleteAttachment` (suppression du fichier puis de la ligne), et création d'URL signée à la demande pour l'ouverture.
+- `src/components/audit/EvidenceAttachments.tsx` : bouton d'upload, état de progression, liste des pièces, confirmation de suppression.
+- Intégration dans `src/routes/_authenticated/check-lists.$auditId.tsx` (bloc sous « Preuve constatée ») et compteur dans `src/components/audit/ChecklistTable.tsx`.
+- Export CSV : nouvelle colonne « Pièces jointes » listant les noms de fichiers ; l'impression affiche la liste des noms (pas les fichiers eux-mêmes).
+- Traductions ajoutées sous `audit.attachments.*` dans `fr/audit.json` et `en/audit.json`.
