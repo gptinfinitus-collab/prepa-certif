@@ -1,0 +1,96 @@
+{
+  "title": "Check-lists d'audit",
+  "subtitle": "Préparez, conduisez et documentez vos audits sur le terrain.",
+  "myAudits": "Mes audits",
+  "noAudit": "Aucun audit pour le moment. Choisissez un modèle ci-dessous pour commencer.",
+  "templates": "Démarrer depuis un modèle",
+  "blankTemplate": "Check-list vierge",
+  "blankTemplateDescription": "Partez d'une page blanche et ajoutez vos propres lignes.",
+  "itemsCount": "{{count}} exigences",
+  "start": "Démarrer",
+  "open": "Ouvrir",
+  "delete": "Supprimer",
+  "deleteConfirm": "Supprimer définitivement cet audit et toutes ses lignes ?",
+  "deleted": "Audit supprimé.",
+  "created": "Audit créé.",
+  "notFound": "Audit introuvable.",
+  "backToList": "Retour aux check-lists",
+  "progress": "Avancement",
+  "treated": "{{treated}} / {{total}} exigences traitées",
+  "nonConformities": "Non-conformités",
+  "saved": "Enregistré",
+  "header": {
+    "title": "Intitulé de l'audit",
+    "auditedEntity": "Entité auditée",
+    "scope": "Périmètre",
+    "auditor": "Auditeur",
+    "date": "Date d'audit",
+    "status": "Statut",
+    "edit": "Modifier l'en-tête",
+    "save": "Enregistrer"
+  },
+  "status": {
+    "draft": "Brouillon",
+    "in_progress": "En cours",
+    "done": "Terminé"
+  },
+  "itemStatus": {
+    "pending": "Non traité",
+    "conform": "Conforme",
+    "major": "NC majeure",
+    "minor": "NC mineure",
+    "observation": "Observation",
+    "na": "Non applicable"
+  },
+  "fields": {
+    "evidence": "Preuves constatées",
+    "finding": "Constat rédigé",
+    "auditee": "Personne rencontrée",
+    "guidance": "Aide à l'audit",
+    "requirement": "Exigence",
+    "chapter": "Chapitre",
+    "clause": "Clause"
+  },
+  "filters": {
+    "all": "Tout",
+    "pending": "Non traité",
+    "nc": "NC seulement",
+    "search": "Rechercher une exigence…",
+    "noResult": "Aucune exigence ne correspond à ce filtre."
+  },
+  "addItem": {
+    "action": "Ajouter une ligne",
+    "title": "Nouvelle ligne personnalisée",
+    "submit": "Ajouter",
+    "cancel": "Annuler",
+    "requirementPlaceholder": "Exigence ou point à vérifier",
+    "chapterPlaceholder": "Chapitre",
+    "clausePlaceholder": "Clause (facultatif)"
+  },
+  "deleteItem": "Supprimer la ligne",
+  "askAi": "Demander à l'IA",
+  "aiPrompt": "Aide-moi à formuler le constat d'audit pour cette exigence : \"{{requirement}}\" ({{clause}}). Preuves constatées : {{evidence}}",
+  "export": {
+    "csv": "Exporter en CSV",
+    "pdf": "Exporter en PDF",
+    "print": "Imprimer / PDF",
+    "headers": [
+      "Chapitre",
+      "Clause",
+      "Exigence",
+      "Statut",
+      "Preuves",
+      "Constat",
+      "Personne rencontrée"
+    ]
+  },
+  "report": {
+    "title": "Rapport d'audit",
+    "summary": "Synthèse",
+    "generatedOn": "Édité le {{date}}"
+  },
+  "errors": {
+    "save": "Enregistrement impossible.",
+    "load": "Chargement impossible."
+  }
+}
