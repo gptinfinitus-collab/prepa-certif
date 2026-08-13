@@ -9,6 +9,7 @@ import {
   Plus,
   Printer,
   RefreshCw,
+  SlidersHorizontal,
   Sparkles,
   Trash2,
 } from "lucide-react";
@@ -38,6 +39,7 @@ import { ActionPlan } from "@/components/audit/ActionPlan";
 import { ChecklistTable } from "@/components/audit/ChecklistTable";
 import {
   buildChecklistCsv,
+  compareChapters,
   complianceSummary,
   downloadTextFile,
   findTemplate,
@@ -98,6 +100,8 @@ function ChecklistDetailPage() {
   const [filter, setFilter] = useState<"all" | "pending" | "nc">("all");
   const [chapterFilter, setChapterFilter] = useState<string>("all");
   const [search, setSearch] = useState("");
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const filtersActive = filter !== "all" || chapterFilter !== "all" || search.trim() !== "";
   const [adding, setAdding] = useState(false);
   const [draft, setDraft] = useState({ chapter: "", clause: "", requirement: "" });
 
@@ -115,11 +119,11 @@ function ChecklistDetailPage() {
   const stats = useMemo(() => summarize(items), [items]);
   const compliance = useMemo(() => complianceSummary(items), [items]);
 
-  /** Chapitres présents dans la check-list, dans l'ordre des exigences. */
+  /** Chapitres présents dans la check-list, triés par numéro (4, 5, 6… 10). */
   const chapters = useMemo(() => {
     const seen: string[] = [];
     for (const item of items) if (!seen.includes(item.chapter)) seen.push(item.chapter);
-    return seen;
+    return seen.sort(compareChapters);
   }, [items]);
 
   const visible = useMemo(() => {
@@ -140,17 +144,19 @@ function ChecklistDetailPage() {
       list.push(item);
       map.set(item.chapter, list);
     }
-    return [...map.entries()];
+    return [...map.entries()].sort((a, b) => compareChapters(a[0], b[0]));
   }, [visible]);
 
-  /** Options du menu « aller à » : une entrée par exigence affichée. */
+  /** Options du menu « aller à » : une entrée par exigence affichée, dans l'ordre des chapitres. */
   const clauseOptions = useMemo(
     () =>
-      visible.map((item) => ({
-        id: item.id,
-        label: `${item.clause ?? item.chapter} — ${item.requirement.slice(0, 48)}`,
-      })),
-    [visible],
+      grouped.flatMap(([, chapterItems]) =>
+        chapterItems.map((item) => ({
+          id: item.id,
+          label: `${item.clause ?? item.chapter} — ${item.requirement.slice(0, 48)}`,
+        })),
+      ),
+    [grouped],
   );
 
   function jumpToClause(id: string) {
@@ -415,23 +421,24 @@ function ChecklistDetailPage() {
           </CardContent>
         </Card>
 
-        <div className="sticky top-[6.5rem] z-20 space-y-3 rounded-xl border border-border bg-card/95 p-3 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-card/80 sm:p-4 lg:top-2 print:hidden">
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="-mx-1 flex w-full gap-2 overflow-x-auto px-1 pb-0.5 sm:mx-0 sm:w-auto sm:overflow-visible sm:px-0">
-              {(["all", "pending", "nc"] as const).map((value) => (
-                <Button
-                  key={value}
-                  size="sm"
-                  variant={filter === value ? "default" : "outline"}
-                  className="shrink-0"
-                  onClick={() => setFilter(value)}
-                >
-                  {t(`audit.filters.${value}`)}
-                </Button>
-              ))}
-            </div>
+        <div className="sticky top-[6.5rem] z-20 -mx-1 rounded-lg bg-background/85 px-1 py-1.5 backdrop-blur supports-[backdrop-filter]:bg-background/70 lg:top-2 print:hidden">
+          <div className="flex items-center gap-2">
+            {clauseOptions.length > 0 && (
+              <Select value="" onValueChange={jumpToClause}>
+                <SelectTrigger className="h-9 min-w-0 flex-1 text-xs">
+                  <SelectValue placeholder={t("audit.filters.jumpTo")} />
+                </SelectTrigger>
+                <SelectContent className="max-h-72">
+                  {clauseOptions.map((option) => (
+                    <SelectItem key={option.id} value={option.id} className="text-xs">
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
             {!isMobile && (
-              <div className="flex shrink-0 gap-1 rounded-md border border-border p-0.5 print:hidden">
+              <div className="flex shrink-0 gap-1 rounded-md border border-border p-0.5">
                 <Button
                   size="sm"
                   variant={view === "cards" ? "secondary" : "ghost"}
@@ -452,57 +459,69 @@ function ChecklistDetailPage() {
                 </Button>
               </div>
             )}
-            <Input
-              className="h-9 w-full sm:ml-auto sm:max-w-xs"
-              placeholder={t("audit.filters.search")}
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-            />
+            <Button
+              size="sm"
+              variant="ghost"
+              className="relative h-9 shrink-0 px-2"
+              aria-expanded={filtersOpen}
+              aria-label={t("audit.filters.chapters")}
+              onClick={() => setFiltersOpen((value) => !value)}
+            >
+              <SlidersHorizontal className="h-4 w-4" />
+              {filtersActive && (
+                <span className="absolute right-1 top-1 h-1.5 w-1.5 rounded-full bg-primary" />
+              )}
+            </Button>
           </div>
 
-          {chapters.length > 0 && (
-            <div className="flex flex-col gap-2 border-t border-border/60 pt-3 sm:flex-row sm:items-center">
-              <span className="shrink-0 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                {t("audit.filters.chapters")}
-              </span>
-              <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1">
-                <Button
-                  size="sm"
-                  variant={chapterFilter === "all" ? "secondary" : "ghost"}
-                  className="h-7 shrink-0 rounded-full px-3 text-xs"
-                  onClick={() => setChapterFilter("all")}
-                >
-                  {t("audit.filters.allChapters")}
-                </Button>
-                {chapters.map((chapter) => (
+          {filtersOpen && (
+            <div className="mt-2 space-y-2 rounded-lg border border-border/60 bg-card p-2.5">
+              <div className="flex flex-wrap gap-1.5">
+                {(["all", "pending", "nc"] as const).map((value) => (
                   <Button
-                    key={chapter}
+                    key={value}
                     size="sm"
-                    variant={chapterFilter === chapter ? "secondary" : "ghost"}
-                    className="h-7 shrink-0 rounded-full px-3 text-xs"
-                    onClick={() => setChapterFilter(chapter)}
+                    variant={filter === value ? "default" : "outline"}
+                    className="h-7 rounded-full px-3 text-xs"
+                    onClick={() => setFilter(value)}
                   >
-                    {chapter}
+                    {t(`audit.filters.${value}`)}
                   </Button>
                 ))}
               </div>
-              {clauseOptions.length > 0 && (
-                <Select value="" onValueChange={jumpToClause}>
-                  <SelectTrigger className="h-8 w-full text-xs sm:ml-auto sm:w-[190px]">
-                    <SelectValue placeholder={t("audit.filters.jumpTo")} />
-                  </SelectTrigger>
-                  <SelectContent className="max-h-72">
-                    {clauseOptions.map((option) => (
-                      <SelectItem key={option.id} value={option.id} className="text-xs">
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+              <Input
+                className="h-8 w-full text-xs"
+                placeholder={t("audit.filters.search")}
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+              />
+              {chapters.length > 0 && (
+                <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1">
+                  <Button
+                    size="sm"
+                    variant={chapterFilter === "all" ? "secondary" : "ghost"}
+                    className="h-7 shrink-0 rounded-full px-3 text-xs"
+                    onClick={() => setChapterFilter("all")}
+                  >
+                    {t("audit.filters.allChapters")}
+                  </Button>
+                  {chapters.map((chapter) => (
+                    <Button
+                      key={chapter}
+                      size="sm"
+                      variant={chapterFilter === chapter ? "secondary" : "ghost"}
+                      className="h-7 shrink-0 rounded-full px-3 text-xs"
+                      onClick={() => setChapterFilter(chapter)}
+                    >
+                      {chapter}
+                    </Button>
+                  ))}
+                </div>
               )}
             </div>
           )}
         </div>
+
 
 
         {grouped.length === 0 ? (

@@ -142,6 +142,31 @@ function normalizeStatus(status: string): ItemStatus {
 }
 
 /**
+ * Ordre naturel des chapitres : « 4. Contexte » avant « 6. Planification » avant
+ * « 10. Amélioration ». Les chapitres sans préfixe numérique passent après, triés
+ * alphabétiquement.
+ */
+export function compareChapters(a: string, b: string): number {
+  const numberOf = (value: string): number[] | null => {
+    const match = /^\s*(\d+(?:\.\d+)*)/.exec(value);
+    return match?.[1] ? match[1].split(".").map(Number) : null;
+  };
+  const na = numberOf(a);
+  const nb = numberOf(b);
+  if (na && nb) {
+    for (let i = 0; i < Math.max(na.length, nb.length); i += 1) {
+      const diff = (na[i] ?? 0) - (nb[i] ?? 0);
+      if (diff !== 0) return diff;
+    }
+    return a.localeCompare(b, "fr");
+  }
+  if (na) return -1;
+  if (nb) return 1;
+  return a.localeCompare(b, "fr");
+}
+
+
+/**
  * Synthèse de conformité par chapitre et globale.
  * Le taux global est calculé sur l'ensemble des lignes notées (et non comme une
  * moyenne des chapitres) afin de ne pas surpondérer les chapitres courts.
@@ -168,13 +193,15 @@ export function complianceSummary(items: AuditChecklistItem[]): ComplianceSummar
     map.set(item.chapter, entry);
   }
 
-  const byChapter: ChapterCompliance[] = [...map.entries()].map(([chapter, entry]) => ({
-    chapter,
-    evaluated: entry.evaluated,
-    total: entry.total,
-    counts: entry.counts,
-    rate: entry.evaluated === 0 ? null : Math.round((entry.score / entry.evaluated) * 100),
-  }));
+  const byChapter: ChapterCompliance[] = [...map.entries()]
+    .sort((a, b) => compareChapters(a[0], b[0]))
+    .map(([chapter, entry]) => ({
+      chapter,
+      evaluated: entry.evaluated,
+      total: entry.total,
+      counts: entry.counts,
+      rate: entry.evaluated === 0 ? null : Math.round((entry.score / entry.evaluated) * 100),
+    }));
 
   return {
     byChapter,
@@ -496,7 +523,10 @@ export function buildChecklistCsv(
   summarySection?: { headers: string[]; rows: string[][] },
 ): string {
   const lines = [headers.map(csvCell).join(";")];
-  for (const item of items) {
+  const ordered = [...items].sort(
+    (a, b) => compareChapters(a.chapter, b.chapter) || a.position - b.position,
+  );
+  for (const item of ordered) {
     lines.push(
       [
         csvCell(item.chapter),
