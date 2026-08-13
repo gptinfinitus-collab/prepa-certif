@@ -3,7 +3,10 @@ import { getAuthUser } from "@/lib/auth-user";
 import { supabase } from "@/integrations/supabase/client";
 import { auditChecklistTemplates, type ChecklistTemplate } from "@/data/audit-checklists";
 import { enAuditChecklistTemplates } from "@/data/audit-checklists.en";
+import { auditChapterQuestions } from "@/data/audit-chapter-questions";
+import { enAuditChapterQuestions } from "@/data/audit-chapter-questions.en";
 import type { Locale } from "@/i18n/config";
+
 
 /** Statuts de constat disponibles sur une ligne de check-list. */
 export const ITEM_STATUSES = ["pending", "conform", "major", "minor", "observation", "na"] as const;
@@ -57,6 +60,21 @@ export function templatesFor(locale: Locale): ChecklistTemplate[] {
 export function findTemplate(locale: Locale, id: string): ChecklistTemplate | null {
   return templatesFor(locale).find((template) => template.id === id) ?? null;
 }
+
+/**
+ * Exemples de questions d'entretien pour un chapitre donné.
+ * Renvoie une liste vide pour les chapitres personnalisés ou hors modèle.
+ */
+export function chapterQuestions(
+  locale: Locale,
+  templateId: string | null | undefined,
+  chapter: string,
+): string[] {
+  if (!templateId) return [];
+  const source = locale === "en" ? enAuditChapterQuestions : auditChapterQuestions;
+  return source[templateId]?.[chapter] ?? [];
+}
+
 
 /** Nombre d'exigences d'un modèle. */
 export function templateItemCount(template: ChecklistTemplate): number {
@@ -521,6 +539,7 @@ export function buildChecklistCsv(
   headers: string[],
   statusLabel: (status: string) => string,
   summarySection?: { headers: string[]; rows: string[][] },
+  attachmentNames?: Record<string, string[]>,
 ): string {
   const lines = [headers.map(csvCell).join(";")];
   const ordered = [...items].sort(
@@ -541,9 +560,11 @@ export function buildChecklistCsv(
         csvCell(item.action),
         csvCell(item.owner),
         csvCell(item.due_date),
+        csvCell((attachmentNames?.[item.id] ?? []).join(" | ")),
       ].join(";"),
     );
   }
+
   if (summarySection) {
     lines.push("");
     lines.push(summarySection.headers.map(csvCell).join(";"));

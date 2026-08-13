@@ -100,7 +100,8 @@
       "Gap identified",
       "Action",
       "Owner",
-      "Due date"
+      "Due date",
+      "Attachments"
     ]
   },
   "report": {
@@ -155,5 +156,23 @@
   "score": {
     "label": "Score",
     "none": "Not scored"
+  },
+  "chapterQuestions": {
+    "title": "Questions to ask",
+    "hint": "Sample interview questions for this chapter."
+  },
+  "attachments": {
+    "title": "Evidence documents",
+    "add": "Attach a file",
+    "empty": "No attachment yet.",
+    "hint": "Images, PDF, Word or Excel — 10 MB per file maximum.",
+    "delete": "Delete attachment",
+    "deleteConfirm": "Permanently delete this attachment?",
+    "deleteError": "Could not delete.",
+    "uploadError": "Upload failed.",
+    "openError": "Could not open the file.",
+    "tooLarge": "File too large (10 MB maximum).",
+    "badType": "File format not accepted.",
+    "count": "{{count}} attachments"
   }
 }
