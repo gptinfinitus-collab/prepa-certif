@@ -8,6 +8,8 @@ import {
   MessageSquarePlus,
   Send,
   Sparkles,
+  Square,
+  RotateCcw,
   Trash2,
   User,
 } from "lucide-react";
@@ -56,6 +58,9 @@ export function AssistantChat({ threadId }: { threadId: string }) {
   const [streamed, setStreamed] = useState("");
   const [busy, setBusy] = useState(false);
   const [input, setInput] = useState("");
+  const [lastQuestion, setLastQuestion] = useState("");
+  const [failed, setFailed] = useState(false);
+  const abortRef = useRef<AbortController | null>(null);
 
   // Question préremplie depuis une page du cours SGS.
   useEffect(() => {
@@ -77,9 +82,12 @@ export function AssistantChat({ threadId }: { threadId: string }) {
   const messages = [...(stored.data ?? []), ...pending];
 
   useEffect(() => {
+    abortRef.current?.abort();
+    abortRef.current = null;
     setPending([]);
     setStreamed("");
     setBusy(false);
+    setFailed(false);
     textareaRef.current?.focus();
   }, [threadId]);
 
@@ -96,13 +104,21 @@ export function AssistantChat({ threadId }: { threadId: string }) {
   }, [input]);
 
 
+  function stop() {
+    abortRef.current?.abort();
+  }
+
   async function send(question: string) {
     const text = question.trim();
     if (!text || busy) return;
     setInput("");
     setBusy(true);
     setStreamed("");
+    setLastQuestion(text);
     setPending([{ id: `local-${Date.now()}`, role: "user", content: text, sources: [] }]);
+
+    const controller = new AbortController();
+    abortRef.current = controller;
 
     try {
       const { data: sessionData } = await supabase.auth.getSession();
@@ -113,6 +129,7 @@ export function AssistantChat({ threadId }: { threadId: string }) {
         method: "POST",
         headers: { "content-type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ threadId, question: text, certificationName, locale }),
+        signal: controller.signal,
       });
       if (!response.ok || !response.body) {
         throw new Error(await response.text().catch(() => t("assistant.errors.unavailable")));
@@ -146,14 +163,22 @@ export function AssistantChat({ threadId }: { threadId: string }) {
           }
         }
       }
+      setFailed(false);
     } catch (error) {
-      toast.error(translateAppError(t, error, "assistant.errors.unavailable"));
+      const aborted = error instanceof DOMException && error.name === "AbortError";
+      if (!aborted) {
+        setFailed(true);
+        toast.error(translateAppError(t, error, "assistant.errors.unavailable"));
+      }
     } finally {
+      abortRef.current = null;
       setBusy(false);
-      setStreamed("");
-      setPending([]);
+      // On recharge les messages persistés AVANT d'effacer l'affichage local :
+      // le texte reste visible, sans clignotement ni perte de la réponse partielle.
       await queryClient.invalidateQueries({ queryKey: ["chat-messages", threadId] });
       await queryClient.invalidateQueries({ queryKey: ["chat-threads"] });
+      setStreamed("");
+      setPending([]);
       textareaRef.current?.focus();
     }
   }
@@ -283,6 +308,15 @@ export function AssistantChat({ threadId }: { threadId: string }) {
               {t("assistant.loading")}
             </p>
           )}
+          {!busy && failed && lastQuestion && (
+            <div className="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-secondary/40 px-3 py-2 text-sm text-muted-foreground">
+              <span>{t("assistant.errors.interrupted")}</span>
+              <Button size="sm" variant="outline" onClick={() => void send(lastQuestion)}>
+                <RotateCcw className="size-4" aria-hidden />
+                {t("assistant.errors.retry")}
+              </Button>
+            </div>
+          )}
           <div ref={bottomRef} />
         </div>
 
@@ -303,14 +337,14 @@ export function AssistantChat({ threadId }: { threadId: string }) {
             className="max-h-32 min-h-0 resize-none overflow-y-auto border-0 bg-transparent py-2 text-sm shadow-none placeholder:text-xs placeholder:text-muted-foreground/70 focus-visible:ring-0 md:text-sm"
           />
           <Button
-            onClick={() => void send(input)}
-            disabled={busy || !input.trim()}
+            onClick={() => (busy ? stop() : void send(input))}
+            disabled={!busy && !input.trim()}
             size="icon"
-            aria-label={t("assistant.input.send")}
+            aria-label={busy ? t("assistant.input.stop") : t("assistant.input.send")}
             className="mb-1 size-9 shrink-0 rounded-full"
           >
             {busy ? (
-              <Loader2 className="size-4 animate-spin" aria-hidden />
+              <Square className="size-3.5 fill-current" aria-hidden />
             ) : (
               <Send className="size-4" aria-hidden />
             )}

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { supabaseFromRequest, streamChat } from "@/lib/chat.server";
+import { supabaseFromRequest, streamChat, orderHistory } from "@/lib/chat.server";
 import { retrieve } from "@/lib/rag.server";
 
 type Locale = "fr" | "en";
@@ -87,12 +87,16 @@ export const Route = createFileRoute("/api/chat")({
           .maybeSingle();
         if (!thread) return new Response("Conversation introuvable", { status: 404 });
 
-        const { data: previous } = await supabase
+        // Les 12 messages LES PLUS RÉCENTS (lus en ordre décroissant puis remis
+        // en ordre chronologique) : sinon le modèle ne voit que le début du fil
+        // et se répète indéfiniment.
+        const { data: recent } = await supabase
           .from("ai_messages")
-          .select("role, content")
+          .select("role, content, created_at")
           .eq("thread_id", thread.id)
-          .order("created_at", { ascending: true })
+          .order("created_at", { ascending: false })
           .limit(12);
+        const previous = orderHistory(recent);
 
         const { error: userInsertError } = await supabase.from("ai_messages").insert({
           user_id: userId,
@@ -113,17 +117,43 @@ export const Route = createFileRoute("/api/chat")({
             .eq("id", thread.id);
         }
 
+        const interruptedMark =
+          locale === "en" ? "\n\n_(response interrupted)_" : "\n\n_(réponse interrompue)_";
+
         const stream = new ReadableStream({
           async start(controller) {
             let answer = "";
+            let interrupted = false;
+            let closed = false;
             let sources: { content: string; document_id: string }[] = [];
+
+            const push = (chunk: Uint8Array) => {
+              if (closed) return;
+              try {
+                controller.enqueue(chunk);
+              } catch {
+                closed = true;
+              }
+            };
+
+            // Battement de cœur : évite qu'un intermédiaire ne coupe un flux long.
+            const heartbeat = setInterval(() => {
+              push(new TextEncoder().encode(": keep-alive\n\n"));
+            }, 10000);
+
+            const onAbort = () => {
+              interrupted = true;
+              closed = true;
+            };
+            request.signal.addEventListener("abort", onAbort);
+
             try {
               const passages = await retrieve(supabase as never, question);
               sources = passages.map((p) => ({
                 content: p.content.slice(0, 400),
                 document_id: p.document_id,
               }));
-              controller.enqueue(sse({ type: "sources", sources }));
+              push(sse({ type: "sources", sources }));
 
               const sourcesBlock = passages
                 .map((p, i) => `[${sourcesLabel(locale)} ${i + 1}]\n${p.content}`)
@@ -134,7 +164,7 @@ export const Route = createFileRoute("/api/chat")({
 
               const messages = [
                 { role: "system" as const, content: system },
-                ...(previous ?? []).map((m) => ({
+                ...previous.map((m) => ({
                   role: m.role as "user" | "assistant",
                   content: m.content,
                 })),
@@ -144,22 +174,34 @@ export const Route = createFileRoute("/api/chat")({
                 },
               ];
 
-              for await (const delta of streamChat(messages)) {
+              for await (const delta of streamChat(messages, { signal: request.signal })) {
                 answer += delta;
-                controller.enqueue(sse({ type: "delta", text: delta }));
+                push(sse({ type: "delta", text: delta }));
               }
             } catch (cause) {
-              const message = cause instanceof Error ? cause.message : "Réponse IA indisponible.";
-              controller.enqueue(sse({ type: "error", message }));
+              const aborted =
+                request.signal.aborted ||
+                (cause instanceof Error &&
+                  (cause.name === "AbortError" || /abort/i.test(cause.message)));
+              if (aborted) {
+                interrupted = true;
+              } else {
+                const message = cause instanceof Error ? cause.message : "Réponse IA indisponible.";
+                push(sse({ type: "error", message }));
+              }
+            } finally {
+              clearInterval(heartbeat);
+              request.signal.removeEventListener("abort", onAbort);
             }
 
+            // La réponse partielle est enregistrée : elle ne doit jamais être perdue.
             if (answer.trim()) {
               const { error } = await supabase.from("ai_messages").insert({
                 user_id: userId,
                 thread_id: thread.id,
                 certification_id: thread.certification_id,
                 role: "assistant",
-                content: answer,
+                content: interrupted ? `${answer.trimEnd()}${interruptedMark}` : answer,
                 sources,
               });
               if (error) {
@@ -167,8 +209,15 @@ export const Route = createFileRoute("/api/chat")({
               }
             }
 
-            controller.enqueue(sse({ type: "done" }));
-            controller.close();
+            push(sse({ type: "done" }));
+            if (!closed) {
+              closed = true;
+              try {
+                controller.close();
+              } catch {
+                /* flux déjà fermé */
+              }
+            }
           },
         });
 
