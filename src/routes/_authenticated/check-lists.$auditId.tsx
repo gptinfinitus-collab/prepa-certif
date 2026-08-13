@@ -209,8 +209,37 @@ function ChecklistDetailPage() {
         </div>
 
         <Card>
-          <CardHeader className="pb-3">
+          <CardHeader className="gap-3 pb-3">
             <CardTitle className="text-xl">{checklist.title}</CardTitle>
+            {canSync && template && (
+              <div className="flex flex-col gap-2 rounded-lg border border-border bg-muted/40 p-3 sm:flex-row sm:items-center sm:justify-between print:hidden">
+                <p className="text-xs text-muted-foreground">
+                  {t("audit.sync.hint", { count: templateTotal, current: items.length })}
+                </p>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="shrink-0"
+                  disabled={syncFromTemplate.isPending}
+                  onClick={() =>
+                    syncFromTemplate.mutate(template, {
+                      onSuccess: ({ added }) =>
+                        toast.success(
+                          added > 0
+                            ? t("audit.sync.added", { count: added })
+                            : t("audit.sync.upToDate"),
+                        ),
+                      onError: () => toast.error(t("audit.sync.error")),
+                    })
+                  }
+                >
+                  <RefreshCw
+                    className={`mr-1 h-4 w-4 ${syncFromTemplate.isPending ? "animate-spin" : ""}`}
+                  />
+                  {t("audit.sync.action")}
+                </Button>
+              </div>
+            )}
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
