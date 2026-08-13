@@ -22,7 +22,8 @@
   "input": {
     "placeholder": "Your question…",
     "ariaLabel": "Your question",
-    "send": "Send"
+    "send": "Send",
+    "stop": "Stop the response"
   },
   "sources": {
     "count_one": "{{count}} excerpt from your documents",
@@ -32,6 +33,8 @@
   "errors": {
     "sessionExpired": "Session expired, please sign in again.",
     "unavailable": "Assistant unavailable.",
-    "answerUnavailable": "AI response unavailable."
+    "answerUnavailable": "AI response unavailable.",
+    "interrupted": "Response interrupted.",
+    "retry": "Retry"
   }
 }

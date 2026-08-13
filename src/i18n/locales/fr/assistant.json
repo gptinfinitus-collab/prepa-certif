@@ -22,7 +22,8 @@
   "input": {
     "placeholder": "Votre question…",
     "ariaLabel": "Votre question",
-    "send": "Envoyer"
+    "send": "Envoyer",
+    "stop": "Arrêter la réponse"
   },
   "sources": {
     "count_one": "{{count}} extrait de vos documents",
@@ -32,6 +33,8 @@
   "errors": {
     "sessionExpired": "Session expirée, reconnectez-vous.",
     "unavailable": "Assistant indisponible.",
-    "answerUnavailable": "Réponse IA indisponible."
+    "answerUnavailable": "Réponse IA indisponible.",
+    "interrupted": "Réponse interrompue.",
+    "retry": "Réessayer"
   }
 }
