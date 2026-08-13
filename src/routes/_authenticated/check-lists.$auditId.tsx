@@ -278,7 +278,7 @@ function ChecklistDetailPage() {
 
             <ComplianceSummary summary={compliance} />
 
-            <div className="flex flex-wrap gap-2 print:hidden">
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap print:hidden">
               <Button size="sm" variant="outline" onClick={exportCsv}>
                 <Download className="mr-1 h-4 w-4" />
                 {t("audit.export.csv")}
@@ -287,7 +287,12 @@ function ChecklistDetailPage() {
                 <Printer className="mr-1 h-4 w-4" />
                 {t("audit.export.print")}
               </Button>
-              <Button size="sm" variant="outline" onClick={() => setAdding((open) => !open)}>
+              <Button
+                size="sm"
+                variant="outline"
+                className="col-span-2 sm:col-span-1"
+                onClick={() => setAdding((open) => !open)}
+              >
                 <Plus className="mr-1 h-4 w-4" />
                 {t("audit.addItem.action")}
               </Button>
@@ -335,18 +340,21 @@ function ChecklistDetailPage() {
           </CardContent>
         </Card>
 
-        <div className="sticky top-2 z-20 space-y-3 rounded-xl border border-border bg-card/95 p-3 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-card/80 sm:p-4 print:hidden">
+        <div className="sticky top-[6.5rem] z-20 space-y-3 rounded-xl border border-border bg-card/95 p-3 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-card/80 sm:p-4 lg:top-2 print:hidden">
           <div className="flex flex-wrap items-center gap-2">
-            {(["all", "pending", "nc"] as const).map((value) => (
-              <Button
-                key={value}
-                size="sm"
-                variant={filter === value ? "default" : "outline"}
-                onClick={() => setFilter(value)}
-              >
-                {t(`audit.filters.${value}`)}
-              </Button>
-            ))}
+            <div className="-mx-1 flex w-full gap-2 overflow-x-auto px-1 pb-0.5 sm:mx-0 sm:w-auto sm:overflow-visible sm:px-0">
+              {(["all", "pending", "nc"] as const).map((value) => (
+                <Button
+                  key={value}
+                  size="sm"
+                  variant={filter === value ? "default" : "outline"}
+                  className="shrink-0"
+                  onClick={() => setFilter(value)}
+                >
+                  {t(`audit.filters.${value}`)}
+                </Button>
+              ))}
+            </div>
             <Input
               className="h-9 w-full sm:ml-auto sm:max-w-xs"
               placeholder={t("audit.filters.search")}
@@ -415,10 +423,10 @@ function ChecklistDetailPage() {
                 </h2>
                 <ul className="space-y-4">
                   {chapterItems.map((item) => (
-                    <li key={item.id} id={`item-${item.id}`} className="scroll-mt-40">
+                    <li key={item.id} id={`item-${item.id}`} className="scroll-mt-48 lg:scroll-mt-40">
                       <Card>
                         <CardContent className="space-y-4 p-4 sm:p-5">
-                          <div className="flex flex-wrap items-start justify-between gap-2">
+                          <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between">
                             <div className="min-w-0 space-y-1">
                               <p className="text-sm font-medium leading-snug">
                                 {item.clause ? (
@@ -434,7 +442,7 @@ function ChecklistDetailPage() {
                               value={item.status}
                               onValueChange={(value) => patchItem(item.id, { status: value })}
                             >
-                              <SelectTrigger className="w-[170px] print:hidden">
+                              <SelectTrigger className="h-9 w-full sm:w-[170px] print:hidden">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
@@ -471,12 +479,12 @@ function ChecklistDetailPage() {
 
                           <div className="flex flex-wrap items-center gap-2 print:hidden">
                             <Input
-                              className="h-8 w-full sm:max-w-[220px]"
+                              className="h-9 w-full sm:h-8 sm:max-w-[220px]"
                               placeholder={t("audit.fields.auditee")}
                               defaultValue={item.auditee ?? ""}
                               onBlur={(event) => patchItem(item.id, { auditee: event.target.value })}
                             />
-                            <Button size="sm" variant="ghost" onClick={() => askAi(item)}>
+                            <Button size="sm" variant="ghost" className="shrink-0" onClick={() => askAi(item)}>
                               <Sparkles className="mr-1 h-4 w-4" />
                               {t("audit.askAi")}
                             </Button>
