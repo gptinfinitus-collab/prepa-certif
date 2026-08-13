@@ -19,6 +19,7 @@
     ]
   },
   "loading": "The assistant is reviewing your documents…",
+  "scrollToBottom": "Jump to latest",
   "input": {
     "placeholder": "Your question…",
     "ariaLabel": "Your question",
