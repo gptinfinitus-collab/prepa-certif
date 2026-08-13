@@ -56,7 +56,10 @@
     "pending": "Non traité",
     "nc": "NC seulement",
     "search": "Rechercher une exigence…",
-    "noResult": "Aucune exigence ne correspond à ce filtre."
+    "noResult": "Aucune exigence ne correspond à ce filtre.",
+    "chapters": "Chapitres",
+    "allChapters": "Tous",
+    "jumpTo": "Aller à…"
   },
   "addItem": {
     "action": "Ajouter une ligne",
