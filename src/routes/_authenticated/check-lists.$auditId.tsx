@@ -3,6 +3,8 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import {
   ArrowLeft,
   ChevronDown,
+  LayoutGrid,
+  Table2,
   Download,
   Plus,
   Printer,
@@ -31,11 +33,14 @@ import { useLocale, useT } from "@/i18n";
 import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { pageHead } from "@/lib/seo";
 import { ComplianceSummary } from "@/components/audit/ComplianceSummary";
+import { ActionPlan } from "@/components/audit/ActionPlan";
+import { ChecklistTable } from "@/components/audit/ChecklistTable";
 import {
   buildChecklistCsv,
   complianceSummary,
   downloadTextFile,
   findTemplate,
+  scoreLabel,
   slugifyTitle,
   summarize,
   templateItemCount,
@@ -95,6 +100,8 @@ function ChecklistDetailPage() {
   const [draft, setDraft] = useState({ chapter: "", clause: "", requirement: "" });
 
   // Sur les modèles longs, les chapitres sont repliés par défaut (vue « tous les chapitres »).
+  const [view, setView] = useState<"cards" | "table">("cards");
+  const [treatmentOpen, setTreatmentOpen] = useState<Record<string, boolean>>({});
   const [openChapters, setOpenChapters] = useState<Record<string, boolean>>({});
   const collapseByDefault = items.length > 60 && chapterFilter === "all" && search.trim() === "";
   const isChapterCollapsed = (chapter: string) =>
@@ -526,9 +533,17 @@ function ChecklistDetailPage() {
                                 ))}
                               </SelectContent>
                             </Select>
-                            <Badge className={`hidden print:inline-flex ${STATUS_STYLES[item.status]}`}>
-                              {t(`audit.itemStatus.${item.status}`)}
-                            </Badge>
+                            <div className="flex items-center gap-2">
+                              <Badge
+                                variant="secondary"
+                                className={`shrink-0 tabular-nums ${STATUS_STYLES[item.status]}`}
+                              >
+                                {t("audit.score.label")} · {scoreLabel(item.status)}
+                              </Badge>
+                              <Badge className={`hidden print:inline-flex ${STATUS_STYLES[item.status]}`}>
+                                {t(`audit.itemStatus.${item.status}`)}
+                              </Badge>
+                            </div>
                           </div>
 
                           <div className="grid gap-3 sm:grid-cols-2">
@@ -549,6 +564,79 @@ function ChecklistDetailPage() {
                               />
                             </div>
                           </div>
+
+                          {(() => {
+                            const needsTreatment = ["major", "minor", "observation"].includes(
+                              item.status,
+                            );
+                            const filled =
+                              Boolean(item.gap || item.action || item.owner || item.due_date);
+                            const open =
+                              treatmentOpen[item.id] ?? (needsTreatment || filled);
+                            return (
+                              <div className="space-y-3 rounded-lg border border-border/70 bg-muted/30 p-3">
+                                <button
+                                  type="button"
+                                  className="flex w-full items-center gap-2 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground transition-colors hover:text-foreground print:hidden"
+                                  onClick={() =>
+                                    setTreatmentOpen((prev) => ({ ...prev, [item.id]: !open }))
+                                  }
+                                >
+                                  {t("audit.treatment.title")}
+                                  <ChevronDown
+                                    className={`ml-auto h-4 w-4 shrink-0 transition-transform ${open ? "rotate-180" : ""}`}
+                                  />
+                                </button>
+                                <div className={open ? "space-y-3" : "hidden print:block"}>
+                                  <div className="grid gap-3 sm:grid-cols-2">
+                                    <div className="space-y-1">
+                                      <Label className="text-xs">{t("audit.fields.gap")}</Label>
+                                      <Textarea
+                                        rows={2}
+                                        defaultValue={item.gap ?? ""}
+                                        onBlur={(event) =>
+                                          patchItem(item.id, { gap: event.target.value })
+                                        }
+                                      />
+                                    </div>
+                                    <div className="space-y-1">
+                                      <Label className="text-xs">{t("audit.fields.action")}</Label>
+                                      <Textarea
+                                        rows={2}
+                                        defaultValue={item.action ?? ""}
+                                        onBlur={(event) =>
+                                          patchItem(item.id, { action: event.target.value })
+                                        }
+                                      />
+                                    </div>
+                                    <div className="space-y-1">
+                                      <Label className="text-xs">{t("audit.fields.owner")}</Label>
+                                      <Input
+                                        className="h-9"
+                                        defaultValue={item.owner ?? ""}
+                                        onBlur={(event) =>
+                                          patchItem(item.id, { owner: event.target.value })
+                                        }
+                                      />
+                                    </div>
+                                    <div className="space-y-1">
+                                      <Label className="text-xs">{t("audit.fields.dueDate")}</Label>
+                                      <Input
+                                        type="date"
+                                        className="h-9"
+                                        defaultValue={item.due_date ?? ""}
+                                        onChange={(event) =>
+                                          patchItem(item.id, {
+                                            due_date: event.target.value || null,
+                                          })
+                                        }
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })()}
 
                           <div className="flex flex-wrap items-center gap-2 print:hidden">
                             <Input
