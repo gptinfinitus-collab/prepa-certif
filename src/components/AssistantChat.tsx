@@ -129,11 +129,16 @@ export function AssistantChat({ threadId }: { threadId: string }) {
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
+    // Le contenu grandit pendant l'écriture sans déclencher de scroll.
+    const observer = new ResizeObserver(onScroll);
+    observer.observe(document.body);
     return () => {
       if (frame) cancelAnimationFrame(frame);
+      observer.disconnect();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
+
   }, []);
 
 
