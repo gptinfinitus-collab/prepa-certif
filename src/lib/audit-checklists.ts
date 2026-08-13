@@ -315,7 +315,16 @@ export function useSyncChecklistFromTemplate(checklistId: string) {
       }
 
       const templateSeen = new Map<string, number>();
-      const toInsert: Record<string, unknown>[] = [];
+      const toInsert: {
+        checklist_id: string;
+        user_id: string;
+        chapter: string;
+        clause: string;
+        requirement: string;
+        guidance: string;
+        position: number;
+        status: string;
+      }[] = [];
       const toReposition: { id: string; position: number }[] = [];
       let position = 0;
 
