@@ -96,7 +96,7 @@ export const Route = createFileRoute("/api/chat")({
           .eq("thread_id", thread.id)
           .order("created_at", { ascending: false })
           .limit(12);
-        const previous = (recent ?? []).slice().reverse();
+        const previous = orderHistory(recent);
 
         const { error: userInsertError } = await supabase.from("ai_messages").insert({
           user_id: userId,
