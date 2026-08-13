@@ -125,5 +125,13 @@
     "description": "Naviguez et recherchez dans le cours auditeur / auditeur principal ISO 45001.",
     "ogTitle": "Cours SGS ISO 45001",
     "ogDescription": "Lecture page par page et recherche par mots-clés dans le cours."
+  },
+  "checklists": {
+    "title": "Check-lists d'audit — PREPA CERTIF",
+    "description": "Modèles de check-lists ISO prêts à l'emploi pour préparer, conduire et documenter vos audits, avec export PDF et CSV."
+  },
+  "checklistDetail": {
+    "title": "Conduite d'audit — PREPA CERTIF",
+    "description": "Remplissez votre check-list d'audit : statut par exigence, preuves, constats et export du rapport."
   }
 }

@@ -14,6 +14,7 @@ import frAdmin from "./locales/fr/admin.json";
 import frAssistant from "./locales/fr/assistant.json";
 import frManual from "./locales/fr/manual.json";
 import frSeo from "./locales/fr/seo.json";
+import frAudit from "./locales/fr/audit.json";
 
 import enCommon from "./locales/en/common.json";
 import enNav from "./locales/en/nav.json";
@@ -26,6 +27,7 @@ import enAdmin from "./locales/en/admin.json";
 import enAssistant from "./locales/en/assistant.json";
 import enManual from "./locales/en/manual.json";
 import enSeo from "./locales/en/seo.json";
+import enAudit from "./locales/en/audit.json";
 
 /** Ressources fusionnées dans un unique espace de noms `translation`. */
 export const resources = {
@@ -42,6 +44,7 @@ export const resources = {
       assistant: frAssistant,
       manual: frManual,
       seo: frSeo,
+      audit: frAudit,
     },
   },
   en: {
@@ -57,6 +60,7 @@ export const resources = {
       assistant: enAssistant,
       manual: enManual,
       seo: enSeo,
+      audit: enAudit,
     },
   },
 } as const;

@@ -125,5 +125,13 @@
     "description": "Browse and search the ISO 45001 auditor / lead auditor course.",
     "ogTitle": "SGS ISO 45001 course",
     "ogDescription": "Page-by-page reading and keyword search in the course."
+  },
+  "checklists": {
+    "title": "Audit checklists — PREPA CERTIF",
+    "description": "Ready-to-use ISO checklist templates to prepare, run and document your audits, with PDF and CSV export."
+  },
+  "checklistDetail": {
+    "title": "Audit run — PREPA CERTIF",
+    "description": "Fill in your audit checklist: status per requirement, evidence, findings and report export."
   }
 }
