@@ -379,7 +379,88 @@ export function AssistantChat({ threadId }: { threadId: string }) {
   );
 }
 
-function Bubble({
+/**
+ * Composeur isolé : la saisie ne re-rend que ce composant, jamais toute la
+ * conversation (rendu Markdown coûteux) — la frappe reste instantanée.
+ */
+const ChatComposer = memo(function ChatComposer({
+  busy,
+  onSend,
+  onStop,
+  textareaRef,
+}: {
+  busy: boolean;
+  onSend: (text: string) => void;
+  onStop: () => void;
+  textareaRef: React.RefObject<HTMLTextAreaElement | null>;
+}) {
+  const t = useT();
+  const [value, setValue] = useState("");
+
+  // Question préremplie depuis une page du cours SGS.
+  useEffect(() => {
+    try {
+      const prefill = sessionStorage.getItem("assistant:prefill");
+      if (prefill) {
+        sessionStorage.removeItem("assistant:prefill");
+        setValue(prefill);
+      }
+    } catch {
+      /* stockage indisponible */
+    }
+    textareaRef.current?.focus();
+  }, [textareaRef]);
+
+  // Champ auto-extensible : 1 ligne au repos, jusqu'à ~5 lignes puis scroll interne.
+  useEffect(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${Math.min(el.scrollHeight, 128)}px`;
+  }, [value, textareaRef]);
+
+  function submit() {
+    const text = value.trim();
+    if (!text || busy) return;
+    setValue("");
+    onSend(text);
+  }
+
+  return (
+    <div className="sticky bottom-20 mt-4 flex items-end gap-2 rounded-full border border-border bg-card/95 py-1 pl-4 pr-1 backdrop-blur md:bottom-4">
+      <Textarea
+        ref={textareaRef}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            submit();
+          }
+        }}
+        rows={1}
+        placeholder={t("assistant.input.placeholder")}
+        aria-label={t("assistant.input.ariaLabel")}
+        className="max-h-32 min-h-0 resize-none overflow-y-auto border-0 bg-transparent py-2 text-sm shadow-none placeholder:text-xs placeholder:text-muted-foreground/70 focus-visible:ring-0 md:text-sm"
+      />
+      <Button
+        onClick={() => (busy ? onStop() : submit())}
+        disabled={!busy && !value.trim()}
+        size="icon"
+        aria-label={busy ? t("assistant.input.stop") : t("assistant.input.send")}
+        className="mb-1 size-9 shrink-0 rounded-full"
+      >
+        {busy ? (
+          <Square className="size-3.5 fill-current" aria-hidden />
+        ) : (
+          <Send className="size-4" aria-hidden />
+        )}
+      </Button>
+    </div>
+  );
+});
+
+const Bubble = memo(function Bubble({
   role,
   children,
   sources = [],
