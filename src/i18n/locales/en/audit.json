@@ -56,7 +56,11 @@
     "guidance": "Audit guidance",
     "requirement": "Requirement",
     "chapter": "Chapter",
-    "clause": "Clause"
+    "clause": "Clause",
+    "gap": "Gap identified",
+    "action": "Action",
+    "owner": "Owner",
+    "dueDate": "Due date"
   },
   "filters": {
     "all": "All",
@@ -88,10 +92,15 @@
       "Chapter",
       "Clause",
       "Requirement",
-      "Status",
+      "Conformity",
       "Evidence",
       "Finding",
-      "Person met"
+      "Person met",
+      "Score",
+      "Gap identified",
+      "Action",
+      "Owner",
+      "Due date"
     ]
   },
   "report": {
@@ -118,5 +127,33 @@
       "Total",
       "Compliance rate"
     ]
+  },
+  "treatment": {
+    "title": "Gap treatment",
+    "show": "Record the gap and action",
+    "hide": "Hide treatment"
+  },
+  "view": {
+    "cards": "Cards",
+    "table": "Table",
+    "label": "View"
+  },
+  "actionPlan": {
+    "title": "Action plan",
+    "empty": "No action to follow up yet.",
+    "requirement": "Requirement",
+    "gap": "Gap identified",
+    "action": "Action",
+    "owner": "Owner",
+    "dueDate": "Due date",
+    "noOwner": "Owner to be defined",
+    "noDate": "Due date to be defined",
+    "overdue": "Overdue",
+    "count": "{{count}} actions to follow up",
+    "missing": "{{count}} without owner or due date"
+  },
+  "score": {
+    "label": "Score",
+    "none": "Not scored"
   }
 }

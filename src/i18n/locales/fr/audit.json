@@ -56,7 +56,11 @@
     "guidance": "Aide à l'audit",
     "requirement": "Exigence",
     "chapter": "Chapitre",
-    "clause": "Clause"
+    "clause": "Clause",
+    "gap": "Écart constaté",
+    "action": "Action",
+    "owner": "Responsable",
+    "dueDate": "Échéance"
   },
   "filters": {
     "all": "Tout",
@@ -88,10 +92,15 @@
       "Chapitre",
       "Clause",
       "Exigence",
-      "Statut",
-      "Preuves",
-      "Constat",
-      "Personne rencontrée"
+      "Conformité",
+      "Preuves / constat",
+      "Constat rédigé",
+      "Personne rencontrée",
+      "Score",
+      "Écart constaté",
+      "Action",
+      "Responsable",
+      "Échéance"
     ]
   },
   "report": {
@@ -118,5 +127,33 @@
       "Total",
       "Taux de conformité"
     ]
+  },
+  "treatment": {
+    "title": "Traitement de l'écart",
+    "show": "Renseigner l'écart et l'action",
+    "hide": "Masquer le traitement"
+  },
+  "view": {
+    "cards": "Cartes",
+    "table": "Tableau",
+    "label": "Affichage"
+  },
+  "actionPlan": {
+    "title": "Plan d'actions",
+    "empty": "Aucune action à suivre pour le moment.",
+    "requirement": "Exigence",
+    "gap": "Écart constaté",
+    "action": "Action",
+    "owner": "Responsable",
+    "dueDate": "Échéance",
+    "noOwner": "Responsable à définir",
+    "noDate": "Échéance à définir",
+    "overdue": "En retard",
+    "count": "{{count}} actions à suivre",
+    "missing": "{{count}} sans responsable ou sans échéance"
+  },
+  "score": {
+    "label": "Score",
+    "none": "Hors notation"
   }
 }
