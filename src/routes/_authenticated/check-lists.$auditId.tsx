@@ -382,15 +382,17 @@ function ChecklistDetailPage() {
         ) : (
           <div className="space-y-6">
             {grouped.map(([chapter, chapterItems]) => (
-              <section key={chapter} className="space-y-3">
-                <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+              <section key={chapter} className="space-y-4">
+                <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                  <span className="h-4 w-1 rounded-full bg-primary/60" />
                   {chapter}
+                  <span className="text-xs font-normal normal-case">({chapterItems.length})</span>
                 </h2>
-                <ul className="space-y-3">
+                <ul className="space-y-4">
                   {chapterItems.map((item) => (
-                    <li key={item.id}>
+                    <li key={item.id} id={`item-${item.id}`} className="scroll-mt-40">
                       <Card>
-                        <CardContent className="space-y-3 p-4">
+                        <CardContent className="space-y-4 p-4 sm:p-5">
                           <div className="flex flex-wrap items-start justify-between gap-2">
                             <div className="min-w-0 space-y-1">
                               <p className="text-sm font-medium leading-snug">
