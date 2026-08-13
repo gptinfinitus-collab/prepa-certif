@@ -298,6 +298,7 @@ export function buildChecklistCsv(
   items: AuditChecklistItem[],
   headers: string[],
   statusLabel: (status: string) => string,
+  summarySection?: { headers: string[]; rows: string[][] },
 ): string {
   const lines = [headers.map(csvCell).join(";")];
   for (const item of items) {
@@ -312,6 +313,11 @@ export function buildChecklistCsv(
         csvCell(item.auditee),
       ].join(";"),
     );
+  }
+  if (summarySection) {
+    lines.push("");
+    lines.push(summarySection.headers.map(csvCell).join(";"));
+    for (const row of summarySection.rows) lines.push(row.map(csvCell).join(";"));
   }
   return `\ufeff${lines.join("\r\n")}`;
 }
