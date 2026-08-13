@@ -56,6 +56,9 @@ export function AssistantChat({ threadId }: { threadId: string }) {
   const [streamed, setStreamed] = useState("");
   const [busy, setBusy] = useState(false);
   const [input, setInput] = useState("");
+  const [lastQuestion, setLastQuestion] = useState("");
+  const [failed, setFailed] = useState(false);
+  const abortRef = useRef<AbortController | null>(null);
 
   // Question préremplie depuis une page du cours SGS.
   useEffect(() => {
