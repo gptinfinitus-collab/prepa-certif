@@ -64,16 +64,20 @@ export type Database = {
       }
       audit_checklist_items: {
         Row: {
+          action: string | null
           auditee: string | null
           chapter: string
           checklist_id: string
           clause: string | null
           created_at: string
+          due_date: string | null
           evidence: string | null
           finding: string | null
+          gap: string | null
           guidance: string | null
           id: string
           is_custom: boolean
+          owner: string | null
           position: number
           requirement: string
           status: string
@@ -81,16 +85,20 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          action?: string | null
           auditee?: string | null
           chapter?: string
           checklist_id: string
           clause?: string | null
           created_at?: string
+          due_date?: string | null
           evidence?: string | null
           finding?: string | null
+          gap?: string | null
           guidance?: string | null
           id?: string
           is_custom?: boolean
+          owner?: string | null
           position?: number
           requirement: string
           status?: string
@@ -98,16 +106,20 @@ export type Database = {
           user_id: string
         }
         Update: {
+          action?: string | null
           auditee?: string | null
           chapter?: string
           checklist_id?: string
           clause?: string | null
           created_at?: string
+          due_date?: string | null
           evidence?: string | null
           finding?: string | null
+          gap?: string | null
           guidance?: string | null
           id?: string
           is_custom?: boolean
+          owner?: string | null
           position?: number
           requirement?: string
           status?: string
