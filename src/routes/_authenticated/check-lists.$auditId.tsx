@@ -120,6 +120,16 @@ function ChecklistDetailPage() {
   const [treatmentOpen, setTreatmentOpen] = useState<Record<string, boolean>>({});
   // Un seul bloc « questions à poser » ouvert à la fois.
   const [questionsChapter, setQuestionsChapter] = useState<string | null>(null);
+  const attachmentCounts = useMemo(
+    () =>
+      Object.fromEntries(Object.entries(attachments).map(([id, files]) => [id, files.length])),
+    [attachments],
+  );
+  const attachmentTotal = useMemo(
+    () => Object.values(attachmentCounts).reduce((sum, n) => sum + n, 0),
+    [attachmentCounts],
+  );
+
 
   const [openChapters, setOpenChapters] = useState<Record<string, boolean>>({});
   const collapseByDefault = items.length > 60 && chapterFilter === "all" && search.trim() === "";
