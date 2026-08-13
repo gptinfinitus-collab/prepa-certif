@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { supabaseFromRequest, streamChat } from "@/lib/chat.server";
+import { supabaseFromRequest, streamChat, orderHistory } from "@/lib/chat.server";
 import { retrieve } from "@/lib/rag.server";
 
 type Locale = "fr" | "en";
