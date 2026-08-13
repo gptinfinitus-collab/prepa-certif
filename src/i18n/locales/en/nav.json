@@ -27,5 +27,11 @@
   "addCertification": "Add a certification",
   "openMenu": "Open menu",
   "expandMenu": "Expand menu",
-  "collapseMenu": "Collapse menu"
+  "collapseMenu": "Collapse menu",
+  "checklists": "Audit checklists",
+  "groupPrep": "Preparation",
+  "groupField": "Field audit",
+  "groupContent": "Content",
+  "groupJourney": "My journey",
+  "groupSettings": "Settings"
 }

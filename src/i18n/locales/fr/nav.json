@@ -27,5 +27,11 @@
   "addCertification": "Ajouter une certification",
   "openMenu": "Ouvrir le menu",
   "expandMenu": "Déplier le menu",
-  "collapseMenu": "Replier le menu"
+  "collapseMenu": "Replier le menu",
+  "checklists": "Check-lists d'audit",
+  "groupPrep": "Préparation",
+  "groupField": "Audit terrain",
+  "groupContent": "Contenu",
+  "groupJourney": "Mon parcours",
+  "groupSettings": "Réglages"
 }

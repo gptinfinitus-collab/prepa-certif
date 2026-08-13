@@ -62,6 +62,121 @@ export type Database = {
           },
         ]
       }
+      audit_checklist_items: {
+        Row: {
+          auditee: string | null
+          chapter: string
+          checklist_id: string
+          clause: string | null
+          created_at: string
+          evidence: string | null
+          finding: string | null
+          guidance: string | null
+          id: string
+          is_custom: boolean
+          position: number
+          requirement: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          auditee?: string | null
+          chapter?: string
+          checklist_id: string
+          clause?: string | null
+          created_at?: string
+          evidence?: string | null
+          finding?: string | null
+          guidance?: string | null
+          id?: string
+          is_custom?: boolean
+          position?: number
+          requirement: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          auditee?: string | null
+          chapter?: string
+          checklist_id?: string
+          clause?: string | null
+          created_at?: string
+          evidence?: string | null
+          finding?: string | null
+          guidance?: string | null
+          id?: string
+          is_custom?: boolean
+          position?: number
+          requirement?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_checklist_items_checklist_id_fkey"
+            columns: ["checklist_id"]
+            isOneToOne: false
+            referencedRelation: "audit_checklists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      audit_checklists: {
+        Row: {
+          audit_date: string | null
+          audited_entity: string | null
+          auditor: string | null
+          certification_id: string | null
+          created_at: string
+          id: string
+          scope: string | null
+          status: string
+          template_id: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          audit_date?: string | null
+          audited_entity?: string | null
+          auditor?: string | null
+          certification_id?: string | null
+          created_at?: string
+          id?: string
+          scope?: string | null
+          status?: string
+          template_id?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          audit_date?: string | null
+          audited_entity?: string | null
+          auditor?: string | null
+          certification_id?: string | null
+          created_at?: string
+          id?: string
+          scope?: string | null
+          status?: string
+          template_id?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_checklists_certification_id_fkey"
+            columns: ["certification_id"]
+            isOneToOne: false
+            referencedRelation: "certifications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       certifications: {
         Row: {
           chapters: Json

@@ -7,7 +7,9 @@ import {
   Bot,
   CalendarRange,
   Check,
+  ChevronDown,
   ChevronsUpDown,
+  ClipboardCheck,
   GraduationCap,
   Home,
   Library,
@@ -43,20 +45,59 @@ import { certificationAccentStyle } from "@/lib/cert-theme";
 import { useIsSuperAdmin } from "@/lib/admin";
 import { useT } from "@/i18n";
 
-const navItems = [
-  { to: "/dashboard", key: "nav.dashboard", icon: Home },
-  { to: "/planning", key: "nav.planning", icon: CalendarRange },
-  { to: "/quiz", key: "nav.quiz", icon: Brain },
-  { to: "/assistant", key: "nav.assistant", icon: Bot },
-  { to: "/cours", key: "nav.course", icon: BookOpen },
-  { to: "/references", key: "nav.references", icon: BookMarked },
-  { to: "/glossaire", key: "nav.glossary", icon: SpellCheck },
-  { to: "/annexes", key: "nav.annexes", icon: ListChecks },
-  { to: "/liens-utiles", key: "nav.usefulLinks", icon: LinkIcon },
-  { to: "/bibliotheque", key: "nav.library", icon: Library },
-  { to: "/cpd", key: "nav.cpd", icon: NotebookPen },
-  { to: "/certifications", key: "nav.certifications", icon: GraduationCap },
-  { to: "/parametres", key: "nav.settings", icon: Settings },
+interface NavItem {
+  to: string;
+  key: string;
+  icon: typeof Home;
+}
+
+interface NavGroup {
+  id: string;
+  key: string;
+  items: NavItem[];
+}
+
+const navGroups: NavGroup[] = [
+  {
+    id: "prep",
+    key: "nav.groupPrep",
+    items: [
+      { to: "/dashboard", key: "nav.dashboard", icon: Home },
+      { to: "/planning", key: "nav.planning", icon: CalendarRange },
+      { to: "/quiz", key: "nav.quiz", icon: Brain },
+      { to: "/assistant", key: "nav.assistant", icon: Bot },
+    ],
+  },
+  {
+    id: "field",
+    key: "nav.groupField",
+    items: [{ to: "/check-lists", key: "nav.checklists", icon: ClipboardCheck }],
+  },
+  {
+    id: "content",
+    key: "nav.groupContent",
+    items: [
+      { to: "/cours", key: "nav.course", icon: BookOpen },
+      { to: "/references", key: "nav.references", icon: BookMarked },
+      { to: "/glossaire", key: "nav.glossary", icon: SpellCheck },
+      { to: "/annexes", key: "nav.annexes", icon: ListChecks },
+      { to: "/bibliotheque", key: "nav.library", icon: Library },
+      { to: "/liens-utiles", key: "nav.usefulLinks", icon: LinkIcon },
+    ],
+  },
+  {
+    id: "journey",
+    key: "nav.groupJourney",
+    items: [
+      { to: "/cpd", key: "nav.cpd", icon: NotebookPen },
+      { to: "/certifications", key: "nav.certifications", icon: GraduationCap },
+    ],
+  },
+  {
+    id: "settings",
+    key: "nav.groupSettings",
+    items: [{ to: "/parametres", key: "nav.settings", icon: Settings }],
+  },
 ];
 
 const mobileItems = [
@@ -65,6 +106,8 @@ const mobileItems = [
   { to: "/quiz", key: "nav.quiz", icon: Brain },
   { to: "/assistant", key: "nav.mobileAssistant", icon: Bot },
 ];
+
+const OPEN_GROUPS_KEY = "prepa.navGroups";
 
 const linkClass = (active: boolean, collapsed: boolean) =>
   cn(
@@ -86,28 +129,105 @@ function NavLinks({
 }) {
   const t = useT();
   const isSuperAdmin = useIsSuperAdmin();
-  const items = isSuperAdmin
-    ? [...navItems, { to: "/admin", key: "nav.admin", icon: ShieldCheck }]
-    : navItems;
+
+  const groups: NavGroup[] = navGroups.map((group) =>
+    group.id === "settings" && isSuperAdmin
+      ? { ...group, items: [...group.items, { to: "/admin", key: "nav.admin", icon: ShieldCheck }] }
+      : group,
+  );
+
+  // Sections ouvertes : persistées, avec ouverture automatique de la section active.
+  const [open, setOpen] = useState<Record<string, boolean>>(() =>
+    Object.fromEntries(groups.map((group) => [group.id, true])),
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const raw = window.localStorage.getItem(OPEN_GROUPS_KEY);
+    if (!raw) return;
+    try {
+      const stored = JSON.parse(raw) as Record<string, boolean>;
+      setOpen((current) => ({ ...current, ...stored }));
+    } catch {
+      /* préférence illisible : on garde les sections ouvertes */
+    }
+  }, []);
+
+  function toggle(id: string) {
+    setOpen((current) => {
+      const next = { ...current, [id]: !current[id] };
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(OPEN_GROUPS_KEY, JSON.stringify(next));
+      }
+      return next;
+    });
+  }
+
+  // En mode replié, on masque les entêtes et on affiche uniquement les icônes.
+  if (collapsed) {
+    return (
+      <>
+        {groups.flatMap((group) =>
+          group.items.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              title={t(item.key)}
+              aria-label={t(item.key)}
+              onClick={onNavigate}
+              className={linkClass(isActive(item.to), true)}
+            >
+              <item.icon className="size-4 shrink-0" aria-hidden />
+            </Link>
+          )),
+        )}
+      </>
+    );
+  }
 
   return (
     <>
-      {items.map((item) => (
-        <Link
-          key={item.to}
-          to={item.to}
-          title={t(item.key)}
-          aria-label={t(item.key)}
-          onClick={onNavigate}
-          className={linkClass(isActive(item.to), collapsed)}
-        >
-          <item.icon className="size-4 shrink-0" aria-hidden />
-          {!collapsed && <span className="truncate">{t(item.key)}</span>}
-        </Link>
-      ))}
+      {groups.map((group) => {
+        const groupActive = group.items.some((item) => isActive(item.to));
+        const expanded = open[group.id] ?? true;
+        return (
+          <div key={group.id} className="space-y-0.5">
+            <button
+              type="button"
+              onClick={() => toggle(group.id)}
+              aria-expanded={expanded || groupActive}
+              className="flex w-full items-center justify-between rounded-md px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-sidebar-foreground/50 transition-colors hover:text-sidebar-foreground"
+            >
+              <span className="truncate">{t(group.key)}</span>
+              <ChevronDown
+                className={cn("size-3.5 transition-transform", !(expanded || groupActive) && "-rotate-90")}
+                aria-hidden
+              />
+            </button>
+            {(expanded || groupActive) && (
+              <div className="space-y-0.5">
+                {group.items.map((item) => (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    title={t(item.key)}
+                    aria-label={t(item.key)}
+                    onClick={onNavigate}
+                    className={linkClass(isActive(item.to), false)}
+                  >
+                    <item.icon className="size-4 shrink-0" aria-hidden />
+                    <span className="truncate">{t(item.key)}</span>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
     </>
   );
 }
+
 
 
 /** Sélecteur de certification active. */

@@ -1,0 +1,88 @@
+{
+  "title": "Audit checklists",
+  "subtitle": "Prepare, run and document your audits in the field.",
+  "myAudits": "My audits",
+  "noAudit": "No audit yet. Pick a template below to get started.",
+  "templates": "Start from a template",
+  "blankTemplate": "Blank checklist",
+  "blankTemplateDescription": "Start from scratch and add your own lines.",
+  "itemsCount": "{{count}} requirements",
+  "start": "Start",
+  "open": "Open",
+  "delete": "Delete",
+  "deleteConfirm": "Permanently delete this audit and all of its lines?",
+  "deleted": "Audit deleted.",
+  "created": "Audit created.",
+  "notFound": "Audit not found.",
+  "backToList": "Back to checklists",
+  "progress": "Progress",
+  "treated": "{{treated}} / {{total}} requirements covered",
+  "nonConformities": "Nonconformities",
+  "saved": "Saved",
+  "header": {
+    "title": "Audit title",
+    "auditedEntity": "Audited entity",
+    "scope": "Scope",
+    "auditor": "Auditor",
+    "date": "Audit date",
+    "status": "Status",
+    "edit": "Edit header",
+    "save": "Save"
+  },
+  "status": {
+    "draft": "Draft",
+    "in_progress": "In progress",
+    "done": "Completed"
+  },
+  "itemStatus": {
+    "pending": "Not covered",
+    "conform": "Conform",
+    "major": "Major NC",
+    "minor": "Minor NC",
+    "observation": "Observation",
+    "na": "Not applicable"
+  },
+  "fields": {
+    "evidence": "Evidence collected",
+    "finding": "Written finding",
+    "auditee": "Person met",
+    "guidance": "Audit guidance",
+    "requirement": "Requirement",
+    "chapter": "Chapter",
+    "clause": "Clause"
+  },
+  "filters": {
+    "all": "All",
+    "pending": "Not covered",
+    "nc": "NC only",
+    "search": "Search a requirement…",
+    "noResult": "No requirement matches this filter."
+  },
+  "addItem": {
+    "action": "Add a line",
+    "title": "New custom line",
+    "submit": "Add",
+    "cancel": "Cancel",
+    "requirementPlaceholder": "Requirement or point to check",
+    "chapterPlaceholder": "Chapter",
+    "clausePlaceholder": "Clause (optional)"
+  },
+  "deleteItem": "Delete line",
+  "askAi": "Ask the AI",
+  "aiPrompt": "Help me word the audit finding for this requirement: \"{{requirement}}\" ({{clause}}). Evidence collected: {{evidence}}",
+  "export": {
+    "csv": "Export as CSV",
+    "pdf": "Export as PDF",
+    "print": "Print / PDF",
+    "headers": ["Chapter", "Clause", "Requirement", "Status", "Evidence", "Finding", "Person met"]
+  },
+  "report": {
+    "title": "Audit report",
+    "summary": "Summary",
+    "generatedOn": "Issued on {{date}}"
+  },
+  "errors": {
+    "save": "Could not save.",
+    "load": "Could not load."
+  }
+}
