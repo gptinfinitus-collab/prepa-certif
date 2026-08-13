@@ -158,14 +158,22 @@ export function AssistantChat({ threadId }: { threadId: string }) {
           }
         }
       }
+      setFailed(false);
     } catch (error) {
-      toast.error(translateAppError(t, error, "assistant.errors.unavailable"));
+      const aborted = error instanceof DOMException && error.name === "AbortError";
+      if (!aborted) {
+        setFailed(true);
+        toast.error(translateAppError(t, error, "assistant.errors.unavailable"));
+      }
     } finally {
+      abortRef.current = null;
       setBusy(false);
-      setStreamed("");
-      setPending([]);
+      // On recharge les messages persistés AVANT d'effacer l'affichage local :
+      // le texte reste visible, sans clignotement ni perte de la réponse partielle.
       await queryClient.invalidateQueries({ queryKey: ["chat-messages", threadId] });
       await queryClient.invalidateQueries({ queryKey: ["chat-threads"] });
+      setStreamed("");
+      setPending([]);
       textareaRef.current?.focus();
     }
   }
