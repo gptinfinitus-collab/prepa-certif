@@ -423,11 +423,11 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
 
 
           {/* Desktop sidebar toggle */}
-          <div className="hidden px-3 pt-3 lg:block">
+          <div className="sticky top-0 z-30 hidden w-fit px-3 pt-3 lg:block">
             <Button
               variant="ghost"
               size="icon"
-              className="size-9 text-muted-foreground"
+              className="size-9 rounded-full bg-background/80 text-muted-foreground shadow-sm backdrop-blur"
               onClick={() => setCollapsed((c) => !c)}
               aria-label={t(collapsed ? "nav.expandMenu" : "nav.collapseMenu")}
             >
