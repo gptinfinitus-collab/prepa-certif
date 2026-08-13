@@ -165,7 +165,7 @@ function Planning() {
                 }}
               />
               {schedule.compressed ? (
-                <p className="mt-2 text-sm text-accent-foreground">
+                <p className="mt-2 text-sm text-accent-strong">
                   {t("common.compressedPaceAutoNotice")}
                 </p>
               ) : null}
