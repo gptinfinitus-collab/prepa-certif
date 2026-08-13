@@ -372,7 +372,7 @@ export function AssistantChat({ threadId }: { threadId: string }) {
         )}
 
 
-        <ChatComposer busy={busy} onSend={sendRef} onStop={stop} />
+        <ChatComposer busy={busy} onSend={sendRef} onStop={stop} textareaRef={textareaRef} />
       </section>
 
     </div>
