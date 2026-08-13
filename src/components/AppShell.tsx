@@ -427,7 +427,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
             <Button
               variant="ghost"
               size="icon"
-              className="size-9 text-muted-foreground"
+              className="size-9 rounded-full bg-background/80 text-muted-foreground shadow-sm backdrop-blur"
               onClick={() => setCollapsed((c) => !c)}
               aria-label={t(collapsed ? "nav.expandMenu" : "nav.collapseMenu")}
             >
