@@ -18,6 +18,31 @@ function rateTone(rate: number | null): string {
   return "text-destructive";
 }
 
+type Counts = Summary["byChapter"][number]["counts"];
+
+const BADGE_TONES: Record<keyof Counts, string> = {
+  conform: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
+  observation: "bg-primary/15 text-primary",
+  minor: "bg-amber-500/15 text-amber-600 dark:text-amber-400",
+  major: "bg-destructive/15 text-destructive",
+  na: "bg-muted text-muted-foreground",
+  pending: "bg-muted text-muted-foreground",
+};
+
+/** Badges de répartition par statut, partagés entre la vue mobile et le tableau. */
+function CountBadges({ counts, t }: { counts: Counts; t: (key: string) => string }) {
+  return (
+    <>
+      {(Object.keys(BADGE_TONES) as (keyof Counts)[]).map((key) =>
+        counts[key] > 0 ? (
+          <Badge key={key} variant="secondary" className={BADGE_TONES[key]}>
+            {t(`audit.itemStatus.${key}`)} · {counts[key]}
+          </Badge>
+        ) : null,
+      )}
+    </>
+  );
+
 /** Synthèse de conformité par chapitre + taux global (calcul purement local). */
 export const ComplianceSummary = memo(function ComplianceSummary({ summary }: Props) {
   const t = useT();
