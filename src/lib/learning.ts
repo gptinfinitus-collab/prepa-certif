@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getAuthUser } from "@/lib/auth-user";
 import { supabase } from "@/integrations/supabase/client";
 import { useLocale } from "@/i18n";
 import { useActiveCertification } from "@/lib/certifications";
@@ -11,7 +12,7 @@ import {
 } from "@/lib/flashcards.functions";
 
 async function requireUser() {
-  const { data } = await supabase.auth.getUser();
+  const { data } = await getAuthUser();
   if (!data.user) throw new Error("notSignedIn");
   return data.user;
 }
@@ -22,7 +23,7 @@ export function useActiveTrack() {
   const query = useQuery({
     queryKey: ["active_track"],
     queryFn: async (): Promise<TrackId> => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       if (!userData.user) return DEFAULT_TRACK;
       const { data, error } = await supabase
         .from("profiles")
@@ -60,7 +61,7 @@ export function useExamBody() {
   const query = useQuery({
     queryKey: ["exam_body"],
     queryFn: async (): Promise<ExamBodyId | null> => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       if (!userData.user) return null;
       const { data, error } = await supabase
         .from("profiles")
@@ -108,7 +109,7 @@ export function useLessonProgressList() {
     queryKey: ["lesson_progress", certificationId, track],
     enabled: !!certificationId,
     queryFn: async (): Promise<LessonProgress[]> => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       if (!userData.user || !certificationId) return [];
       const { data, error } = await supabase
         .from("user_lesson_progress")
@@ -173,7 +174,7 @@ export function useLessonNote(moduleId: number) {
   return useQuery({
     queryKey: ["lesson_note", moduleId],
     queryFn: async (): Promise<string> => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       if (!userData.user) return "";
       const { data, error } = await supabase
         .from("user_notes")
@@ -226,7 +227,7 @@ export function useFlashcardProgress(moduleId: number) {
   return useQuery({
     queryKey: ["flashcard_progress", moduleId],
     queryFn: async (): Promise<Record<string, FlashcardProgressItem>> => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       if (!userData.user) return {};
       const { data, error } = await supabase
         .from("user_flashcard_progress")
@@ -333,7 +334,7 @@ export function useTopicMastery() {
     queryKey: ["topic_mastery", certificationId, track],
     enabled: !!certificationId,
     queryFn: async (): Promise<TopicMastery[]> => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       if (!userData.user || !certificationId) return [];
       const { data, error } = await supabase
         .from("user_topic_mastery")
@@ -410,7 +411,7 @@ export function useOnboardedAt() {
   return useQuery({
     queryKey: ["onboarded_at"],
     queryFn: async (): Promise<string | null> => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       if (!userData.user) return null;
       const { data, error } = await supabase
         .from("profiles")

@@ -1,5 +1,6 @@
 /** Gestion des fils de conversation de l'assistant IA. */
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getAuthUser } from "@/lib/auth-user";
 import { supabase } from "@/integrations/supabase/client";
 
 export interface ChatThread {
@@ -59,7 +60,7 @@ export function useCreateThread() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (certificationId: string | null): Promise<ChatThread> => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const userId = userData.user?.id;
       if (!userId) throw new Error("sessionExpired");
       const { data, error } = await supabase

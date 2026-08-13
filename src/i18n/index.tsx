@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { getAuthUser } from "@/lib/auth-user";
 import { useTranslation } from "react-i18next";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -31,7 +32,7 @@ const LocaleContext = createContext<LocaleContextValue>({
 
 /** Enregistre la langue sur le profil connecté (silencieux hors session). */
 async function persistLocale(locale: Locale) {
-  const { data } = await supabase.auth.getUser();
+  const { data } = await getAuthUser();
   const user = data.user;
   if (!user) return;
   await supabase.from("profiles").upsert({ id: user.id, locale }, { onConflict: "id" });
@@ -66,7 +67,7 @@ export function I18nProvider({
     apply(readLocaleCookie() ?? initialLocale);
 
     void (async () => {
-      const { data } = await supabase.auth.getUser();
+      const { data } = await getAuthUser();
       const user = data.user;
       if (!user) return;
       const { data: profile } = await supabase

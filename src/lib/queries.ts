@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getAuthUser } from "@/lib/auth-user";
 import { supabase } from "@/integrations/supabase/client";
 import { defaultPlan, type StudyPlan } from "@/lib/schedule";
 import { useActiveCertification } from "@/lib/certifications";
@@ -14,7 +15,7 @@ export function useSession() {
   return useQuery({
     queryKey: ["session"],
     queryFn: async () => {
-      const { data } = await supabase.auth.getUser();
+      const { data } = await getAuthUser();
       return data.user ?? null;
     },
   });
@@ -26,7 +27,7 @@ export function useStudyPlan() {
     queryKey: ["study_plan", certificationId],
     enabled: !!certificationId,
     queryFn: async (): Promise<StudyPlan> => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user || !certificationId) return defaultPlan;
       const { data, error } = await supabase
@@ -52,7 +53,7 @@ export function useSaveStudyPlan() {
   const { certificationId } = useActiveCertification();
   return useMutation({
     mutationFn: async (plan: StudyPlan) => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user) throw new Error("notSignedIn");
       if (!certificationId) throw new Error("noCertificationSelected");
@@ -82,7 +83,7 @@ export function useProgress() {
     queryKey: ["module_progress", certificationId],
     enabled: !!certificationId,
     queryFn: async (): Promise<ModuleProgress[]> => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user || !certificationId) return [];
       const { data, error } = await supabase
@@ -101,7 +102,7 @@ export function useSetModuleProgress() {
   const { certificationId } = useActiveCertification();
   return useMutation({
     mutationFn: async (input: { moduleId: number; completed: boolean; selfScore?: number | null }) => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user) throw new Error("notSignedIn");
       if (!certificationId) throw new Error("noCertificationSelected");
@@ -137,7 +138,7 @@ export function useProfile() {
   return useQuery({
     queryKey: ["profile"],
     queryFn: async (): Promise<(Profile & { email: string | null; avatarSignedUrl: string | null }) | null> => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user) return null;
       const { data, error } = await supabase
@@ -176,7 +177,7 @@ export function useUpdateProfile() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (input: { first_name: string; last_name: string }) => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user) throw new Error("notSignedIn");
       const display = [input.first_name, input.last_name].filter(Boolean).join(" ").trim();
@@ -199,7 +200,7 @@ export function useUploadAvatar() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (blob: Blob) => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user) throw new Error("notSignedIn");
       const path = `${user.id}/avatar-${Date.now()}.jpg`;

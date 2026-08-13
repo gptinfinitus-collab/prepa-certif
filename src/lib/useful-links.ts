@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getAuthUser } from "@/lib/auth-user";
 import { supabase } from "@/integrations/supabase/client";
 
 export interface UserLink {
@@ -54,7 +55,7 @@ export function useUserLinks() {
   return useQuery({
     queryKey: ["user_links"],
     queryFn: async (): Promise<UserLink[]> => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user) return [];
       const { data, error } = await supabase
@@ -72,7 +73,7 @@ export function useUpsertUserLink() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (input: UserLinkInput) => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user) throw new Error("notSignedIn");
       const payload = {
@@ -114,7 +115,7 @@ export function useIsSignedIn() {
   return useQuery({
     queryKey: ["is_signed_in"],
     queryFn: async () => {
-      const { data } = await supabase.auth.getUser();
+      const { data } = await getAuthUser();
       return !!data.user;
     },
   });

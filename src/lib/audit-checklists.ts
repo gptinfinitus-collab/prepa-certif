@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getAuthUser } from "@/lib/auth-user";
 import { supabase } from "@/integrations/supabase/client";
 import { auditChecklistTemplates, type ChecklistTemplate } from "@/data/audit-checklists";
 import { enAuditChecklistTemplates } from "@/data/audit-checklists.en";
@@ -143,7 +144,7 @@ export function useCreateAuditChecklist() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (input: CreateChecklistInput): Promise<AuditChecklist> => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user) throw new Error("notAuthenticated");
 
@@ -245,7 +246,7 @@ export function useAddChecklistItem(checklistId: string) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (input: { chapter: string; clause: string; requirement: string }) => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user) throw new Error("notAuthenticated");
       const { data: last } = await supabase

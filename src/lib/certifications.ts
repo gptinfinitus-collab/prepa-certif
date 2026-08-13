@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getAuthUser } from "@/lib/auth-user";
 import { supabase } from "@/integrations/supabase/client";
 
 export interface Certification {
@@ -54,7 +55,7 @@ export function useMyCertifications() {
   return useQuery({
     queryKey: ["user_certifications"],
     queryFn: async (): Promise<UserCertification[]> => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user) return [];
       const { data, error } = await supabase
@@ -98,7 +99,7 @@ export function useFollowCertification() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (certificationId: string) => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user) throw new Error("notSignedIn");
       await supabase
@@ -123,7 +124,7 @@ export function useSetActiveCertification() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (certificationId: string) => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user) throw new Error("notSignedIn");
       await supabase
@@ -147,7 +148,7 @@ export function useUnfollowCertification() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (certificationId: string) => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user) throw new Error("notSignedIn");
       const { error } = await supabase
@@ -166,7 +167,7 @@ export function useCreateCustomCertification() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (input: { name: string; family?: string; description?: string; chapters: string[] }) => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user) throw new Error("notSignedIn");
       const code = `custom-${input.name
