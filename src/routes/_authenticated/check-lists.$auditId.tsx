@@ -117,11 +117,11 @@ function ChecklistDetailPage() {
   const stats = useMemo(() => summarize(items), [items]);
   const compliance = useMemo(() => complianceSummary(items), [items]);
 
-  /** Chapitres présents dans la check-list, dans l'ordre des exigences. */
+  /** Chapitres présents dans la check-list, triés par numéro (4, 5, 6… 10). */
   const chapters = useMemo(() => {
     const seen: string[] = [];
     for (const item of items) if (!seen.includes(item.chapter)) seen.push(item.chapter);
-    return seen;
+    return seen.sort(compareChapters);
   }, [items]);
 
   const visible = useMemo(() => {
@@ -142,7 +142,7 @@ function ChecklistDetailPage() {
       list.push(item);
       map.set(item.chapter, list);
     }
-    return [...map.entries()];
+    return [...map.entries()].sort((a, b) => compareChapters(a[0], b[0]));
   }, [visible]);
 
   /** Options du menu « aller à » : une entrée par exigence affichée. */
