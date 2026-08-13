@@ -128,10 +128,14 @@
   },
   "checklists": {
     "title": "Check-lists d'audit — PREPA CERTIF",
-    "description": "Modèles de check-lists ISO prêts à l'emploi pour préparer, conduire et documenter vos audits, avec export PDF et CSV."
+    "description": "Modèles de check-lists ISO prêts à l'emploi pour préparer, conduire et documenter vos audits, avec export PDF et CSV.",
+    "ogTitle": "Check-lists d'audit ISO prêtes à l'emploi",
+    "ogDescription": "Modèles ISO 45001, 9001, 14001, 27001 et 19011 pour conduire vos audits et exporter vos rapports."
   },
   "checklistDetail": {
     "title": "Conduite d'audit — PREPA CERTIF",
-    "description": "Remplissez votre check-list d'audit : statut par exigence, preuves, constats et export du rapport."
+    "description": "Remplissez votre check-list d'audit : statut par exigence, preuves, constats et export du rapport.",
+    "ogTitle": "Conduite d'audit — PREPA CERTIF",
+    "ogDescription": "Statut par exigence, preuves, constats et export du rapport d'audit."
   }
 }
