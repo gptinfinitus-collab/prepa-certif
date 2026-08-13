@@ -71,6 +71,14 @@ function ChecklistDetailPage() {
   const updateItem = useUpdateChecklistItem(auditId);
   const addItem = useAddChecklistItem(auditId);
   const deleteItem = useDeleteChecklistItem(auditId);
+  const syncFromTemplate = useSyncChecklistFromTemplate(auditId);
+
+  // Modèle d'origine : sert à proposer les exigences ajoutées depuis la création.
+  const template = checklist?.template_id ? findTemplate(locale, checklist.template_id) : null;
+  const templateTotal = template ? templateItemCount(template) : 0;
+  const canSync = template !== null && templateTotal > items.length;
+
+
 
   const [filter, setFilter] = useState<"all" | "pending" | "nc">("all");
   const [chapterFilter, setChapterFilter] = useState<string>("all");
