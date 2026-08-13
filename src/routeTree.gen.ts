@@ -35,6 +35,7 @@ import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AuthenticatedAssistantIndexRouteImport } from './routes/_authenticated/assistant.index'
 import { Route as AuthenticatedAssistantThreadIdRouteImport } from './routes/_authenticated/assistant.$threadId'
 import { Route as AuthenticatedCheckListsIndexRouteImport } from './routes/_authenticated/check-lists.index'
+import { Route as AuthenticatedCheckListsAuditIdRouteImport } from './routes/_authenticated/check-lists.$auditId'
 import { Route as AuthenticatedCoursIndexRouteImport } from './routes/_authenticated/cours.index'
 import { Route as AuthenticatedCoursSectionIdRouteImport } from './routes/_authenticated/cours.$sectionId'
 import { Route as AuthenticatedSeanceModuleIdRouteImport } from './routes/_authenticated/seance.$moduleId'
@@ -175,6 +176,12 @@ const AuthenticatedCheckListsIndexRoute =
     path: '/check-lists/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedCheckListsAuditIdRoute =
+  AuthenticatedCheckListsAuditIdRouteImport.update({
+    id: '/check-lists/$auditId',
+    path: '/check-lists/$auditId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedCoursIndexRoute = AuthenticatedCoursIndexRouteImport.update({
   id: '/cours/',
   path: '/cours/',
@@ -227,6 +234,7 @@ export interface FileRoutesByFullPath {
   '/quiz': typeof AuthenticatedQuizRoute
   '/api/chat': typeof ApiChatRoute
   '/assistant/$threadId': typeof AuthenticatedAssistantThreadIdRoute
+  '/check-lists/$auditId': typeof AuthenticatedCheckListsAuditIdRoute
   '/cours/$sectionId': typeof AuthenticatedCoursSectionIdRoute
   '/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
   '/assistant/': typeof AuthenticatedAssistantIndexRoute
@@ -259,6 +267,7 @@ export interface FileRoutesByTo {
   '/quiz': typeof AuthenticatedQuizRoute
   '/api/chat': typeof ApiChatRoute
   '/assistant/$threadId': typeof AuthenticatedAssistantThreadIdRoute
+  '/check-lists/$auditId': typeof AuthenticatedCheckListsAuditIdRoute
   '/cours/$sectionId': typeof AuthenticatedCoursSectionIdRoute
   '/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
   '/assistant': typeof AuthenticatedAssistantIndexRoute
@@ -293,6 +302,7 @@ export interface FileRoutesById {
   '/_authenticated/quiz': typeof AuthenticatedQuizRoute
   '/api/chat': typeof ApiChatRoute
   '/_authenticated/assistant/$threadId': typeof AuthenticatedAssistantThreadIdRoute
+  '/_authenticated/check-lists/$auditId': typeof AuthenticatedCheckListsAuditIdRoute
   '/_authenticated/cours/$sectionId': typeof AuthenticatedCoursSectionIdRoute
   '/_authenticated/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
   '/_authenticated/assistant/': typeof AuthenticatedAssistantIndexRoute
@@ -327,6 +337,7 @@ export interface FileRouteTypes {
     | '/quiz'
     | '/api/chat'
     | '/assistant/$threadId'
+    | '/check-lists/$auditId'
     | '/cours/$sectionId'
     | '/seance/$moduleId'
     | '/assistant/'
@@ -359,6 +370,7 @@ export interface FileRouteTypes {
     | '/quiz'
     | '/api/chat'
     | '/assistant/$threadId'
+    | '/check-lists/$auditId'
     | '/cours/$sectionId'
     | '/seance/$moduleId'
     | '/assistant'
@@ -392,6 +404,7 @@ export interface FileRouteTypes {
     | '/_authenticated/quiz'
     | '/api/chat'
     | '/_authenticated/assistant/$threadId'
+    | '/_authenticated/check-lists/$auditId'
     | '/_authenticated/cours/$sectionId'
     | '/_authenticated/seance/$moduleId'
     | '/_authenticated/assistant/'
@@ -604,6 +617,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCheckListsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/check-lists/$auditId': {
+      id: '/_authenticated/check-lists/$auditId'
+      path: '/check-lists/$auditId'
+      fullPath: '/check-lists/$auditId'
+      preLoaderRoute: typeof AuthenticatedCheckListsAuditIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/cours/': {
       id: '/_authenticated/cours/'
       path: '/cours'
@@ -653,6 +673,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedProfilRoute: typeof AuthenticatedProfilRoute
   AuthenticatedQuizRoute: typeof AuthenticatedQuizRoute
   AuthenticatedAssistantThreadIdRoute: typeof AuthenticatedAssistantThreadIdRoute
+  AuthenticatedCheckListsAuditIdRoute: typeof AuthenticatedCheckListsAuditIdRoute
   AuthenticatedCoursSectionIdRoute: typeof AuthenticatedCoursSectionIdRoute
   AuthenticatedSeanceModuleIdRoute: typeof AuthenticatedSeanceModuleIdRoute
   AuthenticatedAssistantIndexRoute: typeof AuthenticatedAssistantIndexRoute
@@ -671,6 +692,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedProfilRoute: AuthenticatedProfilRoute,
   AuthenticatedQuizRoute: AuthenticatedQuizRoute,
   AuthenticatedAssistantThreadIdRoute: AuthenticatedAssistantThreadIdRoute,
+  AuthenticatedCheckListsAuditIdRoute: AuthenticatedCheckListsAuditIdRoute,
   AuthenticatedCoursSectionIdRoute: AuthenticatedCoursSectionIdRoute,
   AuthenticatedSeanceModuleIdRoute: AuthenticatedSeanceModuleIdRoute,
   AuthenticatedAssistantIndexRoute: AuthenticatedAssistantIndexRoute,
