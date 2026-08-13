@@ -21,8 +21,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { useLocale, useT } from "@/i18n";
 import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { pageHead } from "@/lib/seo";
+import { ComplianceSummary } from "@/components/audit/ComplianceSummary";
 import {
   buildChecklistCsv,
+  complianceSummary,
   downloadTextFile,
   slugifyTitle,
   summarize,
@@ -74,6 +76,7 @@ function ChecklistDetailPage() {
   const [draft, setDraft] = useState({ chapter: "", clause: "", requirement: "" });
 
   const stats = useMemo(() => summarize(items), [items]);
+  const compliance = useMemo(() => complianceSummary(items), [items]);
 
   /** Chapitres présents dans la check-list, dans l'ordre des exigences. */
   const chapters = useMemo(() => {
@@ -123,7 +126,25 @@ function ChecklistDetailPage() {
 
   function exportCsv() {
     const headers = t("audit.export.headers", { returnObjects: true }) as string[];
-    const csv = buildChecklistCsv(items, headers, (status) => t(`audit.itemStatus.${status}`));
+    const summaryHeaders = t("audit.compliance.csvHeaders", { returnObjects: true }) as string[];
+    const summaryRows = [
+      ...compliance.byChapter.map((row) => [
+        row.chapter,
+        String(row.evaluated),
+        String(row.total),
+        row.rate === null ? "—" : `${row.rate}%`,
+      ]),
+      [
+        t("audit.compliance.overall"),
+        String(compliance.overall.evaluated),
+        String(compliance.overall.applicable),
+        compliance.overall.rate === null ? "—" : `${compliance.overall.rate}%`,
+      ],
+    ];
+    const csv = buildChecklistCsv(items, headers, (status) => t(`audit.itemStatus.${status}`), {
+      headers: summaryHeaders,
+      rows: summaryRows,
+    });
     downloadTextFile(`${slugifyTitle(checklist?.title ?? "audit")}.csv`, csv, "text/csv;charset=utf-8");
   }
 
@@ -254,6 +275,8 @@ function ChecklistDetailPage() {
                 ))}
               </div>
             </div>
+
+            <ComplianceSummary summary={compliance} />
 
             <div className="flex flex-wrap gap-2 print:hidden">
               <Button size="sm" variant="outline" onClick={exportCsv}>
