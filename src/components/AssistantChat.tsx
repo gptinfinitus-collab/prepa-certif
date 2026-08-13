@@ -96,13 +96,21 @@ export function AssistantChat({ threadId }: { threadId: string }) {
   }, [input]);
 
 
+  function stop() {
+    abortRef.current?.abort();
+  }
+
   async function send(question: string) {
     const text = question.trim();
     if (!text || busy) return;
     setInput("");
     setBusy(true);
     setStreamed("");
+    setLastQuestion(text);
     setPending([{ id: `local-${Date.now()}`, role: "user", content: text, sources: [] }]);
+
+    const controller = new AbortController();
+    abortRef.current = controller;
 
     try {
       const { data: sessionData } = await supabase.auth.getSession();
@@ -113,6 +121,7 @@ export function AssistantChat({ threadId }: { threadId: string }) {
         method: "POST",
         headers: { "content-type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ threadId, question: text, certificationName, locale }),
+        signal: controller.signal,
       });
       if (!response.ok || !response.body) {
         throw new Error(await response.text().catch(() => t("assistant.errors.unavailable")));
