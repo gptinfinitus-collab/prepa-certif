@@ -68,21 +68,30 @@ function ChecklistDetailPage() {
   const deleteItem = useDeleteChecklistItem(auditId);
 
   const [filter, setFilter] = useState<"all" | "pending" | "nc">("all");
+  const [chapterFilter, setChapterFilter] = useState<string>("all");
   const [search, setSearch] = useState("");
   const [adding, setAdding] = useState(false);
   const [draft, setDraft] = useState({ chapter: "", clause: "", requirement: "" });
 
   const stats = useMemo(() => summarize(items), [items]);
 
+  /** Chapitres présents dans la check-list, dans l'ordre des exigences. */
+  const chapters = useMemo(() => {
+    const seen: string[] = [];
+    for (const item of items) if (!seen.includes(item.chapter)) seen.push(item.chapter);
+    return seen;
+  }, [items]);
+
   const visible = useMemo(() => {
     const needle = search.trim().toLowerCase();
     return items.filter((item) => {
+      if (chapterFilter !== "all" && item.chapter !== chapterFilter) return false;
       if (filter === "pending" && item.status !== "pending") return false;
       if (filter === "nc" && item.status !== "major" && item.status !== "minor") return false;
       if (!needle) return true;
       return `${item.chapter} ${item.clause ?? ""} ${item.requirement}`.toLowerCase().includes(needle);
     });
-  }, [items, filter, search]);
+  }, [items, filter, chapterFilter, search]);
 
   const grouped = useMemo(() => {
     const map = new Map<string, AuditChecklistItem[]>();
