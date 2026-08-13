@@ -34,6 +34,7 @@ import { Route as AuthenticatedQuizRouteImport } from './routes/_authenticated/q
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AuthenticatedAssistantIndexRouteImport } from './routes/_authenticated/assistant.index'
 import { Route as AuthenticatedAssistantThreadIdRouteImport } from './routes/_authenticated/assistant.$threadId'
+import { Route as AuthenticatedCheckListsIndexRouteImport } from './routes/_authenticated/check-lists.index'
 import { Route as AuthenticatedCoursIndexRouteImport } from './routes/_authenticated/cours.index'
 import { Route as AuthenticatedCoursSectionIdRouteImport } from './routes/_authenticated/cours.$sectionId'
 import { Route as AuthenticatedSeanceModuleIdRouteImport } from './routes/_authenticated/seance.$moduleId'
@@ -168,6 +169,12 @@ const AuthenticatedAssistantThreadIdRoute =
     path: '/assistant/$threadId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedCheckListsIndexRoute =
+  AuthenticatedCheckListsIndexRouteImport.update({
+    id: '/check-lists/',
+    path: '/check-lists/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedCoursIndexRoute = AuthenticatedCoursIndexRouteImport.update({
   id: '/cours/',
   path: '/cours/',
@@ -223,6 +230,7 @@ export interface FileRoutesByFullPath {
   '/cours/$sectionId': typeof AuthenticatedCoursSectionIdRoute
   '/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
   '/assistant/': typeof AuthenticatedAssistantIndexRoute
+  '/check-lists/': typeof AuthenticatedCheckListsIndexRoute
   '/cours/': typeof AuthenticatedCoursIndexRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
@@ -254,6 +262,7 @@ export interface FileRoutesByTo {
   '/cours/$sectionId': typeof AuthenticatedCoursSectionIdRoute
   '/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
   '/assistant': typeof AuthenticatedAssistantIndexRoute
+  '/check-lists': typeof AuthenticatedCheckListsIndexRoute
   '/cours': typeof AuthenticatedCoursIndexRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
@@ -287,6 +296,7 @@ export interface FileRoutesById {
   '/_authenticated/cours/$sectionId': typeof AuthenticatedCoursSectionIdRoute
   '/_authenticated/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
   '/_authenticated/assistant/': typeof AuthenticatedAssistantIndexRoute
+  '/_authenticated/check-lists/': typeof AuthenticatedCheckListsIndexRoute
   '/_authenticated/cours/': typeof AuthenticatedCoursIndexRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
@@ -320,6 +330,7 @@ export interface FileRouteTypes {
     | '/cours/$sectionId'
     | '/seance/$moduleId'
     | '/assistant/'
+    | '/check-lists/'
     | '/cours/'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
@@ -351,6 +362,7 @@ export interface FileRouteTypes {
     | '/cours/$sectionId'
     | '/seance/$moduleId'
     | '/assistant'
+    | '/check-lists'
     | '/cours'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
@@ -383,6 +395,7 @@ export interface FileRouteTypes {
     | '/_authenticated/cours/$sectionId'
     | '/_authenticated/seance/$moduleId'
     | '/_authenticated/assistant/'
+    | '/_authenticated/check-lists/'
     | '/_authenticated/cours/'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
@@ -584,6 +597,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAssistantThreadIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/check-lists/': {
+      id: '/_authenticated/check-lists/'
+      path: '/check-lists'
+      fullPath: '/check-lists/'
+      preLoaderRoute: typeof AuthenticatedCheckListsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/cours/': {
       id: '/_authenticated/cours/'
       path: '/cours'
@@ -636,6 +656,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedCoursSectionIdRoute: typeof AuthenticatedCoursSectionIdRoute
   AuthenticatedSeanceModuleIdRoute: typeof AuthenticatedSeanceModuleIdRoute
   AuthenticatedAssistantIndexRoute: typeof AuthenticatedAssistantIndexRoute
+  AuthenticatedCheckListsIndexRoute: typeof AuthenticatedCheckListsIndexRoute
   AuthenticatedCoursIndexRoute: typeof AuthenticatedCoursIndexRoute
 }
 
@@ -653,6 +674,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCoursSectionIdRoute: AuthenticatedCoursSectionIdRoute,
   AuthenticatedSeanceModuleIdRoute: AuthenticatedSeanceModuleIdRoute,
   AuthenticatedAssistantIndexRoute: AuthenticatedAssistantIndexRoute,
+  AuthenticatedCheckListsIndexRoute: AuthenticatedCheckListsIndexRoute,
   AuthenticatedCoursIndexRoute: AuthenticatedCoursIndexRoute,
 }
 
