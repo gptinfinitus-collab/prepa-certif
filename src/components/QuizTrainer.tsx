@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { getAuthUser } from "@/lib/auth-user";
 import { useServerFn } from "@tanstack/react-start";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CheckCircle2, Loader2, RotateCcw, Sparkles, Wand2, XCircle } from "lucide-react";
@@ -107,7 +108,7 @@ export function QuizTrainer({
       feedback: string | null;
     }[];
   }) {
-    const { data: userData } = await supabase.auth.getUser();
+    const { data: userData } = await getAuthUser();
     const user = userData.user;
     if (!user) return;
 

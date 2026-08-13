@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getAuthUser } from "@/lib/auth-user";
 import { supabase } from "@/integrations/supabase/client";
 
 export const CPD_TYPES = [
@@ -40,7 +41,7 @@ export function useCpdEntries() {
   return useQuery({
     queryKey: ["cpd_entries"],
     queryFn: async (): Promise<CpdEntry[]> => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user) return [];
       const { data, error } = await supabase
@@ -58,7 +59,7 @@ export function useUpsertCpdEntry() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (input: CpdEntryInput) => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user) throw new Error("notSignedIn");
       const payload = {
@@ -104,7 +105,7 @@ export function useCpdTarget() {
   return useQuery({
     queryKey: ["cpd_settings"],
     queryFn: async (): Promise<number> => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user) return DEFAULT_CPD_TARGET;
       const { data, error } = await supabase
@@ -122,7 +123,7 @@ export function useSaveCpdTarget() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (hours: number) => {
-      const { data: userData } = await supabase.auth.getUser();
+      const { data: userData } = await getAuthUser();
       const user = userData.user;
       if (!user) throw new Error("notSignedIn");
       const { error } = await supabase
