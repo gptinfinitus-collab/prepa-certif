@@ -523,7 +523,10 @@ export function buildChecklistCsv(
   summarySection?: { headers: string[]; rows: string[][] },
 ): string {
   const lines = [headers.map(csvCell).join(";")];
-  for (const item of items) {
+  const ordered = [...items].sort(
+    (a, b) => compareChapters(a.chapter, b.chapter) || a.position - b.position,
+  );
+  for (const item of ordered) {
     lines.push(
       [
         csvCell(item.chapter),
