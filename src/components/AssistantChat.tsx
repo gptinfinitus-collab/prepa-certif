@@ -210,6 +210,10 @@ export function AssistantChat({ threadId }: { threadId: string }) {
     }
   }
 
+  sendHandlerRef.current = (text: string) => {
+    void send(text);
+  };
+
   async function startThread() {
     const thread = await createThread.mutateAsync(certificationId ?? null);
     navigate({ to: "/assistant/$threadId", params: { threadId: thread.id } });
