@@ -336,11 +336,20 @@ export function AssistantChat({ threadId }: { threadId: string }) {
         )}
 
         <div className="mt-6 space-y-4">
-          {messages.map((message) => (
-            <Bubble key={message.id} role={message.role} sources={message.sources}>
-              {message.content}
-            </Bubble>
-          ))}
+          {messages.map((message, index) => {
+            const isCurrentExchange = pending.length > 0 && index === messages.length - pending.length;
+            return (
+              <div
+                key={message.id}
+                ref={isCurrentExchange ? exchangeRef : undefined}
+                className={isCurrentExchange ? "scroll-mt-20" : undefined}
+              >
+                <Bubble role={message.role} sources={message.sources}>
+                  {message.content}
+                </Bubble>
+              </div>
+            );
+          })}
 
           {busy && streamed && <Bubble role="assistant">{streamed}</Bubble>}
           {busy && !streamed && (
@@ -360,6 +369,18 @@ export function AssistantChat({ threadId }: { threadId: string }) {
           )}
           <div ref={bottomRef} />
         </div>
+
+        {showScrollDown && (
+          <button
+            type="button"
+            onClick={() => bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" })}
+            aria-label={t("assistant.scrollToBottom")}
+            className="fixed bottom-36 right-4 z-30 rounded-full border border-border bg-card/95 p-2 text-muted-foreground shadow-lg backdrop-blur transition-colors hover:text-foreground md:bottom-20 md:right-8"
+          >
+            <ArrowDown className="size-4" aria-hidden />
+          </button>
+        )}
+
 
         <div className="sticky bottom-20 mt-4 flex items-end gap-2 rounded-full border border-border bg-card/95 py-1 pl-4 pr-1 backdrop-blur md:bottom-4">
           <Textarea
