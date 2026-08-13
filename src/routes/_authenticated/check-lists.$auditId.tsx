@@ -278,7 +278,7 @@ function ChecklistDetailPage() {
 
             <ComplianceSummary summary={compliance} />
 
-            <div className="flex flex-wrap gap-2 print:hidden">
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap print:hidden">
               <Button size="sm" variant="outline" onClick={exportCsv}>
                 <Download className="mr-1 h-4 w-4" />
                 {t("audit.export.csv")}
@@ -287,7 +287,12 @@ function ChecklistDetailPage() {
                 <Printer className="mr-1 h-4 w-4" />
                 {t("audit.export.print")}
               </Button>
-              <Button size="sm" variant="outline" onClick={() => setAdding((open) => !open)}>
+              <Button
+                size="sm"
+                variant="outline"
+                className="col-span-2 sm:col-span-1"
+                onClick={() => setAdding((open) => !open)}
+              >
                 <Plus className="mr-1 h-4 w-4" />
                 {t("audit.addItem.action")}
               </Button>
