@@ -88,12 +88,20 @@ function ChecklistDetailPage() {
   const canSync = template !== null && templateTotal > items.length;
 
 
-
   const [filter, setFilter] = useState<"all" | "pending" | "nc">("all");
   const [chapterFilter, setChapterFilter] = useState<string>("all");
   const [search, setSearch] = useState("");
   const [adding, setAdding] = useState(false);
   const [draft, setDraft] = useState({ chapter: "", clause: "", requirement: "" });
+
+  // Sur les modèles longs, les chapitres sont repliés par défaut (vue « tous les chapitres »).
+  const [openChapters, setOpenChapters] = useState<Record<string, boolean>>({});
+  const collapseByDefault = items.length > 60 && chapterFilter === "all" && search.trim() === "";
+  const isChapterCollapsed = (chapter: string) =>
+    openChapters[chapter] === undefined ? collapseByDefault : !openChapters[chapter];
+  const toggleChapter = (chapter: string) =>
+    setOpenChapters((prev) => ({ ...prev, [chapter]: isChapterCollapsed(chapter) }));
+
 
   const stats = useMemo(() => summarize(items), [items]);
   const compliance = useMemo(() => complianceSummary(items), [items]);
