@@ -326,14 +326,14 @@ export function AssistantChat({ threadId }: { threadId: string }) {
             className="max-h-32 min-h-0 resize-none overflow-y-auto border-0 bg-transparent py-2 text-sm shadow-none placeholder:text-xs placeholder:text-muted-foreground/70 focus-visible:ring-0 md:text-sm"
           />
           <Button
-            onClick={() => void send(input)}
-            disabled={busy || !input.trim()}
+            onClick={() => (busy ? stop() : void send(input))}
+            disabled={!busy && !input.trim()}
             size="icon"
-            aria-label={t("assistant.input.send")}
+            aria-label={busy ? t("assistant.input.stop") : t("assistant.input.send")}
             className="mb-1 size-9 shrink-0 rounded-full"
           >
             {busy ? (
-              <Loader2 className="size-4 animate-spin" aria-hidden />
+              <Square className="size-3.5 fill-current" aria-hidden />
             ) : (
               <Send className="size-4" aria-hidden />
             )}
