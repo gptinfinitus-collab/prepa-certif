@@ -37,13 +37,17 @@ export interface AuditChecklistItem {
   evidence: string | null;
   finding: string | null;
   auditee: string | null;
+  gap: string | null;
+  action: string | null;
+  owner: string | null;
+  due_date: string | null;
   is_custom: boolean;
 }
 
 const LIST_SELECT =
   "id, title, template_id, certification_id, audited_entity, scope, auditor, audit_date, status, updated_at";
 const ITEM_SELECT =
-  "id, checklist_id, chapter, clause, requirement, guidance, position, status, evidence, finding, auditee, is_custom";
+  "id, checklist_id, chapter, clause, requirement, guidance, position, status, evidence, finding, auditee, gap, action, owner, due_date, is_custom";
 
 /** Modèles de check-lists dans la langue demandée. */
 export function templatesFor(locale: Locale): ChecklistTemplate[] {
@@ -98,6 +102,13 @@ export const SCORE_WEIGHTS: Record<ItemStatus, number | null> = {
   na: null,
   pending: null,
 };
+
+/** Score affiché sur une ligne (« — » quand la ligne n'entre pas dans la moyenne). */
+export function scoreLabel(status: string): string {
+  const weight = SCORE_WEIGHTS[status as ItemStatus];
+  if (weight === null || weight === undefined) return "—";
+  return weight.toFixed(2).replace(/0$/, "").replace(".", ",");
+}
 
 export interface ChapterCompliance {
   chapter: string;
@@ -495,6 +506,11 @@ export function buildChecklistCsv(
         csvCell(item.evidence),
         csvCell(item.finding),
         csvCell(item.auditee),
+        csvCell(scoreLabel(item.status)),
+        csvCell(item.gap),
+        csvCell(item.action),
+        csvCell(item.owner),
+        csvCell(item.due_date),
       ].join(";"),
     );
   }
