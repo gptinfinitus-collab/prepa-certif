@@ -154,7 +154,7 @@ function ChecklistDetailPage() {
   if (!checklist) {
     return (
       <AppShell>
-        <div className="space-y-4">
+        <div className="mx-auto w-full max-w-6xl space-y-4 px-4 py-6 sm:px-6 lg:py-8">
           <p className="text-sm text-muted-foreground">{t("audit.notFound")}</p>
           <Button asChild variant="outline">
             <Link to="/check-lists">{t("audit.backToList")}</Link>
@@ -166,7 +166,7 @@ function ChecklistDetailPage() {
 
   return (
     <AppShell>
-      <div className="space-y-6">
+      <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-6 sm:px-6 lg:py-8">
         <div className="print:hidden">
           <Button asChild variant="ghost" size="sm" className="-ml-2">
             <Link to="/check-lists">
