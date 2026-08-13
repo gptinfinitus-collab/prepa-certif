@@ -86,6 +86,97 @@ export function summarize(items: AuditChecklistItem[]) {
   };
 }
 
+/**
+ * Notation d'une ligne de check-list pour le calcul du taux de conformité.
+ * « Non applicable » et « Non traité » sont exclus de la moyenne (poids null).
+ */
+export const SCORE_WEIGHTS: Record<ItemStatus, number | null> = {
+  conform: 1,
+  observation: 0.75,
+  minor: 0.5,
+  major: 0,
+  na: null,
+  pending: null,
+};
+
+export interface ChapterCompliance {
+  chapter: string;
+  /** Lignes notées (hors « non applicable » et « non traité »). */
+  evaluated: number;
+  total: number;
+  counts: Record<ItemStatus, number>;
+  /** Taux de conformité en %, ou null si aucune ligne notée. */
+  rate: number | null;
+}
+
+export interface ComplianceSummary {
+  byChapter: ChapterCompliance[];
+  overall: {
+    evaluated: number;
+    /** Lignes hors « non applicable » (base de la couverture). */
+    applicable: number;
+    total: number;
+    rate: number | null;
+    /** Part de lignes applicables déjà évaluées, en %. */
+    coverage: number;
+  };
+}
+
+function emptyCounts(): Record<ItemStatus, number> {
+  return { pending: 0, conform: 0, major: 0, minor: 0, observation: 0, na: 0 };
+}
+
+function normalizeStatus(status: string): ItemStatus {
+  return (ITEM_STATUSES as readonly string[]).includes(status) ? (status as ItemStatus) : "pending";
+}
+
+/**
+ * Synthèse de conformité par chapitre et globale.
+ * Le taux global est calculé sur l'ensemble des lignes notées (et non comme une
+ * moyenne des chapitres) afin de ne pas surpondérer les chapitres courts.
+ */
+export function complianceSummary(items: AuditChecklistItem[]): ComplianceSummary {
+  const map = new Map<string, { counts: Record<ItemStatus, number>; score: number; evaluated: number; total: number }>();
+  let score = 0;
+  let evaluated = 0;
+  let applicable = 0;
+
+  for (const item of items) {
+    const status = normalizeStatus(item.status);
+    const weight = SCORE_WEIGHTS[status];
+    const entry = map.get(item.chapter) ?? { counts: emptyCounts(), score: 0, evaluated: 0, total: 0 };
+    entry.counts[status] += 1;
+    entry.total += 1;
+    if (status !== "na") applicable += 1;
+    if (weight !== null) {
+      entry.score += weight;
+      entry.evaluated += 1;
+      score += weight;
+      evaluated += 1;
+    }
+    map.set(item.chapter, entry);
+  }
+
+  const byChapter: ChapterCompliance[] = [...map.entries()].map(([chapter, entry]) => ({
+    chapter,
+    evaluated: entry.evaluated,
+    total: entry.total,
+    counts: entry.counts,
+    rate: entry.evaluated === 0 ? null : Math.round((entry.score / entry.evaluated) * 100),
+  }));
+
+  return {
+    byChapter,
+    overall: {
+      evaluated,
+      applicable,
+      total: items.length,
+      rate: evaluated === 0 ? null : Math.round((score / evaluated) * 100),
+      coverage: applicable === 0 ? 0 : Math.round((evaluated / applicable) * 100),
+    },
+  };
+}
+
 /** Liste des audits de l'utilisateur, du plus récemment modifié au plus ancien. */
 export function useAuditChecklists() {
   return useQuery({
@@ -298,6 +389,7 @@ export function buildChecklistCsv(
   items: AuditChecklistItem[],
   headers: string[],
   statusLabel: (status: string) => string,
+  summarySection?: { headers: string[]; rows: string[][] },
 ): string {
   const lines = [headers.map(csvCell).join(";")];
   for (const item of items) {
@@ -312,6 +404,11 @@ export function buildChecklistCsv(
         csvCell(item.auditee),
       ].join(";"),
     );
+  }
+  if (summarySection) {
+    lines.push("");
+    lines.push(summarySection.headers.map(csvCell).join(";"));
+    for (const row of summarySection.rows) lines.push(row.map(csvCell).join(";"));
   }
   return `\ufeff${lines.join("\r\n")}`;
 }
