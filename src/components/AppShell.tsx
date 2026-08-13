@@ -423,7 +423,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
 
 
           {/* Desktop sidebar toggle */}
-          <div className="hidden px-3 pt-3 lg:block">
+          <div className="sticky top-0 z-30 hidden w-fit px-3 pt-3 lg:block">
             <Button
               variant="ghost"
               size="icon"
