@@ -558,7 +558,8 @@ function ChecklistDetailPage() {
                   ))}
                 </ul>
               </section>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
