@@ -1,18 +1,26 @@
-# Cartes blanches sur fond beige
+# Corriger la transition de page « double animation »
 
-## Contexte
+## Le problème
 
-Sur la page check-list d'audit, le fond de page est beige (`--background: oklch(0.977 0.012 88)`) et les cartes (<Card>) apparaissent crème/translucide au lieu de blanches. Le jeton `--card` vaut `oklch(0.995 0.006 90)` — un blanc chaud très légèrement teinté — et `ComplianceSummary` utilise `bg-card/60` (60 % d'opacité), ce qui laisse le beige transparaître.
+Au clic sur un lien de navigation, la page **actuelle** rejoue l'animation d'entrée (montée + fondu) avant que la nouvelle page n'apparaisse. On voit donc deux mouvements au lieu d'un.
 
-## Changements
+## La cause
 
-1. **`src/styles.css` — jeton `--card` (mode clair)** : passer de `oklch(0.995 0.006 90)` à blanc pur `oklch(1 0 0)`. Garde le mode sombre inchangé. Le jeton `--popover` suit le même traitement pour cohérence (`oklch(1 0 0)`).
+Dans `src/components/AppShell.tsx` (ligne 437), le conteneur animé utilise :
 
-2. **`src/components/audit/ComplianceSummary.tsx` ligne 30** : remplacer `bg-card/60` par `bg-card` (pleinement opaque).
+```tsx
+<div key={pathname} className="page-enter">{children}</div>
+```
 
-3. Vérifier que la barre sticky (`bg-card/95` + `supports-[backdrop-filter]:bg-card/80`) reste lisible — la garder translucide avec backdrop-blur (c'est un overlay, pas une carte de contenu).
+`pathname` vient de `useRouterState({ select: s => s.location.pathname })`, qui bascule sur la **nouvelle URL dès le clic**, pendant que la navigation est encore en cours. Le contenu affiché est encore celui de l'ancienne page, mais le changement de `key` la démonte/remonte : l'ancienne page rejoue l'animation. Quand la nouvelle page arrive enfin, elle s'affiche sans animation propre (ou en second mouvement).
 
-## Validation
+## La correction
 
-- Recharger la page check-list d'audit en mode clair et confirmer que les cartes `<Card>` et le bloc `ComplianceSummary` sont blanc pur sur le fond beige.
-- Vérifier que le mode sombre n'a pas régressé (cartes sur fond bleu nuit).
+1. **Baser la `key` sur la route réellement résolue**, pas sur l'URL en attente : utiliser l'identifiant du dernier match résolu (`s.matches[s.matches.length - 1]?.id`, avec repli sur `s.resolvedLocation?.pathname`). Ainsi le remontage — et donc l'animation — se déclenche exactement au moment où le nouveau contenu s'affiche, une seule fois.
+2. **Alléger la cascade** dans `src/styles.css` : le sélecteur `.page-enter > * > *` anime tous les petits-enfants avec des délais jusqu'à 160 ms, ce qui donne une impression de lenteur et un second mouvement perçu. Réduire à un seul mouvement d'ensemble (fondu + montée de 12 px, ~260 ms) et supprimer les délais en cascade, en conservant `prefers-reduced-motion`.
+3. Vérifier ensuite dans l'aperçu : navigation Dashboard → Assistant → Check-lists, un seul mouvement de bas en haut, aucun soubresaut de la page quittée.
+
+## Détails techniques
+
+- Fichiers touchés : `src/components/AppShell.tsx` (calcul de la clé du conteneur `<main>`), `src/styles.css` (blocs `page-enter` / `page-rise-anim`).
+- Aucune modification de logique métier, de données ou de routes.
