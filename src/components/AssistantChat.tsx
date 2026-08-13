@@ -308,6 +308,15 @@ export function AssistantChat({ threadId }: { threadId: string }) {
               {t("assistant.loading")}
             </p>
           )}
+          {!busy && failed && lastQuestion && (
+            <div className="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-secondary/40 px-3 py-2 text-sm text-muted-foreground">
+              <span>{t("assistant.errors.interrupted")}</span>
+              <Button size="sm" variant="outline" onClick={() => void send(lastQuestion)}>
+                <RotateCcw className="size-4" aria-hidden />
+                {t("assistant.errors.retry")}
+              </Button>
+            </div>
+          )}
           <div ref={bottomRef} />
         </div>
 
