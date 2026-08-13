@@ -189,6 +189,60 @@ export type Database = {
           },
         ]
       }
+      audit_item_attachments: {
+        Row: {
+          checklist_id: string
+          created_at: string
+          file_name: string
+          id: string
+          item_id: string
+          mime_type: string | null
+          size_bytes: number
+          storage_path: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          checklist_id: string
+          created_at?: string
+          file_name: string
+          id?: string
+          item_id: string
+          mime_type?: string | null
+          size_bytes?: number
+          storage_path: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          checklist_id?: string
+          created_at?: string
+          file_name?: string
+          id?: string
+          item_id?: string
+          mime_type?: string | null
+          size_bytes?: number
+          storage_path?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_item_attachments_checklist_id_fkey"
+            columns: ["checklist_id"]
+            isOneToOne: false
+            referencedRelation: "audit_checklists"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "audit_item_attachments_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "audit_checklist_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       certifications: {
         Row: {
           chapters: Json

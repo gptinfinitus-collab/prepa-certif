@@ -1,4 +1,7 @@
+import { Paperclip } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
+
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -23,11 +26,15 @@ const STATUS_STYLES: Record<string, string> = {
 interface Props {
   items: AuditChecklistItem[];
   onPatch: (id: string, patch: Partial<AuditChecklistItem>) => void;
+  /** Nombre de pièces jointes par ligne. */
+  attachmentCounts?: Record<string, number>;
 }
 
+
 /** Vue grille reprenant la structure d'une matrice d'audit classique. */
-export function ChecklistTable({ items, onPatch }: Props) {
+export function ChecklistTable({ items, onPatch, attachmentCounts = {} }: Props) {
   const t = useT();
+
 
   return (
     <div className="overflow-x-auto rounded-lg border border-border bg-card">
@@ -39,8 +46,12 @@ export function ChecklistTable({ items, onPatch }: Props) {
             <th className="w-[150px] px-3 py-2 font-medium">{t("audit.compliance.title")}</th>
             <th className="w-[70px] px-3 py-2 text-center font-medium">{t("audit.score.label")}</th>
             <th className="w-[210px] px-3 py-2 font-medium">{t("audit.fields.evidence")}</th>
+            <th className="w-[60px] px-3 py-2 text-center font-medium">
+              <Paperclip className="mx-auto h-3.5 w-3.5" aria-label={t("audit.attachments.title")} />
+            </th>
             <th className="w-[210px] px-3 py-2 font-medium">{t("audit.fields.gap")}</th>
             <th className="w-[210px] px-3 py-2 font-medium">{t("audit.fields.action")}</th>
+
             <th className="w-[150px] px-3 py-2 font-medium">{t("audit.fields.owner")}</th>
             <th className="w-[140px] px-3 py-2 font-medium">{t("audit.fields.dueDate")}</th>
           </tr>
@@ -90,6 +101,17 @@ export function ChecklistTable({ items, onPatch }: Props) {
                   onBlur={(event) => onPatch(item.id, { evidence: event.target.value })}
                 />
               </td>
+              <td className="px-3 py-2 text-center text-xs text-muted-foreground tabular-nums">
+                {attachmentCounts[item.id] ? (
+                  <span className="inline-flex items-center gap-1">
+                    <Paperclip className="h-3 w-3" />
+                    {attachmentCounts[item.id]}
+                  </span>
+                ) : (
+                  "—"
+                )}
+              </td>
+
               <td className="px-3 py-2">
                 <Textarea
                   rows={2}

@@ -3,7 +3,9 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import {
   ArrowLeft,
   ChevronDown,
+  HelpCircle,
   LayoutGrid,
+
   Table2,
   Download,
   Plus,
@@ -37,8 +39,11 @@ import { pageHead } from "@/lib/seo";
 import { ComplianceSummary } from "@/components/audit/ComplianceSummary";
 import { ActionPlan } from "@/components/audit/ActionPlan";
 import { ChecklistTable } from "@/components/audit/ChecklistTable";
+import { EvidenceAttachments } from "@/components/audit/EvidenceAttachments";
+import { useChecklistAttachments } from "@/lib/audit-attachments";
 import {
   buildChecklistCsv,
+  chapterQuestions,
   compareChapters,
   complianceSummary,
   downloadTextFile,
@@ -58,6 +63,7 @@ import {
   ITEM_STATUSES,
   type AuditChecklistItem,
 } from "@/lib/audit-checklists";
+
 
 export const Route = createFileRoute("/_authenticated/check-lists/$auditId")({
   head: ({ match }) => {
@@ -85,11 +91,13 @@ function ChecklistDetailPage() {
 
   const { data: checklist, isLoading } = useAuditChecklist(auditId);
   const { data: items = [] } = useAuditChecklistItems(auditId);
+  const { data: attachments = {} } = useChecklistAttachments(auditId);
   const updateChecklist = useUpdateAuditChecklist(auditId);
   const updateItem = useUpdateChecklistItem(auditId);
   const addItem = useAddChecklistItem(auditId);
   const deleteItem = useDeleteChecklistItem(auditId);
   const syncFromTemplate = useSyncChecklistFromTemplate(auditId);
+
 
   // Modèle d'origine : sert à proposer les exigences ajoutées depuis la création.
   const template = checklist?.template_id ? findTemplate(locale, checklist.template_id) : null;
@@ -108,6 +116,9 @@ function ChecklistDetailPage() {
   // Sur les modèles longs, les chapitres sont repliés par défaut (vue « tous les chapitres »).
   const [view, setView] = useState<"cards" | "table">("cards");
   const [treatmentOpen, setTreatmentOpen] = useState<Record<string, boolean>>({});
+  // Un seul bloc « questions à poser » ouvert à la fois.
+  const [questionsChapter, setQuestionsChapter] = useState<string | null>(null);
+
   const [openChapters, setOpenChapters] = useState<Record<string, boolean>>({});
   const collapseByDefault = items.length > 60 && chapterFilter === "all" && search.trim() === "";
   const isChapterCollapsed = (chapter: string) =>
@@ -191,10 +202,20 @@ function ChecklistDetailPage() {
         compliance.overall.rate === null ? "—" : `${compliance.overall.rate}%`,
       ],
     ];
-    const csv = buildChecklistCsv(items, headers, (status) => t(`audit.itemStatus.${status}`), {
-      headers: summaryHeaders,
-      rows: summaryRows,
-    });
+    const attachmentNames = Object.fromEntries(
+      Object.entries(attachments).map(([itemId, files]) => [
+        itemId,
+        files.map((file) => file.file_name),
+      ]),
+    );
+    const csv = buildChecklistCsv(
+      items,
+      headers,
+      (status) => t(`audit.itemStatus.${status}`),
+      { headers: summaryHeaders, rows: summaryRows },
+      attachmentNames,
+    );
+
     downloadTextFile(`${slugifyTitle(checklist?.title ?? "audit")}.csv`, csv, "text/csv;charset=utf-8");
   }
 
@@ -534,6 +555,8 @@ function ChecklistDetailPage() {
           <div className="space-y-6">
             {grouped.map(([chapter, chapterItems]) => {
               const collapsed = isChapterCollapsed(chapter);
+              const questions = chapterQuestions(locale, checklist.template_id, chapter);
+              const questionsOpen = questionsChapter === chapter;
               return (
               <section key={chapter} className="space-y-4">
                 <button
@@ -548,7 +571,39 @@ function ChecklistDetailPage() {
                     className={`ml-auto h-4 w-4 shrink-0 transition-transform ${collapsed ? "" : "rotate-180"}`}
                   />
                 </button>
+                {questions.length > 0 && (
+                  <div className="rounded-lg border border-border/60 bg-muted/30 print:hidden">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setQuestionsChapter((current) => (current === chapter ? null : chapter))
+                      }
+                      className="flex w-full items-center gap-2 px-3 py-2 text-left text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      <HelpCircle className="h-4 w-4 shrink-0 text-primary/70" />
+                      {t("audit.chapterQuestions.title")}
+                      <span className="text-[11px] font-normal">({questions.length})</span>
+                      <ChevronDown
+                        className={`ml-auto h-4 w-4 shrink-0 transition-transform ${questionsOpen ? "rotate-180" : ""}`}
+                      />
+                    </button>
+                    {questionsOpen && (
+                      <ul className="space-y-1.5 border-t border-border/60 px-3 py-2.5">
+                        {questions.map((question) => (
+                          <li
+                            key={question}
+                            className="flex gap-2 text-xs leading-relaxed text-muted-foreground"
+                          >
+                            <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary/60" />
+                            <span>{question}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                )}
                 <ul className={`space-y-4 ${collapsed ? "hidden print:block" : ""}`}>
+
                   {chapterItems.map((item) => (
                     <li key={item.id} id={`item-${item.id}`} className="scroll-mt-48 lg:scroll-mt-40">
                       <Card>
@@ -611,6 +666,14 @@ function ChecklistDetailPage() {
                               />
                             </div>
                           </div>
+
+                          <EvidenceAttachments
+                            checklistId={auditId}
+                            itemId={item.id}
+                            attachments={attachments[item.id] ?? []}
+                          />
+
+
 
                           {(() => {
                             const needsTreatment = ["major", "minor", "observation"].includes(

@@ -100,7 +100,8 @@
       "Écart constaté",
       "Action",
       "Responsable",
-      "Échéance"
+      "Échéance",
+      "Pièces jointes"
     ]
   },
   "report": {
@@ -155,5 +156,23 @@
   "score": {
     "label": "Score",
     "none": "Hors notation"
+  },
+  "chapterQuestions": {
+    "title": "Questions à poser",
+    "hint": "Exemples de questions d'entretien pour ce chapitre."
+  },
+  "attachments": {
+    "title": "Documents de preuve",
+    "add": "Joindre un fichier",
+    "empty": "Aucune pièce jointe.",
+    "hint": "Images, PDF, Word ou Excel — 10 Mo maximum par fichier.",
+    "delete": "Supprimer la pièce jointe",
+    "deleteConfirm": "Supprimer définitivement cette pièce jointe ?",
+    "deleteError": "Suppression impossible.",
+    "uploadError": "Envoi impossible.",
+    "openError": "Ouverture impossible.",
+    "tooLarge": "Fichier trop volumineux (10 Mo maximum).",
+    "badType": "Format de fichier non accepté.",
+    "count": "{{count}} pièces jointes"
   }
 }
