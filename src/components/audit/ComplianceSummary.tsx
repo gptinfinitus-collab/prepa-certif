@@ -42,6 +42,9 @@ function CountBadges({ counts, t }: { counts: Counts; t: (key: string) => string
       )}
     </>
   );
+}
+
+
 
 /** Synthèse de conformité par chapitre + taux global (calcul purement local). */
 export const ComplianceSummary = memo(function ComplianceSummary({ summary }: Props) {
