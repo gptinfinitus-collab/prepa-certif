@@ -127,36 +127,7 @@ export const ComplianceSummary = memo(function ComplianceSummary({ summary }: Pr
                   </td>
                   <td className="py-2 pr-3">
                     <div className="flex flex-wrap gap-1">
-                      {row.counts.conform > 0 && (
-                        <Badge variant="secondary" className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
-                          {t("audit.itemStatus.conform")} · {row.counts.conform}
-                        </Badge>
-                      )}
-                      {row.counts.observation > 0 && (
-                        <Badge variant="secondary" className="bg-primary/15 text-primary">
-                          {t("audit.itemStatus.observation")} · {row.counts.observation}
-                        </Badge>
-                      )}
-                      {row.counts.minor > 0 && (
-                        <Badge variant="secondary" className="bg-amber-500/15 text-amber-600 dark:text-amber-400">
-                          {t("audit.itemStatus.minor")} · {row.counts.minor}
-                        </Badge>
-                      )}
-                      {row.counts.major > 0 && (
-                        <Badge variant="secondary" className="bg-destructive/15 text-destructive">
-                          {t("audit.itemStatus.major")} · {row.counts.major}
-                        </Badge>
-                      )}
-                      {row.counts.na > 0 && (
-                        <Badge variant="secondary" className="bg-muted text-muted-foreground">
-                          {t("audit.itemStatus.na")} · {row.counts.na}
-                        </Badge>
-                      )}
-                      {row.counts.pending > 0 && (
-                        <Badge variant="secondary" className="bg-muted text-muted-foreground">
-                          {t("audit.itemStatus.pending")} · {row.counts.pending}
-                        </Badge>
-                      )}
+                      <CountBadges counts={row.counts} t={t} />
                     </div>
                   </td>
                   <td className="py-2 text-right">
