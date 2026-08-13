@@ -349,6 +349,8 @@ function ChecklistDetailPage() {
 
             <ComplianceSummary summary={compliance} />
 
+            <ActionPlan items={items} />
+
             <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap print:hidden">
               <Button size="sm" variant="outline" onClick={exportCsv}>
                 <Download className="mr-1 h-4 w-4" />
