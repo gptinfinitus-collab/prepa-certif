@@ -2,6 +2,8 @@ import { type ReactNode, useEffect, useState } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   BookMarked,
+  FileText,
+
   BookOpen,
   Brain,
   Bot,
