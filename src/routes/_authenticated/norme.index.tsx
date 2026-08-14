@@ -16,7 +16,12 @@ import { useLocale, useT } from "@/i18n";
 import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { pageHead } from "@/lib/seo";
 import {
+  officialLanguagesFor,
+  type OfficialStandardLanguage,
+} from "@/lib/official-standards";
+import {
   useDeleteStandardDocument,
+  useImportOfficialStandard,
   useImportStandardDocument,
   useStandardDocument,
   useStandardProgress,
@@ -45,6 +50,7 @@ function StandardIndexPage() {
   const [query, setQuery] = useState("");
   const search = useStandardSearch(document.data?.id, query);
   const importDoc = useImportStandardDocument();
+  const officialDoc = useImportOfficialStandard();
   const removeDoc = useDeleteStandardDocument();
   const fileInput = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
