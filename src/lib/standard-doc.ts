@@ -103,3 +103,13 @@ export function useDeleteStandardDocument() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ["standard"] }),
   });
 }
+
+/** Charge le texte officiel fourni avec l'application (FR ou EN). */
+export function useImportOfficialStandard() {
+  const fn = useServerFn(importOfficialStandard);
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (input: { certificationId: string; language: "fr" | "en" }) => fn({ data: input }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["standard"] }),
+  });
+}
