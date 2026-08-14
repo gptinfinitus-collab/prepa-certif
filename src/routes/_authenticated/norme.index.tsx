@@ -158,7 +158,26 @@ function StandardIndexPage() {
                     <PlayCircle className="mr-1.5 size-4" aria-hidden />
                     {read > 0 ? t("standardDoc.resume") : t("standardDoc.start")}
                   </Button>
+                  {officialLanguages
+                    .filter((lang) => lang !== document.data?.language)
+                    .map((lang) => (
+                      <Button
+                        key={lang}
+                        variant="outline"
+                        size="sm"
+                        disabled={busy}
+                        onClick={() => loadOfficial(lang)}
+                      >
+                        {busy && officialDoc.variables?.language === lang ? (
+                          <Loader2 className="mr-1.5 size-4 animate-spin" aria-hidden />
+                        ) : (
+                          <BookMarked className="mr-1.5 size-4" aria-hidden />
+                        )}
+                        {t(lang === "fr" ? "standardDoc.loadFrench" : "standardDoc.loadEnglish")}
+                      </Button>
+                    ))}
                   <Button variant="outline" size="sm" disabled={busy} onClick={() => fileInput.current?.click()}>
+
                     <Upload className="mr-1.5 size-4" aria-hidden />
                     {t("standardDoc.reimport")}
                   </Button>
