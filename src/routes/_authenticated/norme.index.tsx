@@ -16,7 +16,12 @@ import { useLocale, useT } from "@/i18n";
 import { DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { pageHead } from "@/lib/seo";
 import {
+  officialLanguagesFor,
+  type OfficialStandardLanguage,
+} from "@/lib/official-standards";
+import {
   useDeleteStandardDocument,
+  useImportOfficialStandard,
   useImportStandardDocument,
   useStandardDocument,
   useStandardProgress,
@@ -45,6 +50,7 @@ function StandardIndexPage() {
   const [query, setQuery] = useState("");
   const search = useStandardSearch(document.data?.id, query);
   const importDoc = useImportStandardDocument();
+  const officialDoc = useImportOfficialStandard();
   const removeDoc = useDeleteStandardDocument();
   const fileInput = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
@@ -88,7 +94,24 @@ function StandardIndexPage() {
     );
   }
 
-  const busy = uploading || importDoc.isPending;
+  const officialLanguages = officialLanguagesFor(certification?.code);
+
+  function loadOfficial(language: OfficialStandardLanguage) {
+    if (!certificationId) return;
+    officialDoc.mutate(
+      { certificationId, language },
+      {
+        onSuccess: (result) =>
+          toast.success(
+            t("standardDoc.imported", { sections: result.sectionCount, pages: result.pageCount }),
+          ),
+        onError: () => toast.error(t("standardDoc.importFailed")),
+      },
+    );
+  }
+
+  const busy = uploading || importDoc.isPending || officialDoc.isPending;
+
 
   return (
     <AppShell title={t("standardDoc.title")}>
@@ -135,7 +158,26 @@ function StandardIndexPage() {
                     <PlayCircle className="mr-1.5 size-4" aria-hidden />
                     {read > 0 ? t("standardDoc.resume") : t("standardDoc.start")}
                   </Button>
+                  {officialLanguages
+                    .filter((lang) => lang !== document.data?.language)
+                    .map((lang) => (
+                      <Button
+                        key={lang}
+                        variant="outline"
+                        size="sm"
+                        disabled={busy}
+                        onClick={() => loadOfficial(lang)}
+                      >
+                        {busy && officialDoc.variables?.language === lang ? (
+                          <Loader2 className="mr-1.5 size-4 animate-spin" aria-hidden />
+                        ) : (
+                          <BookMarked className="mr-1.5 size-4" aria-hidden />
+                        )}
+                        {t(lang === "fr" ? "standardDoc.loadFrench" : "standardDoc.loadEnglish")}
+                      </Button>
+                    ))}
                   <Button variant="outline" size="sm" disabled={busy} onClick={() => fileInput.current?.click()}>
+
                     <Upload className="mr-1.5 size-4" aria-hidden />
                     {t("standardDoc.reimport")}
                   </Button>
@@ -159,18 +201,43 @@ function StandardIndexPage() {
               <div className="space-y-3">
                 <p className="text-sm font-medium">{t("standardDoc.emptyTitle")}</p>
                 <p className="text-sm text-muted-foreground">
-                  {t("standardDoc.emptyBody", { name: certification?.name ?? "" })}
+                  {officialLanguages.length > 0
+                    ? t("standardDoc.officialAvailable", { name: certification?.name ?? "" })
+                    : t("standardDoc.emptyBody", { name: certification?.name ?? "" })}
                 </p>
-                <Button size="sm" disabled={busy} onClick={() => fileInput.current?.click()}>
-                  {busy ? (
-                    <Loader2 className="mr-1.5 size-4 animate-spin" aria-hidden />
-                  ) : (
-                    <Upload className="mr-1.5 size-4" aria-hidden />
-                  )}
-                  {busy ? t("standardDoc.importing") : t("standardDoc.import")}
-                </Button>
+                <div className="flex flex-wrap gap-2">
+                  {officialLanguages.map((lang) => (
+                    <Button
+                      key={lang}
+                      size="sm"
+                      disabled={busy}
+                      onClick={() => loadOfficial(lang)}
+                    >
+                      {busy && officialDoc.variables?.language === lang ? (
+                        <Loader2 className="mr-1.5 size-4 animate-spin" aria-hidden />
+                      ) : (
+                        <BookMarked className="mr-1.5 size-4" aria-hidden />
+                      )}
+                      {t(lang === "fr" ? "standardDoc.loadFrench" : "standardDoc.loadEnglish")}
+                    </Button>
+                  ))}
+                  <Button
+                    variant={officialLanguages.length > 0 ? "outline" : "default"}
+                    size="sm"
+                    disabled={busy}
+                    onClick={() => fileInput.current?.click()}
+                  >
+                    {busy && !officialDoc.isPending ? (
+                      <Loader2 className="mr-1.5 size-4 animate-spin" aria-hidden />
+                    ) : (
+                      <Upload className="mr-1.5 size-4" aria-hidden />
+                    )}
+                    {busy ? t("standardDoc.importing") : t("standardDoc.import")}
+                  </Button>
+                </div>
               </div>
             )}
+
             <p className="text-xs text-muted-foreground">{t("standardDoc.privateNotice")}</p>
             <input
               ref={fileInput}

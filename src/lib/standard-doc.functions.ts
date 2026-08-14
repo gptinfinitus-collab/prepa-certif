@@ -186,6 +186,39 @@ export const importStandardDocument = createServerFn({ method: "POST" })
     return importStandard(context.supabase, context.userId, data);
   });
 
+/** Importe le texte officiel déjà déposé dans l'application (FR ou EN). */
+export const importOfficialStandard = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data) =>
+    z
+      .object({ certificationId: z.string().uuid(), language: z.enum(["fr", "en"]) })
+      .parse(data),
+  )
+  .handler(async ({ data, context }) => {
+    const { supabase, userId } = context;
+    const { officialLanguagesFor, officialStandardPath } = await import("@/lib/official-standards");
+    const { importStandard } = await import("@/lib/standard-doc.server");
+
+    const { data: cert } = await supabase
+      .from("certifications")
+      .select("code, name, description")
+      .eq("id", data.certificationId)
+      .maybeSingle();
+    if (!cert) throw new Error("unknownCertification");
+    if (!officialLanguagesFor(cert.code).includes(data.language)) {
+      throw new Error("noOfficialText");
+    }
+
+    return importStandard(supabase, userId, {
+      certificationId: data.certificationId,
+      storagePath: officialStandardPath(cert.code, data.language),
+      name: `${cert.code}-${data.language}.pdf`,
+      title: cert.name,
+      reference: cert.description,
+      language: data.language,
+    });
+  });
+
 /** Supprime la norme importée pour cette certification. */
 export const deleteStandardDocument = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -200,7 +233,11 @@ export const deleteStandardDocument = createServerFn({ method: "POST" })
       .maybeSingle();
     if (!doc) return { deleted: false };
 
-    await supabase.storage.from("iso-library").remove([doc.storage_path]);
+    // Le texte officiel partagé ne doit jamais être supprimé du stockage.
+    if (!doc.storage_path.startsWith("official/")) {
+      await supabase.storage.from("iso-library").remove([doc.storage_path]);
+    }
     await supabase.from("standard_documents").delete().eq("id", doc.id);
     return { deleted: true };
   });
+

@@ -6,10 +6,12 @@ import {
   getStandardProgress,
   getStandardSection,
   getStandardToc,
+  importOfficialStandard,
   importStandardDocument,
   markStandardSectionRead,
   searchStandard,
 } from "@/lib/standard-doc.functions";
+
 
 /** Document de norme importé pour la certification active. */
 export function useStandardDocument(certificationId: string | null) {
@@ -98,6 +100,16 @@ export function useDeleteStandardDocument() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (certificationId: string) => fn({ data: { certificationId } }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["standard"] }),
+  });
+}
+
+/** Charge le texte officiel fourni avec l'application (FR ou EN). */
+export function useImportOfficialStandard() {
+  const fn = useServerFn(importOfficialStandard);
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (input: { certificationId: string; language: "fr" | "en" }) => fn({ data: input }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["standard"] }),
   });
 }

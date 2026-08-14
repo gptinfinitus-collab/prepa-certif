@@ -32,5 +32,9 @@
   "pages": "{{count}} pages",
   "privateNotice": "Contenu privé à votre compte : le texte importé n'est visible que par vous.",
   "copyright": "Texte sous droits d'auteur — usage personnel de révision uniquement.",
-  "noCertification": "Sélectionnez d'abord une certification active."
+  "noCertification": "Sélectionnez d'abord une certification active.",
+  "officialAvailable": "Le texte officiel de {{name}} est fourni avec l'application : choisissez votre langue de lecture.",
+  "loadFrench": "Version française",
+  "loadEnglish": "English version",
+  "switchLanguage": "Changer de langue"
 }
