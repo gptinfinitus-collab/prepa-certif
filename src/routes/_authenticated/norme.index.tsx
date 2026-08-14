@@ -88,7 +88,24 @@ function StandardIndexPage() {
     );
   }
 
-  const busy = uploading || importDoc.isPending;
+  const officialLanguages = officialLanguagesFor(certification?.code);
+
+  function loadOfficial(language: OfficialStandardLanguage) {
+    if (!certificationId) return;
+    officialDoc.mutate(
+      { certificationId, language },
+      {
+        onSuccess: (result) =>
+          toast.success(
+            t("standardDoc.imported", { sections: result.sectionCount, pages: result.pageCount }),
+          ),
+        onError: () => toast.error(t("standardDoc.importFailed")),
+      },
+    );
+  }
+
+  const busy = uploading || importDoc.isPending || officialDoc.isPending;
+
 
   return (
     <AppShell title={t("standardDoc.title")}>
