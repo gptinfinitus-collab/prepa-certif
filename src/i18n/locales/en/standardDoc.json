@@ -32,5 +32,9 @@
   "pages": "{{count}} pages",
   "privateNotice": "Private to your account: the imported text is visible only to you.",
   "copyright": "Copyrighted text — personal revision use only.",
-  "noCertification": "Select an active certification first."
+  "noCertification": "Select an active certification first.",
+  "officialAvailable": "The official {{name}} text ships with the app: pick your reading language.",
+  "loadFrench": "French version",
+  "loadEnglish": "English version",
+  "switchLanguage": "Switch language"
 }
