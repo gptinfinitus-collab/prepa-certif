@@ -675,6 +675,115 @@ export type Database = {
           },
         ]
       }
+      standard_documents: {
+        Row: {
+          certification_id: string
+          created_at: string
+          error: string | null
+          id: string
+          language: string
+          library_document_id: string | null
+          owner_id: string
+          page_count: number
+          reference: string | null
+          section_count: number
+          status: string
+          storage_path: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          certification_id: string
+          created_at?: string
+          error?: string | null
+          id?: string
+          language?: string
+          library_document_id?: string | null
+          owner_id: string
+          page_count?: number
+          reference?: string | null
+          section_count?: number
+          status?: string
+          storage_path: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          certification_id?: string
+          created_at?: string
+          error?: string | null
+          id?: string
+          language?: string
+          library_document_id?: string | null
+          owner_id?: string
+          page_count?: number
+          reference?: string | null
+          section_count?: number
+          status?: string
+          storage_path?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "standard_documents_certification_id_fkey"
+            columns: ["certification_id"]
+            isOneToOne: false
+            referencedRelation: "certifications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      standard_sections: {
+        Row: {
+          chapter: string
+          clause: string | null
+          created_at: string
+          document_id: string
+          id: string
+          markdown: string
+          order_index: number
+          owner_id: string
+          page: number
+          search_vector: unknown
+          title: string
+        }
+        Insert: {
+          chapter?: string
+          clause?: string | null
+          created_at?: string
+          document_id: string
+          id?: string
+          markdown?: string
+          order_index: number
+          owner_id: string
+          page?: number
+          search_vector?: unknown
+          title?: string
+        }
+        Update: {
+          chapter?: string
+          clause?: string | null
+          created_at?: string
+          document_id?: string
+          id?: string
+          markdown?: string
+          order_index?: number
+          owner_id?: string
+          page?: number
+          search_vector?: unknown
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "standard_sections_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "standard_documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       study_plans: {
         Row: {
           certification_id: string
@@ -994,6 +1103,38 @@ export type Database = {
         }
         Relationships: []
       }
+      user_standard_progress: {
+        Row: {
+          document_id: string
+          read_ids: string[]
+          section_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          document_id: string
+          read_ids?: string[]
+          section_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          document_id?: string
+          read_ids?: string[]
+          section_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_standard_progress_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "standard_documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_topic_mastery: {
         Row: {
           attempts: number
@@ -1060,6 +1201,16 @@ export type Database = {
           document_id: string
           id: string
           similarity: number
+        }[]
+      }
+      search_standard_sections: {
+        Args: { p_document_id: string; p_query: string }
+        Returns: {
+          chapter: string
+          id: string
+          page: number
+          snippet: string
+          title: string
         }[]
       }
     }
