@@ -6,10 +6,12 @@ import {
   getStandardProgress,
   getStandardSection,
   getStandardToc,
+  importOfficialStandard,
   importStandardDocument,
   markStandardSectionRead,
   searchStandard,
 } from "@/lib/standard-doc.functions";
+
 
 /** Document de norme importé pour la certification active. */
 export function useStandardDocument(certificationId: string | null) {
