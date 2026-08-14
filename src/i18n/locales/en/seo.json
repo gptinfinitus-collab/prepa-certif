@@ -120,6 +120,12 @@
     "ogTitle": "Preparation session — PREPA CERTIF",
     "ogDescription": "A structured ISO certification preparation session."
   },
+  "standard": {
+    "title": "Standard — PREPA CERTIF",
+    "description": "Read and search the official text of your certification standard, clause by clause.",
+    "ogTitle": "Standard — PREPA CERTIF",
+    "ogDescription": "Reading and search in the official standard text."
+  },
   "manual": {
     "title": "SGS ISO 45001 course — PREPA CERTIF",
     "description": "Browse and search the ISO 45001 auditor / lead auditor course.",

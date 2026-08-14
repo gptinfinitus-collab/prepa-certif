@@ -38,6 +38,8 @@ import { Route as AuthenticatedCheckListsIndexRouteImport } from './routes/_auth
 import { Route as AuthenticatedCheckListsAuditIdRouteImport } from './routes/_authenticated/check-lists.$auditId'
 import { Route as AuthenticatedCoursIndexRouteImport } from './routes/_authenticated/cours.index'
 import { Route as AuthenticatedCoursSectionIdRouteImport } from './routes/_authenticated/cours.$sectionId'
+import { Route as AuthenticatedNormeIndexRouteImport } from './routes/_authenticated/norme.index'
+import { Route as AuthenticatedNormeSectionIdRouteImport } from './routes/_authenticated/norme.$sectionId'
 import { Route as AuthenticatedSeanceModuleIdRouteImport } from './routes/_authenticated/seance.$moduleId'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
@@ -193,6 +195,17 @@ const AuthenticatedCoursSectionIdRoute =
     path: '/cours/$sectionId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedNormeIndexRoute = AuthenticatedNormeIndexRouteImport.update({
+  id: '/norme/',
+  path: '/norme/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedNormeSectionIdRoute =
+  AuthenticatedNormeSectionIdRouteImport.update({
+    id: '/norme/$sectionId',
+    path: '/norme/$sectionId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedSeanceModuleIdRoute =
   AuthenticatedSeanceModuleIdRouteImport.update({
     id: '/seance/$moduleId',
@@ -236,10 +249,12 @@ export interface FileRoutesByFullPath {
   '/assistant/$threadId': typeof AuthenticatedAssistantThreadIdRoute
   '/check-lists/$auditId': typeof AuthenticatedCheckListsAuditIdRoute
   '/cours/$sectionId': typeof AuthenticatedCoursSectionIdRoute
+  '/norme/$sectionId': typeof AuthenticatedNormeSectionIdRoute
   '/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
   '/assistant/': typeof AuthenticatedAssistantIndexRoute
   '/check-lists/': typeof AuthenticatedCheckListsIndexRoute
   '/cours/': typeof AuthenticatedCoursIndexRoute
+  '/norme/': typeof AuthenticatedNormeIndexRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
 }
@@ -269,10 +284,12 @@ export interface FileRoutesByTo {
   '/assistant/$threadId': typeof AuthenticatedAssistantThreadIdRoute
   '/check-lists/$auditId': typeof AuthenticatedCheckListsAuditIdRoute
   '/cours/$sectionId': typeof AuthenticatedCoursSectionIdRoute
+  '/norme/$sectionId': typeof AuthenticatedNormeSectionIdRoute
   '/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
   '/assistant': typeof AuthenticatedAssistantIndexRoute
   '/check-lists': typeof AuthenticatedCheckListsIndexRoute
   '/cours': typeof AuthenticatedCoursIndexRoute
+  '/norme': typeof AuthenticatedNormeIndexRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
 }
@@ -304,10 +321,12 @@ export interface FileRoutesById {
   '/_authenticated/assistant/$threadId': typeof AuthenticatedAssistantThreadIdRoute
   '/_authenticated/check-lists/$auditId': typeof AuthenticatedCheckListsAuditIdRoute
   '/_authenticated/cours/$sectionId': typeof AuthenticatedCoursSectionIdRoute
+  '/_authenticated/norme/$sectionId': typeof AuthenticatedNormeSectionIdRoute
   '/_authenticated/seance/$moduleId': typeof AuthenticatedSeanceModuleIdRoute
   '/_authenticated/assistant/': typeof AuthenticatedAssistantIndexRoute
   '/_authenticated/check-lists/': typeof AuthenticatedCheckListsIndexRoute
   '/_authenticated/cours/': typeof AuthenticatedCoursIndexRoute
+  '/_authenticated/norme/': typeof AuthenticatedNormeIndexRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
 }
@@ -339,10 +358,12 @@ export interface FileRouteTypes {
     | '/assistant/$threadId'
     | '/check-lists/$auditId'
     | '/cours/$sectionId'
+    | '/norme/$sectionId'
     | '/seance/$moduleId'
     | '/assistant/'
     | '/check-lists/'
     | '/cours/'
+    | '/norme/'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
   fileRoutesByTo: FileRoutesByTo
@@ -372,10 +393,12 @@ export interface FileRouteTypes {
     | '/assistant/$threadId'
     | '/check-lists/$auditId'
     | '/cours/$sectionId'
+    | '/norme/$sectionId'
     | '/seance/$moduleId'
     | '/assistant'
     | '/check-lists'
     | '/cours'
+    | '/norme'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
   id:
@@ -406,10 +429,12 @@ export interface FileRouteTypes {
     | '/_authenticated/assistant/$threadId'
     | '/_authenticated/check-lists/$auditId'
     | '/_authenticated/cours/$sectionId'
+    | '/_authenticated/norme/$sectionId'
     | '/_authenticated/seance/$moduleId'
     | '/_authenticated/assistant/'
     | '/_authenticated/check-lists/'
     | '/_authenticated/cours/'
+    | '/_authenticated/norme/'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
   fileRoutesById: FileRoutesById
@@ -638,6 +663,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCoursSectionIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/norme/': {
+      id: '/_authenticated/norme/'
+      path: '/norme'
+      fullPath: '/norme/'
+      preLoaderRoute: typeof AuthenticatedNormeIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/norme/$sectionId': {
+      id: '/_authenticated/norme/$sectionId'
+      path: '/norme/$sectionId'
+      fullPath: '/norme/$sectionId'
+      preLoaderRoute: typeof AuthenticatedNormeSectionIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/seance/$moduleId': {
       id: '/_authenticated/seance/$moduleId'
       path: '/seance/$moduleId'
@@ -675,10 +714,12 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAssistantThreadIdRoute: typeof AuthenticatedAssistantThreadIdRoute
   AuthenticatedCheckListsAuditIdRoute: typeof AuthenticatedCheckListsAuditIdRoute
   AuthenticatedCoursSectionIdRoute: typeof AuthenticatedCoursSectionIdRoute
+  AuthenticatedNormeSectionIdRoute: typeof AuthenticatedNormeSectionIdRoute
   AuthenticatedSeanceModuleIdRoute: typeof AuthenticatedSeanceModuleIdRoute
   AuthenticatedAssistantIndexRoute: typeof AuthenticatedAssistantIndexRoute
   AuthenticatedCheckListsIndexRoute: typeof AuthenticatedCheckListsIndexRoute
   AuthenticatedCoursIndexRoute: typeof AuthenticatedCoursIndexRoute
+  AuthenticatedNormeIndexRoute: typeof AuthenticatedNormeIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -694,10 +735,12 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAssistantThreadIdRoute: AuthenticatedAssistantThreadIdRoute,
   AuthenticatedCheckListsAuditIdRoute: AuthenticatedCheckListsAuditIdRoute,
   AuthenticatedCoursSectionIdRoute: AuthenticatedCoursSectionIdRoute,
+  AuthenticatedNormeSectionIdRoute: AuthenticatedNormeSectionIdRoute,
   AuthenticatedSeanceModuleIdRoute: AuthenticatedSeanceModuleIdRoute,
   AuthenticatedAssistantIndexRoute: AuthenticatedAssistantIndexRoute,
   AuthenticatedCheckListsIndexRoute: AuthenticatedCheckListsIndexRoute,
   AuthenticatedCoursIndexRoute: AuthenticatedCoursIndexRoute,
+  AuthenticatedNormeIndexRoute: AuthenticatedNormeIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
