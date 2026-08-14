@@ -159,18 +159,43 @@ function StandardIndexPage() {
               <div className="space-y-3">
                 <p className="text-sm font-medium">{t("standardDoc.emptyTitle")}</p>
                 <p className="text-sm text-muted-foreground">
-                  {t("standardDoc.emptyBody", { name: certification?.name ?? "" })}
+                  {officialLanguages.length > 0
+                    ? t("standardDoc.officialAvailable", { name: certification?.name ?? "" })
+                    : t("standardDoc.emptyBody", { name: certification?.name ?? "" })}
                 </p>
-                <Button size="sm" disabled={busy} onClick={() => fileInput.current?.click()}>
-                  {busy ? (
-                    <Loader2 className="mr-1.5 size-4 animate-spin" aria-hidden />
-                  ) : (
-                    <Upload className="mr-1.5 size-4" aria-hidden />
-                  )}
-                  {busy ? t("standardDoc.importing") : t("standardDoc.import")}
-                </Button>
+                <div className="flex flex-wrap gap-2">
+                  {officialLanguages.map((lang) => (
+                    <Button
+                      key={lang}
+                      size="sm"
+                      disabled={busy}
+                      onClick={() => loadOfficial(lang)}
+                    >
+                      {busy && officialDoc.variables?.language === lang ? (
+                        <Loader2 className="mr-1.5 size-4 animate-spin" aria-hidden />
+                      ) : (
+                        <BookMarked className="mr-1.5 size-4" aria-hidden />
+                      )}
+                      {t(lang === "fr" ? "standardDoc.loadFrench" : "standardDoc.loadEnglish")}
+                    </Button>
+                  ))}
+                  <Button
+                    variant={officialLanguages.length > 0 ? "outline" : "default"}
+                    size="sm"
+                    disabled={busy}
+                    onClick={() => fileInput.current?.click()}
+                  >
+                    {busy && !officialDoc.isPending ? (
+                      <Loader2 className="mr-1.5 size-4 animate-spin" aria-hidden />
+                    ) : (
+                      <Upload className="mr-1.5 size-4" aria-hidden />
+                    )}
+                    {busy ? t("standardDoc.importing") : t("standardDoc.import")}
+                  </Button>
+                </div>
               </div>
             )}
+
             <p className="text-xs text-muted-foreground">{t("standardDoc.privateNotice")}</p>
             <input
               ref={fileInput}
