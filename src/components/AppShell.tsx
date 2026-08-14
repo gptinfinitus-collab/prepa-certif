@@ -78,6 +78,8 @@ const navGroups: NavGroup[] = [
     key: "nav.groupContent",
     items: [
       { to: "/cours", key: "nav.course", icon: BookOpen },
+      { to: "/norme", key: "nav.standard", icon: FileText },
+
       { to: "/references", key: "nav.references", icon: BookMarked },
       { to: "/glossaire", key: "nav.glossary", icon: SpellCheck },
       { to: "/annexes", key: "nav.annexes", icon: ListChecks },
